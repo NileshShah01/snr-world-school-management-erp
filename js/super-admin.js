@@ -5,12 +5,9 @@ let allSchools = []; // Local cache for filtering
 document.addEventListener('DOMContentLoaded', async () => {
     showOverlay(true);
 
-    // 1. Auth Guard (Strict)
-    const isAuthorized = await checkSuperAdminAuth();
-    if (!isAuthorized) {
-        window.location.href = '/portal/admin-login.html';
-        return;
-    }
+    // 1. Auth Guard (Strict) — Phase 1: use centralized AuthGuard
+    const session = await window.AuthGuard?.requireAuth({ role: 'super_admin' });
+    if (!session) return; // redirect already happened
 
     // 2. Initial Data Load
     await refreshDashboard();

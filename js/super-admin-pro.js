@@ -13,12 +13,9 @@ const STAGES = Object.values(window.SAAS_POLICY?.SAAS_TIERS || {}).map(t => ({
 })).filter(t => t.id > 0); // Hide Stage 0 from grid
 
 document.addEventListener('DOMContentLoaded', async () => {
-    // 1. Auth Guard
-    auth.onAuthStateChanged(user => {
-        if (!user) {
-            window.location.href = 'super-admin-login.html';
-        }
-    });
+    // 1. Auth Guard — Phase 1: use centralized AuthGuard
+    const session = await window.AuthGuard?.requireAuth({ role: 'super_admin' });
+    if (!session) return; // redirect already happened
 
     // 2. Initialize UI
     lucide.createIcons();

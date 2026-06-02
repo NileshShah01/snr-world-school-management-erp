@@ -297,7 +297,7 @@ window.showSection = function (sectionId, updateHash = true) {
 
 // Deprecated: window.originalShowSection is no longer used for extension hooks
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     // Event Listeners
     document.getElementById('studentForm')?.addEventListener('submit', handleStudentSubmit);
     document.getElementById('bulkImportForm')?.addEventListener('submit', handleBulkImport);
@@ -315,25 +315,21 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('websiteSettingsForm')?.addEventListener('submit', handleWebsiteSettingsSave);
 
     // Initial Auth and App Initialization
-    auth.onAuthStateChanged((user) => {
-        if (user) {
-            document.getElementById('adminEmail').textContent = user.email;
+    const session = await window.AuthGuard?.requireAuth({ role: ['admin', 'super_admin'] });
+    if (session) {
+        document.getElementById('adminEmail').textContent = session.user.email;
 
-            // Only initialize once
-            if (!isInitializing) {
-                initializeApp();
-            }
-
-            // Initial Routing based on Hash - delayed to ensure everything is ready
-            setTimeout(() => {
-                const initialSection = window.location.hash.replace('#', '');
-                window.showSection(initialSection || 'dashboardOverview');
-            }, 100);
-        } else {
-            const slug = typeof getURLSlug === 'function' ? getURLSlug() : null;
-            window.location.href = slug ? `/${slug}/portal/admin-login.html` : '/portal/admin-login.html';
+        // Only initialize once
+        if (!isInitializing) {
+            initializeApp();
         }
-    });
+
+        // Initial Routing based on Hash - delayed to ensure everything is ready
+        setTimeout(() => {
+            const initialSection = window.location.hash.replace('#', '');
+            window.showSection(initialSection || 'dashboardOverview');
+        }, 100);
+    }
 
     // Hash change routing
     window.addEventListener('hashchange', () => {

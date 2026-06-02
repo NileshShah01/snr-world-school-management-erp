@@ -74,29 +74,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     }
 
-    // Protection for admin dashboard
-    /* 
-    if (window.location.pathname.includes('admin-dashboard')) {
-        auth.onAuthStateChanged(async (user) => {
-            if (!user) {
-                const slug = typeof getURLSlug === 'function' ? getURLSlug() : null;
-                window.location.href = slug ? `/${slug}/Admin-Login` : '/portal/admin-login.html';
-            } else {
-                try {
-                    const userDoc = await db.collection('users').doc(user.uid).get();
-                    if (userDoc.exists) {
-                        const userData = userDoc.data();
-                        if (userData.schoolId && userData.schoolId !== sessionStorage.getItem('CURRENT_SCHOOL_ID')) {
-                            sessionStorage.setItem('CURRENT_SCHOOL_ID', userData.schoolId);
-                        }
-                    }
-                } catch (e) {
-                    console.error('[Auth] Session sync failed:', e);
-                }
-            }
-        });
-    }
-    */
+    // Note: The admin-dashboard page-level auth guard lives in js/admin-dashboard.js
+    // and the centralized js/auth-guard.js (requireAuth). The block that used to
+    // live here was redundant dead code and has been removed (2026-06-02, Phase 1).
 });
 
 function logoutAdmin() {

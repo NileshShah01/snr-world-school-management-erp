@@ -73,7 +73,7 @@ function renderSessions() {
 
     if (erpState.sessions.length === 0) {
         sessionsTableBody.innerHTML =
-            '<tr><td colspan="4" style="text-align:center;">No sessions found. Create one to begin.</td></tr>';
+            '<tr><td colspan="4" class="text-center text-muted p-4"><i class="fas fa-calendar-alt" style="display:block;font-size:1.5rem;margin-bottom:0.5rem;opacity:0.3;"></i>No sessions found. Create one to begin.</td></tr>';
         return;
     }
 
@@ -157,7 +157,7 @@ async function deleteSession(sessionId) {
 
         if (!classSnap.empty) {
             showLoading(false);
-            alert(`Cannot delete this session because it has classes linked to it. Delete the classes first.`);
+            showToast('Cannot delete this session because it has classes linked to it. Delete the classes first.', 'error');
             return;
         }
 
@@ -208,7 +208,7 @@ async function handleSessionSubmit(event) {
     } catch (error) {
         console.error('Error adding session:', error);
         showToast('Error saving session: ' + error.message, 'error');
-        alert('DEBUG: Error saving session -> ' + error.message + '\nStack: ' + error.stack);
+        console.error('DEBUG: Error saving session -> ' + error.message + '\nStack: ' + error.stack);
     } finally {
         showLoading(false);
     }
@@ -284,7 +284,7 @@ function renderClasses() {
 
     if (erpState.classes.length === 0) {
         classesTableBody.innerHTML =
-            '<tr><td colspan="5" style="text-align:center;">No classes found for this session.</td></tr>';
+            '<tr><td colspan="5" class="text-center text-muted p-4"><i class="fas fa-school" style="display:block;font-size:1.5rem;margin-bottom:0.5rem;opacity:0.3;"></i>No classes found for this session.</td></tr>';
         return;
     }
 
@@ -356,7 +356,7 @@ async function editClass(classId) {
  * DELETE CLASS
  */
 async function deleteClass(classId) {
-    if (!confirm('Are you sure you want to PERMANENTLY delete this class? This cannot be undone.')) return;
+    if (!await window.showConfirmModal({ title: 'Delete Class', message: 'Are you sure you want to PERMANENTLY delete this class? This cannot be undone.', icon: 'fa-school', confirmText: 'Delete', danger: true })) return;
 
     try {
         showLoading(true);
@@ -368,9 +368,7 @@ async function deleteClass(classId) {
 
         if (!studentSnap.empty) {
             showLoading(false);
-            alert(
-                `Cannot delete "${cls.name}" because students are still assigned to it. Please move students to another class or just "Disable" this class instead.`
-            );
+            showToast('Cannot delete "' + cls.name + '" because students are still assigned to it. Please move students to another class or just "Disable" this class instead.', 'error');
             return;
         }
 
@@ -391,7 +389,7 @@ async function deleteClass(classId) {
  */
 async function toggleClassStatus(classId, currentlyDisabled) {
     const action = currentlyDisabled ? 'Enable' : 'Disable';
-    if (!confirm(`Are you sure you want to ${action} this class?`)) return;
+    if (!await window.showConfirmModal({ title: action + ' Class', message: 'Are you sure you want to ' + action + ' this class?', icon: 'fa-toggle-on', confirmText: action })) return;
 
     try {
         showLoading(true);
@@ -440,7 +438,7 @@ async function handleClassSubmit(event) {
     } catch (error) {
         console.error('Error adding class:', error);
         showToast('Error adding class: ' + error.message, 'error');
-        alert('DEBUG: Error adding class -> ' + error.message + '\nStack: ' + error.stack);
+        console.error('DEBUG: Error adding class -> ' + error.message + '\nStack: ' + error.stack);
     } finally {
         showLoading(false);
     }
@@ -822,7 +820,7 @@ window.saveBulkStudentUpdate = async function () {
         return;
     }
 
-    if (!confirm(`Save changes for ${docIds.length} student record(s)?`)) return;
+    if (!await window.showConfirmModal({ title: 'Save Changes', message: 'Save changes for ' + docIds.length + ' student record(s)?', icon: 'fa-save', confirmText: 'Save' })) return;
     showLoading(true);
     try {
         const batch = (window.db || firebase.firestore()).batch();
@@ -868,32 +866,34 @@ async function updateRegistrationSections() {
 }
 
 /**
- * AUTO-INCREMENT STUDENT ID
+ * AUTO-INCREMENT STUDENT ID (legacy wrapper → delegates to global counter)
+ * Returns A###### format string (e.g., A000001). Kept for backward compat.
  */
 async function getNextStudentId() {
+    if (typeof window.getGlobalStudentId === 'function') {
+        return await window.getGlobalStudentId();
+    }
+    // Fallback: per-school counter (legacy — will be removed)
     const counterRef = schoolDoc('counters', 'students');
-
     try {
         return await (window.db || firebase.firestore()).runTransaction(async (transaction) => {
             const doc = await transaction.get(counterRef);
             if (!doc.exists) {
                 transaction.set(counterRef, withSchool({ lastId: 1000 }));
-                return 1000;
+                return 'A' + String(1001).padStart(6, '0');
             }
             const newId = doc.data().lastId + 1;
             transaction.update(counterRef, {
                 lastId: newId,
                 updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
             });
-            return newId;
+            return 'A' + String(newId).padStart(6, '0');
         });
     } catch (error) {
         console.error('Error getting next Student ID:', error);
-        // Fallback: check max ID in students collection
         const snapshot = await schoolData('students').orderBy('student_id', 'desc').limit(1).get();
-        if (snapshot.empty) return 1000;
-        const maxId = parseInt(snapshot.docs[0].data().student_id);
-        return isNaN(maxId) ? 1000 : maxId + 1;
+        const maxId = snapshot.empty ? 0 : parseInt(snapshot.docs[0].data().student_id?.replace('A', '') || '0');
+        return 'A' + String(isNaN(maxId) ? 1 : maxId + 1).padStart(6, '0');
     }
 }
 
@@ -909,7 +909,7 @@ async function loadClassDetails() {
 
     const cls = erpState.classes.find((c) => c.id === classId);
     if (!cls || !cls.sections || cls.sections.length === 0) {
-        list.innerHTML = '<p style="color:var(--text-muted);">No sections defined yet.</p>';
+        showEmptyState(list, { icon: 'fa-layer-group', message: 'No sections defined yet.' });
         return;
     }
 
@@ -957,7 +957,7 @@ async function handleAddSection() {
 }
 
 async function removeSection(classId, sectionName) {
-    if (!confirm(`Are you sure you want to remove Section ${sectionName}?`)) return;
+    if (!await window.showConfirmModal({ title: 'Remove Section', message: 'Are you sure you want to remove Section ' + sectionName + '?', icon: 'fa-layer-group', confirmText: 'Remove', danger: true })) return;
 
     try {
         showLoading(true);
@@ -1050,7 +1050,7 @@ async function handleSubjectSubmit(event) {
 }
 
 async function deleteSubject(id) {
-    if (!confirm('Delete this subject?')) return;
+    if (!await window.showConfirmModal({ title: 'Delete Subject', message: 'Delete this subject?', icon: 'fa-book', confirmText: 'Delete', danger: true })) return;
     try {
         showLoading(true);
         await schoolDoc('subjects', id).delete();
@@ -1128,7 +1128,7 @@ async function handleNonSubjectSubmit(event) {
 }
 
 async function deleteNonSubject(id) {
-    if (!confirm('Delete this co-scholastic area?')) return;
+    if (!await window.showConfirmModal({ title: 'Delete Co-Scholastic Area', message: 'Delete this co-scholastic area?', icon: 'fa-star', confirmText: 'Delete', danger: true })) return;
     try {
         showLoading(true);
         await schoolDoc('nonSubjects', id).delete();

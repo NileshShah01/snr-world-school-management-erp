@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+Disallow: /portal/
+Disallow: /Super-Admin
+Disallow: /Super-Admin-pro
+Disallow: /scripts/
+Disallow: /_backups/
+Disallow: /temp_super_admin/
+Disallow: /temp_question_tool/
+Disallow: /portal/question-formatter/
+Disallow: /*.json$
+
+Sitemap: https://apex-public-school-portal.web.app/sitemap.xml
+Sitemap: https://snredu-erp.web.app/sitemap.xml

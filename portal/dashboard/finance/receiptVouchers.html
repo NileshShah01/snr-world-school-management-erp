@@ -1,0 +1,27 @@
+<section id="receiptVouchersSection" class="dashboard-section hidden">
+                <div class="header">
+                    <div>
+                        <h1><i class="fas fa-hand-holding-usd text-green"></i> Receipt Vouchers</h1>
+                        <p>All incoming receipt records</p>
+                    </div>
+                    <button class="btn-portal btn-primary" onclick="openAddVoucherModal()">
+                        <i class="fas fa-plus"></i> New Receipt
+                    </button>
+                </div>
+                <div class="table-container">
+                    <table class="portal-table">
+                        <thead>
+                            <tr>
+                                <th>Voucher #</th>
+                                <th>Date</th>
+                                <th>Received From</th>
+                                <th>Amount</th>
+                                <th class="text-center">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="receiptVoucherTableBody">
+                            <tr><td colspan="5" class="text-center text-muted p-2">Loading receipt vouchers...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>

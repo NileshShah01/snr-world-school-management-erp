@@ -56,7 +56,7 @@ async function applyStagePermissions() {
 function applySchoolBranding(data) {
     if (!data) return;
     const name = data.schoolName || window.SCHOOL_NAME || 'School';
-    let logo = data.logo || '/images/ApexPublicSchoolLogo.png';
+    let logo = data.logo || 'ApexPublicSchoolLogo.png';
 
     // Use centralized path normalization
     if (typeof ensureAbsoluteUrl === 'function') {
@@ -64,7 +64,7 @@ function applySchoolBranding(data) {
     } else {
         // Fallback if utility not loaded
         if (logo.startsWith('../')) logo = logo.substring(2);
-        if (!logo.startsWith('/') && !logo.startsWith('http')) logo = '/' + logo;
+        if (!logo.startsWith('/') && !logo.startsWith('http') && !logo.startsWith('data:')) logo = '/' + logo;
     }
 
     // Update Title
@@ -82,8 +82,16 @@ function applySchoolBranding(data) {
         document.getElementById('sidebarSchoolName').innerText = name;
     }
     if (document.getElementById('sidebarLogoImg')) {
-        document.getElementById('sidebarLogoImg').src = logo;
-        document.getElementById('sidebarLogoImg').alt = `${name} Logo`;
+        const sidebarImg = document.getElementById('sidebarLogoImg');
+        sidebarImg.alt = `${name} Logo`;
+        const isBare = !logo.startsWith('/') && !logo.startsWith('http') && !logo.startsWith('data:');
+        if (isBare && window.SNRMedia) {
+            window.SNRMedia.getDataUrl(logo).then((url) => {
+                if (url) sidebarImg.src = url;
+            }).catch(() => { sidebarImg.src = ''; });
+        } else {
+            sidebarImg.src = logo;
+        }
     }
 
     // Update Page Header
@@ -813,9 +821,10 @@ async function loadCmsList(collection, containerId, renderFn) {
     el.innerHTML = '<p style="color:#64748b;"><i class="fas fa-spinner fa-spin"></i> Loading...</p>';
     try {
         const snap = await schoolData(collection).orderBy('createdAt', 'asc').get();
-        el.innerHTML = snap.empty
-            ? '<p style="color:#94a3b8; text-align:center; padding:2rem;">No items yet. Add one above!</p>'
-            : '';
+        if (snap.empty) {
+            showEmptyState(el, { icon: 'fa-inbox', message: 'No items yet. Add one above!' });
+            return;
+        }
         snap.forEach((doc) => {
             el.innerHTML += renderFn(doc.id, doc.data());
         });
@@ -823,9 +832,10 @@ async function loadCmsList(collection, containerId, renderFn) {
         // Try without orderBy if field missing
         try {
             const snap2 = await schoolData(collection).get();
-            el.innerHTML = snap2.empty
-                ? '<p style="color:#94a3b8; text-align:center; padding:2rem;">No items yet.</p>'
-                : '';
+            if (snap2.empty) {
+                showEmptyState(el, { icon: 'fa-inbox', message: 'No items yet.' });
+                return;
+            }
             snap2.forEach((doc) => {
                 el.innerHTML += renderFn(doc.id, doc.data());
             });
@@ -952,7 +962,7 @@ function renderStaffItem(id, d) {
 
 // ===================== DELETE CMS ITEM =====================
 async function deleteCmsItem(collection, id, reloadFn) {
-    if (!confirm('Delete this item?')) return;
+    if (!await window.showConfirmModal({ title: 'Delete Item', message: 'Delete this item?', icon: 'fa-trash-alt', confirmText: 'Delete', danger: true })) return;
     try {
         await schoolDoc(collection, id).delete();
         showToast('Deleted!');
@@ -1036,9 +1046,7 @@ const MODAL_CONFIGS = {
             { id: 'cms_quote', label: 'Quote / Review *', type: 'textarea', required: true },
         ],
         save: async (data) => {
-            await db
-                .collection('testimonials')
-                .add(withSchool({ name: data.cms_name, relation: data.cms_relation, quote: data.cms_quote }));
+            await schoolData('testimonials').add({ name: data.cms_name, relation: data.cms_relation, quote: data.cms_quote, schoolId: CURRENT_SCHOOL_ID });
             loadCmsList('testimonials', 'testimonialsListAdmin', renderTestimonialItem);
         },
     },
@@ -1049,7 +1057,7 @@ const MODAL_CONFIGS = {
             { id: 'cms_date', label: 'Date (e.g. April 14, 2026) *', type: 'text', required: true },
         ],
         save: async (data) => {
-            await db.collection('holidays').add(withSchool({ name: data.cms_name, date: data.cms_date }));
+            await schoolData('holidays').add({ name: data.cms_name, date: data.cms_date, schoolId: CURRENT_SCHOOL_ID });
             loadCmsList('holidays', 'holidaysListAdmin', renderHolidayItem);
         },
     },
@@ -1067,9 +1075,7 @@ const MODAL_CONFIGS = {
             { id: 'cms_caption', label: 'Caption (optional)', type: 'text' },
         ],
         save: async (data) => {
-            await db
-                .collection('gallery')
-                .add(withSchool({ url: data.cms_photo, category: data.cms_category, caption: data.cms_caption }));
+            await schoolData('gallery').add({ url: data.cms_photo, category: data.cms_category, caption: data.cms_caption, schoolId: CURRENT_SCHOOL_ID });
             loadCmsList('gallery', 'galleryListAdmin', renderGalleryItem);
         },
     },
@@ -1081,9 +1087,7 @@ const MODAL_CONFIGS = {
             { id: 'cms_photo', label: 'Choose Photo (optional)', type: 'file' },
         ],
         save: async (data) => {
-            await db
-                .collection('staff')
-                .add(withSchool({ name: data.cms_name, subject: data.cms_subject, photo: data.cms_photo }));
+            await schoolData('staff').add({ name: data.cms_name, subject: data.cms_subject, photo: data.cms_photo, schoolId: CURRENT_SCHOOL_ID });
             loadCmsList('staff', 'staffListAdmin', renderStaffItem);
         },
     },
@@ -1203,6 +1207,10 @@ async function saveCmsModal(type) {
 }
 
 async function processCmsImage(file) {
+    if (typeof ImageStorage !== 'undefined') {
+        return ImageStorage.compressImageUnder200KB(file);
+    }
+    // Fallback: basic canvas compression
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.onload = (e) => {
@@ -1213,34 +1221,15 @@ async function processCmsImage(file) {
                 const MAX_HEIGHT = 1000;
                 let width = img.width;
                 let height = img.height;
-
                 if (width > height) {
-                    if (width > MAX_WIDTH) {
-                        height *= MAX_WIDTH / width;
-                        width = MAX_WIDTH;
-                    }
+                    if (width > MAX_WIDTH) { height *= MAX_WIDTH / width; width = MAX_WIDTH; }
                 } else {
-                    if (height > MAX_HEIGHT) {
-                        width *= MAX_HEIGHT / height;
-                        height = MAX_HEIGHT;
-                    }
+                    if (height > MAX_HEIGHT) { width *= MAX_HEIGHT / height; height = MAX_HEIGHT; }
                 }
-
                 canvas.width = width;
                 canvas.height = height;
-                const ctx = canvas.getContext('2d');
-                ctx.drawImage(img, 0, 0, width, height);
-
-                // Compress to stay under 900KB. 0.7 quality usually does the trick for 1000px.
-                const dataUrl = canvas.toDataURL('image/jpeg', 0.75);
-
-                // Check size (base64 is ~1.37x file size)
-                const approximateSizeInBytes = dataUrl.length * (3 / 4);
-                if (approximateSizeInBytes > 900 * 1024) {
-                    reject(new Error('Image is too large even after compression. Please use a smaller image.'));
-                } else {
-                    resolve(dataUrl);
-                }
+                canvas.getContext('2d').drawImage(img, 0, 0, width, height);
+                resolve(canvas.toDataURL('image/jpeg', 0.75));
             };
             img.onerror = reject;
             img.src = e.target.result;
@@ -1359,7 +1348,7 @@ async function uploadTimetable(event, classId) {
 }
 
 async function deleteTimetable(classId, className) {
-    if (!confirm(`Delete timetable for ${className}?`)) return;
+    if (!await window.showConfirmModal({ title: 'Delete Timetable', message: 'Delete timetable for ' + className + '?', icon: 'fa-calendar-times', confirmText: 'Delete', danger: true })) return;
     await schoolDoc('timetables', classId).delete();
     showToast('Timetable deleted!');
     loadTimetableSection();

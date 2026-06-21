@@ -1,0 +1,33 @@
+<section id="staffAttendanceReportSection" class="dashboard-section hidden">
+                <div class="header">
+                    <div>
+                        <h1><i class="fas fa-chart-bar text-primary"></i> Staff Attendance Report</h1>
+                        <p>Monthly attendance summary for all employees</p>
+                    </div>
+                </div>
+                <div class="card max-w-400 mx-auto p-1-5 mb-1-5">
+                    <div class="form-group">
+                        <label>Month</label>
+                        <input type="month" id="staffAttReportMonth" class="form-control" onchange="loadStaffAttendanceReport()">
+                    </div>
+                </div>
+                <div class="card p-1-5">
+                    <div class="table-container">
+                        <table class="portal-table">
+                            <thead>
+                                <tr>
+                                    <th>Employee</th>
+                                    <th>Designation</th>
+                                    <th class="text-center text-green">Present</th>
+                                    <th class="text-center text-red">Absent</th>
+                                    <th class="text-center text-orange">Late</th>
+                                    <th class="text-center">Total Days</th>
+                                </tr>
+                            </thead>
+                            <tbody id="staffAttReportBody">
+                                <tr><td colspan="6" class="text-center text-muted p-2">Select a month to view report</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>

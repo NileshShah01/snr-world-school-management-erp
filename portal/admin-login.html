@@ -3,6 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="recaptcha-site-key" content="" />
         <title>Admin Login | Antigravity ERP</title>
 
         <!-- Meta Tags -->
@@ -236,6 +237,105 @@
                     transform: rotate(360deg);
                 }
             }
+
+            .forgot-row {
+                display: flex;
+                justify-content: flex-end;
+                margin-top: -8px;
+                margin-bottom: 16px;
+            }
+            .forgot-link {
+                font-size: 12px;
+                color: var(--accent);
+                text-decoration: none;
+                opacity: 0.85;
+                transition: opacity 0.2s;
+            }
+            .forgot-link:hover {
+                opacity: 1;
+                text-decoration: underline;
+            }
+
+            .modal-overlay {
+                position: fixed;
+                inset: 0;
+                background: rgba(0, 0, 0, 0.55);
+                backdrop-filter: blur(6px);
+                -webkit-backdrop-filter: blur(6px);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 9999;
+                padding: 20px;
+            }
+            .modal-card {
+                background: var(--card-bg);
+                border: 1px solid var(--glass-border);
+                border-radius: 16px;
+                padding: 28px;
+                max-width: 420px;
+                width: 100%;
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            }
+            .modal-card h3 {
+                margin: 0 0 8px;
+                font-size: 20px;
+                color: var(--text-main);
+            }
+            .modal-sub {
+                font-size: 13px;
+                color: var(--text-dim);
+                margin-bottom: 18px;
+            }
+            .modal-card input[type='email'] {
+                width: 100%;
+                padding: 12px 14px;
+                background: rgba(255, 255, 255, 0.05);
+                border: 1px solid var(--glass-border);
+                border-radius: 10px;
+                color: var(--text-main);
+                font-size: 14px;
+                margin-bottom: 12px;
+                box-sizing: border-box;
+            }
+            .modal-card input[type='email']:focus {
+                outline: none;
+                border-color: var(--accent);
+            }
+            .modal-actions {
+                display: flex;
+                gap: 10px;
+                justify-content: flex-end;
+                margin-top: 8px;
+            }
+            .btn-primary, .btn-secondary {
+                padding: 10px 18px;
+                border-radius: 10px;
+                font-size: 13px;
+                font-weight: 600;
+                cursor: pointer;
+                border: 1px solid transparent;
+                transition: all 0.2s;
+            }
+            .btn-primary {
+                background: var(--accent);
+                color: #00354a;
+            }
+            .btn-primary:hover { opacity: 0.9; }
+            .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
+            .btn-secondary {
+                background: transparent;
+                color: var(--text-dim);
+                border-color: var(--glass-border);
+            }
+            .btn-secondary:hover { color: var(--text-main); }
+            .status-msg {
+                font-size: 13px;
+                margin: 8px 0 0;
+                min-height: 18px;
+            }
+            .status-msg.success { color: #2ecc71; }
+            .status-msg.error { color: var(--error); }
         </style>
     </head>
     <body>
@@ -243,7 +343,7 @@
             <div class="glass-card">
                 <div class="brand-section">
                     <div id="schoolLogoContainer">
-                        <img src="/images/school-logo.png" alt="Portal Logo" class="school-logo" id="schoolLogo" />
+                        <img data-snr-media="school-logo.png" alt="Portal Logo" class="school-logo" id="schoolLogo" />
                     </div>
                     <h1 class="school-name" id="portalBrandName">School Portal</h1>
                 </div>
@@ -279,35 +379,60 @@
                         </div>
                     </div>
 
+                    <div class="form-group forgot-row">
+                        <a href="#" id="forgotPasswordLink" class="forgot-link">Forgot password?</a>
+                    </div>
+
                     <button type="submit" class="login-btn" id="loginBtn">
                         <span id="btnText">Sign In to Dashboard</span>
                         <div class="spinner" id="btnSpinner"></div>
                     </button>
                 </form>
+
+                <!-- Forgot password modal -->
+                <div id="forgotPasswordModal" class="modal-overlay" style="display:none;">
+                    <div class="modal-card">
+                        <h3>Reset your password</h3>
+                        <p class="modal-sub">Enter your portal email. We'll send a reset link if the account exists.</p>
+                        <input type="email" id="forgotEmail" placeholder="admin@school.com" autocomplete="email" />
+                        <div id="forgotStatus" class="status-msg"></div>
+                        <div class="modal-actions">
+                            <button type="button" id="forgotCancel" class="btn-secondary">Cancel</button>
+                            <button type="button" id="forgotSubmit" class="btn-primary">Send Reset Link</button>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="footer">Powered by Antigravity Cloud &bull; Secure Enterprise Management</div>
         </div>
 
         <!-- Firebase Key Scripts -->
-        <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+        <script defer src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+        <script defer src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+        <script defer src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+        <!-- Firebase App Check (reCAPTCHA v3) — disabled until site key is set in firebase-config.js -->
+        <script defer src="/js/app-check.js?v=1.0"></script>
+
+        <!-- Client-side rate limiter for login + forgot password -->
+        <script defer src="/js/rate-limiter.js?v=1.0"></script>
 
         <!-- App Scripts -->
-        <script src="/js/firebase-config.js?v=2.0"></script>
-        <script src="/js/cms-settings.js?v=2.0"></script>
+        <script defer src="/js/firebase-config.js?v=2.0"></script>
+        <script defer src="/js/media-loader.js?v=1.0"></script>
+        <script defer src="/js/cms-settings.js?v=2.0"></script>
+        <script defer src="/js/admin-auth.js?v=2.0"></script>
+
+        <!-- Dynamic Branding Initialization (runs after all deferred scripts) -->
         <script>
-            // Dynamic Branding Initialization
-            (async () => {
+            document.addEventListener('DOMContentLoaded', async function () {
                 try {
-                    // Show loading state
                     const logoEl = document.getElementById('schoolLogo');
                     const brandNameEl = document.getElementById('portalBrandName');
                     if (logoEl) logoEl.style.opacity = '0.5';
                     if (brandNameEl) brandNameEl.style.opacity = '0.5';
 
-                    // Wait for firebase-config.js to set CURRENT_SCHOOL_ID
                     const checkInterval = setInterval(async () => {
                         if (window.CURRENT_SCHOOL_ID) {
                             clearInterval(checkInterval);
@@ -315,19 +440,25 @@
                             const schoolDoc = await db.collection('schools').doc(window.CURRENT_SCHOOL_ID).get();
                             if (schoolDoc.exists) {
                                 const data = schoolDoc.data();
-                                // Add cache-busting to logo URL
                                 const timestamp = Date.now();
                                 const logoUrl = data.logo
                                     ? data.logo.includes('?')
                                         ? data.logo + '&t=' + timestamp
                                         : data.logo + '?t=' + timestamp
-                                    : '/images/ApexPublicSchoolLogo.png';
+                                    : 'ApexPublicSchoolLogo.png';
 
-                                if (data.logo) document.getElementById('schoolLogo').src = logoUrl;
+                                if (data.logo) {
+                                    document.getElementById('schoolLogo').src = logoUrl;
+                                } else {
+                                    if (window.SNRMedia) {
+                                        window.SNRMedia.getDataUrl('ApexPublicSchoolLogo.png').then((url) => {
+                                            if (url) document.getElementById('schoolLogo').src = url;
+                                        });
+                                    }
+                                }
                                 if (data.name) document.getElementById('portalBrandName').innerText = data.name;
                                 document.title = (data.name || 'Admin') + ' | Antigravity ERP';
                             }
-                            // Restore opacity
                             if (logoEl) logoEl.style.opacity = '1';
                             if (brandNameEl) brandNameEl.style.opacity = '1';
                         }
@@ -335,8 +466,97 @@
                 } catch (e) {
                     console.error('Branding failed', e);
                 }
-            })();
+            });
         </script>
-        <script src="/js/admin-auth.js?v=2.0"></script>
+
+        <!-- Forgot password handler -->
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const link = document.getElementById('forgotPasswordLink');
+                const modal = document.getElementById('forgotPasswordModal');
+                const cancel = document.getElementById('forgotCancel');
+                const submit = document.getElementById('forgotSubmit');
+                const emailInput = document.getElementById('forgotEmail');
+                const statusEl = document.getElementById('forgotStatus');
+                const forgotLimiter = (window.SNR_RATE_LIMITERS && window.SNR_RATE_LIMITERS.forgotPassword) || null;
+
+                if (!link || !modal) return;
+
+                function openModal() {
+                    emailInput.value = document.getElementById('email').value || '';
+                    statusEl.textContent = '';
+                    statusEl.className = 'status-msg';
+                    modal.style.display = 'flex';
+                    setTimeout(() => emailInput.focus(), 50);
+                }
+                function closeModal() {
+                    modal.style.display = 'none';
+                }
+
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    openModal();
+                });
+                cancel.addEventListener('click', closeModal);
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) closeModal();
+                });
+
+                submit.addEventListener('click', async () => {
+                    const email = emailInput.value.trim();
+                    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                        statusEl.textContent = 'Please enter a valid email address.';
+                        statusEl.className = 'status-msg error';
+                        return;
+                    }
+                    if (forgotLimiter) {
+                        const r = forgotLimiter.check('forgot:' + email.toLowerCase());
+                        if (!r.allowed) {
+                            statusEl.textContent =
+                                'Too many reset requests. Please wait ' +
+                                forgotLimiter.formatRetryAfter(r.retryAfterMs) +
+                                ' and try again.';
+                            statusEl.className = 'status-msg error';
+                            return;
+                        }
+                    }
+                    submit.disabled = true;
+                    submit.textContent = 'Sending...';
+                    statusEl.textContent = '';
+                    try {
+                        await auth.sendPasswordResetEmail(email);
+                        if (forgotLimiter) forgotLimiter.reset('forgot:' + email.toLowerCase());
+                        statusEl.textContent =
+                            '✅ Reset link sent. Check your inbox (and spam folder).';
+                        statusEl.className = 'status-msg success';
+                        setTimeout(closeModal, 3500);
+                    } catch (err) {
+                        if (forgotLimiter) forgotLimiter.allow('forgot:' + email.toLowerCase());
+                        if (err && err.code === 'auth/user-not-found') {
+                            statusEl.textContent =
+                                '✅ If that email is registered, a reset link has been sent.';
+                            statusEl.className = 'status-msg success';
+                            setTimeout(closeModal, 3500);
+                        } else if (err && err.code === 'auth/too-many-requests') {
+                            statusEl.textContent =
+                                'Too many attempts. Please wait a few minutes and try again.';
+                            statusEl.className = 'status-msg error';
+                        } else {
+                            statusEl.textContent =
+                                'Could not send reset email. Please try again later.';
+                            statusEl.className = 'status-msg error';
+                        }
+                        console.warn('Password reset error:', err && err.code, err && err.message);
+                    } finally {
+                        submit.disabled = false;
+                        submit.textContent = 'Send Reset Link';
+                    }
+                });
+
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape' && modal.style.display === 'flex') closeModal();
+                });
+            });
+        </script>
     </body>
 </html>

@@ -1,0 +1,1991 @@
+﻿{
+    "route":  "add-designation",
+    "title":  "Education Desk",
+    "pageHeading":  "Employee Designation",
+    "forms":  [
+                  {
+                      "action":  "add-designation-process",
+                      "checkboxes":  [
+
+                                     ],
+                      "selects":  [
+                                      {
+                                          "options":  [
+                                                          "System.Collections.Hashtable",
+                                                          "System.Collections.Hashtable"
+                                                      ],
+                                          "name":  "designation"
+                                      }
+                                  ],
+                      "fields":  [
+                                     {
+                                         "placeholder":  "Enter Designation",
+                                         "value":  "",
+                                         "name":  "new_designation_name",
+                                         "id":  "new_designation_name",
+                                         "type":  "text"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "0",
+                                         "name":  "other_admin_priv_input",
+                                         "id":  "other_priv_input",
+                                         "type":  "radio"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "-1",
+                                         "name":  "other_admin_priv_input",
+                                         "id":  "admin_priv_input",
+                                         "type":  "radio"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "1",
+                                         "name":  "parent_priv_input_1",
+                                         "id":  "parent_priv_input_1",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "2",
+                                         "name":  "child_priv_input_2",
+                                         "id":  "1",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "3",
+                                         "name":  "child_priv_input_3",
+                                         "id":  "1",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "100",
+                                         "name":  "parent_priv_input_100",
+                                         "id":  "parent_priv_input_100",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "101",
+                                         "name":  "child_priv_input_101",
+                                         "id":  "100",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "102",
+                                         "name":  "child_priv_input_102",
+                                         "id":  "100",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "103",
+                                         "name":  "child_priv_input_103",
+                                         "id":  "100",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "104",
+                                         "name":  "child_priv_input_104",
+                                         "id":  "100",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "105",
+                                         "name":  "child_priv_input_105",
+                                         "id":  "100",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "106",
+                                         "name":  "child_priv_input_106",
+                                         "id":  "100",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "107",
+                                         "name":  "child_priv_input_107",
+                                         "id":  "100",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "108",
+                                         "name":  "child_priv_input_108",
+                                         "id":  "100",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "150",
+                                         "name":  "parent_priv_input_150",
+                                         "id":  "parent_priv_input_150",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "151",
+                                         "name":  "child_priv_input_151",
+                                         "id":  "150",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "152",
+                                         "name":  "child_priv_input_152",
+                                         "id":  "150",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "153",
+                                         "name":  "child_priv_input_153",
+                                         "id":  "150",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "154",
+                                         "name":  "child_priv_input_154",
+                                         "id":  "150",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "155",
+                                         "name":  "child_priv_input_155",
+                                         "id":  "150",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "156",
+                                         "name":  "child_priv_input_156",
+                                         "id":  "150",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "157",
+                                         "name":  "child_priv_input_157",
+                                         "id":  "150",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "200",
+                                         "name":  "parent_priv_input_200",
+                                         "id":  "parent_priv_input_200",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "201",
+                                         "name":  "child_priv_input_201",
+                                         "id":  "200",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "202",
+                                         "name":  "child_priv_input_202",
+                                         "id":  "200",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "203",
+                                         "name":  "child_priv_input_203",
+                                         "id":  "200",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "204",
+                                         "name":  "child_priv_input_204",
+                                         "id":  "200",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "205",
+                                         "name":  "child_priv_input_205",
+                                         "id":  "200",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "206",
+                                         "name":  "child_priv_input_206",
+                                         "id":  "200",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "207",
+                                         "name":  "child_priv_input_207",
+                                         "id":  "200",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "250",
+                                         "name":  "parent_priv_input_250",
+                                         "id":  "parent_priv_input_250",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "251",
+                                         "name":  "child_priv_input_251",
+                                         "id":  "250",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "252",
+                                         "name":  "child_priv_input_252",
+                                         "id":  "250",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "253",
+                                         "name":  "child_priv_input_253",
+                                         "id":  "250",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "254",
+                                         "name":  "child_priv_input_254",
+                                         "id":  "250",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "255",
+                                         "name":  "child_priv_input_255",
+                                         "id":  "250",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "256",
+                                         "name":  "child_priv_input_256",
+                                         "id":  "250",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "257",
+                                         "name":  "child_priv_input_257",
+                                         "id":  "250",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "258",
+                                         "name":  "child_priv_input_258",
+                                         "id":  "250",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "259",
+                                         "name":  "child_priv_input_259",
+                                         "id":  "250",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "260",
+                                         "name":  "child_priv_input_260",
+                                         "id":  "250",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "261",
+                                         "name":  "child_priv_input_261",
+                                         "id":  "250",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "262",
+                                         "name":  "child_priv_input_262",
+                                         "id":  "250",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "263",
+                                         "name":  "child_priv_input_263",
+                                         "id":  "250",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "300",
+                                         "name":  "parent_priv_input_300",
+                                         "id":  "parent_priv_input_300",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "301",
+                                         "name":  "child_priv_input_301",
+                                         "id":  "300",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "302",
+                                         "name":  "child_priv_input_302",
+                                         "id":  "300",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "303",
+                                         "name":  "child_priv_input_303",
+                                         "id":  "300",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "304",
+                                         "name":  "child_priv_input_304",
+                                         "id":  "300",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "305",
+                                         "name":  "child_priv_input_305",
+                                         "id":  "300",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "306",
+                                         "name":  "child_priv_input_306",
+                                         "id":  "300",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "307",
+                                         "name":  "child_priv_input_307",
+                                         "id":  "300",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "308",
+                                         "name":  "child_priv_input_308",
+                                         "id":  "300",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "309",
+                                         "name":  "child_priv_input_309",
+                                         "id":  "300",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "310",
+                                         "name":  "child_priv_input_310",
+                                         "id":  "300",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "310",
+                                         "name":  "child_priv_input_310",
+                                         "id":  "300",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "311",
+                                         "name":  "child_priv_input_311",
+                                         "id":  "300",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "350",
+                                         "name":  "parent_priv_input_350",
+                                         "id":  "parent_priv_input_350",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "351",
+                                         "name":  "child_priv_input_351",
+                                         "id":  "350",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "352",
+                                         "name":  "child_priv_input_352",
+                                         "id":  "350",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "353",
+                                         "name":  "child_priv_input_353",
+                                         "id":  "350",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "357",
+                                         "name":  "child_priv_input_357",
+                                         "id":  "350",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "354",
+                                         "name":  "child_priv_input_354",
+                                         "id":  "350",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "355",
+                                         "name":  "child_priv_input_355",
+                                         "id":  "350",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "356",
+                                         "name":  "child_priv_input_356",
+                                         "id":  "350",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "357",
+                                         "name":  "child_priv_input_357",
+                                         "id":  "350",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "358",
+                                         "name":  "child_priv_input_358",
+                                         "id":  "350",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "359",
+                                         "name":  "child_priv_input_359",
+                                         "id":  "350",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "360",
+                                         "name":  "child_priv_input_360",
+                                         "id":  "350",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "361",
+                                         "name":  "child_priv_input_361",
+                                         "id":  "350",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "362",
+                                         "name":  "child_priv_input_362",
+                                         "id":  "350",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "400",
+                                         "name":  "parent_priv_input_400",
+                                         "id":  "parent_priv_input_400",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "401",
+                                         "name":  "child_priv_input_401",
+                                         "id":  "400",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "402",
+                                         "name":  "child_priv_input_402",
+                                         "id":  "400",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "450",
+                                         "name":  "parent_priv_input_450",
+                                         "id":  "parent_priv_input_450",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "451",
+                                         "name":  "child_priv_input_451",
+                                         "id":  "450",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "452",
+                                         "name":  "child_priv_input_452",
+                                         "id":  "450",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "500",
+                                         "name":  "parent_priv_input_500",
+                                         "id":  "parent_priv_input_500",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "501",
+                                         "name":  "child_priv_input_501",
+                                         "id":  "500",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "502",
+                                         "name":  "child_priv_input_502",
+                                         "id":  "500",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "503",
+                                         "name":  "child_priv_input_503",
+                                         "id":  "500",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "504",
+                                         "name":  "child_priv_input_504",
+                                         "id":  "500",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "505",
+                                         "name":  "child_priv_input_505",
+                                         "id":  "500",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "506",
+                                         "name":  "child_priv_input_506",
+                                         "id":  "500",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "507",
+                                         "name":  "child_priv_input_507",
+                                         "id":  "500",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "508",
+                                         "name":  "child_priv_input_508",
+                                         "id":  "500",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "550",
+                                         "name":  "parent_priv_input_550",
+                                         "id":  "parent_priv_input_550",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "551",
+                                         "name":  "child_priv_input_551",
+                                         "id":  "550",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "552",
+                                         "name":  "child_priv_input_552",
+                                         "id":  "550",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "553",
+                                         "name":  "child_priv_input_553",
+                                         "id":  "550",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "554",
+                                         "name":  "child_priv_input_554",
+                                         "id":  "550",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "555",
+                                         "name":  "child_priv_input_555",
+                                         "id":  "550",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "556",
+                                         "name":  "child_priv_input_556",
+                                         "id":  "550",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "558",
+                                         "name":  "child_priv_input_558",
+                                         "id":  "550",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "559",
+                                         "name":  "child_priv_input_559",
+                                         "id":  "550",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "600",
+                                         "name":  "parent_priv_input_600",
+                                         "id":  "parent_priv_input_600",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "601",
+                                         "name":  "child_priv_input_601",
+                                         "id":  "600",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "608",
+                                         "name":  "child_priv_input_608",
+                                         "id":  "600",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "603",
+                                         "name":  "child_priv_input_603",
+                                         "id":  "600",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "604",
+                                         "name":  "child_priv_input_604",
+                                         "id":  "600",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "605",
+                                         "name":  "child_priv_input_605",
+                                         "id":  "600",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "606",
+                                         "name":  "child_priv_input_606",
+                                         "id":  "600",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "607",
+                                         "name":  "child_priv_input_607",
+                                         "id":  "600",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "609",
+                                         "name":  "child_priv_input_609",
+                                         "id":  "600",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "610",
+                                         "name":  "child_priv_input_610",
+                                         "id":  "600",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "611",
+                                         "name":  "child_priv_input_611",
+                                         "id":  "600",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "612",
+                                         "name":  "child_priv_input_612",
+                                         "id":  "600",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "613",
+                                         "name":  "child_priv_input_613",
+                                         "id":  "600",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "650",
+                                         "name":  "parent_priv_input_650",
+                                         "id":  "parent_priv_input_650",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "651",
+                                         "name":  "child_priv_input_651",
+                                         "id":  "650",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "652",
+                                         "name":  "child_priv_input_652",
+                                         "id":  "650",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "654",
+                                         "name":  "child_priv_input_654",
+                                         "id":  "650",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "655",
+                                         "name":  "child_priv_input_655",
+                                         "id":  "650",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "656",
+                                         "name":  "child_priv_input_656",
+                                         "id":  "650",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "657",
+                                         "name":  "child_priv_input_657",
+                                         "id":  "650",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "656",
+                                         "name":  "child_priv_input_656",
+                                         "id":  "650",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "700",
+                                         "name":  "parent_priv_input_700",
+                                         "id":  "parent_priv_input_700",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "701",
+                                         "name":  "child_priv_input_701",
+                                         "id":  "700",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "702",
+                                         "name":  "child_priv_input_702",
+                                         "id":  "700",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "703",
+                                         "name":  "child_priv_input_703",
+                                         "id":  "700",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "704",
+                                         "name":  "child_priv_input_704",
+                                         "id":  "700",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "705",
+                                         "name":  "child_priv_input_705",
+                                         "id":  "700",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "706",
+                                         "name":  "child_priv_input_706",
+                                         "id":  "700",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "707",
+                                         "name":  "child_priv_input_707",
+                                         "id":  "700",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "750",
+                                         "name":  "parent_priv_input_750",
+                                         "id":  "parent_priv_input_750",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "751",
+                                         "name":  "child_priv_input_751",
+                                         "id":  "750",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "752",
+                                         "name":  "child_priv_input_752",
+                                         "id":  "750",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "753",
+                                         "name":  "child_priv_input_753",
+                                         "id":  "750",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "754",
+                                         "name":  "child_priv_input_754",
+                                         "id":  "750",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "755",
+                                         "name":  "child_priv_input_755",
+                                         "id":  "750",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "756",
+                                         "name":  "child_priv_input_756",
+                                         "id":  "750",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "757",
+                                         "name":  "child_priv_input_757",
+                                         "id":  "750",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "758",
+                                         "name":  "child_priv_input_758",
+                                         "id":  "750",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "759",
+                                         "name":  "child_priv_input_759",
+                                         "id":  "750",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "760",
+                                         "name":  "child_priv_input_760",
+                                         "id":  "750",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "761",
+                                         "name":  "child_priv_input_761",
+                                         "id":  "750",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "762",
+                                         "name":  "child_priv_input_762",
+                                         "id":  "750",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "800",
+                                         "name":  "parent_priv_input_800",
+                                         "id":  "parent_priv_input_800",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "801",
+                                         "name":  "child_priv_input_801",
+                                         "id":  "800",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "802",
+                                         "name":  "child_priv_input_802",
+                                         "id":  "800",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "803",
+                                         "name":  "child_priv_input_803",
+                                         "id":  "800",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "804",
+                                         "name":  "child_priv_input_804",
+                                         "id":  "800",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "805",
+                                         "name":  "child_priv_input_805",
+                                         "id":  "800",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "806",
+                                         "name":  "child_priv_input_806",
+                                         "id":  "800",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "850",
+                                         "name":  "parent_priv_input_850",
+                                         "id":  "parent_priv_input_850",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "851",
+                                         "name":  "child_priv_input_851",
+                                         "id":  "850",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "852",
+                                         "name":  "child_priv_input_852",
+                                         "id":  "850",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "853",
+                                         "name":  "child_priv_input_853",
+                                         "id":  "850",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "854",
+                                         "name":  "child_priv_input_854",
+                                         "id":  "850",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "855",
+                                         "name":  "child_priv_input_855",
+                                         "id":  "850",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "856",
+                                         "name":  "child_priv_input_856",
+                                         "id":  "850",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "857",
+                                         "name":  "child_priv_input_857",
+                                         "id":  "850",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "858",
+                                         "name":  "child_priv_input_858",
+                                         "id":  "850",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "900",
+                                         "name":  "parent_priv_input_900",
+                                         "id":  "parent_priv_input_900",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "901",
+                                         "name":  "child_priv_input_901",
+                                         "id":  "900",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "902",
+                                         "name":  "child_priv_input_902",
+                                         "id":  "900",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "903",
+                                         "name":  "child_priv_input_903",
+                                         "id":  "900",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "904",
+                                         "name":  "child_priv_input_904",
+                                         "id":  "900",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "905",
+                                         "name":  "child_priv_input_905",
+                                         "id":  "900",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "906",
+                                         "name":  "child_priv_input_906",
+                                         "id":  "900",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "907",
+                                         "name":  "child_priv_input_907",
+                                         "id":  "900",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "908",
+                                         "name":  "child_priv_input_908",
+                                         "id":  "900",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "950",
+                                         "name":  "parent_priv_input_950",
+                                         "id":  "parent_priv_input_950",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "951",
+                                         "name":  "child_priv_input_951",
+                                         "id":  "950",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "952",
+                                         "name":  "child_priv_input_952",
+                                         "id":  "950",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "1000",
+                                         "name":  "parent_priv_input_1000",
+                                         "id":  "parent_priv_input_1000",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "1001",
+                                         "name":  "child_priv_input_1001",
+                                         "id":  "1000",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "1002",
+                                         "name":  "child_priv_input_1002",
+                                         "id":  "1000",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "1003",
+                                         "name":  "child_priv_input_1003",
+                                         "id":  "1000",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "1004",
+                                         "name":  "child_priv_input_1004",
+                                         "id":  "1000",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "1005",
+                                         "name":  "child_priv_input_1005",
+                                         "id":  "1000",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "1050",
+                                         "name":  "parent_priv_input_1050",
+                                         "id":  "parent_priv_input_1050",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "1051",
+                                         "name":  "child_priv_input_1051",
+                                         "id":  "1050",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "1052",
+                                         "name":  "child_priv_input_1052",
+                                         "id":  "1050",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "1053",
+                                         "name":  "child_priv_input_1053",
+                                         "id":  "1050",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "1054",
+                                         "name":  "child_priv_input_1054",
+                                         "id":  "1050",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "1055",
+                                         "name":  "child_priv_input_1055",
+                                         "id":  "1050",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "1056",
+                                         "name":  "child_priv_input_1056",
+                                         "id":  "1050",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "1057",
+                                         "name":  "child_priv_input_1057",
+                                         "id":  "1050",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "1058",
+                                         "name":  "child_priv_input_1058",
+                                         "id":  "1050",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "1059",
+                                         "name":  "child_priv_input_1059",
+                                         "id":  "1050",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "1060",
+                                         "name":  "child_priv_input_1060",
+                                         "id":  "1050",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "1061",
+                                         "name":  "child_priv_input_1061",
+                                         "id":  "1050",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "1062",
+                                         "name":  "child_priv_input_1062",
+                                         "id":  "1050",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "1062",
+                                         "name":  "child_priv_input_1062",
+                                         "id":  "1050",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "1062",
+                                         "name":  "child_priv_input_1062",
+                                         "id":  "1050",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "1063",
+                                         "name":  "child_priv_input_1063",
+                                         "id":  "1050",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "1100",
+                                         "name":  "parent_priv_input_1100",
+                                         "id":  "parent_priv_input_1100",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "1101",
+                                         "name":  "child_priv_input_1101",
+                                         "id":  "1100",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "1102",
+                                         "name":  "child_priv_input_1102",
+                                         "id":  "1100",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "1103",
+                                         "name":  "child_priv_input_1103",
+                                         "id":  "1100",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "1104",
+                                         "name":  "child_priv_input_1104",
+                                         "id":  "1100",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "1105",
+                                         "name":  "child_priv_input_1105",
+                                         "id":  "1100",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "1106",
+                                         "name":  "child_priv_input_1106",
+                                         "id":  "1100",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "1107",
+                                         "name":  "child_priv_input_1107",
+                                         "id":  "1100",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "1150",
+                                         "name":  "parent_priv_input_1150",
+                                         "id":  "parent_priv_input_1150",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "1151",
+                                         "name":  "child_priv_input_1151",
+                                         "id":  "1150",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "1152",
+                                         "name":  "child_priv_input_1152",
+                                         "id":  "1150",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "1153",
+                                         "name":  "child_priv_input_1153",
+                                         "id":  "1150",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "1200",
+                                         "name":  "parent_priv_input_1200",
+                                         "id":  "parent_priv_input_1200",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "1201",
+                                         "name":  "child_priv_input_1201",
+                                         "id":  "1200",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "1202",
+                                         "name":  "child_priv_input_1202",
+                                         "id":  "1200",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "1250",
+                                         "name":  "parent_priv_input_1250",
+                                         "id":  "parent_priv_input_1250",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "1251",
+                                         "name":  "child_priv_input_1251",
+                                         "id":  "1250",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "1252",
+                                         "name":  "child_priv_input_1252",
+                                         "id":  "1250",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "1253",
+                                         "name":  "child_priv_input_1253",
+                                         "id":  "1250",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "1254",
+                                         "name":  "child_priv_input_1254",
+                                         "id":  "1250",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "1300",
+                                         "name":  "parent_priv_input_1300",
+                                         "id":  "parent_priv_input_1300",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "1301",
+                                         "name":  "child_priv_input_1301",
+                                         "id":  "1300",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "1302",
+                                         "name":  "child_priv_input_1302",
+                                         "id":  "1300",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "1303",
+                                         "name":  "child_priv_input_1303",
+                                         "id":  "1300",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "1350",
+                                         "name":  "parent_priv_input_1350",
+                                         "id":  "parent_priv_input_1350",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "1351",
+                                         "name":  "child_priv_input_1351",
+                                         "id":  "1350",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "1352",
+                                         "name":  "child_priv_input_1352",
+                                         "id":  "1350",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "1353",
+                                         "name":  "child_priv_input_1353",
+                                         "id":  "1350",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "1502",
+                                         "name":  "child_priv_input_1502",
+                                         "id":  "1350",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "1400",
+                                         "name":  "parent_priv_input_1400",
+                                         "id":  "parent_priv_input_1400",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "1401",
+                                         "name":  "child_priv_input_1401",
+                                         "id":  "1400",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "1402",
+                                         "name":  "child_priv_input_1402",
+                                         "id":  "1400",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "1403",
+                                         "name":  "child_priv_input_1403",
+                                         "id":  "1400",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "1450",
+                                         "name":  "parent_priv_input_1450",
+                                         "id":  "parent_priv_input_1450",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "1451",
+                                         "name":  "child_priv_input_1451",
+                                         "id":  "1450",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "1452",
+                                         "name":  "child_priv_input_1452",
+                                         "id":  "1450",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "1453",
+                                         "name":  "child_priv_input_1453",
+                                         "id":  "1450",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "1454",
+                                         "name":  "child_priv_input_1454",
+                                         "id":  "1450",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "1500",
+                                         "name":  "parent_priv_input_1500",
+                                         "id":  "parent_priv_input_1500",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "1501",
+                                         "name":  "child_priv_input_1501",
+                                         "id":  "1500",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "",
+                                         "name":  "hidden_parent_priv_fields",
+                                         "id":  "hidden_parent_priv_fields",
+                                         "type":  "hidden"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "",
+                                         "name":  "hidden_child_priv_fields",
+                                         "id":  "hidden_child_priv_fields",
+                                         "type":  "hidden"
+                                     }
+                                 ],
+                      "radios":  [
+
+                                 ],
+                      "method":  "POST",
+                      "enctype":  ""
+                  },
+                  {
+                      "action":  "add-designation",
+                      "checkboxes":  [
+
+                                     ],
+                      "selects":  [
+
+                                  ],
+                      "fields":  [
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "",
+                                         "name":  "edit_designation",
+                                         "id":  "edit_designation",
+                                         "type":  "hidden"
+                                     }
+                                 ],
+                      "radios":  [
+
+                                 ],
+                      "method":  "GET",
+                      "enctype":  ""
+                  }
+              ],
+    "ajaxEndpoints":  {
+
+                      },
+    "links":  [
+                  "home",
+                  "employee-profile",
+                  "/employee/emp-logout",
+                  "/app/dashboard",
+                  "add-employee",
+                  "search-employee",
+                  "add-designation",
+                  "add-department",
+                  "upload-employee",
+                  "employee-id-print",
+                  "add-batch",
+                  "add-course",
+                  "add-course-details",
+                  "add-subject",
+                  "add-non-subject",
+                  "add-syllabus",
+                  "all-syllabus",
+                  "add-time-table",
+                  "view-time-table",
+                  "time-table-assign",
+                  "view-time-table-assign",
+                  "employee-time-table",
+                  "session-time-table",
+                  "start-admission",
+                  "add-primary-source",
+                  "add-admission-enquiry",
+                  "my-admission-enquiry",
+                  "all-admission-enquiry",
+                  "enquiry-report",
+                  "upload-enquiry",
+                  "add-student",
+                  "search-student",
+                  "upload-student",
+                  "elective-subject-mapping",
+                  "promote-student",
+                  "student-id-print",
+                  "student-pickup-id-print",
+                  "student-rfid-update",
+                  "hostel-search-student",
+                  "transport-search-student",
+                  "add-course-fee-type",
+                  "add-transport-fee-type",
+                  "manage-course-fee",
+                  "course-fee-structure",
+                  "manage-transport-route-fee",
+                  "course-fee-payment",
+                  "monthly-fee-payment",
+                  "add-course-fee-payment",
+                  "demand-receipt",
+                  "bulk-discount",
+                  "bulk-extra-fee",
+                  "late-fee-fine-rule",
+                  "employee-attendance",
+                  "view-employee-attendance",
+                  "view-all-employee-attendance",
+                  "student-daily-attendance",
+                  "view-student-daily-attendance",
+                  "view-all-student-daily-attendance",
+                  "smart-card-student-attendance",
+                  "attendance-monthly-report",
+                  "add-order",
+                  "my-order",
+                  "all-order",
+                  "create-study-document",
+                  "view-study-document",
+                  "create-homework",
+                  "manage-homework",
+                  "update-homework-report",
+                  "download-homework-report",
+                  "setup-exam-grading-config",
+                  "manage-exam",
+                  "manage-exam-schedule",
+                  "view-exam-schedule",
+                  "publish-exam-schedule",
+                  "exam-hall-ticket",
+                  "exam-attendance-card",
+                  "student-exam-attendance",
+                  "view-student-exam-attendance",
+                  "exam-hall-plan",
+                  "exam-hall-detail",
+                  "exam-sitting-plan",
+                  "manage-exam-subject-result",
+                  "add-exam-subject-result",
+                  "manage-exam-result",
+                  "view-exam-result",
+                  "manage-nonsubject-result",
+                  "view-nonsubject-result",
+                  "publish-exam-result",
+                  "update-report-card-remarks",
+                  "generate-report-card",
+                  "view-report-card",
+                  "publish-report-card",
+                  "employee-leave-type",
+                  "employee-leave-assign",
+                  "add-employee-leave",
+                  "apply-self-employee-leave",
+                  "approve-employee-leave",
+                  "manage-salary-head",
+                  "manage-salary-structure",
+                  "assign-salary-structure",
+                  "salary-payment",
+                  "salary-payment-process",
+                  "delete-salary-payment-process",
+                  "print-salary-payslip",
+                  "create-salary-loan",
+                  "approve-salary-loan",
+                  "approved-salary-loan",
+                  "manage-salary-emi-payment",
+                  "view-salary-loan-transaction",
+                  "salary-loan-report",
+                  "my-salary-loan",
+                  "manage-vehicle-detail",
+                  "manage-driver-detail",
+                  "manage-stoppage",
+                  "manage-transport-route",
+                  "assign-stoppage-to-route",
+                  "assign-student-to-route",
+                  "student-transport-report",
+                  "add-event-and-holiday",
+                  "view-event-and-holiday",
+                  "email-template",
+                  "sms-template",
+                  "system-sms-template",
+                  "sms-balance",
+                  "whatsapp-balance",
+                  "notification-configuration",
+                  "dashboard-configuration",
+                  "parent-login-manage",
+                  "create-parent-login",
+                  "add-online-class",
+                  "all-online-class",
+                  "attend-online-class",
+                  "student-communication",
+                  "student-app-communication",
+                  "student-whatsapp-communication",
+                  "employee-communication",
+                  "print-notice",
+                  "notice-board-management",
+                  "daily-dairy-manage",
+                  "school-newsletter",
+                  "school-leaving-certificate",
+                  "student-bonafide-certificate",
+                  "create-finance-account",
+                  "add-finance-account-head",
+                  "add-finance-expense-record",
+                  "add-finance-income-record",
+                  "account-balance-transfer",
+                  "finance-account-statement",
+                  "finance-daily-register",
+                  "finance-profit-and-loss",
+                  "add-product-category",
+                  "add-product",
+                  "product-inventory-stock-in",
+                  "product-inventory-stock-out",
+                  "manage-product-inventory",
+                  "product-additional-fields-mapping",
+                  "add-product-rate-plan",
+                  "all-product-rate-plan",
+                  "product-tax-rule",
+                  "download-payment-receipt-pdf",
+                  "download-payment-receipt",
+                  "download-due-payment",
+                  "due-payment-with-detail",
+                  "admission-report",
+                  "receipt-revert-report",
+                  "flash-news",
+                  "page-setup",
+                  "page-content-setup"
+              ],
+    "jsFunctions":  [
+                        "getNewDesignation",
+                        "getSubChildPriv",
+                        "childPrivileges",
+                        "getSubmitWithPrivileges"
+                    ],
+    "dtColumns":  [
+
+                  ],
+    "jsEvents":  [
+                     "onchange=getNewDesignation(this)",
+                     "onchange=getOtherPriv(this)",
+                     "onchange=getSubChildPriv(this,1)",
+                     "onchange=getSubChildPriv(this,100)",
+                     "onchange=getSubChildPriv(this,150)",
+                     "onchange=getSubChildPriv(this,200)",
+                     "onchange=getSubChildPriv(this,250)",
+                     "onchange=getSubChildPriv(this,300)",
+                     "onchange=getSubChildPriv(this,350)",
+                     "onchange=getSubChildPriv(this,400)",
+                     "onchange=getSubChildPriv(this,450)",
+                     "onchange=getSubChildPriv(this,500)",
+                     "onchange=getSubChildPriv(this,550)",
+                     "onchange=getSubChildPriv(this,600)",
+                     "onchange=getSubChildPriv(this,650)",
+                     "onchange=getSubChildPriv(this,700)",
+                     "onchange=getSubChildPriv(this,750)",
+                     "onchange=getSubChildPriv(this,800)",
+                     "onchange=getSubChildPriv(this,850)",
+                     "onchange=getSubChildPriv(this,900)",
+                     "onchange=getSubChildPriv(this,950)",
+                     "onchange=getSubChildPriv(this,1000)",
+                     "onchange=getSubChildPriv(this,1050)",
+                     "onchange=getSubChildPriv(this,1100)",
+                     "onchange=getSubChildPriv(this,1150)",
+                     "onchange=getSubChildPriv(this,1200)",
+                     "onchange=getSubChildPriv(this,1250)",
+                     "onchange=getSubChildPriv(this,1300)",
+                     "onchange=getSubChildPriv(this,1350)",
+                     "onchange=getSubChildPriv(this,1400)",
+                     "onchange=getSubChildPriv(this,1450)",
+                     "onchange=getSubChildPriv(this,1500)",
+                     "onclick=getSubmitWithPrivileges()"
+                 ],
+    "layoutClasses":  [
+                          "col-md-3",
+                          "col-md-12",
+                          "col-md-6"
+                      ],
+    "sessionOpts":  [
+
+                    ],
+    "sidebarNav":  [
+                       {
+                           "label":  "Log Out",
+                           "icon":  "fa fa-sign-out pull-right",
+                           "href":  "/employee/emp-logout"
+                       },
+                       {
+                           "label":  "",
+                           "icon":  "fa fa-envelope-o",
+                           "href":  "javascript:;"
+                       }
+                   ],
+    "cssAssets":  [
+                      "/static/vendors/bootstrap/dist/css/bootstrap.min.css",
+                      "/static/vendors/font-awesome/css/font-awesome.min.css",
+                      "/static/vendors/nprogress/nprogress.css",
+                      "/static/vendors/iCheck/skins/flat/green.css",
+                      "/static/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css",
+                      "/static/vendors/animate.css/animate.min.css",
+                      "/static/vendors/jqvmap/dist/jqvmap.min.css",
+                      "/static/vendors/bootstrap-daterangepicker/daterangepicker.css",
+                      "/static/css/jquery-ui.min.css",
+                      "/static/vendors/select2/dist/css/select2.min.css",
+                      "/static/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css",
+                      "/static/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css",
+                      "/static/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css",
+                      "/static/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css",
+                      "/static/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css",
+                      "/static/vendors/pnotify/dist/pnotify.css",
+                      "/static/vendors/pnotify/dist/pnotify.buttons.css",
+                      "/static/vendors/pnotify/dist/pnotify.nonblock.css",
+                      "/static/assets/clockpicker/bootstrap-clockpicker.min.css",
+                      "/static/assets/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.css",
+                      "/static/build/css/custom.min.css?v=2.6"
+                  ],
+    "jsAssets":  [
+                     "/static/vendors/jquery/dist/jquery.min.js",
+                     "/static/vendors/bootstrap/dist/js/bootstrap.min.js?v=1.1",
+                     "/static/vendors/fastclick/lib/fastclick.js",
+                     "/static/vendors/nprogress/nprogress.js",
+                     "/static/vendors/Chart.js/dist/Chart.min.js",
+                     "/static/vendors/echarts/dist/echarts.min.js",
+                     "/static/vendors/gauge.js/dist/gauge.min.js",
+                     "/static/vendors/iCheck/icheck.min.js",
+                     "/static/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js",
+                     "/static/vendors/skycons/skycons.js",
+                     "/static/vendors/Flot/jquery.flot.js",
+                     "/static/vendors/Flot/jquery.flot.pie.js",
+                     "/static/vendors/Flot/jquery.flot.time.js",
+                     "/static/vendors/Flot/jquery.flot.stack.js",
+                     "/static/vendors/Flot/jquery.flot.resize.js",
+                     "/static/vendors/flot.orderbars/js/jquery.flot.orderBars.js",
+                     "/static/vendors/flot-spline/js/jquery.flot.spline.min.js",
+                     "/static/vendors/flot.curvedlines/curvedLines.js",
+                     "/static/vendors/DateJS/build/date.js",
+                     "/static/vendors/jqvmap/dist/jquery.vmap.js",
+                     "/static/vendors/jqvmap/dist/maps/jquery.vmap.world.js",
+                     "/static/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js",
+                     "/static/vendors/moment/min/moment.min.js",
+                     "/static/vendors/bootstrap-daterangepicker/daterangepicker.js?v=1.4",
+                     "/static/vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js",
+                     "/static/vendors/jquery.hotkeys/jquery.hotkeys.js",
+                     "/static/vendors/google-code-prettify/src/prettify.js",
+                     "/static/vendors/jquery.tagsinput/src/jquery.tagsinput.js",
+                     "/static/vendors/switchery/dist/switchery.min.js",
+                     "/static/vendors/select2/dist/js/select2.full.min.js",
+                     "/static/vendors/parsleyjs/dist/parsley.min.js",
+                     "/static/vendors/autosize/dist/autosize.min.js",
+                     "/static/vendors/devbridge-autocomplete/dist/jquery.autocomplete.min.js",
+                     "/static/vendors/starrr/dist/starrr.js",
+                     "/static/vendors/datatables.net/js/jquery.dataTables.min.js",
+                     "/static/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js",
+                     "/static/vendors/datatables.net-buttons/js/dataTables.buttons.min.js",
+                     "/static/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js",
+                     "/static/vendors/datatables.net-buttons/js/buttons.flash.min.js",
+                     "/static/vendors/datatables.net-buttons/js/buttons.html5.min.js",
+                     "/static/vendors/datatables.net-buttons/js/buttons.print.min.js",
+                     "/static/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js",
+                     "/static/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js",
+                     "/static/vendors/datatables.net-responsive/js/dataTables.responsive.min.js",
+                     "/static/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js",
+                     "/static/vendors/jszip/dist/jszip.min.js",
+                     "/static/vendors/pdfmake/build/pdfmake.min.js",
+                     "/static/vendors/pdfmake/build/vfs_fonts.js",
+                     "/static/vendors/pnotify/dist/pnotify.js",
+                     "/static/vendors/pnotify/dist/pnotify.buttons.js",
+                     "/static/vendors/pnotify/dist/pnotify.nonblock.js",
+                     "/static/assets/clockpicker/bootstrap-clockpicker.min.js?v=1.6",
+                     "/static/assets/jquery-validation/js/jquery.validate.js",
+                     "/static/assets/bootstrap-switch/dist/js/bootstrap-switch.js",
+                     "/static/build/js/custom.js?v=4.2",
+                     "/static/build/js/common.js?v=2.4"
+                 ],
+    "images":  [
+                   "https://doc3.educationdesk.in/photos/enterprise_0/base64img/1704006565240.jpg",
+                   "https://doc3.educationdesk.in/photos/college_259/profile/1724204681494.jpg"
+               ],
+    "modals":  [
+
+               ],
+    "uploads":  [
+
+                ],
+    "htmlSize":  198496
+}

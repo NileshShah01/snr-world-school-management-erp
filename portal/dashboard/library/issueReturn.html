@@ -1,0 +1,62 @@
+<section id="issueReturnSection" class="dashboard-section card hidden">
+                    <div class="header mb-2">
+                        <div>
+                            <h1>Issue & Return Books</h1>
+                            <p>Handle daily library transactions for students and staff</p>
+                        </div>
+                    </div>
+
+                    <div class="grid-cols-1-2 gap-2">
+                        <div class="glass-card p-1-5">
+                            <h3 class="mb-1-5">Issue New Book</h3>
+                            <form id="issueBookForm" onsubmit="ERPLibrary.issueBook(event)">
+                                <div class="form-group">
+                                    <label>Select Student</label>
+                                    <div id="issue_student_select" title="Select Student"></div>
+                                    <input type="hidden" id="selected_student_id" />
+                                </div>
+                                <div class="form-group">
+                                    <label>Select Book</label>
+                                    <select
+                                        id="issue_book_select"
+                                        class="form-control"
+                                        required
+                                        title="Select Book"
+                                    ></select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Expected Return Date</label>
+                                    <input
+                                        type="date"
+                                        id="issue_return_date"
+                                        class="form-control"
+                                        title="Return Date"
+                                    />
+                                </div>
+                                <button type="submit" class="btn-portal btn-primary w-full mt-1" title="Issue Book">
+                                    <i class="fas fa-book"></i> Issue Book
+                                </button>
+                            </form>
+                        </div>
+
+                        <div class="glass-card p-1-5">
+                            <h3 class="mb-1-5">Active Issues (Pending Returns)</h3>
+                            <div class="table-container">
+                                <table class="portal-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Book</th>
+                                            <th>Member ID</th>
+                                            <th>Issued On</th>
+                                            <th>Due Date</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="txListBody">
+                                        <!-- Populated by JS -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </section>

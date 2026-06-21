@@ -204,7 +204,7 @@
     };
 
     window.deleteSyllabus = async function (id) {
-        if (!confirm('Are you sure you want to delete this resource?')) return;
+        if (!await window.showConfirmModal({ title: 'Delete Resource', message: 'Are you sure you want to delete this resource?', icon: 'fa-trash-alt', confirmText: 'Delete', danger: true })) return;
         setLoading(true);
         try {
             await schoolDoc('syllabus', id).delete();

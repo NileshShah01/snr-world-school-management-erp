@@ -3,9 +3,13 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="recaptcha-site-key" content="" />
 
-        <title>Contact | Apex Public School</title>
+        <title>Contact | <span data-school-field="schoolName">School</span></title>
 
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
         <link rel="stylesheet" href="/style.css" />
 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
@@ -176,35 +180,30 @@
         <div id="header"></div>
 
         <section class="page-header">
-            <h1 id="contactHeaderTitle">Contact Apex Public School</h1>
+            <h1>Contact <span data-school-field="schoolName">School</span></h1>
 
-            <p id="contactHeaderSubtitle">Anjani Bazar, Parsa, Saran</p>
+            <p data-school-field="schoolLocation">Loading…</p>
         </section>
 
         <section class="reveal">
-            <h2 class="section-title">Contact Information</h2>
+            <h2 class="section-title" data-i18n="contact.title">Contact Information</h2>
             <div class="grid">
                 <div class="card">
                     <i class="fa-solid fa-phone"></i>
                     <h3>Phone</h3>
-                    <p class="dyn-phone">8084243031</p>
+                    <p data-school-field="phone">—</p>
                 </div>
 
                 <div class="card">
                     <i class="fa-solid fa-envelope"></i>
                     <h3>Email</h3>
-                    <p class="dyn-email">Apexpublicschool61@gmail.com</p>
+                    <p data-school-field="email">—</p>
                 </div>
 
                 <div class="card">
                     <i class="fa-solid fa-location-dot"></i>
                     <h3>Address</h3>
-                    <p id="contactAddress">
-                        Anjani Bazar<br />
-                        Near SBI Branch<br />
-                        Parsa, Saran<br />
-                        Bihar 841219
-                    </p>
+                    <p data-school-field="address_full">Loading…</p>
                 </div>
 
                 <div class="card">
@@ -219,21 +218,24 @@
         </section>
 
         <section class="reveal">
-            <h2 class="section-title">Send Inquiry</h2>
+            <h2 class="section-title" data-i18n="contact.subtitle">Send Inquiry</h2>
             <div class="form-container">
                 <form id="contactForm">
                     <div class="grid gap-md mb-3">
                         <div class="form-group mb-0">
-                            <label>Name <span class="text-secondary">*</span></label>
-                            <input type="text" id="con_name" class="form-control" required placeholder="Your name" title="Full Name" />
+                            <label data-i18n="contact.name">Name <span class="text-secondary">*</span></label>
+                            <input type="text" id="con_name" class="form-control" required
+                                data-i18n-attr="placeholder:contact.name|title:contact.name"
+                                placeholder="Your name" title="Full Name" />
                         </div>
                         <div class="form-group mb-0">
-                            <label>Mobile Number <span class="text-secondary">*</span></label>
+                            <label data-i18n="contact.phone">Mobile Number <span class="text-secondary">*</span></label>
                             <input
                                 type="tel"
                                 id="con_mobile"
                                 class="form-control"
                                 required
+                                data-i18n-attr="placeholder:contact.phone|title:contact.phone"
                                 placeholder="10-digit number"
                                 maxlength="10"
                                 title="10-digit Mobile Number"
@@ -241,19 +243,20 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label>Message / Inquiry <span class="text-secondary">*</span></label>
+                        <label data-i18n="contact.message">Message / Inquiry <span class="text-secondary">*</span></label>
                         <textarea
                             id="con_message"
                             class="form-control"
                             required
                             rows="4"
+                            data-i18n-attr="placeholder:contact.message|title:contact.message"
                             placeholder="How can we help you?"
                             title="Message or Inquiry Description"
                         ></textarea>
                     </div>
                     <div id="con_status" class="status-box"></div>
                     <button type="submit" class="btn-submit" title="Send your message">
-                        <i class="fa-solid fa-paper-plane"></i> Send Message
+                        <i class="fa-solid fa-paper-plane"></i> <span data-i18n="contact.send">Send Message</span>
                     </button>
                 </form>
             </div>
@@ -262,64 +265,91 @@
         <section class="reveal">
             <h2 class="section-title">Follow Us</h2>
             <div class="social-links">
-                <a href="#" title="Facebook"><i class="fa-brands fa-facebook"></i></a>
-                <a href="#" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
-                <a href="#" title="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                <a href="#" title="Facebook" onclick="alert('Add your school Facebook page URL here');return false;"><i class="fa-brands fa-facebook"></i></a>
+                <a href="#" title="Instagram" onclick="alert('Add your school Instagram page URL here');return false;"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" title="YouTube" onclick="alert('Add your school YouTube channel URL here');return false;"><i class="fa-brands fa-youtube"></i></a>
             </div>
         </section>
 
         <div id="footer"></div>
 
         <!-- NEW FLOATING BUTTONS CONTAINER -->
-        <script src="/script.js"></script>
+        <script defer src="/script.js"></script>
 
         <!-- Firebase SDK for Inquiry Sync -->
-        <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-        <script src="/js/firebase-config.js"></script>
-        <script src="/js/cms-settings.js"></script>
+        <script defer src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+        <script defer src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+        <script defer src="/js/app-check.js?v=1.0"></script>
+        <script defer src="/js/firebase-config.js"></script>
+        <script defer src="/js/i18n.js"></script>
+        <script defer src="/js/media-loader.js?v=1.0"></script>
+        <script defer src="/js/rate-limiter.js?v=1.0"></script>
+        <script defer src="/js/cms-settings.js"></script>
         <script>
-            document.getElementById('contactForm')?.addEventListener('submit', async function (e) {
-                e.preventDefault();
-                const btn = this.querySelector('button[type="submit"]');
-                const status = document.getElementById('con_status');
-                btn.disabled = true;
-                btn.textContent = 'Sending...';
-                status.style.display = 'none';
+            document.addEventListener('DOMContentLoaded', function () {
+                document.getElementById('contactForm')?.addEventListener('submit', async function (e) {
+                    e.preventDefault();
+                    const btn = this.querySelector('button[type="submit"]');
+                    const status = document.getElementById('con_status');
+                    const t = (window.SNR_I18N && window.SNR_I18N.t) || function (k, fb) { return fb || k; };
+                    btn.disabled = true;
+                    btn.textContent = 'Sending...';
+                    status.style.display = 'none';
 
-                const mobile = document.getElementById('con_mobile').value.trim();
-                if (mobile.length !== 10 || isNaN(mobile)) {
-                    status.style.display = 'block';
-                    status.className = 'status-box status-error';
-                    status.textContent = 'Please enter a valid 10-digit mobile number.';
-                    btn.disabled = false;
-                    btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Send Message';
-                    return;
-                }
+                    const mobile = document.getElementById('con_mobile').value.trim();
+                    if (mobile.length !== 10 || isNaN(mobile)) {
+                        status.style.display = 'block';
+                        status.className = 'status-box status-error';
+                        status.textContent = t('contact.err_mobile', 'Please enter a valid 10-digit mobile number.');
+                        btn.disabled = false;
+                        btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> ' + t('contact.send', 'Send Message');
+                        return;
+                    }
 
-                try {
-                    await db.collection('inquiries').add({
-                        parent: document.getElementById('con_name').value.trim(),
-                        student: 'N/A (General Contact)',
-                        mobile: mobile,
-                        class: 'N/A',
-                        village: 'N/A',
-                        message: document.getElementById('con_message').value.trim(),
-                        status: 'New',
-                        submittedAt: firebase.firestore.FieldValue.serverTimestamp(),
-                    });
-                    status.style.display = 'block';
-                    status.className = 'status-box status-success';
-                    status.textContent = '✅ Message sent successfully! We will contact you soon.';
-                    this.reset();
-                } catch (err) {
-                    status.style.display = 'block';
-                    status.className = 'status-box status-error';
-                    status.textContent = 'Failed to send message. Please try calling us instead.';
-                } finally {
-                    btn.disabled = false;
-                    btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Send Message';
-                }
+                    // Client-side rate limit: 2 inquiries per minute per mobile
+                    const limiter = (window.SNR_RATE_LIMITERS && window.SNR_RATE_LIMITERS.inquiry) || null;
+                    if (limiter) {
+                        const r = limiter.check('contact:' + mobile);
+                        if (!r.allowed) {
+                            status.style.display = 'block';
+                            status.className = 'status-box status-error';
+                            status.textContent =
+                                t('contact.err_rate', '⚠️ Too many submissions. Please wait a minute and try again.') +
+                                ' (' + limiter.formatRetryAfter(r.retryAfterMs) + ')';
+                            btn.disabled = false;
+                            btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> ' + t('contact.send', 'Send Message');
+                            return;
+                        }
+                    }
+
+                    try {
+                        await schoolData('inquiries').add({
+                            schoolId: CURRENT_SCHOOL_ID,
+                            parent: document.getElementById('con_name').value.trim(),
+                            student: 'N/A (General Contact)',
+                            mobile: mobile,
+                            class: 'N/A',
+                            village: 'N/A',
+                            message: document.getElementById('con_message').value.trim(),
+                            status: 'New',
+                            submittedAt: firebase.firestore.FieldValue.serverTimestamp(),
+                        });
+                        if (limiter) limiter.reset('contact:' + mobile);
+                        status.style.display = 'block';
+                        status.className = 'status-box status-success';
+                        status.textContent = t('contact.sent_ok', '✅ Message sent successfully! We will contact you soon.');
+                        this.reset();
+                    } catch (err) {
+                        console.error('Contact form submission failed:', err);
+                        if (limiter) limiter.allow('contact:' + mobile);
+                        status.style.display = 'block';
+                        status.className = 'status-box status-error';
+                        status.textContent = t('contact.err_send', 'Failed to send message. Please try calling us instead.');
+                    } finally {
+                        btn.disabled = false;
+                        btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> ' + t('contact.send', 'Send Message');
+                    }
+                });
             });
         </script>
 

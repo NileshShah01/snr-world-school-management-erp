@@ -1,0 +1,64 @@
+<section id="addSubjectSection" class="dashboard-section hidden">
+                    <div class="header">
+                        <div>
+                            <h1>Define Subjects</h1>
+                            <p>Manage scholastic subjects for the active session</p>
+                        </div>
+                    </div>
+                    <div class="grid-cols-1-2 gap-1-5">
+                        <div class="card p-1-5">
+                            <h3>New Subject</h3>
+                            <form id="addSubjectForm" onsubmit="handleSubjectSubmit(event)" class="mt-1">
+                                <div class="form-group">
+                                    <label>Subject Name (e.g., Mathematics)</label>
+                                    <input
+                                        type="text"
+                                        id="subjectNameInput"
+                                        class="form-control"
+                                        placeholder="Mathematics"
+                                        required
+                                        title="Subject Name"
+                                    />
+                                </div>
+                                <div class="form-group">
+                                    <label>Subject Code (Optional)</label>
+                                    <input
+                                        type="text"
+                                        id="subjectCodeInput"
+                                        class="form-control"
+                                        placeholder="MATH01"
+                                        title="Subject Code"
+                                    />
+                                </div>
+                                <div class="form-group">
+                                    <label>Subject Type</label>
+                                    <select id="subjectTypeSelect" class="form-control" title="Subject Type">
+                                        <option value="Compulsory">Compulsory</option>
+                                        <option value="Elective">Elective</option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn-portal btn-primary w-full" title="Add Subject">
+                                    <i class="fas fa-plus"></i> Add Subject
+                                </button>
+                            </form>
+                        </div>
+                        <div class="card p-1-5">
+                            <h3>Subject List</h3>
+                            <div class="table-responsive mt-1">
+                                <table class="portal-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Code</th>
+                                            <th>Type</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="subjectsTableBody">
+                                        <!-- Dynamic content -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </section>

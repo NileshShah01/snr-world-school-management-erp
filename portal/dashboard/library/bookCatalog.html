@@ -1,0 +1,94 @@
+<section id="bookCatalogSection" class="dashboard-section card hidden">
+                    <div class="header mb-2">
+                        <div>
+                            <h1>Library Book Catalog</h1>
+                            <p>Manage school library inventory and categories</p>
+                        </div>
+                        <button class="btn-portal btn-primary" onclick="toggleAddBookForm()">
+                            <i class="fas fa-plus"></i> Add New Book
+                        </button>
+                    </div>
+
+                    <div id="addBookFormWrapper" class="card p-2 mb-2 hidden">
+                        <form id="addBookForm" onsubmit="ERPLibrary.saveBook(event)">
+                            <div class="grid-auto-200 gap-1-5 mb-1-5">
+                                <div class="form-group">
+                                    <label>Book Title</label>
+                                    <input
+                                        type="text"
+                                        name="title"
+                                        class="form-control"
+                                        placeholder="Enter Title"
+                                        required
+                                    />
+                                </div>
+                                <div class="form-group">
+                                    <label>Author</label>
+                                    <input type="text" name="author" class="form-control" placeholder="Enter Author" />
+                                </div>
+                                <div class="form-group">
+                                    <label>Category</label>
+                                    <input
+                                        type="text"
+                                        name="category"
+                                        class="form-control"
+                                        placeholder="e.g. Science, History"
+                                        title="Book Category"
+                                    />
+                                </div>
+                                <div class="form-group">
+                                    <label>Accession No / ISBN</label>
+                                    <input
+                                        type="text"
+                                        name="accessionNo"
+                                        class="form-control"
+                                        placeholder="ID No"
+                                        title="Accession/ISBN Number"
+                                    />
+                                </div>
+                                <div class="form-group">
+                                    <label>Total Copies</label>
+                                    <input
+                                        type="number"
+                                        name="total"
+                                        class="form-control"
+                                        value="1"
+                                        min="1"
+                                        title="Total Copies"
+                                    />
+                                </div>
+                            </div>
+                            <div class="flex gap-1">
+                                <button type="submit" class="btn-portal btn-primary" title="Save Book">
+                                    Save Book
+                                </button>
+                                <button
+                                    type="button"
+                                    class="btn-portal btn-ghost"
+                                    onclick="toggleAddBookForm()"
+                                    title="Cancel"
+                                >
+                                    Cancel
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="table-container">
+                        <table class="portal-table">
+                            <thead>
+                                <tr>
+                                    <th>Accession No</th>
+                                    <th>Title</th>
+                                    <th>Author</th>
+                                    <th>Category</th>
+                                    <th>Availability</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="bookListBody">
+                                <!-- Populated by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>

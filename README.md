@@ -5,7 +5,7 @@ Apex Public School — official website & SNR World School ERP.
 ## Quick links
 
 - [`IMAGE_STORAGE.md`](./IMAGE_STORAGE.md) — how images/files are stored (Base64 in Firestore, no Firebase Storage)
-- [`competitive-analysis-report.md`](./competitive-analysis-report.md) — SNR Edu ERP vs Education Desk
+- [`docs/`](./docs/) — Architecture, module, and gap analysis documentation
 - [`firebase.json`](./firebase.json) — Firebase Hosting rewrites & multi-tenant routing
 - [`firestore.rules`](./firestore.rules) — Firestore security rules
 

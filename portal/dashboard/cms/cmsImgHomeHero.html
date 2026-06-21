@@ -1,0 +1,64 @@
+<section id="cmsImgHomeHeroSection" class="dashboard-section hidden">
+                    <div class="card">
+                        <h3><i class="fas fa-header"></i> Home Page Hero Slider</h3>
+                        <p class="text-xs text-muted mb-1-5">
+                            Edit the 4 large sliding images at the top of the home page.
+                        </p>
+
+                        <form id="cmsHomeHeroForm">
+                            <div class="grid gap-1-25">
+                                <div class="form-group">
+                                    <label>Hero Image 1</label
+                                    ><input
+                                        type="file"
+                                        class="hero-file"
+                                        accept="image/*"
+                                        onchange="previewCmsImage(event, 'hero_img_1_preview')"
+                                        class="form-control"
+                                        title="Hero Image 1"
+                                    />
+                                    <div id="hero_img_1_preview" class="image-preview-mini"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Hero Image 2</label
+                                    ><input
+                                        type="file"
+                                        class="hero-file"
+                                        accept="image/*"
+                                        onchange="previewCmsImage(event, 'hero_img_2_preview')"
+                                        class="form-control"
+                                        title="Hero Image 2"
+                                    />
+                                    <div id="hero_img_2_preview" class="image-preview-mini"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Hero Image 3</label
+                                    ><input
+                                        type="file"
+                                        class="hero-file"
+                                        accept="image/*"
+                                        onchange="previewCmsImage(event, 'hero_img_3_preview')"
+                                        class="form-control"
+                                        title="Hero Image 3"
+                                    />
+                                    <div id="hero_img_3_preview" class="image-preview-mini"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Hero Image 4</label
+                                    ><input
+                                        type="file"
+                                        class="hero-file"
+                                        accept="image/*"
+                                        onchange="previewCmsImage(event, 'hero_img_4_preview')"
+                                        class="form-control"
+                                        title="Hero Image 4"
+                                    />
+                                    <div id="hero_img_4_preview" class="image-preview-mini"></div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn-portal btn-primary mt-2" title="Save Hero Slider Images">
+                                <i class="fas fa-save"></i> Save Hero Slider Images
+                            </button>
+                        </form>
+                    </div>
+                </section>

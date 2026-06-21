@@ -8,6 +8,10 @@ temp_super_admin/
 portal/question-formatter/
 screenshot_temp.html
 
+# Build / deploy artifacts
+dist/
+.firebase/hosting.*.cache
+
 # Firebase config (contains API keys)
 js/firebase-config.js
 
@@ -15,3 +19,8 @@ js/firebase-config.js
 serviceAccountKey.json
 **/serviceAccountKey.json
 *-firebase-adminsdk-*.json
+*.pem
+*.key
+.env
+.env.local
+.env.*

@@ -1,0 +1,148 @@
+<section id="studentDetailSection" class="dashboard-section card hidden">
+                    <div class="flex flex-between align-center mb-1-5">
+                        <div>
+                            <h1 id="detailStudentName">Student Profile</h1>
+                            <p class="text-sm text-muted" id="detailStudentSubtext">View complete student information</p>
+                        </div>
+                        <div class="flex gap-0-75">
+                            <button class="btn-portal btn-secondary" onclick="showSection('studentList')"><i class="fas fa-arrow-left"></i> Back to List</button>
+                            <button class="btn-portal btn-primary" id="detailEditBtn" onclick="editStudent(currentDetailStudentId)"><i class="fas fa-edit"></i> Edit</button>
+                        </div>
+                    </div>
+
+                    <!-- Profile Header -->
+                    <div class="card mb-1" id="detailProfileCard">
+                        <div style="display:flex;gap:2rem;align-items:start;flex-wrap:wrap;">
+                            <div style="text-align:center;flex-shrink:0;">
+                                <div id="detailPhotoContainer" style="width:130px;height:130px;border-radius:50%;overflow:hidden;border:3px solid var(--primary,#3b82f6);background:var(--bg-card,#1e293b);display:flex;align-items:center;justify-content:center;">
+                                    <i id="detailPhotoPlaceholder" class="fas fa-user-graduate" style="font-size:3rem;color:var(--text-muted,#94a3b8);"></i>
+                                    <img id="detailPhotoImg" style="display:none;width:100%;height:100%;object-fit:cover;" />
+                                </div>
+                                <p class="text-xs text-muted mt-0-5" id="detailStudentId">ID: --</p>
+                            </div>
+                            <div style="flex:1;min-width:200px;">
+                                <h2 id="detailName" style="margin:0 0 0.25rem;font-size:1.5rem;">--</h2>
+                                <p class="text-sm text-muted" id="detailClassSection">--</p>
+                                <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-top:0.75rem;">
+                                    <div class="stat-mini"><span class="text-xs text-muted">Roll No</span><p class="font-600" id="detailRoll">--</p></div>
+                                    <div class="stat-mini"><span class="text-xs text-muted">Gender</span><p class="font-600" id="detailGender">--</p></div>
+                                    <div class="stat-mini"><span class="text-xs text-muted">DOB</span><p class="font-600" id="detailDob">--</p></div>
+                                    <div class="stat-mini"><span class="text-xs text-muted">Age</span><p class="font-600" id="detailAge">--</p></div>
+                                    <div class="stat-mini"><span class="text-xs text-muted">Session</span><p class="font-600" id="detailSession">--</p></div>
+                                    <div class="stat-mini"><span class="text-xs text-muted">Status</span><p class="font-600" id="detailStatus">--</p></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Stats Row -->
+                    <div class="stats-grid mb-1" id="detailStatsRow" style="grid-template-columns:repeat(auto-fit,minmax(160px,1fr));">
+                        <div class="stat-card"><div class="stat-icon bg-sky-opacity-10 text-sky"><i class="fas fa-calendar-check"></i></div><div class="stat-info"><h3>Attendance</h3><p id="detailAttendancePct" class="text-lg font-700">--</p></div></div>
+                        <div class="stat-card"><div class="stat-icon bg-emerald-opacity-10 text-emerald"><i class="fas fa-wallet"></i></div><div class="stat-info"><h3>Fee Status</h3><p id="detailFeeStatus" class="text-lg font-700">--</p><span class="text-xs text-muted" id="detailLastPayDate"></span></div></div>
+                        <div class="stat-card"><div class="stat-icon bg-amber-opacity-10 text-amber"><i class="fas fa-file-alt"></i></div><div class="stat-info"><h3>Exam Count</h3><p id="detailExamCount" class="text-lg font-700">--</p></div></div>
+                        <div class="stat-card"><div class="stat-icon bg-purple-opacity-10 text-purple"><i class="fas fa-book"></i></div><div class="stat-info"><h3>Class</h3><p id="detailStatClass" class="text-lg font-700">--</p></div></div>
+                    </div>
+
+                    <!-- Tabbed Details -->
+                    <div class="card">
+                        <div style="display:flex;gap:0;border-bottom:2px solid var(--border,#334155);margin-bottom:1.5rem;">
+                            <button class="tab-btn active" data-tab="personal" onclick="switchDetailTab('personal')">Personal</button>
+                            <button class="tab-btn" data-tab="family" onclick="switchDetailTab('family')">Family</button>
+                            <button class="tab-btn" data-tab="academic" onclick="switchDetailTab('academic')">Academic</button>
+                            <button class="tab-btn" data-tab="fees" onclick="switchDetailTab('fees')">Fees</button>
+                            <button class="tab-btn" data-tab="attendance" onclick="switchDetailTab('attendance')">Attendance</button>
+                        </div>
+
+                        <!-- Personal Tab -->
+                        <div class="detail-tab-content" id="detailTabPersonal">
+                            <table class="portal-table detail-table">
+                                <tr><td class="label">Full Name</td><td id="dtName">--</td></tr>
+                                <tr><td class="label">Date of Birth</td><td id="dtDob">--</td></tr>
+                                <tr><td class="label">Gender</td><td id="dtGender">--</td></tr>
+                                <tr><td class="label">Blood Group</td><td id="dtBlood">--</td></tr>
+                                <tr><td class="label">Religion</td><td id="dtReligion">--</td></tr>
+                                <tr><td class="label">Category</td><td id="dtCategory">--</td></tr>
+                                <tr><td class="label">Caste</td><td id="dtCaste">--</td></tr>
+                                <tr><td class="label">Aadhaar No</td><td id="dtAadhar">--</td></tr>
+                                <tr><td class="label">PEN</td><td id="dtPen">--</td></tr>
+                                <tr><td class="label">Mobile</td><td id="dtMobile">--</td></tr>
+                                <tr><td class="label">Email</td><td id="dtEmail">--</td></tr>
+                                <tr><td class="label">Address</td><td id="dtAddress">--</td></tr>
+                                <tr><td class="label">Permanent Address</td><td id="dtPermanentAddress">--</td></tr>
+                                <tr><td class="label">City</td><td id="dtCity">--</td></tr>
+                                <tr><td class="label">Hostel</td><td id="dtHostel">--</td></tr>
+                                <tr><td class="label">Transport</td><td id="dtTransport">--</td></tr>
+                            </table>
+                        </div>
+
+                        <!-- Family Tab -->
+                        <div class="detail-tab-content hidden" id="detailTabFamily">
+                            <table class="portal-table detail-table">
+                                <tr><td class="label">Father's Name</td><td id="dtFather">--</td></tr>
+                                <tr><td class="label">Father's Aadhaar</td><td id="dtFatherAadhar">--</td></tr>
+                                <tr><td class="label">Mother's Name</td><td id="dtMother">--</td></tr>
+                                <tr><td class="label">Mother's Aadhaar</td><td id="dtMotherAadhar">--</td></tr>
+                                <tr><td class="label">Guardian Name</td><td id="dtGuardian">--</td></tr>
+                                <tr><td class="label">Guardian Phone</td><td id="dtGuardianPhone">--</td></tr>
+                            </table>
+                        </div>
+
+                        <!-- Academic Tab -->
+                        <div class="detail-tab-content hidden" id="detailTabAcademic">
+                            <table class="portal-table detail-table">
+                                <tr><td class="label">Student ID</td><td id="dtStudentId">--</td></tr>
+                                <tr><td class="label">Roll No</td><td id="dtRoll">--</td></tr>
+                                <tr><td class="label">Registration No</td><td id="dtRegNo">--</td></tr>
+                                <tr><td class="label">Class</td><td id="dtClass">--</td></tr>
+                                <tr><td class="label">Section</td><td id="dtSection">--</td></tr>
+                                <tr><td class="label">Session</td><td id="dtSession">--</td></tr>
+                                <tr><td class="label">Admission Year</td><td id="dtAdmissionYear">--</td></tr>
+                                <tr><td class="label">Date of Joining</td><td id="dtJoinDate">--</td></tr>
+                                <tr><td class="label">Smart Card No</td><td id="dtSmartCard">--</td></tr>
+                            </table>
+                        </div>
+
+                        <!-- Fees Tab (loaded dynamically) -->
+                        <div class="detail-tab-content hidden" id="detailTabFees">
+                            <h3 class="mb-0-75" style="font-weight:600;font-size:1rem;">Fee Ledger</h3>
+                            <p class="text-muted" id="detailFeesLoading">Loading fee records...</p>
+                            <div class="table-responsive mb-2">
+                                <table class="portal-table" id="detailFeesTable" style="display:none;">
+                                    <thead><tr><th>Month</th><th>Amount</th><th>Paid</th><th>Due</th><th>Status</th><th>Date</th></tr></thead>
+                                    <tbody id="detailFeesBody"></tbody>
+                                </table>
+                            </div>
+
+                            <h3 class="mb-0-75" style="font-weight:600;font-size:1rem;">Payment Receipts</h3>
+                            <p class="text-muted" id="detailReceiptsLoading">Loading receipts...</p>
+                            <div class="table-responsive">
+                                <table class="portal-table" id="detailReceiptsTable" style="display:none;">
+                                    <thead><tr><th>Receipt No</th><th>Amount</th><th>Mode</th><th>Date</th><th>Remarks</th><th>Action</th></tr></thead>
+                                    <tbody id="detailReceiptsBody"></tbody>
+                                </table>
+                            </div>
+                            <p class="text-xs text-muted mt-0-5" id="detailNoReceipts" style="display:none;">No payment receipts found.</p>
+                        </div>
+
+                        <!-- Attendance Tab (loaded dynamically) -->
+                        <div class="detail-tab-content hidden" id="detailTabAttendance">
+                            <p class="text-muted" id="detailAttLoading">Loading attendance records...</p>
+                            <div class="table-responsive">
+                                <table class="portal-table" id="detailAttTable" style="display:none;">
+                                    <thead><tr><th>Date</th><th>Status</th></tr></thead>
+                                    <tbody id="detailAttBody"></tbody>
+                                </table>
+                            </div>
+                            <div class="mt-1" id="detailAttSummary"></div>
+                        </div>
+                    </div>
+
+                    <style>
+                        .tab-btn { padding:0.6rem 1.2rem;background:none;border:none;border-bottom:2px solid transparent;color:var(--text-muted,#94a3b8);cursor:pointer;font-size:0.9rem;font-weight:500;transition:all 0.2s;margin-bottom:-2px; }
+                        .tab-btn.active { color:var(--primary,#3b82f6);border-bottom-color:var(--primary,#3b82f6); }
+                        .tab-btn:hover { color:var(--text,#e2e8f0); }
+                        .detail-table td { padding:0.5rem 0.75rem !important; }
+                        .detail-table td.label { font-weight:600;width:180px;color:var(--text-muted,#94a3b8); }
+                        .stat-mini { background:var(--bg-card,#1e293b);border:1px solid var(--border,#334155);border-radius:0.5rem;padding:0.5rem 1rem;min-width:100px;text-align:center; }
+                    </style>
+                </section>

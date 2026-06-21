@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="recaptcha-site-key" content="">
     <title id="portalTitle">Student Portal | Login</title>
     <!-- Google Fonts: Inter & Outfit -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -77,13 +78,76 @@
             margin-bottom: 20px;
         }
 
-        .input-group i {
+        .input-group i.input-icon {
             position: absolute;
             left: 16px;
             top: 50%;
             transform: translateY(-50%);
             color: var(--text-dim);
             transition: color 0.3s;
+        }
+
+        .login-tabs {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 24px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 12px;
+            padding: 4px;
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 10px 16px;
+            border: none;
+            border-radius: 10px;
+            background: transparent;
+            color: var(--text-dim);
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-main);
+            background: rgba(255,255,255,0.05);
+        }
+
+        .tab-btn.active {
+            background: var(--accent-primary);
+            color: white;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+
+        .tab-btn i {
+            font-size: 15px;
+        }
+
+        .pwd-toggle {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--text-dim);
+            cursor: pointer;
+            padding: 6px;
+            border-radius: 8px;
+            transition: all 0.2s;
+            z-index: 1;
+        }
+
+        .pwd-toggle:hover {
+            color: var(--accent-secondary);
+            background: rgba(255,255,255,0.05);
         }
 
         .input-field {
@@ -96,6 +160,7 @@
             outline: none;
             transition: all 0.3s;
             font-size: 15px;
+            box-sizing: border-box;
         }
 
         .input-field:focus {
@@ -104,7 +169,9 @@
             box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
         }
 
-        .input-field:focus + i {
+        .input-field:focus + i,
+        .input-field:focus ~ i,
+        .input-field:focus + .input-icon {
             color: var(--accent-primary);
         }
 
@@ -207,32 +274,75 @@
             </div>
 
             <form id="studentLoginForm">
-                <div class="input-group">
-                    <i class="fas fa-mobile-alt"></i>
-                    <input 
-                        type="text" 
-                        id="student_phone" 
-                        class="input-field" 
-                        placeholder="Registered Mobile Number"
-                        required
-                        maxlength="10"
-                        oninput="this.value = this.value.replace(/[^0-9]/g, '')"
-                    >
+                <!-- Login Mode Tabs -->
+                <div class="login-tabs">
+                    <button type="button" class="tab-btn active" data-mode="student" onclick="switchLoginMode('student')">
+                        <i class="fas fa-user-graduate"></i> Student
+                    </button>
+                    <button type="button" class="tab-btn" data-mode="parent" onclick="switchLoginMode('parent')">
+                        <i class="fas fa-users"></i> Parent
+                    </button>
                 </div>
 
-                <div class="input-group">
-                    <i class="fas fa-user"></i>
-                    <input 
-                        type="text" 
-                        id="student_name" 
-                        class="input-field" 
-                        placeholder="Full Name (as registered)" 
-                        required
-                    >
+                <!-- Student Fields -->
+                <div id="studentFields" class="tab-content">
+                    <div class="input-group">
+                        <i class="fas fa-mobile-alt"></i>
+                        <input 
+                            type="text" 
+                            id="student_phone" 
+                            class="input-field" 
+                            placeholder="Registered Mobile Number"
+                            required
+                            maxlength="10"
+                            oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                        >
+                    </div>
+
+                    <div class="input-group">
+                        <i class="fas fa-user"></i>
+                        <input 
+                            type="text" 
+                            id="student_name" 
+                            class="input-field" 
+                            placeholder="Full Name (as registered)" 
+                            required
+                        >
+                    </div>
+                </div>
+
+                <!-- Parent Fields -->
+                <div id="parentFields" class="tab-content" style="display:none">
+                    <div class="input-group">
+                        <i class="fas fa-user-circle"></i>
+                        <input 
+                            type="text" 
+                            id="parent_username" 
+                            class="input-field" 
+                            placeholder="Username (provided by school)"
+                            required
+                            autocomplete="username"
+                        >
+                    </div>
+
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        <input 
+                            type="password" 
+                            id="parent_password" 
+                            class="input-field" 
+                            placeholder="Password"
+                            required
+                            autocomplete="current-password"
+                        >
+                        <button type="button" class="pwd-toggle" onclick="togglePassword()" tabindex="-1" title="Show/Hide Password">
+                            <i class="fas fa-eye" id="pwdToggleIcon"></i>
+                        </button>
+                    </div>
                 </div>
 
                 <button type="submit" class="login-btn" id="loginSubmitBtn">
-                    <span>Login Securely</span>
+                    <span id="loginBtnText">Login Securely</span>
                     <i class="fas fa-arrow-right text-xs opacity-70"></i>
                 </button>
 
@@ -259,9 +369,12 @@
     </div>
 
     <!-- Firebase SDKs -->
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-        <script src="/js/firebase-config.js"></script>
-        <script src="/js/student-auth.js"></script>
+    <script defer src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script defer src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script defer src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script defer src="/js/app-check.js?v=1.0"></script>
+        <script defer src="/js/firebase-config.js"></script>
+        <script defer src="/js/media-loader.js?v=1.0"></script>
+        <script defer src="/js/student-auth.js"></script>
 </body>
 </html>

@@ -1,0 +1,106 @@
+<section id="bulkResultGeneratorSection" class="dashboard-section card hidden">
+                    <div class="header mb-2">
+                        <div>
+                            <h1>Bulk Result Generator & Publisher</h1>
+                            <p>Generate PDF report cards and publish them to student portal in bulk</p>
+                        </div>
+                    </div>
+
+                    <div class="glass-card p-1-5 mb-2 grid-auto-180 gap-1 align-flex-end">
+                        <div class="form-group mb-0">
+                            <label>Session</label>
+                            <select
+                                id="bulkRes_sessionSelect"
+                                class="form-control"
+                                onchange="loadBulkResClasses()"
+                                title="Select Session"
+                            ></select>
+                        </div>
+                        <div class="form-group mb-0">
+                            <label>Class</label>
+                            <select
+                                id="bulkRes_classSelect"
+                                class="form-control"
+                                onchange="loadBulkResSections()"
+                                title="Select Class"
+                            ></select>
+                        </div>
+                        <div class="form-group mb-0">
+                            <label>Section</label>
+                            <select
+                                id="bulkRes_sectionSelect"
+                                class="form-control"
+                                onchange="loadStudentsForBulkRes()"
+                                title="Select Section"
+                            >
+                                <option value="All">All Sections</option>
+                            </select>
+                        </div>
+                        <div class="form-group mb-0">
+                            <label>Assessment Term</label>
+                            <select id="bulkRes_examSelect" class="form-control" title="Select Exam"></select>
+                        </div>
+                        <div class="form-group mb-0">
+                            <label>Template</label>
+                            <select id="bulkRes_formatSelect" class="form-control" title="Select Template">
+                                <option value="himalayan">Himalayan (Standard)</option>
+                                <option value="premium">Premium Elite</option>
+                            </select>
+                        </div>
+                        <button
+                            class="btn-portal btn-secondary h-42"
+                            onclick="loadStudentsForBulkRes()"
+                            title="Load Students"
+                        >
+                            <i class="fas fa-search"></i> Load Students
+                        </button>
+                    </div>
+
+                    <div class="table-container">
+                        <table class="portal-table">
+                            <thead>
+                                <tr>
+                                    <th class="w-10">
+                                        <input
+                                            type="checkbox"
+                                            id="selectAllBulkRes"
+                                            onclick="toggleBulkResSelection(this)"
+                                            title="Select All"
+                                        />
+                                    </th>
+                                    <th>Roll No</th>
+                                    <th>Student Name</th>
+                                    <th>Marks Status</th>
+                                    <th>Action/Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="bulkResTableBody">
+                                <tr>
+                                    <td colspan="5" class="text-center p-3 text-muted">
+                                        Select filters to load students
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="mt-2 flex justify-flex-end gap-1 align-center">
+                        <div id="bulkResProgressArea" class="flex-1 hidden">
+                            <div class="text-xs mb-0-5 flex-between">
+                                <span id="bulkResStatusMsg">Processing...</span>
+                                <span id="bulkResPercentMsg">0%</span>
+                            </div>
+                            <div class="h-8 bg-gray-light border-radius-0-25 overflow-hidden">
+                                <div id="bulkResProgressBar" class="h-full bg-primary w-0 transition-width"></div>
+                            </div>
+                        </div>
+                        <button
+                            class="btn-portal btn-primary"
+                            id="startBulkGenBtn"
+                            onclick="runBulkGeneration()"
+                            disabled
+                        >
+                            <i class="fas fa-magic"></i> Generate & Publish Selected
+                        </button>
+                    </div>
+                </section>

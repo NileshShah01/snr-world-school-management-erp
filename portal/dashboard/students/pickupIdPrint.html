@@ -1,0 +1,118 @@
+<section id="pickupIdPrintSection" class="dashboard-section hidden">
+                <div class="header">
+                    <div>
+                        <h1>Pickup ID Print</h1>
+                        <p>Generate pickup cards for students with parent/guardian authorization</p>
+                    </div>
+                </div>
+
+                <div class="grid-2-1 mt-1-5">
+                    <div>
+                        <div class="card mb-1-5">
+                            <h3 class="mb-1-25"><i class="fas fa-id-card primary"></i> Configuration</h3>
+                            <div class="grid-2 gap-1-25">
+                                <div class="form-group">
+                                    <label>Session</label>
+                                    <select
+                                        id="pickup_session"
+                                        onchange="loadClassesForPickupId()"
+                                        class="form-control"
+                                        title="Session"
+                                    ></select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Class</label>
+                                    <select
+                                        id="pickup_class"
+                                        onchange="
+                                            loadSectionsForPickupId();
+                                            loadStudentsForPickupId();
+                                        "
+                                        class="form-control"
+                                        title="Class"
+                                    >
+                                        <option value="">Select Session First</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Section</label>
+                                    <select
+                                        id="pickup_section"
+                                        onchange="loadStudentsForPickupId()"
+                                        class="form-control"
+                                        title="Section"
+                                    >
+                                        <option value="">Select Class First</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card mb-1-5">
+                            <div class="flex flex-between align-center mb-1">
+                                <h3 class="mb-0"><i class="fas fa-users primary"></i> Select Students</h3>
+                                <div class="flex gap-0-5">
+                                    <button class="btn-portal btn-ghost btn-sm" onclick="selectAllPickupStudents()">
+                                        Select All
+                                    </button>
+                                    <button class="btn-portal btn-ghost btn-sm" onclick="deselectAllPickupStudents()">
+                                        Deselect All
+                                    </button>
+                                </div>
+                            </div>
+                            <div
+                                class="pickup-student-list"
+                                id="pickupStudentList"
+                                style="max-height: 300px; overflow-y: auto"
+                            >
+                                <p class="text-muted text-center p-2">Select session and class to load students</p>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <h3 class="mb-1"><i class="fas fa-cog primary"></i> Print Options</h3>
+                            <div class="grid-2 gap-1-25">
+                                <div class="form-group">
+                                    <label>Template</label>
+                                    <select id="pickup_template" class="form-control">
+                                        <option value="simple">Simple Card</option>
+                                        <option value="detailed">Detailed Card</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Orientation</label>
+                                    <select id="pickup_orientation" class="form-control">
+                                        <option value="portrait">Portrait</option>
+                                        <option value="landscape">Landscape</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <button
+                                class="btn-portal btn-primary w-full mt-1"
+                                onclick="generatePickupIdCards()"
+                                title="Generate Pickup IDs"
+                            >
+                                <i class="fas fa-print"></i> Generate Pickup IDs
+                            </button>
+                        </div>
+                    </div>
+
+                    <aside>
+                        <div class="card sticky-top">
+                            <h3 class="mb-1-25 text-center">Live Preview</h3>
+                            <div
+                                id="pickupIdPreviewContainer"
+                                class="flex flex-center min-h-400 bg-secondary border-radius-12 border-2 border-dashed overflow-hidden p-1-5"
+                            >
+                                <div class="text-muted text-center">
+                                    <i class="fas fa-eye-slash text-4xl opacity-20 block mb-1"></i>
+                                    Select students to see preview
+                                </div>
+                            </div>
+                            <div class="mt-1-5 text-sm text-center text-muted">
+                                <span id="pickupSelectedCount">0</span> students selected
+                            </div>
+                        </div>
+                    </aside>
+                </div>
+            </section>

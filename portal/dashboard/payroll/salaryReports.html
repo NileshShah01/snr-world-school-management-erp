@@ -1,0 +1,43 @@
+<section id="salaryReportsSection" class="dashboard-section hidden">
+                <div class="header">
+                    <div>
+                        <h1><i class="fas fa-chart-bar text-primary"></i> Salary Reports</h1>
+                        <p>Monthly salary expenditure summary and department-wise breakdown</p>
+                    </div>
+                </div>
+                <div class="card max-w-400 mx-auto p-1-5 mb-1-5">
+                    <div class="form-group">
+                        <label>Select Month</label>
+                        <input type="month" id="salaryReportMonth" class="form-control" onchange="loadSalaryReport()">
+                    </div>
+                </div>
+                <div class="grid-2 gap-1-5 mb-1-5">
+                    <div class="card p-1-5 text-center">
+                        <div class="text-muted text-sm mb-0-5">Total Staff Paid</div>
+                        <div class="text-xl font-bold text-green" id="salRepPaidCount">0</div>
+                    </div>
+                    <div class="card p-1-5 text-center">
+                        <div class="text-muted text-sm mb-0-5">Total Expenditure</div>
+                        <div class="text-xl font-bold text-primary" id="salRepTotalExpend">\u20B90</div>
+                    </div>
+                </div>
+                <div class="card p-1-5">
+                    <h3 class="mb-1">Department-wise Breakdown</h3>
+                    <div class="table-container">
+                        <table class="portal-table">
+                            <thead>
+                                <tr>
+                                    <th>Department</th>
+                                    <th class="text-center">Staff Count</th>
+                                    <th class="text-right">Total Earnings</th>
+                                    <th class="text-right">Total Deductions</th>
+                                    <th class="text-right">Net Pay</th>
+                                </tr>
+                            </thead>
+                            <tbody id="salaryReportBody">
+                                <tr><td colspan="5" class="text-center text-muted p-2">Select a month to view report</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>

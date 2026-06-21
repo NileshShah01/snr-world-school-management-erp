@@ -71,20 +71,35 @@ const ReportCardTool = {
                 compress: false, // PDFs are not canvas-compressible
             });
 
-            // 8. Update publications reference for student portal
+            // 8. Save report document for student portal
             const year = sessionId.split('_')[0];
             await schoolDoc('reports', `${studentId}_${year}`).set(
                 withSchool({
                     studentId: studentId,
                     examId: examId,
                     sessionId: sessionId,
-                    fileData: saved.dataUri, // Student portal uses this directly
+                    fileData: saved.dataUri,
                     fileName: saved.name,
                     fileMime: saved.mime,
                     fileSize: saved.sizeBytes,
                     uploadedAt: firebase.firestore.FieldValue.serverTimestamp(),
                 })
             );
+
+            // 9. Auto-publish: create publication record so students can see the report
+            const cls = student.class || student.className || '';
+            const sec = student.section || 'A';
+            if (cls) {
+                const pubId = `${examId}_${cls.replace(/\s+/g, '_')}_${sec}`;
+                await schoolDoc('publications', pubId).set(withSchool({
+                    examId,
+                    className: cls,
+                    sectionName: sec,
+                    published: true,
+                    type: 'result',
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+                }), { merge: true });
+            }
 
             return { success: true, url: saved.dataUri };
         } catch (e) {

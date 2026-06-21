@@ -1,0 +1,57 @@
+<section id="lateFeeRulesSection" class="dashboard-section card hidden">
+                    <div class="header mb-1-5">
+                        <div>
+                            <h1 class="text-rose-500"><i class="fas fa-clock"></i> Late Fee Fine Rules</h1>
+                            <p>Configure automated fine calculation for overdue payments</p>
+                        </div>
+                    </div>
+                    <div class="grid-2-1 gap-1-5">
+                        <div class="card p-0 overflow-hidden">
+                            <div class="p-1-25 border-bottom bg-slate-50 font-600">Active Rules</div>
+                            <div class="table-container">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Rule Name</th>
+                                            <th>Grace Days</th>
+                                            <th>Type</th>
+                                            <th>Amount</th>
+                                            <th class="text-center">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="fineRulesTableBody">
+                                        <tr>
+                                            <td colspan="5" class="text-center p-4 text-muted">No rules defined</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="card p-1-5">
+                            <h3 class="mb-1 text-md">Add New Rule</h3>
+                            <div class="form-group">
+                                <label>Rule Name</label>
+                                <input type="text" id="lfrName" class="form-control" placeholder="e.g. Standard Fine" />
+                            </div>
+                            <div class="form-group">
+                                <label>Grace Period (Days)</label>
+                                <input type="number" id="lfrGrace" class="form-control" value="5" />
+                            </div>
+                            <div class="form-group">
+                                <label>Fine Type</label>
+                                <select id="lfrType" class="form-control">
+                                    <option value="fixed">Fixed Amount (Once)</option>
+                                    <option value="per_day">Per Day Fine</option>
+                                    <option value="percent">Percentage of Due</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Fine Amount (₹ / %)</label>
+                                <input type="number" id="lfrAmount" class="form-control" placeholder="Amount" />
+                            </div>
+                            <button class="btn-portal btn-primary w-full mt-1" onclick="saveFineRule()">
+                                <i class="fas fa-save"></i> Save Rule
+                            </button>
+                        </div>
+                    </div>
+                </section>

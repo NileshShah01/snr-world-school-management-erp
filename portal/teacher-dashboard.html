@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title id="teacherPortalTitle">Teacher Dashboard</title>
+    <link rel="stylesheet" href="/css/portal.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+</head>
+<body class="dashboard-page">
+    <div id="loadingOverlay" class="overlay-full">
+        <div class="spinner-large"></div>
+        <p class="mt-1 font-bold text-muted" id="loadingPortalText">Loading Teacher Portal...</p>
+    </div>
+
+    <div class="dashboard-layout">
+        <aside class="sidebar glass-sidebar" id="teacherSidebar">
+            <div class="sidebar-logo">
+                <img id="sidebarLogoImg" data-snr-media="ApexPublicSchoolLogo.png" alt="School Logo" class="h-32 w-auto object-contain school-logo-dynamic" />
+                <h2 class="text-lg line-height-1-2 school-name-dynamic" id="sidebarSchoolName">School ERP</h2>
+            </div>
+
+            <div class="sidebar-profile">
+                <div id="sidebarProfilePhoto" class="sidebar-avatar">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                </div>
+                <h4 id="teacherName">Loading...</h4>
+                <p id="teacherDesignation" class="text-xs uppercase letter-spacing-1">Teacher</p>
+            </div>
+
+            <nav class="nav-menu" id="teacherSidebarNav">
+            </nav>
+
+            <div class="mt-auto pt-8">
+                <button class="dark-mode-toggle" onclick="toggleDarkMode()" title="Toggle Dark Mode">
+                    <i class="fas fa-moon" id="darkModeIcon"></i>
+                    <span id="darkModeLabel">Dark Mode</span>
+                    <div class="toggle-track">
+                        <div class="toggle-thumb"></div>
+                    </div>
+                </button>
+                <a href="#" class="nav-link text-red mt-1" onclick="logoutTeacher()" title="Logout">
+                    <i class="fas fa-sign-out-alt"></i> <span>Logout</span>
+                </a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="top-bar no-mobile">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search..." readonly onclick="showTeacherSection('dashboard')" />
+                </div>
+                <div class="flex align-center gap-md">
+                    <div class="year-pill">
+                        <i class="far fa-calendar-alt text-muted"></i>
+                        <span id="teacherYearDisplay" class="text-sm font-500">Session 2025-26</span>
+                    </div>
+                    <div class="divider-v"></div>
+                    <div class="notify-dot position-relative" id="teacherProfileTrigger" onclick="toggleTeacherProfileDropdown()" style="cursor:pointer;">
+                        <div style="width:36px;height:36px;border-radius:50%;background:var(--primary,#3b82f6);display:flex;align-items:center;justify-content:center;color:white;font-size:0.85rem;font-weight:700;" id="teacherAvatarInitial">
+                            T
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div id="teacherProfileDropdown" class="hidden position-absolute" style="top:60px;right:2rem;background:var(--bg-card,#1e293b);border:1px solid var(--border,#334155);border-radius:0.75rem;box-shadow:0 10px 40px rgba(0,0,0,0.3);z-index:1000;min-width:220px;padding:0.5rem;">
+                <div style="padding:0.75rem 1rem;border-bottom:1px solid var(--border,#334155);">
+                    <p class="font-600 text-sm" id="teacherEmail">teacher@school.com</p>
+                    <p class="text-xs text-muted" id="teacherDesignationDropdown">Teacher</p>
+                </div>
+                <a href="#" onclick="showTeacherSection('profile');toggleTeacherProfileDropdown();" style="display:block;padding:0.6rem 1rem;color:var(--text,#e2e8f0);text-decoration:none;font-size:0.9rem;border-radius:0.4rem;">
+                    <i class="fas fa-user-circle mr-0-5"></i> View Profile
+                </a>
+                <a href="#" onclick="logoutTeacher()" style="display:block;padding:0.6rem 1rem;color:#f87171;text-decoration:none;font-size:0.9rem;border-radius:0.4rem;border-top:1px solid var(--border,#334155);margin-top:0.25rem;">
+                    <i class="fas fa-sign-out-alt mr-0-5"></i> Logout
+                </a>
+            </div>
+
+            <div class="mobile-header">
+                <div class="d-flex align-items-center gap-sm">
+                    <i class="fas fa-bars-staggered cursor-pointer text-xl primary" onclick="document.getElementById('teacherSidebar').classList.toggle('active')"></i>
+                    <h2 class="text-md secondary fw-800 m-0 school-name-dynamic" id="mobileBrandName">Teacher Portal</h2>
+                </div>
+                <div style="width:36px;height:36px;border-radius:50%;background:var(--primary,#3b82f6);display:flex;align-items:center;justify-content:center;color:white;font-size:0.85rem;font-weight:700;">
+                    T
+                </div>
+            </div>
+
+            <!-- ===== SECTIONS ===== -->
+
+            <!-- Dashboard -->
+            <section id="dashboardSection" class="teacher-section active">
+                <div class="header">
+                    <div>
+                        <h1 id="teacherSectionTitle">Dashboard</h1>
+                        <p class="text-sm text-muted mt-0-25" id="teacherHeaderSubtext">Welcome to your teacher portal</p>
+                    </div>
+                </div>
+                <div class="stats-grid" id="teacherStatsGrid">
+                    <div class="stat-card">
+                        <div class="stat-icon bg-sky-opacity-10 text-sky">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>My Students</h3>
+                            <p id="teacherMyStudentsCount">--</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon bg-emerald-opacity-10 text-emerald">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Today's Classes</h3>
+                            <p id="teacherTodayClasses">--</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon bg-amber-opacity-10 text-amber">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Pending Tasks</h3>
+                            <p id="teacherPendingTasks">--</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon bg-purple-opacity-10 text-purple">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Designation</h3>
+                            <p id="teacherDesigBadge" class="text-sm">--</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card mt-1">
+                    <h3>Quick Actions</h3>
+                    <div class="flex gap-1 mt-1 flex-wrap">
+                        <button class="btn-portal btn-primary" onclick="showTeacherSection('attendance')"><i class="fas fa-calendar-check"></i> Mark Attendance</button>
+                        <button class="btn-portal btn-secondary" onclick="showTeacherSection('students')"><i class="fas fa-users"></i> View Students</button>
+                        <button class="btn-portal btn-secondary" onclick="showTeacherSection('academic')"><i class="fas fa-file-alt"></i> Marks Entry</button>
+                        <button class="btn-portal btn-secondary" onclick="showTeacherSection('timetable')"><i class="fas fa-clock"></i> My Timetable</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Attendance -->
+            <section id="attendanceSection" class="teacher-section hidden">
+                <div class="header"><div><h1>Attendance</h1><p class="text-sm text-muted mt-0-25">Mark and view student attendance</p></div></div>
+                <div class="card">
+                    <p class="text-muted">Attendance module loaded from <code>erp-attendance.js</code>. Use the attendance section in your admin tools or ask your admin to configure this.</p>
+                </div>
+            </section>
+
+            <!-- Students -->
+            <section id="studentsSection" class="teacher-section hidden">
+                <div class="header"><div><h1>Students</h1><p class="text-sm text-muted mt-0-25">View your class students</p></div></div>
+                <div class="card">
+                    <div class="form-group">
+                        <label>Class</label>
+                        <select id="teacherStudentClassFilter" class="form-control" onchange="loadTeacherStudents()">
+                            <option value="">Select Class</option>
+                        </select>
+                    </div>
+                    <div class="form-group mt-1">
+                        <label>Section</label>
+                        <select id="teacherStudentSectionFilter" class="form-control" onchange="loadTeacherStudents()">
+                            <option value="">Select Section</option>
+                        </select>
+                    </div>
+                    <div class="table-responsive mt-1">
+                        <table class="portal-table">
+                            <thead><tr><th>Student ID</th><th>Name</th><th>Class</th><th>Section</th><th>Roll No</th></tr></thead>
+                            <tbody id="teacherStudentListBody">
+                                <tr><td colspan="5" class="text-center text-muted py-3">Select class and section to view students.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Academic -->
+            <section id="academicSection" class="teacher-section hidden">
+                <div class="header"><div><h1>Academic</h1><p class="text-sm text-muted mt-0-25">Marks entry, exams, and results</p></div></div>
+                <div class="card">
+                    <p class="text-muted">Academic module uses <code>erp-exams.js</code>. Please use the full version in your admin dashboard for marks entry and exam management.</p>
+                </div>
+            </section>
+
+            <!-- Homework -->
+            <section id="homeworkSection" class="teacher-section hidden">
+                <div class="header"><div><h1>Homework</h1><p class="text-sm text-muted mt-0-25">Assign and review homework</p></div></div>
+                <div class="card">
+                    <p class="text-muted">Homework module uses <code>erp-homework.js</code>. Use the admin dashboard for full homework assignment features.</p>
+                </div>
+            </section>
+
+            <!-- Timetable -->
+            <section id="timetableSection" class="teacher-section hidden">
+                <div class="header"><div><h1>Timetable</h1><p class="text-sm text-muted mt-0-25">View your class schedule</p></div></div>
+                <div class="card">
+                    <p class="text-muted">Timetable module uses <code>erp-timetable.js</code>. View your full schedule in the admin dashboard.</p>
+                </div>
+            </section>
+
+            <!-- Notices -->
+            <section id="noticesSection" class="teacher-section hidden">
+                <div class="header"><div><h1>Notices</h1><p class="text-sm text-muted mt-0-25">School notices and announcements</p></div></div>
+                <div class="card">
+                    <div id="teacherNoticesList" class="mt-1">
+                        <p class="text-muted">Loading notices...</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Library -->
+            <section id="librarySection" class="teacher-section hidden">
+                <div class="header"><div><h1>Library</h1><p class="text-sm text-muted mt-0-25">Browse and issue books</p></div></div>
+                <div class="card">
+                    <p class="text-muted">Library module uses <code>erp-library.js</code>. Use the admin dashboard for library management.</p>
+                </div>
+            </section>
+
+            <!-- Transport -->
+            <section id="transportSection" class="teacher-section hidden">
+                <div class="header"><div><h1>Transport</h1><p class="text-sm text-muted mt-0-25">Manage student transport</p></div></div>
+                <div class="card">
+                    <p class="text-muted">Transport module uses <code>erp-transport.js</code>. Use the admin dashboard for transport management.</p>
+                </div>
+            </section>
+
+            <!-- Fees -->
+            <section id="feesSection" class="teacher-section hidden">
+                <div class="header"><div><h1>Fees</h1><p class="text-sm text-muted mt-0-25">Fee collection and tracking</p></div></div>
+                <div class="card">
+                    <p class="text-muted">Fees module uses <code>erp-fees.js</code>. Use the admin dashboard for fee management.</p>
+                </div>
+            </section>
+
+            <!-- Communication -->
+            <section id="communicationSection" class="teacher-section hidden">
+                <div class="header"><div><h1>Communication</h1><p class="text-sm text-muted mt-0-25">Send messages to students and parents</p></div></div>
+                <div class="card">
+                    <p class="text-muted">Communication module uses <code>erp-notifications.js</code>. Use the admin dashboard for bulk messaging.</p>
+                </div>
+            </section>
+
+            <!-- Profile -->
+            <section id="profileSection" class="teacher-section hidden">
+                <div class="header"><div><h1>My Profile</h1><p class="text-sm text-muted mt-0-25">View your personal details</p></div></div>
+                <div class="card">
+                    <div id="teacherProfileContent">
+                        <p class="text-muted">Loading profile...</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script defer src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script defer src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script defer src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script defer src="/js/firebase-config.js?v=1.5"></script>
+    <script defer src="/js/media-loader.js?v=1.0"></script>
+    <script defer src="/js/saas-policy.js"></script>
+    <script defer src="/js/auth-guard.js?v=1.0"></script>
+    <script defer src="/js/erp-designations.js?v=1.0"></script>
+    <script defer src="/js/teacher-dashboard.js?v=1.0"></script>
+    <script>
+        window.addEventListener('load', function () {
+            var overlay = document.getElementById('loadingOverlay');
+            if (overlay && !overlay.classList.contains('hidden')) {
+                overlay.style.display = 'none';
+            }
+        });
+    </script>
+
+    <!-- DARK MODE SCRIPT -->
+    <script>
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            var isDark = document.body.classList.contains('dark-mode');
+            localStorage.setItem('darkMode', isDark);
+            updateDarkModeUI(isDark);
+        }
+        function updateDarkModeUI(isDark) {
+            var icon = document.getElementById('darkModeIcon');
+            var label = document.getElementById('darkModeLabel');
+            if (icon) icon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+            if (label) label.textContent = isDark ? 'Light Mode' : 'Dark Mode';
+        }
+        (function() {
+            var saved = localStorage.getItem('darkMode');
+            var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            if (saved === 'true' || (saved === null && prefersDark)) {
+                document.body.classList.add('dark-mode');
+                updateDarkModeUI(true);
+            }
+        })();
+    </script>
+
+    <!-- Service Worker -->
+    <script defer>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function () {
+                navigator.serviceWorker.register('/sw.js').catch(function () {});
+            });
+        }
+    </script>
+</body>
+</html>

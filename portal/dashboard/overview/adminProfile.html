@@ -1,0 +1,34 @@
+<section id="adminProfileSection" class="dashboard-section hidden">
+                    <div class="header">
+                        <div>
+                            <h1><i class="fas fa-user-circle primary"></i> My Profile</h1>
+                            <p>View your account details and change your password</p>
+                        </div>
+                    </div>
+                    <div class="card p-1-5" style="max-width:500px;">
+                        <div class="flex-col gap-1">
+                            <div class="flex align-center gap-1">
+                                <div class="avatar-circle-lg bg-primary-light flex-center" id="adminProfileAvatar" style="width:64px;height:64px;border-radius:50%;">
+                                    <i class="fas fa-user-shield text-primary" style="font-size:1.8rem;"></i>
+                                </div>
+                                <div>
+                                    <h3 id="adminProfileName" class="mb-0">Admin</h3>
+                                    <p class="text-sm text-muted" id="adminProfileEmail">admin@school.com</p>
+                                </div>
+                            </div>
+                            <div class="divider"></div>
+                            <div class="form-group">
+                                <label>School ID</label>
+                                <input type="text" class="input" id="adminProfileSchoolId" readonly style="background:var(--bg-gray);">
+                            </div>
+                            <div class="form-group">
+                                <label>Role</label>
+                                <input type="text" class="input" id="adminProfileRole" readonly style="background:var(--bg-gray);" value="Administrator">
+                            </div>
+                            <div class="divider"></div>
+                            <button class="btn-portal btn-primary w-full" onclick="openAdminChangePwdModal()">
+                                <i class="fas fa-key"></i> Change Password
+                            </button>
+                        </div>
+                    </div>
+                </section>

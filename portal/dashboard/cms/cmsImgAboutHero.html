@@ -1,0 +1,26 @@
+<section id="cmsImgAboutHeroSection" class="dashboard-section hidden">
+                    <div class="card">
+                        <h3><i class="fas fa-image"></i> About Page Hero Banner</h3>
+                        <p class="text-xs text-muted mb-1-5">
+                            Update the main banner image at the top of the About Us page.
+                        </p>
+
+                        <form id="cmsAboutHeroForm">
+                            <div class="form-group">
+                                <label>Banner Image</label>
+                                <input
+                                    type="file"
+                                    id="aboutHeroUrl"
+                                    accept="image/*"
+                                    onchange="previewCmsImage(event, 'aboutHero_preview')"
+                                    class="form-control"
+                                    title="About Page Banner Image"
+                                />
+                                <div id="aboutHero_preview" class="image-preview-mini"></div>
+                            </div>
+                            <button type="submit" class="btn-portal btn-primary mt-1-5" title="Save About Page Hero">
+                                <i class="fas fa-save"></i> Save About Page Hero
+                            </button>
+                        </form>
+                    </div>
+                </section>

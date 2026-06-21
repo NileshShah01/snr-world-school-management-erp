@@ -1,0 +1,3544 @@
+﻿<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html lang="en">
+  <head>
+    	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Education Desk</title>
+
+    <!-- Bootstrap -->
+    <link href="/static/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="/static/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="/static/vendors/nprogress/nprogress.css" rel="stylesheet">
+    <!-- iCheck -->
+    <link href="/static/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+    <!-- bootstrap-progressbar -->
+    <link href="/static/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
+    <!-- Animate.css -->
+    <link href="/static/vendors/animate.css/animate.min.css" rel="stylesheet">
+    <!-- JQVMap -->
+    <link href="/static/vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet"/>
+    <!-- bootstrap-daterangepicker -->
+    <link href="/static/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/jquery-ui.min.css">
+    <!-- Select2 -->
+    <link href="/static/vendors/select2/dist/css/select2.min.css" rel="stylesheet">
+	<!-- Datatables -->
+    <link href="/static/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <link href="/static/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+    <link href="/static/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+    <link href="/static/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+    <link href="/static/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
+    <link href="/static/vendors/pnotify/dist/pnotify.css" rel="stylesheet">
+    <link href="/static/vendors/pnotify/dist/pnotify.buttons.css" rel="stylesheet">
+    <link href="/static/vendors/pnotify/dist/pnotify.nonblock.css" rel="stylesheet">
+    
+    <!-- ClockPicker Stylesheet -->
+	<link rel="stylesheet" type="text/css" href="/static/assets/clockpicker/bootstrap-clockpicker.min.css">
+	
+	<link rel="stylesheet" type="text/css" href="/static/assets/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.css">
+    
+    <!-- Custom Theme Style -->
+    <link href="/static/build/css/custom.min.css?v=2.6" rel="stylesheet">
+    <link rel="shortcut icon" href="/static/favicon.ico"/>
+    <style type="text/css">
+    	label.error {
+		    color: red;
+		}
+		input.error {
+		    border-color: red;
+		}
+		body {
+    		background: #a21a46;
+    	}
+    	.nav.side-menu>li>a {
+    		margin-bottom: 4px;
+		}
+		.nav>li>a {
+		    position: relative;
+		    display: block;
+		    padding: 6px 15px 6px;
+		}
+		.left_col {
+		    background: #a21b46;
+		}
+		.nav.side-menu>li.active>a {
+			background: none;
+			background-color: #b3071f;
+		}
+		.nav-md ul.nav.child_menu li:after {
+	    	border-left: 1px solid #676767;
+		}
+		.nav-md ul.nav.child_menu li:before {
+	    	background: #a9a9a9;
+		}
+		.nav-sm ul.nav.child_menu {
+		    background: #a21a46;
+	    }
+	    .nav-sm .nav.side-menu li a i {
+	    	font-size: 20px !important;
+	    }
+	    .nav-sm .nav.side-menu li a {
+		    font-size: 10px;
+		    padding: 5px 5px;
+		}
+		.nav-sm ul.nav.child_menu li {
+		    padding: 0 10px;
+		    border-bottom: 1px solid #6d6d6d;
+		}
+		.nav.child_menu {
+    		background-color: rgb(26, 62, 162);
+		}
+		.pay-text span {
+		    font-weight: bold;
+		}
+		.pay-text {
+		    font-size: 16px;
+		}
+    </style>
+    <script type="text/javascript">
+    var windowLocTxt = window.location.href;
+	var localHost = ":8080";
+    if (window.location.protocol == 'http:' && windowLocTxt.indexOf(localHost) == -1) {
+        console.log("you are accessing us via an insecure protocol (HTTP). Redirecting you to HTTPS.");
+        window.location.href = window.location.href.replace('http:', 'https:');
+    }
+    </script>
+    
+   	
+   	<style type="text/css">
+   		.checkbox.inline {
+		    display: inline-block;
+		    margin-right: 10px;
+		}
+   	</style>
+    
+  </head>
+
+  <body class="nav-md">
+    <div class="container body">
+      <div class="main_container">
+
+	 	
+
+
+
+
+
+
+
+
+
+
+
+<!-- top navigation -->
+        <div class="top_nav">
+          <div class="nav_menu">
+           	<nav>
+              	<div class="nav toggle">
+                	<a id="menu_toggle"><i class="fa fa-bars"></i></a>
+              	</div>
+              	<div class="navbar nav_title" style="border: 0;">
+              		<a href="home" class="site_title"><img style="width: auto;" src="https://doc3.educationdesk.in/photos/enterprise_0/base64img/1704006565240.jpg"/></a>
+           		</div>
+           		
+              <ul class="nav navbar-nav navbar-right">
+                <li class="">
+                  <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    <img src="https://doc3.educationdesk.in/photos/college_259/profile/1724204681494.jpg" alt="">APEX PUBLIC SCHOOL
+                    <span class=" fa fa-angle-down"></span>
+                  </a>
+                  <ul class="dropdown-menu dropdown-usermenu pull-right">
+                    <li><a href="employee-profile">Profile</a></li>
+                    <li><a href="javascript:;">Help</a></li>
+                    <li><a href="/employee/emp-logout"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+                  </ul>
+                </li>
+
+                <li role="presentation" class="dropdown" style="display: none;">
+                  <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
+                    <i class="fa fa-envelope-o"></i>
+                    <span class="badge bg-green">6</span>
+                  </a>
+                  <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
+                    <li>
+                      <a>
+                        <span class="image"><img src="/static/images/img.jpg" alt="Profile Image" /></span>
+                        <span>
+                          <span>John Smith</span>
+                          <span class="time">3 mins ago</span>
+                        </span>
+                        <span class="message">
+                          Film festivals used to be do-or-die moments for movie makers. They were where...
+                        </span>
+                      </a>
+                    </li>
+                    <li>
+                      <a>
+                        <span class="image"><img src="/static/images/img.jpg" alt="Profile Image" /></span>
+                        <span>
+                          <span>John Smith</span>
+                          <span class="time">3 mins ago</span>
+                        </span>
+                        <span class="message">
+                          Film festivals used to be do-or-die moments for movie makers. They were where...
+                        </span>
+                      </a>
+                    </li>
+                    <li>
+                      <a>
+                        <span class="image"><img src="/static/images/img.jpg" alt="Profile Image" /></span>
+                        <span>
+                          <span>John Smith</span>
+                          <span class="time">3 mins ago</span>
+                        </span>
+                        <span class="message">
+                          Film festivals used to be do-or-die moments for movie makers. They were where...
+                        </span>
+                      </a>
+                    </li>
+                    <li>
+                      <a>
+                        <span class="image"><img src="/static/images/img.jpg" alt="Profile Image" /></span>
+                        <span>
+                          <span>John Smith</span>
+                          <span class="time">3 mins ago</span>
+                        </span>
+                        <span class="message">
+                          Film festivals used to be do-or-die moments for movie makers. They were where...
+                        </span>
+                      </a>
+                    </li>
+                    <li>
+                      <div class="text-center">
+                        <a>
+                          <strong>See All Alerts</strong>
+                          <i class="fa fa-angle-right"></i>
+                        </a>
+                      </div>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </nav>
+            
+          </div>
+          	
+        </div>
+        <!-- /top navigation -->
+        
+		
+
+
+
+
+
+
+
+
+<div class="col-md-3 left_col left-menu-side">
+          <div class="left_col scroll-view">
+
+            <div class="clearfix"></div>
+
+            <!-- menu profile quick info -->
+            <!--<div class="profile clearfix">
+              <div class="profile_pic">
+                <img src="/static/images/img.jpg" alt="..." class="img-circle profile_img">
+              </div>
+              <div class="profile_info">
+                <span>Welcome,</span>
+                <h2>John Doe</h2>
+              </div>
+            </div>-->
+            <!-- /menu profile quick info -->
+
+            <!--<br />-->
+
+            <!-- sidebar menu -->
+            <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+              <div class="menu_section">
+                <ul class="nav side-menu">
+                
+                
+                  	<li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="home">Dashboard</a></li>
+                      
+                      		<li><a href="/app/dashboard">Dashboard v2</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                 
+                
+                  	<li><a><i class="fa fa-user"></i> Employee <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="add-employee">Add Employee</a></li>
+                      
+                      		<li><a href="search-employee">Employee Search</a></li>
+                      
+                      		<li><a href="add-designation">Designation</a></li>
+                      
+                      		<li><a href="add-department">Department</a></li>
+                      
+                      		<li><a href="upload-employee">Upload Employee</a></li>
+                      
+                      		<li><a href="employee-id-print">Employee ID Print</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                 
+                
+                  	<li><a><i class="fa fa-book"></i> Class Management <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="add-batch">Add Session</a></li>
+                      
+                      		<li><a href="add-course">Add Class</a></li>
+                      
+                      		<li><a href="add-course-details">Add Class Details</a></li>
+                      
+                      		<li><a href="add-subject">Add Subject</a></li>
+                      
+                      		<li><a href="add-non-subject">Add Non-Subject</a></li>
+                      
+                      		<li><a href="add-syllabus">Add Syllabus</a></li>
+                      
+                      		<li><a href="all-syllabus">Manage Syllabus</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                 
+                
+                  	<li><a><i class="fa fa-calendar"></i> Time Table <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="add-time-table">Add Time Table</a></li>
+                      
+                      		<li><a href="view-time-table">View Time Table</a></li>
+                      
+                      		<li><a href="time-table-assign">Time Table Assign</a></li>
+                      
+                      		<li><a href="view-time-table-assign">View Time Table Assign</a></li>
+                      
+                      		<li><a href="employee-time-table">View Employee Time Table</a></li>
+                      
+                      		<li><a href="session-time-table">View Session Time Table</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                 
+                
+                  	<li><a><i class="fa fa-slack"></i> Admission &amp; Enquiry <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="start-admission">Start Admission</a></li>
+                      
+                      		<li><a href="add-primary-source">Add Primary Source</a></li>
+                      
+                      		<li><a href="add-admission-enquiry">Admission Enquiry</a></li>
+                      
+                      		<li><a href="my-admission-enquiry">My Admission Enquiry</a></li>
+                      
+                      		<li><a href="all-admission-enquiry">All Admission Enquiry</a></li>
+                      
+                      		<li><a href="enquiry-report">Enquiry Report</a></li>
+                      
+                      		<li><a href="upload-enquiry">Upload Enquiry</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                 
+                
+                  	<li><a><i class="fa fa-graduation-cap"></i> Student <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="add-student">Add Student</a></li>
+                      
+                      		<li><a href="search-student">Search Student</a></li>
+                      
+                      		<li><a href="upload-student">Upload Student</a></li>
+                      
+                      		<li><a href="elective-subject-mapping">Elective Subject Mapping</a></li>
+                      
+                      		<li><a href="promote-student">Promote Student</a></li>
+                      
+                      		<li><a href="student-id-print">Student ID Print</a></li>
+                      
+                      		<li><a href="student-pickup-id-print">Pickup ID Print</a></li>
+                      
+                      		<li><a href="student-rfid-update">Student Bulk Update</a></li>
+                      
+                      		<li><a href="hostel-search-student">Hostel Student Report</a></li>
+                      
+                      		<li><a href="transport-search-student">Transport Student Report</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                 
+                 
+                
+                  	<li><a><i class="fa fa-rupee"></i> Fees Management <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="add-course-fee-type">Class Fee Type</a></li>
+                      
+                      		<li><a href="add-transport-fee-type">Transport Fee Type</a></li>
+                      
+                      		<li><a href="manage-course-fee">Manage Class Fee</a></li>
+                      
+                      		<li><a href="course-fee-structure">Class Fee Structure</a></li>
+                      
+                      		<li><a href="manage-transport-route-fee">Transport Fee Manage</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                 
+                 
+                
+                  	<li><a><i class="fa fa-money"></i> Payments <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="course-fee-payment">Student Fee Payment</a></li>
+                      
+                      		<li><a href="monthly-fee-payment">Monthly Fee Payment</a></li>
+                      
+                      		<li><a href="add-course-fee-payment">Add Fee Payment</a></li>
+                      
+                      		<li><a href="demand-receipt">Demand Receipt</a></li>
+                      
+                      		<li><a href="bulk-discount">Bulk Discount</a></li>
+                      
+                      		<li><a href="bulk-extra-fee">Bulk Add Extra Fee</a></li>
+                      
+                      		<li><a href="late-fee-fine-rule">Late Fee Fine Rule</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                 
+                 
+                
+                  	<li><a><i class="fa fa-check-square-o"></i> Attendance <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="employee-attendance">Employee Attendance</a></li>
+                      
+                      		<li><a href="view-employee-attendance">View Employee Attendance</a></li>
+                      
+                      		<li><a href="view-all-employee-attendance">View All Employee Attendance</a></li>
+                      
+                      		<li><a href="student-daily-attendance">Student Attendance</a></li>
+                      
+                      		<li><a href="view-student-daily-attendance">Download Student Attendance</a></li>
+                      
+                      		<li><a href="view-all-student-daily-attendance">All Student Daily Attendance</a></li>
+                      
+                      		<li><a href="smart-card-student-attendance">Smart Card Attendance</a></li>
+                      
+                      		<li><a href="attendance-monthly-report">Attendance Monthly Report</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                 
+                
+                  	<li><a><i class="fa fa-truck"></i> Order <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="add-order">Add Order</a></li>
+                      	
+                      		<li><a href="my-order">My Order</a></li>
+                      	
+                      		<li><a href="all-order">All Order</a></li>
+                      	
+                    	</ul>
+                  	</li>
+                 
+                 
+                 
+                
+                  	<li><a><i class="fa fa-book"></i> Study Document <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="create-study-document">Create Study Document</a></li>
+                      
+                      		<li><a href="view-study-document">View Study Document</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                 
+                 
+                
+                  	<li><a><i class="fa fa-file-word-o"></i> Homework <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="create-homework">Create Homework</a></li>
+                      
+                      		<li><a href="manage-homework">Manage Homework</a></li>
+                      
+                      		<li><a href="update-homework-report">Update Homework Report</a></li>
+                      
+                      		<li><a href="download-homework-report">Download Homework Report</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                 
+                 
+                
+                  	<li><a><i class="fa fa-shield"></i> Exam Management <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="setup-exam-grading-config">Setup Exam Grading</a></li>
+                      
+                      		<li><a href="manage-exam">Manage Exam</a></li>
+                      
+                      		<li><a href="manage-exam-schedule">Manage Exam Schedule</a></li>
+                      
+                      		<li><a href="view-exam-schedule">View Exam Schedule</a></li>
+                      
+                      		<li><a href="publish-exam-schedule">Publish Exam Schedule</a></li>
+                      
+                      		<li><a href="exam-hall-ticket">Exam Hall Ticket</a></li>
+                      
+                      		<li><a href="exam-attendance-card">Exam Attendance Card</a></li>
+                      
+                      		<li><a href="student-exam-attendance">Student Exam Attendance</a></li>
+                      
+                      		<li><a href="view-student-exam-attendance">View Exam Attendance</a></li>
+                      
+                      		<li><a href="exam-hall-plan">Exam Hall Plan</a></li>
+                      
+                      		<li><a href="exam-hall-detail">Exam Hall Detail</a></li>
+                      
+                      		<li><a href="exam-sitting-plan">Exam Sitting Plan</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                 
+                 
+                
+                  	<li><a><i class="fa fa-flag-checkered"></i> Result Management <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="manage-exam-subject-result">Manage Exam Result</a></li>
+                      
+                      		<li><a href="add-exam-subject-result">Add Exam Result</a></li>
+                      
+                      		<li><a href="manage-exam-result">Manage All Exam Result</a></li>
+                      
+                      		<li><a href="view-exam-result">View All Exam Result</a></li>
+                      
+                      		<li><a href="manage-nonsubject-result">Manage NonSubject Result</a></li>
+                      
+                      		<li><a href="view-nonsubject-result">View NonSubject Result</a></li>
+                      
+                      		<li><a href="publish-exam-result">Publish Exam Result</a></li>
+                      
+                      		<li><a href="update-report-card-remarks">Report Card Remarks</a></li>
+                      
+                      		<li><a href="generate-report-card">Generate Report Card</a></li>
+                      
+                      		<li><a href="view-report-card">View Report Card</a></li>
+                      
+                      		<li><a href="publish-report-card">Publish Report Card</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                 
+                 
+                
+                  	<li><a><i class="fa fa-coffee"></i> Employee Leave <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="employee-leave-type">Leave Type</a></li>
+                      
+                      		<li><a href="employee-leave-assign">Leave Assign</a></li>
+                      
+                      		<li><a href="add-employee-leave">Add Leave</a></li>
+                      
+                      		<li><a href="apply-self-employee-leave">Apply Leave</a></li>
+                      
+                      		<li><a href="approve-employee-leave">Approve Leave</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                 
+                  
+                
+                  	<li><a><i class="fa fa-rupee"></i> Employee Salary <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="manage-salary-head">Manage Salary Head</a></li>
+                      
+                      		<li><a href="manage-salary-structure">Salary Structure</a></li>
+                      
+                      		<li><a href="assign-salary-structure">Assign Salary Structure</a></li>
+                      
+                      		<li><a href="salary-payment">Create Salary Payment</a></li>
+                      
+                      		<li><a href="salary-payment-process">Salary Payment Process</a></li>
+                      
+                      		<li><a href="delete-salary-payment-process">Delete Pending Salary</a></li>
+                      
+                      		<li><a href="print-salary-payslip">Print Payslip</a></li>
+                      
+                      		<li><a href="create-salary-loan">Create Salary Loan</a></li>
+                      
+                      		<li><a href="approve-salary-loan">Approve Salary Loan</a></li>
+                      
+                      		<li><a href="approved-salary-loan">All Approved Loan</a></li>
+                      
+                      		<li><a href="manage-salary-emi-payment">Add Salary Loan EMI</a></li>
+                      
+                      		<li><a href="view-salary-loan-transaction">View Salary Loan Transaction</a></li>
+                      
+                      		<li><a href="salary-loan-report">Salary Loan Report</a></li>
+                      
+                      		<li><a href="my-salary-loan">My Salary Loan</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                 
+                 
+                
+                  	<li><a><i class="fa fa-taxi"></i> Transport <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="manage-vehicle-detail">Manage Vehicle Detail</a></li>
+                      
+                      		<li><a href="manage-driver-detail">Manage Driver Detail</a></li>
+                      
+                      		<li><a href="manage-stoppage">Manage Stoppage</a></li>
+                      
+                      		<li><a href="manage-transport-route">Manage Transport Route</a></li>
+                      
+                      		<li><a href="assign-stoppage-to-route">Assign Stoppage To Route</a></li>
+                      
+                      		<li><a href="assign-student-to-route">Assign Student To Route</a></li>
+                      
+                      		<li><a href="student-transport-report">Student Transport Report</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                
+                 
+                 
+                
+                  	<li><a><i class="fa fa-th"></i> Holiday <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="add-event-and-holiday">Add Event & Holiday</a></li>
+                      
+                      		<li><a href="view-event-and-holiday">View Event & Holiday</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                 
+                 
+                
+                  	<li><a><i class="fa fa-gear"></i> Configuration <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="email-template">Email Template</a></li>
+                      
+                      		<li><a href="sms-template">Sms Template</a></li>
+                      
+                      		<li><a href="system-sms-template">System Sms Template</a></li>
+                      
+                      		<li><a href="sms-balance">SMS Balance</a></li>
+                      
+                      		<li><a href="whatsapp-balance">WhatsApp Balance</a></li>
+                      
+                      		<li><a href="notification-configuration">Notification Configuration</a></li>
+                      
+                      		<li><a href="dashboard-configuration">Dashboard Configuration</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                 
+                 
+                
+                  	<li><a><i class="fa fa-android"></i> Mobile App <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="parent-login-manage">Parent Login Manage</a></li>
+                      
+                      		<li><a href="create-parent-login">Create Parent Login</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                 
+                 
+                
+                  	<li><a><i class="fa fa-object-group"></i> Online Class <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="add-online-class">Add Online Class</a></li>
+                      
+                      		<li><a href="all-online-class">All Online Class</a></li>
+                      
+                      		<li><a href="attend-online-class">Attend Online Class</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                 
+                 
+                
+                  	<li><a><i class="fa fa-bullhorn"></i> Communication <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="student-communication">Student Communication</a></li>
+                      
+                      		<li><a href="student-app-communication">Student App Communication</a></li>
+                      
+                      		<li><a href="student-whatsapp-communication">Whatsapp Communication</a></li>
+                      
+                      		<li><a href="employee-communication">Employee Communication</a></li>
+                      
+                      		<li><a href="print-notice">Notice Print</a></li>
+                      
+                      		<li><a href="notice-board-management">Notice Board</a></li>
+                      
+                      		<li><a href="daily-dairy-manage">Daily Dairy</a></li>
+                      
+                      		<li><a href="school-newsletter">School Newsletter</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                 
+                 
+                
+                  	<li><a><i class="fa fa-file-excel-o"></i> Certificate <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="school-leaving-certificate">School Leaving</a></li>
+                      
+                      		<li><a href="student-bonafide-certificate">Student Bonafide</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                 
+                 
+                
+                  	<li><a><i class="fa fa-bank"></i> Finance <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="create-finance-account">Create Finance Account</a></li>
+                      
+                      		<li><a href="add-finance-account-head">Income & Expense Head</a></li>
+                      
+                      		<li><a href="add-finance-expense-record">Record Expense</a></li>
+                      
+                      		<li><a href="add-finance-income-record">Record Income</a></li>
+                      
+                      		<li><a href="account-balance-transfer">Account Balance Transfer</a></li>
+                      
+                      		<li><a href="finance-account-statement">Account Statement</a></li>
+                      
+                      		<li><a href="finance-daily-register">Daily Register</a></li>
+                      
+                      		<li><a href="finance-profit-and-loss">Profit And Loss</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                 
+                 
+                
+                  	<li><a><i class="fa fa-cubes"></i> Product Inventory <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="add-product-category">Manage Category</a></li>
+                      
+                      		<li><a href="add-product">Manage Product</a></li>
+                      
+                      		<li><a href="product-inventory-stock-in">Inventory Stock In</a></li>
+                      
+                      		<li><a href="product-inventory-stock-out">Inventory Stock Out</a></li>
+                      
+                      		<li><a href="manage-product-inventory">View Inventory Transaction</a></li>
+                      
+                      		<li><a href="product-additional-fields-mapping">Inventory Additional Fields</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                 
+                
+                  	<li><a><i class="fa fa-tasks"></i> Rate Plan And Tax <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="add-product-rate-plan">Add Rate Plan</a></li>
+                      	
+                      		<li><a href="all-product-rate-plan">All Rate Plan</a></li>
+                      	
+                      		<li><a href="product-tax-rule">Product Tax Rule</a></li>
+                      	
+                    	</ul>
+                  	</li>
+                 
+                 
+                
+                  	<li><a><i class="fa fa-bar-chart-o"></i> Reports <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="download-payment-receipt-pdf">Download Receipt PDF</a></li>
+                      
+                      		<li><a href="download-payment-receipt">Download Receipt Details</a></li>
+                      
+                      		<li><a href="download-due-payment">Download Due Payment</a></li>
+                      
+                      		<li><a href="due-payment-with-detail">Due Payment With Detail</a></li>
+                      
+                      		<li><a href="admission-report">New Admission Report</a></li>
+                      
+                      		<li><a href="receipt-revert-report">Receipt Revert Report</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                 
+                 
+                
+                  	<li><a><i class="fa fa-wordpress"></i> Website <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="flash-news">Flash News</a></li>
+                      
+                      		<li><a href="page-setup">Page Setup</a></li>
+                      
+                      		<li><a href="page-content-setup">Page Content Setup</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                 
+                </ul>
+              </div>
+            </div>
+            <!-- /sidebar menu -->
+
+            <!-- /menu footer buttons -->
+<!--             <div class="sidebar-footer hidden-small"> -->
+<!--               <a data-toggle="tooltip" data-placement="top" title="Settings"> -->
+<!--                 <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> -->
+<!--               </a> -->
+<!--               <a data-toggle="tooltip" data-placement="top" title="FullScreen"> -->
+<!--                 <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span> -->
+<!--               </a> -->
+<!--               <a data-toggle="tooltip" data-placement="top" title="Lock"> -->
+<!--                 <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span> -->
+<!--               </a> -->
+<!--               <a data-toggle="tooltip" data-placement="top" title="Logout"> -->
+<!--                 <span class="glyphicon glyphicon-off" aria-hidden="true"></span> -->
+<!--               </a> -->
+<!--             </div> -->
+            <!-- /menu footer buttons -->
+          </div>
+        </div>
+        
+        <!-- page content -->
+        <div class="right_col" role="main">
+          <div class="">
+            <div class="page-title">
+              <div class="title_left">
+                <h3>Employee Designation</h3>
+              </div>
+            </div>
+
+            <div class="clearfix"></div>
+            
+			
+            <div class="row">
+              <form data-parsley-validate id="add-designation" name="add-designation" action="add-designation-process" method="post">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Add Designation</h2>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                      	<div class="row">
+                      		<div class="col-md-6">
+	                      		<div class="form-group">
+			                        <label>Select Designation</label>
+			                        <div>
+			                          <select class="select2box form-control" onchange="getNewDesignation(this)" name="designation" tabindex="-1">
+			                            <option></option>
+			                          	
+					                          		<option value="1028">Admin</option>
+					                          	
+					                          		<option value="1102">Teacher</option>
+					                          	
+			                          		<option selected='selected' value="-1">New Designation</option>
+			                          </select>
+			                        </div>
+			                      </div>
+		                     </div>
+                      		<div class="col-md-6" id="new_desig_div">
+                      			<div class="form-group">
+			                      	<label>Name*</label>
+			                      	<input type="text" autocomplete="off"  name="new_designation_name" id="new_designation_name" required="required" class="form-control" placeholder="Enter Designation" value="">
+			                    </div>
+                      		</div>
+                      		<div class="col-md-3" style="margin-top: 13px;clear: left;">
+                      			<div class="checkbox inline">
+		                            <label class="no-padding">
+	                             		 <input name="other_admin_priv_input" class="flat" value="0" checked='checked' id="other_priv_input" type="radio"  onchange="getOtherPriv(this)" > Others
+		                            </label>
+	                          	</div>
+	                          	<div class="checkbox inline">
+		                            <label class="no-padding">
+	                            		<input name="other_admin_priv_input" class="flat"   value="-1" id="admin_priv_input" type="radio"  onchange="getOtherPriv(this)" > Admin
+		                            </label>
+	                          	</div>
+                      		</div>
+                      	</div>
+                  </div>
+                </div>
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Privileges Details</h2>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                      	<div class="row" id="privileges_list" style="">
+                      		
+		                      		<div class="col-md-3" style="margin-top: 13px;clear: left;">
+		                      			<div class="checkbox">
+				                            <label class="no-padding">
+				                            	
+				                            		<input name="parent_priv_input_1" value="1" id="parent_priv_input_1" type="checkbox" class="parent_checkbox flat" onchange="getSubChildPriv(this,1)" > Home
+				                            	
+				                            </label>
+			                          	</div>
+		                      		</div>
+		                      		<div class="col-md-12" id="child_priv_div_1" style="display: none;">
+		                      		
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_2" value="2" type="checkbox" class="child_checkbox flat" data-parent-priv-id="1" > Dashboard
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_3" value="3" type="checkbox" class="child_checkbox flat" data-parent-priv-id="1" > Dashboard v2
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+		                      		</div>
+                      			
+		                      		<div class="col-md-3" style="margin-top: 13px;clear: left;">
+		                      			<div class="checkbox">
+				                            <label class="no-padding">
+				                            	
+				                            		<input name="parent_priv_input_100" value="100" id="parent_priv_input_100" type="checkbox" class="parent_checkbox flat" onchange="getSubChildPriv(this,100)" > Employee
+				                            	
+				                            </label>
+			                          	</div>
+		                      		</div>
+		                      		<div class="col-md-12" id="child_priv_div_100" style="display: none;">
+		                      		
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_101" value="101" type="checkbox" class="child_checkbox flat" data-parent-priv-id="100" > Add Employee
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_102" value="102" type="checkbox" class="child_checkbox flat" data-parent-priv-id="100" > Create Employee Login
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_103" value="103" type="checkbox" class="child_checkbox flat" data-parent-priv-id="100" > Disable Employee
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_104" value="104" type="checkbox" class="child_checkbox flat" data-parent-priv-id="100" > Employee Search
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_105" value="105" type="checkbox" class="child_checkbox flat" data-parent-priv-id="100" > Designation
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_106" value="106" type="checkbox" class="child_checkbox flat" data-parent-priv-id="100" > Department
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_107" value="107" type="checkbox" class="child_checkbox flat" data-parent-priv-id="100" > Upload Employee
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_108" value="108" type="checkbox" class="child_checkbox flat" data-parent-priv-id="100" > Employee ID Print
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+		                      		</div>
+                      			
+		                      		<div class="col-md-3" style="margin-top: 13px;clear: left;">
+		                      			<div class="checkbox">
+				                            <label class="no-padding">
+				                            	
+				                            		<input name="parent_priv_input_150" value="150" id="parent_priv_input_150" type="checkbox" class="parent_checkbox flat" onchange="getSubChildPriv(this,150)" > Course Management
+				                            	
+				                            </label>
+			                          	</div>
+		                      		</div>
+		                      		<div class="col-md-12" id="child_priv_div_150" style="display: none;">
+		                      		
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_151" value="151" type="checkbox" class="child_checkbox flat" data-parent-priv-id="150" > Add Batch
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_152" value="152" type="checkbox" class="child_checkbox flat" data-parent-priv-id="150" > Add Course
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_153" value="153" type="checkbox" class="child_checkbox flat" data-parent-priv-id="150" > Add Course Details
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_154" value="154" type="checkbox" class="child_checkbox flat" data-parent-priv-id="150" > Add Subject
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_155" value="155" type="checkbox" class="child_checkbox flat" data-parent-priv-id="150" > Add Non-Subject
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_156" value="156" type="checkbox" class="child_checkbox flat" data-parent-priv-id="150" > Add Syllabus
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_157" value="157" type="checkbox" class="child_checkbox flat" data-parent-priv-id="150" > Manage Syllabus
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+		                      		</div>
+                      			
+		                      		<div class="col-md-3" style="margin-top: 13px;clear: left;">
+		                      			<div class="checkbox">
+				                            <label class="no-padding">
+				                            	
+				                            		<input name="parent_priv_input_200" value="200" id="parent_priv_input_200" type="checkbox" class="parent_checkbox flat" onchange="getSubChildPriv(this,200)" > Time Table
+				                            	
+				                            </label>
+			                          	</div>
+		                      		</div>
+		                      		<div class="col-md-12" id="child_priv_div_200" style="display: none;">
+		                      		
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_201" value="201" type="checkbox" class="child_checkbox flat" data-parent-priv-id="200" > Add Time Table
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_202" value="202" type="checkbox" class="child_checkbox flat" data-parent-priv-id="200" > View Time Table
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_203" value="203" type="checkbox" class="child_checkbox flat" data-parent-priv-id="200" > Time Table Assign
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_204" value="204" type="checkbox" class="child_checkbox flat" data-parent-priv-id="200" > View Time Table Assign
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_205" value="205" type="checkbox" class="child_checkbox flat" data-parent-priv-id="200" > View Employee Time Table
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_206" value="206" type="checkbox" class="child_checkbox flat" data-parent-priv-id="200" > View Session Time Table
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_207" value="207" type="checkbox" class="child_checkbox flat" data-parent-priv-id="200" > Add Time Table Session
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+		                      		</div>
+                      			
+		                      		<div class="col-md-3" style="margin-top: 13px;clear: left;">
+		                      			<div class="checkbox">
+				                            <label class="no-padding">
+				                            	
+				                            		<input name="parent_priv_input_250" value="250" id="parent_priv_input_250" type="checkbox" class="parent_checkbox flat" onchange="getSubChildPriv(this,250)" > Student
+				                            	
+				                            </label>
+			                          	</div>
+		                      		</div>
+		                      		<div class="col-md-12" id="child_priv_div_250" style="display: none;">
+		                      		
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_251" value="251" type="checkbox" class="child_checkbox flat" data-parent-priv-id="250" > Add Student
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_252" value="252" type="checkbox" class="child_checkbox flat" data-parent-priv-id="250" > View Student
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_253" value="253" type="checkbox" class="child_checkbox flat" data-parent-priv-id="250" > Search Student
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_254" value="254" type="checkbox" class="child_checkbox flat" data-parent-priv-id="250" > Upload Student
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_255" value="255" type="checkbox" class="child_checkbox flat" data-parent-priv-id="250" > Elective Subject Mapping
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_256" value="256" type="checkbox" class="child_checkbox flat" data-parent-priv-id="250" > Promote Student
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_257" value="257" type="checkbox" class="child_checkbox flat" data-parent-priv-id="250" > Disable Student
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_258" value="258" type="checkbox" class="child_checkbox flat" data-parent-priv-id="250" > Student ID Print
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_259" value="259" type="checkbox" class="child_checkbox flat" data-parent-priv-id="250" > Student Bulk Update
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_260" value="260" type="checkbox" class="child_checkbox flat" data-parent-priv-id="250" > Pickup ID Print
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_261" value="261" type="checkbox" class="child_checkbox flat" data-parent-priv-id="250" > Generate TC
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_262" value="262" type="checkbox" class="child_checkbox flat" data-parent-priv-id="250" > Hostel Student Report
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_263" value="263" type="checkbox" class="child_checkbox flat" data-parent-priv-id="250" > Transport Student Report
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+		                      		</div>
+                      			
+		                      		<div class="col-md-3" style="margin-top: 13px;clear: left;">
+		                      			<div class="checkbox">
+				                            <label class="no-padding">
+				                            	
+				                            		<input name="parent_priv_input_300" value="300" id="parent_priv_input_300" type="checkbox" class="parent_checkbox flat" onchange="getSubChildPriv(this,300)" > Exam Management
+				                            	
+				                            </label>
+			                          	</div>
+		                      		</div>
+		                      		<div class="col-md-12" id="child_priv_div_300" style="display: none;">
+		                      		
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_301" value="301" type="checkbox" class="child_checkbox flat" data-parent-priv-id="300" > Manage Exam
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_302" value="302" type="checkbox" class="child_checkbox flat" data-parent-priv-id="300" > Manage Exam Schedule
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_303" value="303" type="checkbox" class="child_checkbox flat" data-parent-priv-id="300" > View Exam Schedule
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_304" value="304" type="checkbox" class="child_checkbox flat" data-parent-priv-id="300" > Publish Exam Schedule
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_305" value="305" type="checkbox" class="child_checkbox flat" data-parent-priv-id="300" > Exam Hall Ticket
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_306" value="306" type="checkbox" class="child_checkbox flat" data-parent-priv-id="300" > Exam Attendance Card
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_307" value="307" type="checkbox" class="child_checkbox flat" data-parent-priv-id="300" > Student Exam Attendance
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_308" value="308" type="checkbox" class="child_checkbox flat" data-parent-priv-id="300" > View Exam Attendance
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_309" value="309" type="checkbox" class="child_checkbox flat" data-parent-priv-id="300" > Setup Exam Grading
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_310" value="310" type="checkbox" class="child_checkbox flat" data-parent-priv-id="300" > Exam Hall Detail
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_310" value="310" type="checkbox" class="child_checkbox flat" data-parent-priv-id="300" > Exam Sitting Plan
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_311" value="311" type="checkbox" class="child_checkbox flat" data-parent-priv-id="300" > Exam Hall Plan
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+		                      		</div>
+                      			
+		                      		<div class="col-md-3" style="margin-top: 13px;clear: left;">
+		                      			<div class="checkbox">
+				                            <label class="no-padding">
+				                            	
+				                            		<input name="parent_priv_input_350" value="350" id="parent_priv_input_350" type="checkbox" class="parent_checkbox flat" onchange="getSubChildPriv(this,350)" > Attendance
+				                            	
+				                            </label>
+			                          	</div>
+		                      		</div>
+		                      		<div class="col-md-12" id="child_priv_div_350" style="display: none;">
+		                      		
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_351" value="351" type="checkbox" class="child_checkbox flat" data-parent-priv-id="350" > Employee Attendance
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_352" value="352" type="checkbox" class="child_checkbox flat" data-parent-priv-id="350" > View Employee Attendance
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_353" value="353" type="checkbox" class="child_checkbox flat" data-parent-priv-id="350" > Student Subject Attendance
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_357" value="357" type="checkbox" class="child_checkbox flat" data-parent-priv-id="350" > View Subject Attendance
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_354" value="354" type="checkbox" class="child_checkbox flat" data-parent-priv-id="350" > View All Subject Attendance
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_355" value="355" type="checkbox" class="child_checkbox flat" data-parent-priv-id="350" > All Subject Attendance
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_356" value="356" type="checkbox" class="child_checkbox flat" data-parent-priv-id="350" > View All Student Attendance
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_357" value="357" type="checkbox" class="child_checkbox flat" data-parent-priv-id="350" > Smart Card Attendance
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_358" value="358" type="checkbox" class="child_checkbox flat" data-parent-priv-id="350" > View All Employee Attendance
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_359" value="359" type="checkbox" class="child_checkbox flat" data-parent-priv-id="350" > Student Attendance
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_360" value="360" type="checkbox" class="child_checkbox flat" data-parent-priv-id="350" > Download Student Attendance
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_361" value="361" type="checkbox" class="child_checkbox flat" data-parent-priv-id="350" > Attendance Monthly Report
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_362" value="362" type="checkbox" class="child_checkbox flat" data-parent-priv-id="350" > All Student Daily Attendance
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+		                      		</div>
+                      			
+		                      		<div class="col-md-3" style="margin-top: 13px;clear: left;">
+		                      			<div class="checkbox">
+				                            <label class="no-padding">
+				                            	
+				                            		<input name="parent_priv_input_400" value="400" id="parent_priv_input_400" type="checkbox" class="parent_checkbox flat" onchange="getSubChildPriv(this,400)" > Employee Leave
+				                            	
+				                            </label>
+			                          	</div>
+		                      		</div>
+		                      		<div class="col-md-12" id="child_priv_div_400" style="display: none;">
+		                      		
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_401" value="401" type="checkbox" class="child_checkbox flat" data-parent-priv-id="400" > Employee Leave
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_402" value="402" type="checkbox" class="child_checkbox flat" data-parent-priv-id="400" > View Employee Leaves
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+		                      		</div>
+                      			
+		                      		<div class="col-md-3" style="margin-top: 13px;clear: left;">
+		                      			<div class="checkbox">
+				                            <label class="no-padding">
+				                            	
+				                            		<input name="parent_priv_input_450" value="450" id="parent_priv_input_450" type="checkbox" class="parent_checkbox flat" onchange="getSubChildPriv(this,450)" > Event & Holiday
+				                            	
+				                            </label>
+			                          	</div>
+		                      		</div>
+		                      		<div class="col-md-12" id="child_priv_div_450" style="display: none;">
+		                      		
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_451" value="451" type="checkbox" class="child_checkbox flat" data-parent-priv-id="450" > Add Event & Holiday
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_452" value="452" type="checkbox" class="child_checkbox flat" data-parent-priv-id="450" > View Event & Holiday
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+		                      		</div>
+                      			
+		                      		<div class="col-md-3" style="margin-top: 13px;clear: left;">
+		                      			<div class="checkbox">
+				                            <label class="no-padding">
+				                            	
+				                            		<input name="parent_priv_input_500" value="500" id="parent_priv_input_500" type="checkbox" class="parent_checkbox flat" onchange="getSubChildPriv(this,500)" > Configuration
+				                            	
+				                            </label>
+			                          	</div>
+		                      		</div>
+		                      		<div class="col-md-12" id="child_priv_div_500" style="display: none;">
+		                      		
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_501" value="501" type="checkbox" class="child_checkbox flat" data-parent-priv-id="500" > Email Template
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_502" value="502" type="checkbox" class="child_checkbox flat" data-parent-priv-id="500" > Sms Template
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_503" value="503" type="checkbox" class="child_checkbox flat" data-parent-priv-id="500" > System History
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_504" value="504" type="checkbox" class="child_checkbox flat" data-parent-priv-id="500" > SMS Balance
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_505" value="505" type="checkbox" class="child_checkbox flat" data-parent-priv-id="500" > Notification Configuration
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_506" value="506" type="checkbox" class="child_checkbox flat" data-parent-priv-id="500" > Dashboard Configuration
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_507" value="507" type="checkbox" class="child_checkbox flat" data-parent-priv-id="500" > System Sms Template
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_508" value="508" type="checkbox" class="child_checkbox flat" data-parent-priv-id="500" > WhatsApp Balance
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+		                      		</div>
+                      			
+		                      		<div class="col-md-3" style="margin-top: 13px;clear: left;">
+		                      			<div class="checkbox">
+				                            <label class="no-padding">
+				                            	
+				                            		<input name="parent_priv_input_550" value="550" id="parent_priv_input_550" type="checkbox" class="parent_checkbox flat" onchange="getSubChildPriv(this,550)" > Communication
+				                            	
+				                            </label>
+			                          	</div>
+		                      		</div>
+		                      		<div class="col-md-12" id="child_priv_div_550" style="display: none;">
+		                      		
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_551" value="551" type="checkbox" class="child_checkbox flat" data-parent-priv-id="550" > Employee Communication
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_552" value="552" type="checkbox" class="child_checkbox flat" data-parent-priv-id="550" > Student Communication
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_553" value="553" type="checkbox" class="child_checkbox flat" data-parent-priv-id="550" > Notice Print
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_554" value="554" type="checkbox" class="child_checkbox flat" data-parent-priv-id="550" > Notice Board
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_555" value="555" type="checkbox" class="child_checkbox flat" data-parent-priv-id="550" > Student App Communication
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_556" value="556" type="checkbox" class="child_checkbox flat" data-parent-priv-id="550" > Daily Dairy
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_558" value="558" type="checkbox" class="child_checkbox flat" data-parent-priv-id="550" > School Newsletter
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_559" value="559" type="checkbox" class="child_checkbox flat" data-parent-priv-id="550" > Whatsapp Communication
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+		                      		</div>
+                      			
+		                      		<div class="col-md-3" style="margin-top: 13px;clear: left;">
+		                      			<div class="checkbox">
+				                            <label class="no-padding">
+				                            	
+				                            		<input name="parent_priv_input_600" value="600" id="parent_priv_input_600" type="checkbox" class="parent_checkbox flat" onchange="getSubChildPriv(this,600)" > Exam Result Management
+				                            	
+				                            </label>
+			                          	</div>
+		                      		</div>
+		                      		<div class="col-md-12" id="child_priv_div_600" style="display: none;">
+		                      		
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_601" value="601" type="checkbox" class="child_checkbox flat" data-parent-priv-id="600" > Manage All Exam Result
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_608" value="608" type="checkbox" class="child_checkbox flat" data-parent-priv-id="600" > Manage Exam Result
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_603" value="603" type="checkbox" class="child_checkbox flat" data-parent-priv-id="600" > View All Exam Result
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_604" value="604" type="checkbox" class="child_checkbox flat" data-parent-priv-id="600" > Publish Exam Result
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_605" value="605" type="checkbox" class="child_checkbox flat" data-parent-priv-id="600" > Generate Report Card
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_606" value="606" type="checkbox" class="child_checkbox flat" data-parent-priv-id="600" > View Report Card
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_607" value="607" type="checkbox" class="child_checkbox flat" data-parent-priv-id="600" > Upload Exam Result
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_609" value="609" type="checkbox" class="child_checkbox flat" data-parent-priv-id="600" > Add Exam Result
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_610" value="610" type="checkbox" class="child_checkbox flat" data-parent-priv-id="600" > Publish Report Card
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_611" value="611" type="checkbox" class="child_checkbox flat" data-parent-priv-id="600" > Manage NonSubject Result
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_612" value="612" type="checkbox" class="child_checkbox flat" data-parent-priv-id="600" > View NonSubject Result
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_613" value="613" type="checkbox" class="child_checkbox flat" data-parent-priv-id="600" > Report Card Remarks
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+		                      		</div>
+                      			
+		                      		<div class="col-md-3" style="margin-top: 13px;clear: left;">
+		                      			<div class="checkbox">
+				                            <label class="no-padding">
+				                            	
+				                            		<input name="parent_priv_input_650" value="650" id="parent_priv_input_650" type="checkbox" class="parent_checkbox flat" onchange="getSubChildPriv(this,650)" > Fees Management
+				                            	
+				                            </label>
+			                          	</div>
+		                      		</div>
+		                      		<div class="col-md-12" id="child_priv_div_650" style="display: none;">
+		                      		
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_651" value="651" type="checkbox" class="child_checkbox flat" data-parent-priv-id="650" > Manage Course Fee
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_652" value="652" type="checkbox" class="child_checkbox flat" data-parent-priv-id="650" > Course Fee Structure
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_654" value="654" type="checkbox" class="child_checkbox flat" data-parent-priv-id="650" > Course Fee Publish
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_655" value="655" type="checkbox" class="child_checkbox flat" data-parent-priv-id="650" > Course Fee Dues
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_656" value="656" type="checkbox" class="child_checkbox flat" data-parent-priv-id="650" > Course Fee Type
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_657" value="657" type="checkbox" class="child_checkbox flat" data-parent-priv-id="650" > Transport Fee Manage
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_656" value="656" type="checkbox" class="child_checkbox flat" data-parent-priv-id="650" > Transport Fee Type
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+		                      		</div>
+                      			
+		                      		<div class="col-md-3" style="margin-top: 13px;clear: left;">
+		                      			<div class="checkbox">
+				                            <label class="no-padding">
+				                            	
+				                            		<input name="parent_priv_input_700" value="700" id="parent_priv_input_700" type="checkbox" class="parent_checkbox flat" onchange="getSubChildPriv(this,700)" > Transport Management
+				                            	
+				                            </label>
+			                          	</div>
+		                      		</div>
+		                      		<div class="col-md-12" id="child_priv_div_700" style="display: none;">
+		                      		
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_701" value="701" type="checkbox" class="child_checkbox flat" data-parent-priv-id="700" > Manage Vehicle Detail
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_702" value="702" type="checkbox" class="child_checkbox flat" data-parent-priv-id="700" > Manage Driver Detail
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_703" value="703" type="checkbox" class="child_checkbox flat" data-parent-priv-id="700" > Manage Stoppage
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_704" value="704" type="checkbox" class="child_checkbox flat" data-parent-priv-id="700" > Manage Transport Route
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_705" value="705" type="checkbox" class="child_checkbox flat" data-parent-priv-id="700" > Assign Stoppage To Route
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_706" value="706" type="checkbox" class="child_checkbox flat" data-parent-priv-id="700" > Assign Student To Route
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_707" value="707" type="checkbox" class="child_checkbox flat" data-parent-priv-id="700" > Student Transport Report
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+		                      		</div>
+                      			
+		                      		<div class="col-md-3" style="margin-top: 13px;clear: left;">
+		                      			<div class="checkbox">
+				                            <label class="no-padding">
+				                            	
+				                            		<input name="parent_priv_input_750" value="750" id="parent_priv_input_750" type="checkbox" class="parent_checkbox flat" onchange="getSubChildPriv(this,750)" > Payment
+				                            	
+				                            </label>
+			                          	</div>
+		                      		</div>
+		                      		<div class="col-md-12" id="child_priv_div_750" style="display: none;">
+		                      		
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_751" value="751" type="checkbox" class="child_checkbox flat" data-parent-priv-id="750" > Student Fee Payment
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_752" value="752" type="checkbox" class="child_checkbox flat" data-parent-priv-id="750" > Monthly Fee Payment
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_753" value="753" type="checkbox" class="child_checkbox flat" data-parent-priv-id="750" > Add Fee Discount
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_754" value="754" type="checkbox" class="child_checkbox flat" data-parent-priv-id="750" > Remove Fee Payment
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_755" value="755" type="checkbox" class="child_checkbox flat" data-parent-priv-id="750" > Add Fee Payment
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_756" value="756" type="checkbox" class="child_checkbox flat" data-parent-priv-id="750" > Demand Receipt
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_757" value="757" type="checkbox" class="child_checkbox flat" data-parent-priv-id="750" > Add Extra Fee Payment
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_758" value="758" type="checkbox" class="child_checkbox flat" data-parent-priv-id="750" > Bulk Discount
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_759" value="759" type="checkbox" class="child_checkbox flat" data-parent-priv-id="750" > Bulk Add Extra Fee
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_760" value="760" type="checkbox" class="child_checkbox flat" data-parent-priv-id="750" > Revert Fee Payment
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_761" value="761" type="checkbox" class="child_checkbox flat" data-parent-priv-id="750" > Late Fee Fine Rule
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_762" value="762" type="checkbox" class="child_checkbox flat" data-parent-priv-id="750" > Payment Date Change
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+		                      		</div>
+                      			
+		                      		<div class="col-md-3" style="margin-top: 13px;clear: left;">
+		                      			<div class="checkbox">
+				                            <label class="no-padding">
+				                            	
+				                            		<input name="parent_priv_input_800" value="800" id="parent_priv_input_800" type="checkbox" class="parent_checkbox flat" onchange="getSubChildPriv(this,800)" > Payment
+				                            	
+				                            </label>
+			                          	</div>
+		                      		</div>
+		                      		<div class="col-md-12" id="child_priv_div_800" style="display: none;">
+		                      		
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_801" value="801" type="checkbox" class="child_checkbox flat" data-parent-priv-id="800" > Manage Category
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_802" value="802" type="checkbox" class="child_checkbox flat" data-parent-priv-id="800" > Manage Product
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_803" value="803" type="checkbox" class="child_checkbox flat" data-parent-priv-id="800" > View Inventory Transaction
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_804" value="804" type="checkbox" class="child_checkbox flat" data-parent-priv-id="800" > Inventory Stock In
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_805" value="805" type="checkbox" class="child_checkbox flat" data-parent-priv-id="800" > Inventory Stock Out
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_806" value="806" type="checkbox" class="child_checkbox flat" data-parent-priv-id="800" > Inventory Additional Fields
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+		                      		</div>
+                      			
+		                      		<div class="col-md-3" style="margin-top: 13px;clear: left;">
+		                      			<div class="checkbox">
+				                            <label class="no-padding">
+				                            	
+				                            		<input name="parent_priv_input_850" value="850" id="parent_priv_input_850" type="checkbox" class="parent_checkbox flat" onchange="getSubChildPriv(this,850)" > Reports
+				                            	
+				                            </label>
+			                          	</div>
+		                      		</div>
+		                      		<div class="col-md-12" id="child_priv_div_850" style="display: none;">
+		                      		
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_851" value="851" type="checkbox" class="child_checkbox flat" data-parent-priv-id="850" > Download Receipt PDF
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_852" value="852" type="checkbox" class="child_checkbox flat" data-parent-priv-id="850" > Download Receipt Details
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_853" value="853" type="checkbox" class="child_checkbox flat" data-parent-priv-id="850" > Download Due Payment
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_854" value="854" type="checkbox" class="child_checkbox flat" data-parent-priv-id="850" > Available Stock Report
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_855" value="855" type="checkbox" class="child_checkbox flat" data-parent-priv-id="850" > Stock Transaction Report
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_856" value="856" type="checkbox" class="child_checkbox flat" data-parent-priv-id="850" > Due Payment With Detail
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_857" value="857" type="checkbox" class="child_checkbox flat" data-parent-priv-id="850" > New Admission Report
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_858" value="858" type="checkbox" class="child_checkbox flat" data-parent-priv-id="850" > Receipt Revert Report
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+		                      		</div>
+                      			
+		                      		<div class="col-md-3" style="margin-top: 13px;clear: left;">
+		                      			<div class="checkbox">
+				                            <label class="no-padding">
+				                            	
+				                            		<input name="parent_priv_input_900" value="900" id="parent_priv_input_900" type="checkbox" class="parent_checkbox flat" onchange="getSubChildPriv(this,900)" > Finance
+				                            	
+				                            </label>
+			                          	</div>
+		                      		</div>
+		                      		<div class="col-md-12" id="child_priv_div_900" style="display: none;">
+		                      		
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_901" value="901" type="checkbox" class="child_checkbox flat" data-parent-priv-id="900" > Create Finance Account
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_902" value="902" type="checkbox" class="child_checkbox flat" data-parent-priv-id="900" > Income & Expense Head
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_903" value="903" type="checkbox" class="child_checkbox flat" data-parent-priv-id="900" > Record Expense
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_904" value="904" type="checkbox" class="child_checkbox flat" data-parent-priv-id="900" > Record Income
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_905" value="905" type="checkbox" class="child_checkbox flat" data-parent-priv-id="900" > Account Balance Transfer
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_906" value="906" type="checkbox" class="child_checkbox flat" data-parent-priv-id="900" > Account Statement
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_907" value="907" type="checkbox" class="child_checkbox flat" data-parent-priv-id="900" > Daily Register
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_908" value="908" type="checkbox" class="child_checkbox flat" data-parent-priv-id="900" > Profit And Loss
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+		                      		</div>
+                      			
+		                      		<div class="col-md-3" style="margin-top: 13px;clear: left;">
+		                      			<div class="checkbox">
+				                            <label class="no-padding">
+				                            	
+				                            		<input name="parent_priv_input_950" value="950" id="parent_priv_input_950" type="checkbox" class="parent_checkbox flat" onchange="getSubChildPriv(this,950)" > Photo Attendance
+				                            	
+				                            </label>
+			                          	</div>
+		                      		</div>
+		                      		<div class="col-md-12" id="child_priv_div_950" style="display: none;">
+		                      		
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_951" value="951" type="checkbox" class="child_checkbox flat" data-parent-priv-id="950" > Register Photo
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_952" value="952" type="checkbox" class="child_checkbox flat" data-parent-priv-id="950" > Take Photo Attendance
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+		                      		</div>
+                      			
+		                      		<div class="col-md-3" style="margin-top: 13px;clear: left;">
+		                      			<div class="checkbox">
+				                            <label class="no-padding">
+				                            	
+				                            		<input name="parent_priv_input_1000" value="1000" id="parent_priv_input_1000" type="checkbox" class="parent_checkbox flat" onchange="getSubChildPriv(this,1000)" > Employee Leave
+				                            	
+				                            </label>
+			                          	</div>
+		                      		</div>
+		                      		<div class="col-md-12" id="child_priv_div_1000" style="display: none;">
+		                      		
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_1001" value="1001" type="checkbox" class="child_checkbox flat" data-parent-priv-id="1000" > Leave Type
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_1002" value="1002" type="checkbox" class="child_checkbox flat" data-parent-priv-id="1000" > Leave Assign
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_1003" value="1003" type="checkbox" class="child_checkbox flat" data-parent-priv-id="1000" > Add Leave
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_1004" value="1004" type="checkbox" class="child_checkbox flat" data-parent-priv-id="1000" > Apply Leave
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_1005" value="1005" type="checkbox" class="child_checkbox flat" data-parent-priv-id="1000" > Approve Leave
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+		                      		</div>
+                      			
+		                      		<div class="col-md-3" style="margin-top: 13px;clear: left;">
+		                      			<div class="checkbox">
+				                            <label class="no-padding">
+				                            	
+				                            		<input name="parent_priv_input_1050" value="1050" id="parent_priv_input_1050" type="checkbox" class="parent_checkbox flat" onchange="getSubChildPriv(this,1050)" > Employee Salary
+				                            	
+				                            </label>
+			                          	</div>
+		                      		</div>
+		                      		<div class="col-md-12" id="child_priv_div_1050" style="display: none;">
+		                      		
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_1051" value="1051" type="checkbox" class="child_checkbox flat" data-parent-priv-id="1050" > Manage Salary Head
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_1052" value="1052" type="checkbox" class="child_checkbox flat" data-parent-priv-id="1050" > Salary Structure
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_1053" value="1053" type="checkbox" class="child_checkbox flat" data-parent-priv-id="1050" > Assign Salary Structure
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_1054" value="1054" type="checkbox" class="child_checkbox flat" data-parent-priv-id="1050" > Create Salary Payment
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_1055" value="1055" type="checkbox" class="child_checkbox flat" data-parent-priv-id="1050" > Salary Payment Process
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_1056" value="1056" type="checkbox" class="child_checkbox flat" data-parent-priv-id="1050" > Print Payslip
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_1057" value="1057" type="checkbox" class="child_checkbox flat" data-parent-priv-id="1050" > Delete Pending Salary
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_1058" value="1058" type="checkbox" class="child_checkbox flat" data-parent-priv-id="1050" > Completed Salary Payment
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_1059" value="1059" type="checkbox" class="child_checkbox flat" data-parent-priv-id="1050" > Create Salary Loan
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_1060" value="1060" type="checkbox" class="child_checkbox flat" data-parent-priv-id="1050" > Approve Salary Loan
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_1061" value="1061" type="checkbox" class="child_checkbox flat" data-parent-priv-id="1050" > Add Salary Loan EMI
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_1062" value="1062" type="checkbox" class="child_checkbox flat" data-parent-priv-id="1050" > View Salary Loan Transaction
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_1062" value="1062" type="checkbox" class="child_checkbox flat" data-parent-priv-id="1050" > Salary Loan Report
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_1062" value="1062" type="checkbox" class="child_checkbox flat" data-parent-priv-id="1050" > My Salary Loan
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_1063" value="1063" type="checkbox" class="child_checkbox flat" data-parent-priv-id="1050" > All Approved Loan
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+		                      		</div>
+                      			
+		                      		<div class="col-md-3" style="margin-top: 13px;clear: left;">
+		                      			<div class="checkbox">
+				                            <label class="no-padding">
+				                            	
+				                            		<input name="parent_priv_input_1100" value="1100" id="parent_priv_input_1100" type="checkbox" class="parent_checkbox flat" onchange="getSubChildPriv(this,1100)" > Admission
+				                            	
+				                            </label>
+			                          	</div>
+		                      		</div>
+		                      		<div class="col-md-12" id="child_priv_div_1100" style="display: none;">
+		                      		
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_1101" value="1101" type="checkbox" class="child_checkbox flat" data-parent-priv-id="1100" > Start Admission
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_1102" value="1102" type="checkbox" class="child_checkbox flat" data-parent-priv-id="1100" > Add Primary Source
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_1103" value="1103" type="checkbox" class="child_checkbox flat" data-parent-priv-id="1100" > Admission Enquiry
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_1104" value="1104" type="checkbox" class="child_checkbox flat" data-parent-priv-id="1100" > My Admission Enquiry
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_1105" value="1105" type="checkbox" class="child_checkbox flat" data-parent-priv-id="1100" > All Admission Enquiry
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_1106" value="1106" type="checkbox" class="child_checkbox flat" data-parent-priv-id="1100" > Enquiry Report
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_1107" value="1107" type="checkbox" class="child_checkbox flat" data-parent-priv-id="1100" > Upload Enquiry
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+		                      		</div>
+                      			
+		                      		<div class="col-md-3" style="margin-top: 13px;clear: left;">
+		                      			<div class="checkbox">
+				                            <label class="no-padding">
+				                            	
+				                            		<input name="parent_priv_input_1150" value="1150" id="parent_priv_input_1150" type="checkbox" class="parent_checkbox flat" onchange="getSubChildPriv(this,1150)" > Website
+				                            	
+				                            </label>
+			                          	</div>
+		                      		</div>
+		                      		<div class="col-md-12" id="child_priv_div_1150" style="display: none;">
+		                      		
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_1151" value="1151" type="checkbox" class="child_checkbox flat" data-parent-priv-id="1150" > Flash News
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_1152" value="1152" type="checkbox" class="child_checkbox flat" data-parent-priv-id="1150" > Page Setup
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_1153" value="1153" type="checkbox" class="child_checkbox flat" data-parent-priv-id="1150" > Page Content Setup
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+		                      		</div>
+                      			
+		                      		<div class="col-md-3" style="margin-top: 13px;clear: left;">
+		                      			<div class="checkbox">
+				                            <label class="no-padding">
+				                            	
+				                            		<input name="parent_priv_input_1200" value="1200" id="parent_priv_input_1200" type="checkbox" class="parent_checkbox flat" onchange="getSubChildPriv(this,1200)" > Mobile App
+				                            	
+				                            </label>
+			                          	</div>
+		                      		</div>
+		                      		<div class="col-md-12" id="child_priv_div_1200" style="display: none;">
+		                      		
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_1201" value="1201" type="checkbox" class="child_checkbox flat" data-parent-priv-id="1200" > Parent Login Manage
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_1202" value="1202" type="checkbox" class="child_checkbox flat" data-parent-priv-id="1200" > Create Parent Login
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+		                      		</div>
+                      			
+		                      		<div class="col-md-3" style="margin-top: 13px;clear: left;">
+		                      			<div class="checkbox">
+				                            <label class="no-padding">
+				                            	
+				                            		<input name="parent_priv_input_1250" value="1250" id="parent_priv_input_1250" type="checkbox" class="parent_checkbox flat" onchange="getSubChildPriv(this,1250)" > Homework
+				                            	
+				                            </label>
+			                          	</div>
+		                      		</div>
+		                      		<div class="col-md-12" id="child_priv_div_1250" style="display: none;">
+		                      		
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_1251" value="1251" type="checkbox" class="child_checkbox flat" data-parent-priv-id="1250" > Create Homework
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_1252" value="1252" type="checkbox" class="child_checkbox flat" data-parent-priv-id="1250" > Manage Homework
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_1253" value="1253" type="checkbox" class="child_checkbox flat" data-parent-priv-id="1250" > Update Homework Report
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_1254" value="1254" type="checkbox" class="child_checkbox flat" data-parent-priv-id="1250" > Download Homework Report
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+		                      		</div>
+                      			
+		                      		<div class="col-md-3" style="margin-top: 13px;clear: left;">
+		                      			<div class="checkbox">
+				                            <label class="no-padding">
+				                            	
+				                            		<input name="parent_priv_input_1300" value="1300" id="parent_priv_input_1300" type="checkbox" class="parent_checkbox flat" onchange="getSubChildPriv(this,1300)" > Study Document
+				                            	
+				                            </label>
+			                          	</div>
+		                      		</div>
+		                      		<div class="col-md-12" id="child_priv_div_1300" style="display: none;">
+		                      		
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_1301" value="1301" type="checkbox" class="child_checkbox flat" data-parent-priv-id="1300" > Create Study Document
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_1302" value="1302" type="checkbox" class="child_checkbox flat" data-parent-priv-id="1300" > View Study Document
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_1303" value="1303" type="checkbox" class="child_checkbox flat" data-parent-priv-id="1300" > Delete Study Document
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+		                      		</div>
+                      			
+		                      		<div class="col-md-3" style="margin-top: 13px;clear: left;">
+		                      			<div class="checkbox">
+				                            <label class="no-padding">
+				                            	
+				                            		<input name="parent_priv_input_1350" value="1350" id="parent_priv_input_1350" type="checkbox" class="parent_checkbox flat" onchange="getSubChildPriv(this,1350)" > Order
+				                            	
+				                            </label>
+			                          	</div>
+		                      		</div>
+		                      		<div class="col-md-12" id="child_priv_div_1350" style="display: none;">
+		                      		
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_1351" value="1351" type="checkbox" class="child_checkbox flat" data-parent-priv-id="1350" > Add Order
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_1352" value="1352" type="checkbox" class="child_checkbox flat" data-parent-priv-id="1350" > All Order
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_1353" value="1353" type="checkbox" class="child_checkbox flat" data-parent-priv-id="1350" > My Order
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_1502" value="1502" type="checkbox" class="child_checkbox flat" data-parent-priv-id="1350" > Student Bonafide
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+		                      		</div>
+                      			
+		                      		<div class="col-md-3" style="margin-top: 13px;clear: left;">
+		                      			<div class="checkbox">
+				                            <label class="no-padding">
+				                            	
+				                            		<input name="parent_priv_input_1400" value="1400" id="parent_priv_input_1400" type="checkbox" class="parent_checkbox flat" onchange="getSubChildPriv(this,1400)" > Rate Plan And Tax
+				                            	
+				                            </label>
+			                          	</div>
+		                      		</div>
+		                      		<div class="col-md-12" id="child_priv_div_1400" style="display: none;">
+		                      		
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_1401" value="1401" type="checkbox" class="child_checkbox flat" data-parent-priv-id="1400" > Add Rate Plan
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_1402" value="1402" type="checkbox" class="child_checkbox flat" data-parent-priv-id="1400" > All Rate Plan
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_1403" value="1403" type="checkbox" class="child_checkbox flat" data-parent-priv-id="1400" > Product Tax Rule
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+		                      		</div>
+                      			
+		                      		<div class="col-md-3" style="margin-top: 13px;clear: left;">
+		                      			<div class="checkbox">
+				                            <label class="no-padding">
+				                            	
+				                            		<input name="parent_priv_input_1450" value="1450" id="parent_priv_input_1450" type="checkbox" class="parent_checkbox flat" onchange="getSubChildPriv(this,1450)" > Online Class
+				                            	
+				                            </label>
+			                          	</div>
+		                      		</div>
+		                      		<div class="col-md-12" id="child_priv_div_1450" style="display: none;">
+		                      		
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_1451" value="1451" type="checkbox" class="child_checkbox flat" data-parent-priv-id="1450" > Add Online Class
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_1452" value="1452" type="checkbox" class="child_checkbox flat" data-parent-priv-id="1450" > All Online Class
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_1453" value="1453" type="checkbox" class="child_checkbox flat" data-parent-priv-id="1450" > Attend Online Class
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_1454" value="1454" type="checkbox" class="child_checkbox flat" data-parent-priv-id="1450" > Update/Cancel Online Class
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+		                      		</div>
+                      			
+		                      		<div class="col-md-3" style="margin-top: 13px;clear: left;">
+		                      			<div class="checkbox">
+				                            <label class="no-padding">
+				                            	
+				                            		<input name="parent_priv_input_1500" value="1500" id="parent_priv_input_1500" type="checkbox" class="parent_checkbox flat" onchange="getSubChildPriv(this,1500)" > Certificate
+				                            	
+				                            </label>
+			                          	</div>
+		                      		</div>
+		                      		<div class="col-md-12" id="child_priv_div_1500" style="display: none;">
+		                      		
+				                      					<div class="col-md-3" style="margin-top: 13px;">
+							                      			<div class="checkbox">
+									                            <label class="no-padding">
+									                              
+									                              		<input name="child_priv_input_1501" value="1501" type="checkbox" class="child_checkbox flat" data-parent-priv-id="1500" > School Leaving
+									                              
+									                            </label> 
+								                          	</div>
+							                      		</div>
+				                      				
+		                      		</div>
+                      			
+                      		<input type="hidden" name="hidden_parent_priv_fields" id="hidden_parent_priv_fields" value="" />
+                      		<input type="hidden" name="hidden_child_priv_fields" id="hidden_child_priv_fields" value="" />
+                      	</div>
+                      	<div class="row">
+                      		<div class="col-md-12 text-right">
+                      			<button type="button" onclick="getSubmitWithPrivileges()" class="btn btn-success">Submit</button>
+                      		</div>
+                      	</div>
+                </div>
+               </div>
+             </div>
+             </form>
+           </div>
+         </div>
+       </div>
+        <!-- /page content -->
+
+	<form id="edit_designation_form" action="add-designation">
+		<input type="hidden" name="edit_designation" id="edit_designation" />
+	</form>
+        	<!-- footer content -->
+        <footer>
+          <div class="pull-right">
+            Â©2025 Education Desk. All Rights Reserved.
+          </div>
+          <div class="clearfix"></div>
+        </footer>
+        <!-- /footer content -->
+        <div id="sys_loader_" style="display: none;">
+           <div id="sys_loader_bg" class="loader-backbg">
+           </div>
+           	<div class="loader-body-cls">
+          		<div class="spinner" role="spinner" style="float: left;margin-right: 15px;margin-top: 3px;">
+           			<div class="spinner-icon"></div>
+           		</div>
+           		Please Wait...
+           	</div>
+         </div>
+        <!-- jQuery -->
+    <script src="/static/vendors/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="/static/vendors/bootstrap/dist/js/bootstrap.min.js?v=1.1"></script>
+    <!-- FastClick -->
+    <script src="/static/vendors/fastclick/lib/fastclick.js"></script>
+    <!-- NProgress -->
+    <script src="/static/vendors/nprogress/nprogress.js"></script>
+    <!-- Chart.js -->
+    <script src="/static/vendors/Chart.js/dist/Chart.min.js"></script>
+    <!-- ECharts -->
+    <script src="/static/vendors/echarts/dist/echarts.min.js"></script>
+    <!-- gauge.js -->
+    <script src="/static/vendors/gauge.js/dist/gauge.min.js"></script>
+    <!-- iCheck -->
+    <script src="/static/vendors/iCheck/icheck.min.js"></script>
+    <!-- bootstrap-progressbar -->
+    <script src="/static/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+    <!-- iCheck -->
+    <script src="/static/vendors/iCheck/icheck.min.js"></script>
+    <!-- Skycons -->
+    <script src="/static/vendors/skycons/skycons.js"></script>
+    <!-- Flot -->
+    <script src="/static/vendors/Flot/jquery.flot.js"></script>
+    <script src="/static/vendors/Flot/jquery.flot.pie.js"></script>
+    <script src="/static/vendors/Flot/jquery.flot.time.js"></script>
+    <script src="/static/vendors/Flot/jquery.flot.stack.js"></script>
+    <script src="/static/vendors/Flot/jquery.flot.resize.js"></script>
+    <!-- Flot plugins -->
+    <script src="/static/vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script>
+    <script src="/static/vendors/flot-spline/js/jquery.flot.spline.min.js"></script>
+    <script src="/static/vendors/flot.curvedlines/curvedLines.js"></script>
+    <!-- DateJS -->
+    <script src="/static/vendors/DateJS/build/date.js"></script>
+    <!-- JQVMap -->
+    <script src="/static/vendors/jqvmap/dist/jquery.vmap.js"></script>
+    <script src="/static/vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
+    <script src="/static/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
+    <!-- bootstrap-daterangepicker -->
+    <script src="/static/vendors/moment/min/moment.min.js"></script>
+    <script src="/static/vendors/bootstrap-daterangepicker/daterangepicker.js?v=1.4"></script>
+    
+    <!-- bootstrap-wysiwyg -->
+    <script src="/static/vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js"></script>
+    <script src="/static/vendors/jquery.hotkeys/jquery.hotkeys.js"></script>
+    <script src="/static/vendors/google-code-prettify/src/prettify.js"></script>
+    <!-- jQuery Tags Input -->
+    <script src="/static/vendors/jquery.tagsinput/src/jquery.tagsinput.js"></script>
+    <!-- Switchery -->
+    <script src="/static/vendors/switchery/dist/switchery.min.js"></script>
+    <!-- Select2 -->
+    <script src="/static/vendors/select2/dist/js/select2.full.min.js"></script>
+    <!-- Parsley -->
+    <script src="/static/vendors/parsleyjs/dist/parsley.min.js"></script>
+    <!-- Autosize -->
+    <script src="/static/vendors/autosize/dist/autosize.min.js"></script>
+    <!-- jQuery autocomplete -->
+    <script src="/static/vendors/devbridge-autocomplete/dist/jquery.autocomplete.min.js"></script>
+    <!-- starrr -->
+    <script src="/static/vendors/starrr/dist/starrr.js"></script>
+    
+    <!-- Datatables -->
+    <script src="/static/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/static/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="/static/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/static/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+    <script src="/static/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="/static/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="/static/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="/static/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+    <script src="/static/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+    <script src="/static/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="/static/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+    <script src="/static/vendors/jszip/dist/jszip.min.js"></script>
+    <script src="/static/vendors/pdfmake/build/pdfmake.min.js"></script>
+    <script src="/static/vendors/pdfmake/build/vfs_fonts.js"></script>
+    <script src="/static/vendors/pnotify/dist/pnotify.js"></script>
+    <script src="/static/vendors/pnotify/dist/pnotify.buttons.js"></script>
+    <script src="/static/vendors/pnotify/dist/pnotify.nonblock.js"></script>
+    
+    <!-- ClockPicker script -->
+	<script type="text/javascript" src="/static/assets/clockpicker/bootstrap-clockpicker.min.js?v=1.6"></script>
+    
+    <script type="text/javascript" src="/static/assets/jquery-validation/js/jquery.validate.js"></script>
+    <script type="text/javascript" src="/static/assets/bootstrap-switch/dist/js/bootstrap-switch.js"></script>
+    
+    <!-- Custom Theme Scripts -->
+    <script src="/static/build/js/custom.js?v=4.2"></script>
+    <script src="/static/build/js/common.js?v=2.4"></script>
+    <script>
+    document.addEventListener("click", function (e) {
+        const link = e.target.closest("a");
+        if (!link) return; // Not inside an <a>
+
+        const url = link.getAttribute("href");
+        if (url.includes("doc3") && url.includes("pdf")) {
+            e.preventDefault();
+            console.log(url);
+            const version = Date.now();
+            const newUrl = url.includes("?")?(url+"&version="+version):(url+"?version="+version);
+            console.log(newUrl);
+            window.open(newUrl, "_blank");
+        }
+    });
+    </script>
+
+      </div>
+    </div>
+	<script type="text/javascript">
+		function getNewDesignation(htmlObj){
+			var designationId = htmlObj.value;
+			var designationName = htmlObj.options[htmlObj.selectedIndex].text;
+			//alert(designationId + ":" + designationName);
+            if(designationId > 0) {
+            	//$('#new_desig_div').hide();
+            	$('#new_designation_name').val(designationName)
+            	$('#new_designation_name').removeAttr('required');
+            	$('#edit_designation').val(designationId)
+            	$('#edit_designation_form').submit();
+            }
+            if(designationId == -1){
+            	//$('#new_desig_div').show();
+            	$('#new_designation_name').val("")
+            	$('#new_designation_name').attr('required','required');
+            	$('#edit_designation').val("")
+            	$('#edit_designation_form').submit();
+            }
+		}
+		
+		$('.parent_checkbox').on('ifChecked', function () { 
+			var privId = $(this).val();
+			$('#child_priv_div_'+privId).show();
+			$('#child_priv_div_'+privId).find('.child_checkbox').iCheck('check');	
+		});
+		
+		$('.parent_checkbox').on('ifUnchecked', function () { 
+			var privId = $(this).val();
+			$('#child_priv_div_'+privId).hide();
+			$('#child_priv_div_'+privId).find('.child_checkbox').iCheck('uncheck');
+		});
+		
+		//child_checkbox
+		$('.child_checkbox').on('ifChecked', function () { 
+			var parentPrivilegesId = $(this).attr("data-parent-priv-id");
+			//$('#parent_priv_input_'+parentPrivilegesId).iCheck('check');	
+		});
+		
+		$('.child_checkbox').on('ifUnchecked', function () { 
+			var parentPrivilegesId = $(this).attr("data-parent-priv-id");
+			//$('#parent_priv_input_'+parentPrivilegesId).iCheck('uncheck');
+		});
+		
+		function getSubChildPriv(htmlObj,privId){
+			
+		}
+		
+		function childPrivileges(parentPrivilegesId,childPrivilegesId){
+			var showPrivilege=false;
+			$('#child_priv_div_'+parentPrivilegesId).find(".child_checkbox").each(function() {
+				if($(this).is(':checked')) {
+					showPrivilege = true;	
+				}
+			});
+			if(!showPrivilege){
+				$('#parent_priv_input_'+parentPrivilegesId).prop('checked',false);
+			}else{
+				$('#parent_priv_input_'+parentPrivilegesId).prop('checked',true);
+			}
+		}
+		
+		function getSubmitWithPrivileges(){
+			var selectedVal = "";
+			$('.parent_checkbox').each(function(){
+				if($(this).is(':checked')) {
+					if(selectedVal==""){
+						 selectedVal = $(this).val();
+					 }else{
+						 selectedVal = selectedVal + "," + $(this).val();
+					 }
+				}
+			});
+			//alert(selectedVal);
+			$('#hidden_parent_priv_fields').val(selectedVal);
+			var childSelectedVal = "";
+			$('.child_checkbox').each(function(){
+				if($(this).is(':checked')) {
+					if(childSelectedVal==""){
+						childSelectedVal = $(this).val();
+					 }else{
+						 childSelectedVal = childSelectedVal + "," + $(this).val();
+					 }
+				}
+			});
+			if (selectedVal==null || selectedVal=="" || typeof selectedVal == 'undefined'){
+				childSelectedVal="-1";
+			}
+			$('#hidden_child_priv_fields').val(childSelectedVal);
+			$('#add-designation').submit();
+		}
+		
+		// For oncheck callback
+		$('#admin_priv_input').on('ifChecked', function () {
+			$('#privileges_list').hide();
+			$('.parent_checkbox').prop('checked',false);
+			$('.child_checkbox').prop('checked',false);
+			$('#hidden_parent_priv_fields').val("");
+			$('#hidden_child_priv_fields').val("-1");
+		});
+
+		// For onUncheck callback
+		$('#other_priv_input').on('ifChecked', function () { 
+			$('#privileges_list').show();			
+		});
+		
+	</script>
+  </body>
+</html>
+

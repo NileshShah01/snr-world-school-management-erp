@@ -1,0 +1,43 @@
+<section id="leaveCalendarSection" class="dashboard-section hidden">
+    <div class="flex flex-between align-center mb-1">
+        <div>
+            <h1><i class="fas fa-calendar-alt text-primary"></i> Leave Calendar</h1>
+            <p class="text-sm text-muted">Approved leaves overview</p>
+        </div>
+        <button class="btn-portal btn-ghost btn-sm" onclick="loadLeaveCalendar()"><i class="fas fa-sync"></i> Refresh</button>
+    </div>
+    <div class="card p-1-5">
+        <div class="flex gap-1 mb-1" style="max-width:400px;">
+            <div style="flex:1;">
+                <label class="form-label text-xs">Session</label>
+                <select id="calSessionFilter" class="form-control form-control-sm" onchange="loadLeaveCalendar()">
+                    <option value="">Current</option>
+                </select>
+            </div>
+            <div style="flex:1;">
+                <label class="form-label text-xs">Staff</label>
+                <select id="calStaffFilter" class="form-control form-control-sm" onchange="loadLeaveCalendar()">
+                    <option value="">All Staff</option>
+                </select>
+            </div>
+        </div>
+        <div class="table-container">
+            <table class="portal-table">
+                <thead>
+                    <tr>
+                        <th>Staff</th>
+                        <th>Leave Type</th>
+                        <th>From</th>
+                        <th>To</th>
+                        <th>Days</th>
+                        <th>Reason</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="calLeaveBody">
+                    <tr><td colspan="7" class="text-center text-muted p-2">Loading...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>

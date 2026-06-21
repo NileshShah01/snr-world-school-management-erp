@@ -1,0 +1,66 @@
+<section id="bonafideCertificateSection" class="dashboard-section hidden">
+                <div class="header">
+                    <div>
+                        <h1><i class="fas fa-certificate text-primary"></i> Bonafide Certificate</h1>
+                        <p>Generate student bonafide certificate for any purpose</p>
+                    </div>
+                </div>
+                <div class="card p-2 max-w-900">
+                    <div class="grid-3 gap-1 mb-1-5">
+                        <div class="form-group">
+                            <label>Session *</label>
+                            <select id="cert_bonafide_session" class="form-control" onchange="loadCertClasses('bonafide')"></select>
+                        </div>
+                        <div class="form-group">
+                            <label>Class *</label>
+                            <select id="cert_bonafide_class" class="form-control" onchange="loadCertSections('bonafide')"></select>
+                        </div>
+                        <div class="form-group">
+                            <label>Section</label>
+                            <select id="cert_bonafide_section" class="form-control" onchange="loadCertStudents('bonafide')"></select>
+                        </div>
+                    </div>
+                    <div class="form-group mb-1-5">
+                        <label>Student *</label>
+                        <select id="cert_bonafide_student" class="form-control" onchange="populateCertStudent('bonafide')"></select>
+                    </div>
+                    <div class="grid-2 gap-1-5 mb-1-5">
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input type="text" id="cert_bonafide_name" class="form-control" readonly />
+                        </div>
+                        <div class="form-group">
+                            <label>Father's Name</label>
+                            <input type="text" id="cert_bonafide_father" class="form-control" readonly />
+                        </div>
+                        <div class="form-group">
+                            <label>Date of Birth</label>
+                            <input type="date" id="cert_bonafide_dob" class="form-control" readonly />
+                        </div>
+                        <div class="form-group">
+                            <label>Roll No</label>
+                            <input type="text" id="cert_bonafide_roll" class="form-control" readonly />
+                        </div>
+                    </div>
+                    <div class="form-group mb-1-5">
+                        <label>Purpose</label>
+                        <input type="text" id="cert_bonafide_purpose" class="form-control" placeholder="e.g. Bank account opening, Passport, etc." />
+                    </div>
+                    <div class="form-group mb-1-5">
+                        <label>Remarks (optional)</label>
+                        <textarea id="cert_bonafide_remarks" class="form-control" rows="2"></textarea>
+                    </div>
+                    <div class="form-group mb-1-5">
+                        <label>Ref No (auto)</label>
+                        <input type="text" id="cert_bonafide_refno" class="form-control" readonly placeholder="Auto-generated on Generate" />
+                    </div>
+                    <div class="flex gap-1">
+                        <button class="btn-portal btn-primary" onclick="generateCertificate('bonafide')">
+                            <i class="fas fa-magic"></i> Generate Certificate
+                        </button>
+                        <button class="btn-portal btn-secondary" onclick="clearCertFields('bonafide')">
+                            <i class="fas fa-eraser"></i> Reset
+                        </button>
+                    </div>
+                </div>
+            </section>

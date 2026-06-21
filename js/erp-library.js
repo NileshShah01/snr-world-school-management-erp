@@ -193,7 +193,7 @@ const ERPLibrary = {
     },
 
     async returnBook(txId, bookId) {
-        if (!confirm('Confirm book return?')) return;
+        if (!await window.showConfirmModal({ title: 'Confirm Return', message: 'Confirm book return?', icon: 'fa-book', confirmText: 'Confirm Return' })) return;
 
         try {
             showLoading(true);

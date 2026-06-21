@@ -267,7 +267,7 @@ async function runAIExtraction() {
         renderEditor();
         renderPaper();
         toggleLoading(false);
-        alert('AI Successfully extracted questions from your images!');
+        showToast('AI Successfully extracted questions from your images!', 'success');
     }, 2000);
 }
 

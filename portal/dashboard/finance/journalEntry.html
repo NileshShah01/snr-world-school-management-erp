@@ -1,0 +1,28 @@
+<section id="journalEntrySection" class="dashboard-section hidden">
+                <div class="header">
+                    <div>
+                        <h1><i class="fas fa-book text-primary"></i> Journal Entry</h1>
+                        <p>Record double-entry vouchers: Payment, Receipt, Journal, and Contra</p>
+                    </div>
+                    <button class="btn-portal btn-primary" onclick="openAddVoucherModal()">
+                        <i class="fas fa-plus"></i> New Voucher
+                    </button>
+                </div>
+                <div class="table-container">
+                    <table class="portal-table">
+                        <thead>
+                            <tr>
+                                <th>Voucher #</th>
+                                <th>Type</th>
+                                <th>Date</th>
+                                <th>Particulars</th>
+                                <th class="text-right">Amount</th>
+                                <th class="text-center">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="financeVoucherTableBody">
+                            <tr><td colspan="6" class="text-center text-muted p-2">Loading vouchers...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>

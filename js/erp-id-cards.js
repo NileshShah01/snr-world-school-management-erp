@@ -4,6 +4,27 @@
 
 let selectedStudentData = null;
 
+// Resolve a schoolLogo reference to a data URL. Accepts:
+//   - bare filename   ('ApexPublicSchoolLogo.png')  → looked up in media library
+//   - http(s) URL     ('https://cdn.example.com/..') → returned as-is
+//   - data URL        ('data:image/png;base64,...')  → returned as-is
+//   - absolute path   ('/images/foo.png')            → resolved to media library if filename
+// Falls back to the input string on error (e.g. media-loader not ready).
+async function resolveSchoolLogoUrl(ref) {
+    if (!ref) return '';
+    if (ref.startsWith('data:') || ref.startsWith('http://') || ref.startsWith('https://')) return ref;
+    // Extract bare filename
+    const stripped = ref.replace(/^(\.\/|\/)+/, '').replace(/^images\//, '');
+    if (!/\.(jpe?g|png)$/i.test(stripped)) return ref;
+    if (window.SNRMedia) {
+        try {
+            const url = await window.SNRMedia.getDataUrl(stripped);
+            return url || ref;
+        } catch (e) { return ref; }
+    }
+    return ref;
+}
+
 async function initERPIdCards() {
     console.log('Initializing Premium ID Card Module...');
     populateTemplateGallery();
@@ -144,7 +165,7 @@ async function updateIdPreviewWithData(data) {
         photo: data.photo_url || '',
         orientation: orientation,
         schoolName: window.SCHOOL_NAME || 'School ERP',
-        schoolLogo: window.SCHOOL_LOGO || '',
+        schoolLogo: await resolveSchoolLogoUrl(window.SCHOOL_LOGO || 'ApexPublicSchoolLogo.png'),
     };
 
     // Use template function
@@ -205,7 +226,7 @@ function selectTemplate(templateKey, element) {
     updateIdPreview();
 }
 
-function showTemplatePreview(templateKey) {
+async function showTemplatePreview(templateKey) {
     const container = document.getElementById('idCardPreviewContainer');
     if (!container) return;
 
@@ -223,12 +244,15 @@ function showTemplatePreview(templateKey) {
         photo: '',
         orientation: document.getElementById('idCardOrientation').value || 'vertical',
         schoolName: window.SCHOOL_NAME || 'School ERP',
-        schoolLogo: window.SCHOOL_LOGO || '/images/logo.png',
+        schoolLogo: window.SCHOOL_LOGO || 'logo.png',
         schoolContact: window.SCHOOL_PHONE || '',
         schoolWebsite: window.SCHOOL_WEBSITE || '',
         trustName: window.TRUST_NAME || '',
         address_summary: window.SCHOOL_ADDRESS || '',
     };
+
+    // Resolve school logo to a data URL (handles bare filenames from media library)
+    sampleData.schoolLogo = await resolveSchoolLogoUrl(sampleData.schoolLogo);
 
     const templateFn = window.ID_TEMPLATES[templateKey] || window.ID_TEMPLATES.format1;
     container.innerHTML = templateFn(sampleData);
@@ -253,7 +277,7 @@ async function updateIdPreview() {
             ...selectedStudentData,
             orientation: orientation,
             schoolName: window.SCHOOL_NAME || 'School ERP',
-            schoolLogo: window.SCHOOL_LOGO || '/images/logo.png',
+            schoolLogo: window.SCHOOL_LOGO || 'logo.png',
             schoolContact: window.SCHOOL_PHONE || '',
             schoolWebsite: window.SCHOOL_WEBSITE || '',
             trustName: window.TRUST_NAME || '',
@@ -274,6 +298,9 @@ async function updateIdPreview() {
                 selectedStudentData.bloodGroup || selectedStudentData.blood_group || selectedStudentData.blood || 'N/A',
             photo: selectedStudentData.photo_url || selectedStudentData.photo || '', // Handled by template if empty
         };
+
+        // Resolve school logo to a data URL
+        data.schoolLogo = await resolveSchoolLogoUrl(data.schoolLogo);
 
         const templateFn = window.ID_TEMPLATES[templateKey] || window.ID_TEMPLATES.template1;
         container.innerHTML = templateFn(data);
@@ -419,7 +446,7 @@ async function generateBatchIdCards() {
                 ...s,
                 orientation: orientation,
                 schoolName: window.SCHOOL_NAME || 'School ERP',
-                schoolLogo: window.SCHOOL_LOGO || '/images/logo.png',
+                schoolLogo: window.SCHOOL_LOGO || 'logo.png',
                 schoolContact: window.SCHOOL_PHONE || '',
                 schoolWebsite: window.SCHOOL_WEBSITE || '',
                 trustName: window.TRUST_NAME || '',
@@ -437,6 +464,9 @@ async function generateBatchIdCards() {
                 bloodGroup: s.bloodGroup || s.blood_group || s.blood || 'N/A',
                 photo: s.photo_url || s.photo || '',
             };
+
+            // Resolve school logo to a data URL
+            data.schoolLogo = await resolveSchoolLogoUrl(data.schoolLogo);
 
             renderDiv.innerHTML = templateFn(data);
             const cardEl = renderDiv.querySelector('.id-card-wrapper');

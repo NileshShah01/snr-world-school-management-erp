@@ -1,0 +1,61 @@
+<section id="feeMasterSection" class="dashboard-section card hidden">
+                    <div class="header">
+                        <div>
+                            <h1><i class="fas fa-coins text-primary"></i> Fee Master Configuration</h1>
+                            <p>Define fee structures, types, and amounts for each class and session</p>
+                        </div>
+                        <button
+                            class="btn-portal btn-primary"
+                            onclick="openAddFeeStructureModal()"
+                            title="Add New Fee Type"
+                        >
+                            <i class="fas fa-plus"></i> Add New Fee Type
+                        </button>
+                    </div>
+
+                    <div class="card mb-2 bg-slate-light p-1-5">
+                        <div class="grid-3 m-0">
+                            <div class="form-group">
+                                <label>Session</label>
+                                <select
+                                    id="feeMasterSessionFilter"
+                                    onchange="loadFeeMaster()"
+                                    class="form-control"
+                                    title="Filter by Session"
+                                ></select>
+                            </div>
+                            <div class="form-group">
+                                <label>Target Class</label>
+                                <select
+                                    id="feeMasterClassFilter"
+                                    onchange="loadFeeMaster()"
+                                    class="form-control"
+                                    title="Filter by Class"
+                                >
+                                    <option value="">All Classes</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="table-container">
+                        <table class="portal-table">
+                            <thead>
+                                <tr>
+                                    <th>Fee Name</th>
+                                    <th>Class</th>
+                                    <th>Amount</th>
+                                    <th>Frequency</th>
+                                    <th>Due Month</th>
+                                    <th>Status</th>
+                                    <th class="text-center">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="feeMasterTableBody">
+                                <tr>
+                                    <td colspan="7" class="text-center">Select filters to view fee structure</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>

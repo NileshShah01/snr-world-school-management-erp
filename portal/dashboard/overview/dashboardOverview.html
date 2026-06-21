@@ -1,0 +1,75 @@
+<section id="dashboardOverviewSection" class="dashboard-section active">
+                    <div class="stats-grid" id="statsOverview">
+                        <div class="stat-card">
+                            <div class="stat-icon bg-sky-opacity-10 text-sky">
+                                <i class="fas fa-user-graduate" title="Total Students"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Total Students</h3>
+                                <p id="totalStudentsCount">Loading...</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon bg-emerald-opacity-10 text-emerald">
+                                <i class="fas fa-chalkboard-teacher" title="Total Teachers"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Total Teachers</h3>
+                                <p id="totalTeachersCount">Loading...</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon bg-amber-opacity-10 text-amber">
+                                <i class="fas fa-indian-rupee-sign" title="Monthly Fees"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Monthly Fees</h3>
+                                <p id="monthlyFeesTotal">Loading...</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon bg-rose-opacity-10 text-rose">
+                                <i class="fas fa-clock" title="Today's Attendance"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Today's Attendance</h3>
+                                <p id="attendanceRate">Loading...</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Analytics Section -->
+                    <div id="analyticsHub" class="mt-2-5">
+                        <h2 class="text-lg font-bold flex align-center gap-0-5 mb-1-5">
+                            <i class="fas fa-chart-pie"></i> Visual Insights
+                        </h2>
+                        <div class="grid-cols-auto-400 gap-1-5">
+                            <div class="card p-1-5">
+                                <h4 class="mb-1">
+                                    <i class="fas fa-chart-line text-emerald"></i> Fee Collection Trend
+                                </h4>
+                                <canvas id="feeGrowthChart" height="250"></canvas>
+                            </div>
+                            <div class="card p-1-5">
+                                <h4 class="mb-1"><i class="fas fa-chart-area text-sky"></i> Enrollment Growth</h4>
+                                <canvas id="enrollmentChart" height="250"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-2-5 grid-cols-2-1 gap-2">
+                        <div class="card p-1-5">
+                            <h3 class="mb-1-5">Recent Admissions</h3>
+                            <div id="recentAdmissionsList" class="text-center text-muted p-2">
+                                <i class="fas fa-user-plus text-3xl mb-1 opacity-30"></i>
+                                <p>No recent admissions to show.</p>
+                            </div>
+                        </div>
+                        <div class="card p-1-5">
+                            <h3 class="mb-1-5">Quick Notices</h3>
+                            <div id="dashboardNotices" class="flex flex-col gap-1">
+                                <p class="text-muted text-sm">No active notices.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>

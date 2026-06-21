@@ -1,0 +1,124 @@
+<section id="cmsImgAdmissionsSection" class="dashboard-section hidden">
+                    <div class="card mb-1-5">
+                        <h3><i class="fas fa-school"></i> Admissions Page Facilities Photos</h3>
+                        <p class="text-xs text-muted mb-1-5">
+                            Manage the images that appear when clicking facility cards on the admissions page.
+                        </p>
+
+                        <form id="cmsFacilityImagesForm">
+                            <div class="grid-2 gap-1-5">
+                                <div class="form-group">
+                                    <label>Smart Classrooms (Photo 1)</label>
+                                    <input
+                                        type="file"
+                                        id="f_smart_1"
+                                        accept="image/*"
+                                        onchange="previewCmsImage(event, 'f_smart_1_preview')"
+                                        title="Upload Smart Classrooms Photo 1"
+                                    />
+                                    <div id="f_smart_1_preview" class="image-preview-mini"></div>
+                                    <label class="mt-0-5 block">(Photo 2)</label>
+                                    <input
+                                        type="file"
+                                        id="f_smart_2"
+                                        accept="image/*"
+                                        onchange="previewCmsImage(event, 'f_smart_2_preview')"
+                                        title="Upload Smart Classrooms Photo 2"
+                                    />
+                                    <div id="f_smart_2_preview" class="image-preview-mini"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Computer Lab (Photo 1)</label>
+                                    <input
+                                        type="file"
+                                        id="f_computer_1"
+                                        accept="image/*"
+                                        onchange="previewCmsImage(event, 'f_computer_1_preview')"
+                                        title="Upload Computer Lab Photo 1"
+                                    />
+                                    <div id="f_computer_1_preview" class="image-preview-mini"></div>
+                                    <label class="mt-0-5 block">(Photo 2)</label>
+                                    <input
+                                        type="file"
+                                        id="f_computer_2"
+                                        accept="image/*"
+                                        onchange="previewCmsImage(event, 'f_computer_2_preview')"
+                                        title="Upload Computer Lab Photo 2"
+                                    />
+                                    <div id="f_computer_2_preview" class="image-preview-mini"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Sports & Playground (Photo 1)</label>
+                                    <input
+                                        type="file"
+                                        id="f_sports_1"
+                                        accept="image/*"
+                                        onchange="previewCmsImage(event, 'f_sports_1_preview')"
+                                        title="Upload Sports & Playground Photo 1"
+                                    />
+                                    <div id="f_sports_1_preview" class="image-preview-mini"></div>
+                                    <label class="mt-0-5 block">(Photo 2)</label>
+                                    <input
+                                        type="file"
+                                        id="f_sports_2"
+                                        accept="image/*"
+                                        onchange="previewCmsImage(event, 'f_sports_2_preview')"
+                                        title="Upload Sports & Playground Photo 2"
+                                    />
+                                    <div id="f_sports_2_preview" class="image-preview-mini"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label>CCTV Security (Photo 1)</label>
+                                    <input
+                                        type="file"
+                                        id="f_security_1"
+                                        accept="image/*"
+                                        onchange="previewCmsImage(event, 'f_security_1_preview')"
+                                        title="Upload CCTV Security Photo 1"
+                                    />
+                                    <div id="f_security_1_preview" class="image-preview-mini"></div>
+                                    <label class="mt-0-5 block">(Photo 2)</label>
+                                    <input
+                                        type="file"
+                                        id="f_security_2"
+                                        accept="image/*"
+                                        onchange="previewCmsImage(event, 'f_security_2_preview')"
+                                        title="Upload CCTV Security Photo 2"
+                                    />
+                                    <div id="f_security_2_preview" class="image-preview-mini"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Transport Facility (Photo 1)</label>
+                                    <input
+                                        type="file"
+                                        id="f_transport_1"
+                                        accept="image/*"
+                                        onchange="previewCmsImage(event, 'f_transport_1_preview')"
+                                        title="Upload Transport Facility Photo 1"
+                                    />
+                                    <div id="f_transport_1_preview" class="image-preview-mini"></div>
+                                    <label class="mt-0-5 block">(Photo 2)</label>
+                                    <input
+                                        type="file"
+                                        id="f_transport_2"
+                                        accept="image/*"
+                                        onchange="previewCmsImage(event, 'f_transport_2_preview')"
+                                        title="Upload Transport Facility Photo 2"
+                                    />
+                                    <div id="f_transport_2_preview" class="image-preview-mini"></div>
+                                </div>
+                            </div>
+                            <div id="cmsAdmissionsImgLoading" class="hidden text-center text-primary mt-1">
+                                <i class="fas fa-spinner fa-spin"></i> Processing Images...
+                            </div>
+                            <button
+                                type="submit"
+                                id="cmsAdmissionsImgSaveBtn"
+                                class="btn-portal btn-primary mt-1"
+                                title="Save Admissions Media"
+                            >
+                                <i class="fas fa-save"></i> Save Admissions Media
+                            </button>
+                        </form>
+                    </div>
+                </section>

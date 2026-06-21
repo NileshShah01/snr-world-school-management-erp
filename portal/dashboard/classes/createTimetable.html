@@ -1,0 +1,65 @@
+<section id="createTimetableSection" class="dashboard-section card hidden">
+    <div class="header mb-2 text-center">
+        <h1>Timetable Grid Editor</h1>
+        <p>Design weekly class schedules with subject-teacher assignments</p>
+    </div>
+    <div style="display:flex;gap:0.5rem;justify-content:center;margin-bottom:1rem;">
+        <button class="btn-portal btn-primary" id="ttTabGrid" onclick="_switchTtTab('grid')"><i class="fas fa-th"></i> Grid Editor</button>
+        <button class="btn-portal btn-ghost" id="ttTabUpload" onclick="_switchTtTab('upload')"><i class="fas fa-upload"></i> Upload PDF</button>
+    </div>
+    <div id="ttGridPanel">
+        <div class="glass-card p-1-5 mb-1-5 grid-2 gap-1">
+            <div class="form-group mb-0">
+                <label>Session</label>
+                <select id="tt_sessionSelect" class="form-control" title="Select Session"></select>
+            </div>
+            <div class="form-group mb-0">
+                <label>Class</label>
+                <select id="tt_classSelect" class="form-control" title="Select Class"></select>
+            </div>
+        </div>
+        <div id="timetableGridEditor" class="mb-2"><p style="text-align:center;color:var(--text-muted);padding:2rem;">Select a class to begin editing.</p></div>
+    </div>
+    <div id="ttUploadPanel" class="hidden">
+        <div class="card max-w-600 mx-auto p-2">
+            <form id="uploadTimetableForm" onsubmit="handleTimetableUpload(event)">
+                <div class="grid-2 gap-1 mb-1-5">
+                    <div class="form-group mb-0">
+                        <label>Session</label>
+                        <select id="ttSessSelect" class="form-control" required title="Select Session"></select>
+                    </div>
+                    <div class="form-group mb-0">
+                        <label>Class</label>
+                        <select id="ttClsSelect" class="form-control" required title="Select Class"></select>
+                    </div>
+                </div>
+                <div class="form-group mb-1-5">
+                    <label>Timetable Document (PDF/Image)</label>
+                    <div class="file-upload-zone">
+                        <input type="file" id="tt_file" accept=".pdf,image/*" required title="Select File" />
+                        <i class="fas fa-cloud-upload-alt text-3xl mb-1"></i>
+                        <p class="font-600">Click to browse or drag & drop</p>
+                        <small>Upload PDF or image as a fallback timetable</small>
+                    </div>
+                </div>
+                <button type="submit" class="btn-portal btn-primary w-full"><i class="fas fa-upload mr-1"></i> Upload & Publish</button>
+            </form>
+        </div>
+    </div>
+</section>
+<script>
+function _switchTtTab(tab) {
+    const grid = document.getElementById('ttGridPanel');
+    const upload = document.getElementById('ttUploadPanel');
+    const btnGrid = document.getElementById('ttTabGrid');
+    const btnUpload = document.getElementById('ttTabUpload');
+    if (tab === 'grid') {
+        grid.classList.remove('hidden'); upload.classList.add('hidden');
+        btnGrid.className = 'btn-portal btn-primary'; btnUpload.className = 'btn-portal btn-ghost';
+    } else {
+        grid.classList.add('hidden'); upload.classList.remove('hidden');
+        btnGrid.className = 'btn-portal btn-ghost'; btnUpload.className = 'btn-portal btn-primary';
+    }
+}
+window._switchTtTab = _switchTtTab;
+</script>

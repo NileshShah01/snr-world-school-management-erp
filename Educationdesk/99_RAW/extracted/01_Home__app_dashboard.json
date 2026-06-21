@@ -1,0 +1,44 @@
+﻿{
+    "route":  "/app/dashboard",
+    "title":  "EduDesk Dashboard",
+    "pageHeading":  "",
+    "forms":  [
+
+              ],
+    "ajaxEndpoints":  {
+
+                      },
+    "links":  {
+
+              },
+    "jsFunctions":  {
+
+                    },
+    "dtColumns":  [
+
+                  ],
+    "jsEvents":  {
+
+                 },
+    "layoutClasses":  {
+
+                      },
+    "sessionOpts":  [
+
+                    ],
+    "sidebarNav":  [
+
+                   ],
+    "cssAssets":  "/static/dashboard/assets/index-DrAQcQDf.css",
+    "jsAssets":  "/static/dashboard/assets/index-DGFFdhDn.js",
+    "images":  [
+
+               ],
+    "modals":  [
+
+               ],
+    "uploads":  [
+
+                ],
+    "htmlSize":  536
+}

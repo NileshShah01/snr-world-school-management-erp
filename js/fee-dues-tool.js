@@ -135,7 +135,7 @@ async function processFeeData() {
         const paidIdKey = findKey(rawPaidData[0], 'Student Id');
 
         if (!duesIdKey || !paidIdKey) {
-            showToast(`Could not find 'Student id' column. Check headers.`, 'error');
+            showToast('Could not find \'Student id\' column. Check headers.', 'error');
             return;
         }
 
@@ -221,8 +221,6 @@ async function downloadFeePdf() {
         const sortedClasses = Object.keys(feeDuesToolResultData).sort();
         const dateStr = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
 
-        for (let i = 0; i < sortedClasses.forEach; i++) {} // Fake loop just to use await if needed
-        
         // Use a standard loop for async support if we need to load logos
         for (let i = 0; i < sortedClasses.length; i++) {
             const cls = sortedClasses[i];

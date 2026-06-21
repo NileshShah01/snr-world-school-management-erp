@@ -1,0 +1,110 @@
+<section id="addResultSection" class="dashboard-section card hidden">
+                    <div class="header mb-2">
+                        <h1>Bulk Marks Entry</h1>
+                        <p>High-speed data entry grid for examination results</p>
+                    </div>
+                    <div class="glass-card p-1-5 mb-2 grid-5 gap-1 align-flex-end">
+                        <div class="form-group mb-0">
+                            <label>Session</label>
+                            <select
+                                id="marksSessionSelect"
+                                class="form-control"
+                                onchange="loadMarksClasses()"
+                                title="Select Session"
+                            ></select>
+                        </div>
+                        <div class="form-group mb-0">
+                            <label>Class</label>
+                            <select
+                                id="marksClassSelect"
+                                class="form-control"
+                                onchange="loadMarksSections()"
+                                title="Select Class"
+                            ></select>
+                        </div>
+                        <div class="form-group mb-0">
+                            <label>Section</label>
+                            <select
+                                id="marksSectionSelect"
+                                class="form-control"
+                                onchange="loadMarksSubjects()"
+                                title="Select Section"
+                            ></select>
+                        </div>
+                        <div class="form-group mb-0">
+                            <label>Exam</label>
+                            <select
+                                id="marksExamSelect"
+                                class="form-control"
+                                onchange="refreshMarksGrid()"
+                                title="Select Exam"
+                            ></select>
+                        </div>
+                        <div class="form-group mb-0">
+                            <label>Subject</label>
+                            <select
+                                id="marksSubjectSelect"
+                                class="form-control"
+                                onchange="refreshMarksGrid()"
+                                title="Select Subject"
+                            ></select>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-between align-center mb-1-5">
+                        <div class="flex gap-2 text-sm">
+                            <div class="badge bg-secondary p-0-5-1">
+                                Students: <span id="marksCountStudents" class="font-700">--</span>
+                            </div>
+                            <div class="badge bg-success-light text-success p-0-5-1">
+                                Entered: <span id="marksCountEntered" class="font-700">--</span>
+                            </div>
+                        </div>
+                        <div class="flex gap-1">
+                            <label
+                                for="marksExcelInput"
+                                class="btn-portal btn-ghost cursor-pointer"
+                                title="Import from Excel"
+                            >
+                                <i class="fas fa-file-excel mr-1"></i> Import Excel
+                            </label>
+                            <input
+                                type="file"
+                                id="marksExcelInput"
+                                class="hidden"
+                                accept=".xlsx, .xls"
+                                onchange="handleMarksExcelUpload(event)"
+                            />
+
+                            <button
+                                class="btn-portal btn-secondary"
+                                onclick="downloadMarksExcelTemplate()"
+                                title="Download Excel Template"
+                            >
+                                <i class="fas fa-download mr-1"></i> Template
+                            </button>
+
+                            <button class="btn-portal btn-primary" onclick="saveMarksGrid()" title="Finalize Marks">
+                                <i class="fas fa-check-double mr-1"></i> Finalize Marks
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="table-container">
+                        <div class="table-responsive">
+                            <table class="portal-table">
+                                <thead id="marksGridHeaderRow">
+                                    <tr>
+                                        <th class="w-100">Roll No</th>
+                                        <th>Student Name</th>
+                                        <th id="singleSubjectHeader" class="min-w-150">Score Obtained</th>
+                                        <th id="statusHeader" class="w-150">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="marksGridTableBody">
+                                    <!-- Populated by JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>

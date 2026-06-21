@@ -1,0 +1,1266 @@
+﻿<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+<html lang="en">
+  <head>
+    	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Education Desk</title>
+
+    <!-- Bootstrap -->
+    <link href="/static/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="/static/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="/static/vendors/nprogress/nprogress.css" rel="stylesheet">
+    <!-- iCheck -->
+    <link href="/static/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+    <!-- bootstrap-progressbar -->
+    <link href="/static/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
+    <!-- Animate.css -->
+    <link href="/static/vendors/animate.css/animate.min.css" rel="stylesheet">
+    <!-- JQVMap -->
+    <link href="/static/vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet"/>
+    <!-- bootstrap-daterangepicker -->
+    <link href="/static/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/jquery-ui.min.css">
+    <!-- Select2 -->
+    <link href="/static/vendors/select2/dist/css/select2.min.css" rel="stylesheet">
+	<!-- Datatables -->
+    <link href="/static/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <link href="/static/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+    <link href="/static/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+    <link href="/static/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+    <link href="/static/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
+    <link href="/static/vendors/pnotify/dist/pnotify.css" rel="stylesheet">
+    <link href="/static/vendors/pnotify/dist/pnotify.buttons.css" rel="stylesheet">
+    <link href="/static/vendors/pnotify/dist/pnotify.nonblock.css" rel="stylesheet">
+    
+    <!-- ClockPicker Stylesheet -->
+	<link rel="stylesheet" type="text/css" href="/static/assets/clockpicker/bootstrap-clockpicker.min.css">
+	
+	<link rel="stylesheet" type="text/css" href="/static/assets/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.css">
+    
+    <!-- Custom Theme Style -->
+    <link href="/static/build/css/custom.min.css?v=2.6" rel="stylesheet">
+    <link rel="shortcut icon" href="/static/favicon.ico"/>
+    <style type="text/css">
+    	label.error {
+		    color: red;
+		}
+		input.error {
+		    border-color: red;
+		}
+		body {
+    		background: #a21a46;
+    	}
+    	.nav.side-menu>li>a {
+    		margin-bottom: 4px;
+		}
+		.nav>li>a {
+		    position: relative;
+		    display: block;
+		    padding: 6px 15px 6px;
+		}
+		.left_col {
+		    background: #a21b46;
+		}
+		.nav.side-menu>li.active>a {
+			background: none;
+			background-color: #b3071f;
+		}
+		.nav-md ul.nav.child_menu li:after {
+	    	border-left: 1px solid #676767;
+		}
+		.nav-md ul.nav.child_menu li:before {
+	    	background: #a9a9a9;
+		}
+		.nav-sm ul.nav.child_menu {
+		    background: #a21a46;
+	    }
+	    .nav-sm .nav.side-menu li a i {
+	    	font-size: 20px !important;
+	    }
+	    .nav-sm .nav.side-menu li a {
+		    font-size: 10px;
+		    padding: 5px 5px;
+		}
+		.nav-sm ul.nav.child_menu li {
+		    padding: 0 10px;
+		    border-bottom: 1px solid #6d6d6d;
+		}
+		.nav.child_menu {
+    		background-color: rgb(26, 62, 162);
+		}
+		.pay-text span {
+		    font-weight: bold;
+		}
+		.pay-text {
+		    font-size: 16px;
+		}
+    </style>
+    <script type="text/javascript">
+    var windowLocTxt = window.location.href;
+	var localHost = ":8080";
+    if (window.location.protocol == 'http:' && windowLocTxt.indexOf(localHost) == -1) {
+        console.log("you are accessing us via an insecure protocol (HTTP). Redirecting you to HTTPS.");
+        window.location.href = window.location.href.replace('http:', 'https:');
+    }
+    </script>
+    
+   	
+    <style type="text/css">
+    	.title {
+		    font-size: 16px;
+		    font-weight: 500;
+		    margin-bottom: 5px;
+		    color: brown;
+		}
+    </style>
+  </head>
+
+  <body class="nav-md">
+    <div class="container body">
+      <div class="main_container">
+
+		
+
+
+
+
+
+
+
+
+
+
+
+<!-- top navigation -->
+        <div class="top_nav">
+          <div class="nav_menu">
+           	<nav>
+              	<div class="nav toggle">
+                	<a id="menu_toggle"><i class="fa fa-bars"></i></a>
+              	</div>
+              	<div class="navbar nav_title" style="border: 0;">
+              		<a href="home" class="site_title"><img style="width: auto;" src="https://doc3.educationdesk.in/photos/enterprise_0/base64img/1704006565240.jpg"/></a>
+           		</div>
+           		
+              <ul class="nav navbar-nav navbar-right">
+                <li class="">
+                  <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    <img src="https://doc3.educationdesk.in/photos/college_259/profile/1724204681494.jpg" alt="">APEX PUBLIC SCHOOL
+                    <span class=" fa fa-angle-down"></span>
+                  </a>
+                  <ul class="dropdown-menu dropdown-usermenu pull-right">
+                    <li><a href="employee-profile">Profile</a></li>
+                    <li><a href="javascript:;">Help</a></li>
+                    <li><a href="/employee/emp-logout"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+                  </ul>
+                </li>
+
+                <li role="presentation" class="dropdown" style="display: none;">
+                  <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
+                    <i class="fa fa-envelope-o"></i>
+                    <span class="badge bg-green">6</span>
+                  </a>
+                  <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
+                    <li>
+                      <a>
+                        <span class="image"><img src="/static/images/img.jpg" alt="Profile Image" /></span>
+                        <span>
+                          <span>John Smith</span>
+                          <span class="time">3 mins ago</span>
+                        </span>
+                        <span class="message">
+                          Film festivals used to be do-or-die moments for movie makers. They were where...
+                        </span>
+                      </a>
+                    </li>
+                    <li>
+                      <a>
+                        <span class="image"><img src="/static/images/img.jpg" alt="Profile Image" /></span>
+                        <span>
+                          <span>John Smith</span>
+                          <span class="time">3 mins ago</span>
+                        </span>
+                        <span class="message">
+                          Film festivals used to be do-or-die moments for movie makers. They were where...
+                        </span>
+                      </a>
+                    </li>
+                    <li>
+                      <a>
+                        <span class="image"><img src="/static/images/img.jpg" alt="Profile Image" /></span>
+                        <span>
+                          <span>John Smith</span>
+                          <span class="time">3 mins ago</span>
+                        </span>
+                        <span class="message">
+                          Film festivals used to be do-or-die moments for movie makers. They were where...
+                        </span>
+                      </a>
+                    </li>
+                    <li>
+                      <a>
+                        <span class="image"><img src="/static/images/img.jpg" alt="Profile Image" /></span>
+                        <span>
+                          <span>John Smith</span>
+                          <span class="time">3 mins ago</span>
+                        </span>
+                        <span class="message">
+                          Film festivals used to be do-or-die moments for movie makers. They were where...
+                        </span>
+                      </a>
+                    </li>
+                    <li>
+                      <div class="text-center">
+                        <a>
+                          <strong>See All Alerts</strong>
+                          <i class="fa fa-angle-right"></i>
+                        </a>
+                      </div>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </nav>
+            
+          </div>
+          	
+        </div>
+        <!-- /top navigation -->
+        
+		
+
+
+
+
+
+
+
+
+<div class="col-md-3 left_col left-menu-side">
+          <div class="left_col scroll-view">
+
+            <div class="clearfix"></div>
+
+            <!-- menu profile quick info -->
+            <!--<div class="profile clearfix">
+              <div class="profile_pic">
+                <img src="/static/images/img.jpg" alt="..." class="img-circle profile_img">
+              </div>
+              <div class="profile_info">
+                <span>Welcome,</span>
+                <h2>John Doe</h2>
+              </div>
+            </div>-->
+            <!-- /menu profile quick info -->
+
+            <!--<br />-->
+
+            <!-- sidebar menu -->
+            <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+              <div class="menu_section">
+                <ul class="nav side-menu">
+                
+                
+                  	<li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="home">Dashboard</a></li>
+                      
+                      		<li><a href="/app/dashboard">Dashboard v2</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                 
+                
+                  	<li><a><i class="fa fa-user"></i> Employee <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="add-employee">Add Employee</a></li>
+                      
+                      		<li><a href="search-employee">Employee Search</a></li>
+                      
+                      		<li><a href="add-designation">Designation</a></li>
+                      
+                      		<li><a href="add-department">Department</a></li>
+                      
+                      		<li><a href="upload-employee">Upload Employee</a></li>
+                      
+                      		<li><a href="employee-id-print">Employee ID Print</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                 
+                
+                  	<li><a><i class="fa fa-book"></i> Class Management <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="add-batch">Add Session</a></li>
+                      
+                      		<li><a href="add-course">Add Class</a></li>
+                      
+                      		<li><a href="add-course-details">Add Class Details</a></li>
+                      
+                      		<li><a href="add-subject">Add Subject</a></li>
+                      
+                      		<li><a href="add-non-subject">Add Non-Subject</a></li>
+                      
+                      		<li><a href="add-syllabus">Add Syllabus</a></li>
+                      
+                      		<li><a href="all-syllabus">Manage Syllabus</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                 
+                
+                  	<li><a><i class="fa fa-calendar"></i> Time Table <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="add-time-table">Add Time Table</a></li>
+                      
+                      		<li><a href="view-time-table">View Time Table</a></li>
+                      
+                      		<li><a href="time-table-assign">Time Table Assign</a></li>
+                      
+                      		<li><a href="view-time-table-assign">View Time Table Assign</a></li>
+                      
+                      		<li><a href="employee-time-table">View Employee Time Table</a></li>
+                      
+                      		<li><a href="session-time-table">View Session Time Table</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                 
+                
+                  	<li><a><i class="fa fa-slack"></i> Admission &amp; Enquiry <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="start-admission">Start Admission</a></li>
+                      
+                      		<li><a href="add-primary-source">Add Primary Source</a></li>
+                      
+                      		<li><a href="add-admission-enquiry">Admission Enquiry</a></li>
+                      
+                      		<li><a href="my-admission-enquiry">My Admission Enquiry</a></li>
+                      
+                      		<li><a href="all-admission-enquiry">All Admission Enquiry</a></li>
+                      
+                      		<li><a href="enquiry-report">Enquiry Report</a></li>
+                      
+                      		<li><a href="upload-enquiry">Upload Enquiry</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                 
+                
+                  	<li><a><i class="fa fa-graduation-cap"></i> Student <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="add-student">Add Student</a></li>
+                      
+                      		<li><a href="search-student">Search Student</a></li>
+                      
+                      		<li><a href="upload-student">Upload Student</a></li>
+                      
+                      		<li><a href="elective-subject-mapping">Elective Subject Mapping</a></li>
+                      
+                      		<li><a href="promote-student">Promote Student</a></li>
+                      
+                      		<li><a href="student-id-print">Student ID Print</a></li>
+                      
+                      		<li><a href="student-pickup-id-print">Pickup ID Print</a></li>
+                      
+                      		<li><a href="student-rfid-update">Student Bulk Update</a></li>
+                      
+                      		<li><a href="hostel-search-student">Hostel Student Report</a></li>
+                      
+                      		<li><a href="transport-search-student">Transport Student Report</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                 
+                 
+                
+                  	<li><a><i class="fa fa-rupee"></i> Fees Management <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="add-course-fee-type">Class Fee Type</a></li>
+                      
+                      		<li><a href="add-transport-fee-type">Transport Fee Type</a></li>
+                      
+                      		<li><a href="manage-course-fee">Manage Class Fee</a></li>
+                      
+                      		<li><a href="course-fee-structure">Class Fee Structure</a></li>
+                      
+                      		<li><a href="manage-transport-route-fee">Transport Fee Manage</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                 
+                 
+                
+                  	<li><a><i class="fa fa-money"></i> Payments <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="course-fee-payment">Student Fee Payment</a></li>
+                      
+                      		<li><a href="monthly-fee-payment">Monthly Fee Payment</a></li>
+                      
+                      		<li><a href="add-course-fee-payment">Add Fee Payment</a></li>
+                      
+                      		<li><a href="demand-receipt">Demand Receipt</a></li>
+                      
+                      		<li><a href="bulk-discount">Bulk Discount</a></li>
+                      
+                      		<li><a href="bulk-extra-fee">Bulk Add Extra Fee</a></li>
+                      
+                      		<li><a href="late-fee-fine-rule">Late Fee Fine Rule</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                 
+                 
+                
+                  	<li><a><i class="fa fa-check-square-o"></i> Attendance <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="employee-attendance">Employee Attendance</a></li>
+                      
+                      		<li><a href="view-employee-attendance">View Employee Attendance</a></li>
+                      
+                      		<li><a href="view-all-employee-attendance">View All Employee Attendance</a></li>
+                      
+                      		<li><a href="student-daily-attendance">Student Attendance</a></li>
+                      
+                      		<li><a href="view-student-daily-attendance">Download Student Attendance</a></li>
+                      
+                      		<li><a href="view-all-student-daily-attendance">All Student Daily Attendance</a></li>
+                      
+                      		<li><a href="smart-card-student-attendance">Smart Card Attendance</a></li>
+                      
+                      		<li><a href="attendance-monthly-report">Attendance Monthly Report</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                 
+                
+                  	<li><a><i class="fa fa-truck"></i> Order <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="add-order">Add Order</a></li>
+                      	
+                      		<li><a href="my-order">My Order</a></li>
+                      	
+                      		<li><a href="all-order">All Order</a></li>
+                      	
+                    	</ul>
+                  	</li>
+                 
+                 
+                 
+                
+                  	<li><a><i class="fa fa-book"></i> Study Document <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="create-study-document">Create Study Document</a></li>
+                      
+                      		<li><a href="view-study-document">View Study Document</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                 
+                 
+                
+                  	<li><a><i class="fa fa-file-word-o"></i> Homework <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="create-homework">Create Homework</a></li>
+                      
+                      		<li><a href="manage-homework">Manage Homework</a></li>
+                      
+                      		<li><a href="update-homework-report">Update Homework Report</a></li>
+                      
+                      		<li><a href="download-homework-report">Download Homework Report</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                 
+                 
+                
+                  	<li><a><i class="fa fa-shield"></i> Exam Management <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="setup-exam-grading-config">Setup Exam Grading</a></li>
+                      
+                      		<li><a href="manage-exam">Manage Exam</a></li>
+                      
+                      		<li><a href="manage-exam-schedule">Manage Exam Schedule</a></li>
+                      
+                      		<li><a href="view-exam-schedule">View Exam Schedule</a></li>
+                      
+                      		<li><a href="publish-exam-schedule">Publish Exam Schedule</a></li>
+                      
+                      		<li><a href="exam-hall-ticket">Exam Hall Ticket</a></li>
+                      
+                      		<li><a href="exam-attendance-card">Exam Attendance Card</a></li>
+                      
+                      		<li><a href="student-exam-attendance">Student Exam Attendance</a></li>
+                      
+                      		<li><a href="view-student-exam-attendance">View Exam Attendance</a></li>
+                      
+                      		<li><a href="exam-hall-plan">Exam Hall Plan</a></li>
+                      
+                      		<li><a href="exam-hall-detail">Exam Hall Detail</a></li>
+                      
+                      		<li><a href="exam-sitting-plan">Exam Sitting Plan</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                 
+                 
+                
+                  	<li><a><i class="fa fa-flag-checkered"></i> Result Management <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="manage-exam-subject-result">Manage Exam Result</a></li>
+                      
+                      		<li><a href="add-exam-subject-result">Add Exam Result</a></li>
+                      
+                      		<li><a href="manage-exam-result">Manage All Exam Result</a></li>
+                      
+                      		<li><a href="view-exam-result">View All Exam Result</a></li>
+                      
+                      		<li><a href="manage-nonsubject-result">Manage NonSubject Result</a></li>
+                      
+                      		<li><a href="view-nonsubject-result">View NonSubject Result</a></li>
+                      
+                      		<li><a href="publish-exam-result">Publish Exam Result</a></li>
+                      
+                      		<li><a href="update-report-card-remarks">Report Card Remarks</a></li>
+                      
+                      		<li><a href="generate-report-card">Generate Report Card</a></li>
+                      
+                      		<li><a href="view-report-card">View Report Card</a></li>
+                      
+                      		<li><a href="publish-report-card">Publish Report Card</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                 
+                 
+                
+                  	<li><a><i class="fa fa-coffee"></i> Employee Leave <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="employee-leave-type">Leave Type</a></li>
+                      
+                      		<li><a href="employee-leave-assign">Leave Assign</a></li>
+                      
+                      		<li><a href="add-employee-leave">Add Leave</a></li>
+                      
+                      		<li><a href="apply-self-employee-leave">Apply Leave</a></li>
+                      
+                      		<li><a href="approve-employee-leave">Approve Leave</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                 
+                  
+                
+                  	<li><a><i class="fa fa-rupee"></i> Employee Salary <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="manage-salary-head">Manage Salary Head</a></li>
+                      
+                      		<li><a href="manage-salary-structure">Salary Structure</a></li>
+                      
+                      		<li><a href="assign-salary-structure">Assign Salary Structure</a></li>
+                      
+                      		<li><a href="salary-payment">Create Salary Payment</a></li>
+                      
+                      		<li><a href="salary-payment-process">Salary Payment Process</a></li>
+                      
+                      		<li><a href="delete-salary-payment-process">Delete Pending Salary</a></li>
+                      
+                      		<li><a href="print-salary-payslip">Print Payslip</a></li>
+                      
+                      		<li><a href="create-salary-loan">Create Salary Loan</a></li>
+                      
+                      		<li><a href="approve-salary-loan">Approve Salary Loan</a></li>
+                      
+                      		<li><a href="approved-salary-loan">All Approved Loan</a></li>
+                      
+                      		<li><a href="manage-salary-emi-payment">Add Salary Loan EMI</a></li>
+                      
+                      		<li><a href="view-salary-loan-transaction">View Salary Loan Transaction</a></li>
+                      
+                      		<li><a href="salary-loan-report">Salary Loan Report</a></li>
+                      
+                      		<li><a href="my-salary-loan">My Salary Loan</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                 
+                 
+                
+                  	<li><a><i class="fa fa-taxi"></i> Transport <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="manage-vehicle-detail">Manage Vehicle Detail</a></li>
+                      
+                      		<li><a href="manage-driver-detail">Manage Driver Detail</a></li>
+                      
+                      		<li><a href="manage-stoppage">Manage Stoppage</a></li>
+                      
+                      		<li><a href="manage-transport-route">Manage Transport Route</a></li>
+                      
+                      		<li><a href="assign-stoppage-to-route">Assign Stoppage To Route</a></li>
+                      
+                      		<li><a href="assign-student-to-route">Assign Student To Route</a></li>
+                      
+                      		<li><a href="student-transport-report">Student Transport Report</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                
+                 
+                 
+                
+                  	<li><a><i class="fa fa-th"></i> Holiday <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="add-event-and-holiday">Add Event & Holiday</a></li>
+                      
+                      		<li><a href="view-event-and-holiday">View Event & Holiday</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                 
+                 
+                
+                  	<li><a><i class="fa fa-gear"></i> Configuration <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="email-template">Email Template</a></li>
+                      
+                      		<li><a href="sms-template">Sms Template</a></li>
+                      
+                      		<li><a href="system-sms-template">System Sms Template</a></li>
+                      
+                      		<li><a href="sms-balance">SMS Balance</a></li>
+                      
+                      		<li><a href="whatsapp-balance">WhatsApp Balance</a></li>
+                      
+                      		<li><a href="notification-configuration">Notification Configuration</a></li>
+                      
+                      		<li><a href="dashboard-configuration">Dashboard Configuration</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                 
+                 
+                
+                  	<li><a><i class="fa fa-android"></i> Mobile App <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="parent-login-manage">Parent Login Manage</a></li>
+                      
+                      		<li><a href="create-parent-login">Create Parent Login</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                 
+                 
+                
+                  	<li><a><i class="fa fa-object-group"></i> Online Class <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="add-online-class">Add Online Class</a></li>
+                      
+                      		<li><a href="all-online-class">All Online Class</a></li>
+                      
+                      		<li><a href="attend-online-class">Attend Online Class</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                 
+                 
+                
+                  	<li><a><i class="fa fa-bullhorn"></i> Communication <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="student-communication">Student Communication</a></li>
+                      
+                      		<li><a href="student-app-communication">Student App Communication</a></li>
+                      
+                      		<li><a href="student-whatsapp-communication">Whatsapp Communication</a></li>
+                      
+                      		<li><a href="employee-communication">Employee Communication</a></li>
+                      
+                      		<li><a href="print-notice">Notice Print</a></li>
+                      
+                      		<li><a href="notice-board-management">Notice Board</a></li>
+                      
+                      		<li><a href="daily-dairy-manage">Daily Dairy</a></li>
+                      
+                      		<li><a href="school-newsletter">School Newsletter</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                 
+                 
+                
+                  	<li><a><i class="fa fa-file-excel-o"></i> Certificate <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="school-leaving-certificate">School Leaving</a></li>
+                      
+                      		<li><a href="student-bonafide-certificate">Student Bonafide</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                 
+                 
+                
+                  	<li><a><i class="fa fa-bank"></i> Finance <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="create-finance-account">Create Finance Account</a></li>
+                      
+                      		<li><a href="add-finance-account-head">Income & Expense Head</a></li>
+                      
+                      		<li><a href="add-finance-expense-record">Record Expense</a></li>
+                      
+                      		<li><a href="add-finance-income-record">Record Income</a></li>
+                      
+                      		<li><a href="account-balance-transfer">Account Balance Transfer</a></li>
+                      
+                      		<li><a href="finance-account-statement">Account Statement</a></li>
+                      
+                      		<li><a href="finance-daily-register">Daily Register</a></li>
+                      
+                      		<li><a href="finance-profit-and-loss">Profit And Loss</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                 
+                 
+                
+                  	<li><a><i class="fa fa-cubes"></i> Product Inventory <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="add-product-category">Manage Category</a></li>
+                      
+                      		<li><a href="add-product">Manage Product</a></li>
+                      
+                      		<li><a href="product-inventory-stock-in">Inventory Stock In</a></li>
+                      
+                      		<li><a href="product-inventory-stock-out">Inventory Stock Out</a></li>
+                      
+                      		<li><a href="manage-product-inventory">View Inventory Transaction</a></li>
+                      
+                      		<li><a href="product-additional-fields-mapping">Inventory Additional Fields</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                 
+                
+                  	<li><a><i class="fa fa-tasks"></i> Rate Plan And Tax <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="add-product-rate-plan">Add Rate Plan</a></li>
+                      	
+                      		<li><a href="all-product-rate-plan">All Rate Plan</a></li>
+                      	
+                      		<li><a href="product-tax-rule">Product Tax Rule</a></li>
+                      	
+                    	</ul>
+                  	</li>
+                 
+                 
+                
+                  	<li><a><i class="fa fa-bar-chart-o"></i> Reports <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="download-payment-receipt-pdf">Download Receipt PDF</a></li>
+                      
+                      		<li><a href="download-payment-receipt">Download Receipt Details</a></li>
+                      
+                      		<li><a href="download-due-payment">Download Due Payment</a></li>
+                      
+                      		<li><a href="due-payment-with-detail">Due Payment With Detail</a></li>
+                      
+                      		<li><a href="admission-report">New Admission Report</a></li>
+                      
+                      		<li><a href="receipt-revert-report">Receipt Revert Report</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                 
+                 
+                
+                  	<li><a><i class="fa fa-wordpress"></i> Website <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="flash-news">Flash News</a></li>
+                      
+                      		<li><a href="page-setup">Page Setup</a></li>
+                      
+                      		<li><a href="page-content-setup">Page Content Setup</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                 
+                </ul>
+              </div>
+            </div>
+            <!-- /sidebar menu -->
+
+            <!-- /menu footer buttons -->
+<!--             <div class="sidebar-footer hidden-small"> -->
+<!--               <a data-toggle="tooltip" data-placement="top" title="Settings"> -->
+<!--                 <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> -->
+<!--               </a> -->
+<!--               <a data-toggle="tooltip" data-placement="top" title="FullScreen"> -->
+<!--                 <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span> -->
+<!--               </a> -->
+<!--               <a data-toggle="tooltip" data-placement="top" title="Lock"> -->
+<!--                 <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span> -->
+<!--               </a> -->
+<!--               <a data-toggle="tooltip" data-placement="top" title="Logout"> -->
+<!--                 <span class="glyphicon glyphicon-off" aria-hidden="true"></span> -->
+<!--               </a> -->
+<!--             </div> -->
+            <!-- /menu footer buttons -->
+          </div>
+        </div>
+        
+        <!-- page content -->
+        <div class="right_col" role="main">
+          <div class="">
+            <div class="page-title">
+              <div class="title_left">
+                <h3>Manage Exam Sitting Plan</h3>
+              </div>
+            </div>
+
+            <div class="clearfix"></div>
+            
+			
+            <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Exam Sitting Plan</h2>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                      <form data-parsley-validate name="add-batch" action="add-batch" method="post">
+                      	<div class="row">
+                      		<div class="col-md-3">
+                      			<div class="form-group">
+			                      	<label>Session*</label>
+			                      	<select name="course_batch" class="select2box form-control" required onchange="loadParentCourse(this);">
+			                      		<option></option>
+			                      		
+			                      				<option value="525" > 2023-2024 </option>
+			                      			
+			                      				<option value="616" > 2024-2025 </option>
+			                      			
+			                      				<option value="786" > 2025-2026 </option>
+			                      			
+			                      				<option value="1127" > 2026-2027 </option>
+			                      			
+			                      	</select>
+			                    </div>
+                      		</div>
+                      		<div class="col-md-3">
+                      			<div class="form-group">
+			                      	<label>Class*</label>
+			                      	<select id="course_main" name="parent_course" class="select2box form-control" required onchange="loadChildCourse(this);">
+			                      		<option></option>
+			                      	</select>
+			                    </div>
+                      		</div>
+                      		<div class="col-md-3">
+                      			<div class="form-group">
+			                      	<label>Class (Year/Semester)*</label>
+			                      	<select id="course_semester" name="child_course" class="select2box form-control" required onchange="loadExamForCourse(this);">
+			                      		<option></option>
+			                      	</select>
+			                    </div>
+                      		</div>
+                      		<div class="col-md-3">
+                      			<div class="form-group">
+			                      	<label>Sort By*</label>
+			                      	<select id="sort_by" name="sort_by" class="select2box form-control" required onchange="loadExamSittingPlan();">
+			                      		<option selected="selected" value="name">Name</option>
+			                      		<option value="rollCode">Roll No</option>
+			                      		<option value="studentCode">Registration No</option>
+			                      	</select>
+			                    </div>
+                      		</div>
+                      		<div class="col-md-3">
+                      			<div class="form-group">
+			                      	<label>Exam*</label>
+			                      	<select id="exam_detail" name="exam_detail" class="select2box form-control" required onchange="loadExamSittingPlan();">
+			                      		<option></option>
+			                      	</select>
+			                    </div>
+                      		</div>
+<!--                       		<div class="col-md-6"> -->
+<!--                       			<div class="form-group"> -->
+<!-- 			                      	<label>Exam Schedule*</label> -->
+<!-- 			                      	<select id="exam_schedule" name="exam_schedule" class="select2box form-control" required onchange="loadExamSittingPlan();"> -->
+<!-- 			                      		<option></option> -->
+<!-- 			                      	</select> -->
+<!-- 			                    </div> -->
+<!--                       		</div> -->
+                      	</div>
+                      </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="exam_schedule_table_div" class="row"></div>
+          </div>
+        </div>
+        <!-- /page content -->
+
+        	<!-- footer content -->
+        <footer>
+          <div class="pull-right">
+            Â©2025 Education Desk. All Rights Reserved.
+          </div>
+          <div class="clearfix"></div>
+        </footer>
+        <!-- /footer content -->
+        <div id="sys_loader_" style="display: none;">
+           <div id="sys_loader_bg" class="loader-backbg">
+           </div>
+           	<div class="loader-body-cls">
+          		<div class="spinner" role="spinner" style="float: left;margin-right: 15px;margin-top: 3px;">
+           			<div class="spinner-icon"></div>
+           		</div>
+           		Please Wait...
+           	</div>
+         </div>
+        <!-- jQuery -->
+    <script src="/static/vendors/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="/static/vendors/bootstrap/dist/js/bootstrap.min.js?v=1.1"></script>
+    <!-- FastClick -->
+    <script src="/static/vendors/fastclick/lib/fastclick.js"></script>
+    <!-- NProgress -->
+    <script src="/static/vendors/nprogress/nprogress.js"></script>
+    <!-- Chart.js -->
+    <script src="/static/vendors/Chart.js/dist/Chart.min.js"></script>
+    <!-- ECharts -->
+    <script src="/static/vendors/echarts/dist/echarts.min.js"></script>
+    <!-- gauge.js -->
+    <script src="/static/vendors/gauge.js/dist/gauge.min.js"></script>
+    <!-- iCheck -->
+    <script src="/static/vendors/iCheck/icheck.min.js"></script>
+    <!-- bootstrap-progressbar -->
+    <script src="/static/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+    <!-- iCheck -->
+    <script src="/static/vendors/iCheck/icheck.min.js"></script>
+    <!-- Skycons -->
+    <script src="/static/vendors/skycons/skycons.js"></script>
+    <!-- Flot -->
+    <script src="/static/vendors/Flot/jquery.flot.js"></script>
+    <script src="/static/vendors/Flot/jquery.flot.pie.js"></script>
+    <script src="/static/vendors/Flot/jquery.flot.time.js"></script>
+    <script src="/static/vendors/Flot/jquery.flot.stack.js"></script>
+    <script src="/static/vendors/Flot/jquery.flot.resize.js"></script>
+    <!-- Flot plugins -->
+    <script src="/static/vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script>
+    <script src="/static/vendors/flot-spline/js/jquery.flot.spline.min.js"></script>
+    <script src="/static/vendors/flot.curvedlines/curvedLines.js"></script>
+    <!-- DateJS -->
+    <script src="/static/vendors/DateJS/build/date.js"></script>
+    <!-- JQVMap -->
+    <script src="/static/vendors/jqvmap/dist/jquery.vmap.js"></script>
+    <script src="/static/vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
+    <script src="/static/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
+    <!-- bootstrap-daterangepicker -->
+    <script src="/static/vendors/moment/min/moment.min.js"></script>
+    <script src="/static/vendors/bootstrap-daterangepicker/daterangepicker.js?v=1.4"></script>
+    
+    <!-- bootstrap-wysiwyg -->
+    <script src="/static/vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js"></script>
+    <script src="/static/vendors/jquery.hotkeys/jquery.hotkeys.js"></script>
+    <script src="/static/vendors/google-code-prettify/src/prettify.js"></script>
+    <!-- jQuery Tags Input -->
+    <script src="/static/vendors/jquery.tagsinput/src/jquery.tagsinput.js"></script>
+    <!-- Switchery -->
+    <script src="/static/vendors/switchery/dist/switchery.min.js"></script>
+    <!-- Select2 -->
+    <script src="/static/vendors/select2/dist/js/select2.full.min.js"></script>
+    <!-- Parsley -->
+    <script src="/static/vendors/parsleyjs/dist/parsley.min.js"></script>
+    <!-- Autosize -->
+    <script src="/static/vendors/autosize/dist/autosize.min.js"></script>
+    <!-- jQuery autocomplete -->
+    <script src="/static/vendors/devbridge-autocomplete/dist/jquery.autocomplete.min.js"></script>
+    <!-- starrr -->
+    <script src="/static/vendors/starrr/dist/starrr.js"></script>
+    
+    <!-- Datatables -->
+    <script src="/static/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/static/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="/static/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/static/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+    <script src="/static/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="/static/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="/static/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="/static/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+    <script src="/static/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+    <script src="/static/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="/static/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+    <script src="/static/vendors/jszip/dist/jszip.min.js"></script>
+    <script src="/static/vendors/pdfmake/build/pdfmake.min.js"></script>
+    <script src="/static/vendors/pdfmake/build/vfs_fonts.js"></script>
+    <script src="/static/vendors/pnotify/dist/pnotify.js"></script>
+    <script src="/static/vendors/pnotify/dist/pnotify.buttons.js"></script>
+    <script src="/static/vendors/pnotify/dist/pnotify.nonblock.js"></script>
+    
+    <!-- ClockPicker script -->
+	<script type="text/javascript" src="/static/assets/clockpicker/bootstrap-clockpicker.min.js?v=1.6"></script>
+    
+    <script type="text/javascript" src="/static/assets/jquery-validation/js/jquery.validate.js"></script>
+    <script type="text/javascript" src="/static/assets/bootstrap-switch/dist/js/bootstrap-switch.js"></script>
+    
+    <!-- Custom Theme Scripts -->
+    <script src="/static/build/js/custom.js?v=4.2"></script>
+    <script src="/static/build/js/common.js?v=2.4"></script>
+    <script>
+    document.addEventListener("click", function (e) {
+        const link = e.target.closest("a");
+        if (!link) return; // Not inside an <a>
+
+        const url = link.getAttribute("href");
+        if (url.includes("doc3") && url.includes("pdf")) {
+            e.preventDefault();
+            console.log(url);
+            const version = Date.now();
+            const newUrl = url.includes("?")?(url+"&version="+version):(url+"?version="+version);
+            console.log(newUrl);
+            window.open(newUrl, "_blank");
+        }
+    });
+    </script>
+
+      </div>
+    </div>
+	<script type="text/javascript">
+		function loadParentCourse(htmlObj){
+			var batchId = $(htmlObj).val();
+			$("#exam_schedule_table_div").html("");
+			$("#course_semester").html("");
+			$("#course_main").html("");
+			$("#exam_detail").html("");
+			selectBoxInit("#course_main");
+			selectBoxInit("#course_semester");
+			selectBoxInit("#exam_detail");
+			if(batchId > 0){
+				NProgress.start();
+				$.ajax({
+					url: "/employee/get-parent-course?course_batch_id="+batchId,
+					type:"post",
+					success: function(msg){
+						NProgress.done();
+						$("#course_main").html(msg);
+						selectBoxInit("#course_main");
+					},error:function(){
+						NProgress.done();
+					}
+				});
+			}
+		}
+		
+		function loadChildCourse(htmlObj){
+			var parentCourseId = $(htmlObj).val();
+			$("#exam_schedule_table_div").html("");
+			$("#course_semester").html("");
+			$("#exam_detail").html("");
+			selectBoxInit("#course_semester");
+			selectBoxInit("#exam_detail");
+			if(parentCourseId > 0){
+				NProgress.start();
+				$.ajax({
+					url: "/employee/get-child-course?parent_course_id="+parentCourseId,
+					type:"post",
+					success: function(msg){
+						NProgress.done();
+						$("#course_semester").html(msg);
+						selectBoxInit("#course_semester");
+					},error:function(){
+						NProgress.done();
+					}
+				});
+			}
+		}
+		
+		function loadExamForCourse(htmlObj){
+			var courseId = $(htmlObj).val();
+			var parentCourseId = $("#course_main").val();
+			$("#exam_detail").html("");
+			selectBoxInit("#exam_detail");
+			$("#exam_schedule_table_div").html("");
+			if(courseId > 0){
+				NProgress.start();
+				$.ajax({
+					url: "/employee/get-exam-option-for-course?course_id="+courseId+"&parent_course_id="+parentCourseId,
+					type:"post",
+					success: function(msg){
+						$("#exam_detail").html(msg);
+						selectBoxInit("#exam_detail");
+						NProgress.done();
+					},error:function(){
+						NProgress.done();
+					}
+				});
+			}
+		}
+		
+		function loadExamScheduleForCourse(htmlObj){
+			var courseId = $("#course_semester").val();
+			var examId = $(htmlObj).val();
+			var parentCourseId = $("#course_main").val();
+			$("#exam_schedule").html("");
+			$("#exam_schedule_table_div").html("");
+			selectBoxInit("#exam_schedule");
+			if(examId > 0){
+				NProgress.start();
+				showLoader();
+				$.ajax({
+					url: "/employee/get-exam-schedule-option-for-exam?course_id="+courseId+"&parent_course_id="+parentCourseId+"&exam_id="+examId,
+					type:"post",
+					success: function(msg){
+						hideLoader();
+						$("#exam_schedule").html(msg);
+						selectBoxInit("#exam_schedule");
+						NProgress.done();
+					},error:function(){
+						NProgress.done();
+						hideLoader();
+					}
+				});
+			}
+		}
+		
+		function loadExamSittingPlan(){
+			var courseId = $("#course_semester").val();
+			var examId = $("#exam_detail").val();
+			var examScheduleId = 0;
+			var parentCourseId = $("#course_main").val();
+			$("#exam_schedule_table_div").html("");
+			var sortBy = $("#sort_by").val();
+			if(examId > 0){
+				NProgress.start();
+				showLoader();
+				$.ajax({
+					url: "/employee/get-exam-sitting-plan-ajax?course_id="+courseId+"&parent_course_id="+parentCourseId+"&exam_id="+examId+"&exam_schedule_id="+examScheduleId+"&sort_by="+sortBy,
+					type:"post",
+					success: function(msg){
+						$("#exam_schedule_table_div").html(msg);
+						hideLoader();
+						NProgress.done();
+					},error:function(){
+						NProgress.done();
+						hideLoader();
+					}
+				});
+			}
+		}
+		
+		function editExamScheduleShow(){
+			$("#exam_schedule_display_div").hide();
+			$("#exam_schedule_edit_div").show();
+		}
+		
+		function saveExamSittingPlan(){
+			var dataF = $("#examHallMappingFrm").serialize();
+				showLoader();
+				NProgress.start();
+				var courseId = $("#course_semester").val();
+				var examId = $("#exam_detail").val();
+				var examScheduleId = $("#exam_schedule").val();
+				var parentCourseId = $("#course_main").val();
+				$.ajax({
+					url: "/employee/exam-sitting-plan-submit",
+					data:dataF,
+					type:"post",
+					success: function(msg){
+						if(msg == "true"){
+							successNotification("Success","Student Exam Sitting Plan Updated");
+						}else if(msg == "Success Updated"){
+							successNotification("Success","Student RFID Details are updated.");
+						}else{
+							errorNotification("Opps!!","Something went wrong.");
+						}
+						$.ajax({
+							url: "/employee/get-exam-sitting-plan-ajax?course_id="+courseId+"&parent_course_id="+parentCourseId+"&exam_id="+examId+"&exam_schedule_id="+examScheduleId,
+							type:"post",
+							success: function(msg){
+								$("#exam_schedule_table_div").html(msg);
+								hideLoader();
+								NProgress.done();
+							},error:function(){
+								NProgress.done();
+								hideLoader();
+							}
+						});
+					},error:function(){
+						NProgress.done();
+						hideLoader();
+					}
+				});
+		}
+		
+	</script>
+  </body>
+</html>
+

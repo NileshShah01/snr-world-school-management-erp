@@ -1,0 +1,187 @@
+<section id="studentBulkUpdateSection" class="dashboard-section hidden">
+                    <div class="header">
+                        <div>
+                            <h1>Bulk Student Data Manager</h1>
+                            <p>Fast grid-based editing for multiple student records</p>
+                        </div>
+                        <div class="flex gap-0-75">
+                            <button class="btn-portal btn-ghost" onclick="toggleBulkUpdateColumns()" title="Columns">
+                                <i class="fas fa-columns"></i> Columns
+                            </button>
+                            <button class="btn-portal" onclick="saveBulkStudentUpdate()" title="Save All Changes">
+                                <i class="fas fa-save"></i> Save All Changes
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="card mb-1-5">
+                        <div class="grid-cols-auto-200">
+                            <div class="form-group">
+                                <label>Session</label>
+                                <select
+                                    id="bulk_student_session"
+                                    onchange="loadClassesForBulkUpdate()"
+                                    class="form-control"
+                                    title="Session"
+                                ></select>
+                            </div>
+                            <div class="form-group">
+                                <label>Class</label>
+                                <select
+                                    id="bulk_student_class"
+                                    onchange="
+                                        loadBulkSectionsForUpdate();
+                                        loadBulkStudentList();
+                                    "
+                                    class="form-control"
+                                    title="Class"
+                                >
+                                    <option value="">Select Session First</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Section</label>
+                                <select
+                                    id="bulk_student_section"
+                                    onchange="loadBulkStudentList()"
+                                    class="form-control"
+                                    title="Section"
+                                >
+                                    <option value="">Select Class First</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bulk Set Value Toolbar -->
+                    <div class="card p-1 mb-1-5" id="bulkSetToolbar">
+                        <div class="flex gap-1 align-flex-end flex-wrap">
+                            <div class="form-group mb-0" style="min-width:200px;">
+                                <label>Bulk Set Field</label>
+                                <select id="bulkSetField" class="form-control" onchange="bulkSetFieldChanged()" title="Select field to set">
+                                    <option value="">— Select Field —</option>
+                                    <option value="roll_no">Roll No</option>
+                                    <option value="name">Name</option>
+                                    <option value="section">Section</option>
+                                    <option value="father_name">Father Name</option>
+                                    <option value="mother_name">Mother Name</option>
+                                    <option value="mobile">Mobile</option>
+                                    <option value="email">Email</option>
+                                    <option value="guardian_name">Guardian Name</option>
+                                    <option value="guardian_phone">Guardian Phone</option>
+                                    <option value="dob">Date of Birth</option>
+                                    <option value="gender">Gender</option>
+                                    <option value="blood_group">Blood Group</option>
+                                    <option value="category">Category</option>
+                                    <option value="caste">Caste</option>
+                                    <option value="religion">Religion</option>
+                                    <option value="aadhar">Aadhaar No</option>
+                                    <option value="pen">PEN</option>
+                                    <option value="reg_no">Reg No</option>
+                                    <option value="rfid_no">RFID No</option>
+                                    <option value="address">Address</option>
+                                    <option value="permanent_address">Permanent Address</option>
+                                    <option value="city">City</option>
+                                    <option value="sms_contact">SMS Contact</option>
+                                    <option value="hostel">Hostel</option>
+                                    <option value="transport">Transport</option>
+                                    <option value="join_date">Join Date</option>
+                                    <option value="status">Status</option>
+                                </select>
+                            </div>
+                            <div class="form-group mb-0" style="min-width:180px;">
+                                <label>Value</label>
+                                <input type="text" id="bulkSetValue" class="form-control" placeholder="Enter value" title="Value to set" />
+                            </div>
+                            <div class="form-group mb-0 flex gap-0-5 align-center">
+                                <button class="btn-portal" onclick="bulkSetColumnValue()" title="Apply to All">
+                                    <i class="fas fa-check-double"></i> Apply to All
+                                </button>
+                                <label class="flex align-center gap-0-25 text-xs" style="cursor:pointer;white-space:nowrap;">
+                                    <input type="checkbox" id="bulkSetAutoSave" checked />
+                                    Auto-save
+                                </label>
+                            </div>
+                        </div>
+                        <p class="text-xs text-muted mt-0-5" id="bulkSetStatus"></p>
+                    </div>
+
+                    <!-- Column Toggles (Hidden by default) -->
+                    <div id="bulkColumnToggles" class="card hidden mb-1-5 bg-slate-light">
+                        <h3 class="text-sm mb-1 text-slate-muted">Toggle Visible Columns</h3>
+                        <div class="flex flex-wrap gap-1">
+                            <label class="cb-container">Roll No<input type="checkbox" checked onchange="toggleBulkCol('col_roll')" title="Show Roll No" /><span class="checkmark"></span></label>
+                            <label class="cb-container">Father Name<input type="checkbox" checked onchange="toggleBulkCol('col_father')" title="Show Father Name" /><span class="checkmark"></span></label>
+                            <label class="cb-container">Mother Name<input type="checkbox" onchange="toggleBulkCol('col_mother')" title="Show Mother Name" /><span class="checkmark"></span></label>
+                            <label class="cb-container">Mobile<input type="checkbox" checked onchange="toggleBulkCol('col_mobile')" title="Show Mobile" /><span class="checkmark"></span></label>
+                            <label class="cb-container">Email<input type="checkbox" onchange="toggleBulkCol('col_email')" title="Show Email" /><span class="checkmark"></span></label>
+                            <label class="cb-container">Birth Date<input type="checkbox" checked onchange="toggleBulkCol('col_dob')" title="Show Birth Date" /><span class="checkmark"></span></label>
+                            <label class="cb-container">Gender<input type="checkbox" onchange="toggleBulkCol('col_gender')" title="Show Gender" /><span class="checkmark"></span></label>
+                            <label class="cb-container">Blood Group<input type="checkbox" onchange="toggleBulkCol('col_blood')" title="Show Blood Group" /><span class="checkmark"></span></label>
+                            <label class="cb-container">Category<input type="checkbox" onchange="toggleBulkCol('col_category')" title="Show Category" /><span class="checkmark"></span></label>
+                            <label class="cb-container">Caste<input type="checkbox" onchange="toggleBulkCol('col_caste')" title="Show Caste" /><span class="checkmark"></span></label>
+                            <label class="cb-container">Religion<input type="checkbox" onchange="toggleBulkCol('col_religion')" title="Show Religion" /><span class="checkmark"></span></label>
+                            <label class="cb-container">Aadhaar<input type="checkbox" onchange="toggleBulkCol('col_aadhar')" title="Show Aadhaar" /><span class="checkmark"></span></label>
+                            <label class="cb-container">PEN<input type="checkbox" onchange="toggleBulkCol('col_pen')" title="Show PEN" /><span class="checkmark"></span></label>
+                            <label class="cb-container">Reg No<input type="checkbox" onchange="toggleBulkCol('col_regno')" title="Show Reg No" /><span class="checkmark"></span></label>
+                            <label class="cb-container">RFID No<input type="checkbox" onchange="toggleBulkCol('col_rfid')" title="Show RFID No" /><span class="checkmark"></span></label>
+                            <label class="cb-container">Guardian Name<input type="checkbox" onchange="toggleBulkCol('col_guardian')" title="Show Guardian Name" /><span class="checkmark"></span></label>
+                            <label class="cb-container">Guardian Phone<input type="checkbox" onchange="toggleBulkCol('col_guardphone')" title="Show Guardian Phone" /><span class="checkmark"></span></label>
+                            <label class="cb-container">Address<input type="checkbox" onchange="toggleBulkCol('col_address')" title="Show Address" /><span class="checkmark"></span></label>
+                            <label class="cb-container">Perm. Address<input type="checkbox" onchange="toggleBulkCol('col_permaddr')" title="Show Permanent Address" /><span class="checkmark"></span></label>
+                            <label class="cb-container">City<input type="checkbox" onchange="toggleBulkCol('col_city')" title="Show City" /><span class="checkmark"></span></label>
+                            <label class="cb-container">SMS Contact<input type="checkbox" onchange="toggleBulkCol('col_sms')" title="Show SMS Alert" /><span class="checkmark"></span></label>
+                            <label class="cb-container">Hostel<input type="checkbox" onchange="toggleBulkCol('col_hostel')" title="Show Hostel" /><span class="checkmark"></span></label>
+                            <label class="cb-container">Transport<input type="checkbox" onchange="toggleBulkCol('col_transport')" title="Show Transport" /><span class="checkmark"></span></label>
+                            <label class="cb-container">Join Date<input type="checkbox" onchange="toggleBulkCol('col_joindate')" title="Show Join Date" /><span class="checkmark"></span></label>
+                            <label class="cb-container">Status<input type="checkbox" onchange="toggleBulkCol('col_status')" title="Show Status" /><span class="checkmark"></span></label>
+                        </div>
+                    </div>
+
+                    <div class="card p-0- important overflow-hidden">
+                        <div class="table-responsive">
+                            <table class="portal-table">
+                                <thead id="bulkUpdateTableHead">
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Student Name</th>
+                                        <th class="col_roll">Roll No</th>
+                                        <th class="col_section hidden">Section</th>
+                                        <th class="col_father">Father</th>
+                                        <th class="col_mother hidden">Mother</th>
+                                        <th class="col_mobile">Mobile</th>
+                                        <th class="col_email hidden">Email</th>
+                                        <th class="col_dob">DOB</th>
+                                        <th class="col_gender hidden">Gender</th>
+                                        <th class="col_blood hidden">Blood</th>
+                                        <th class="col_category hidden">Category</th>
+                                        <th class="col_caste hidden">Caste</th>
+                                        <th class="col_religion hidden">Religion</th>
+                                        <th class="col_aadhar hidden">Aadhaar</th>
+                                        <th class="col_pen hidden">PEN</th>
+                                        <th class="col_regno hidden">Reg No</th>
+                                        <th class="col_rfid hidden">RFID</th>
+                                        <th class="col_guardian hidden">Guardian</th>
+                                        <th class="col_guardphone hidden">Grd. Phone</th>
+                                        <th class="col_address hidden">Address</th>
+                                        <th class="col_permaddr hidden">Perm. Addr</th>
+                                        <th class="col_city hidden">City</th>
+                                        <th class="col_sms hidden">SMS</th>
+                                        <th class="col_hostel hidden">Hostel</th>
+                                        <th class="col_transport hidden">Transport</th>
+                                        <th class="col_joindate hidden">Join Date</th>
+                                        <th class="col_status hidden">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="bulkUpdateTableBody">
+                                    <tr>
+                                        <td colspan="28" class="text-center p-3 text-slate-muted">
+                                            <i class="fas fa-filter text-2xl opacity-03 mb-1 block"></i>
+                                            Select Session and Class to start bulk editing
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>

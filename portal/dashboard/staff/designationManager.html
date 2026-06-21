@@ -1,0 +1,54 @@
+<section id="designationManagerSection" class="dashboard-section hidden">
+                    <div class="header">
+                        <div>
+                            <h1>Designations &amp; Permissions</h1>
+                            <p>Create roles and control section-level access for teachers and staff</p>
+                        </div>
+                    </div>
+                    <div class="grid-cols-1-2 gap-1-5">
+                        <div class="card">
+                            <h3 id="desigFormTitle">New Designation</h3>
+                            <form id="designationForm" class="mt-1">
+                                <input type="hidden" id="desigEditId" value="" />
+                                <div class="form-group">
+                                    <label>Designation Name</label>
+                                    <input type="text" id="desigName" class="form-control" placeholder="e.g. Class Teacher" required title="Designation Name" />
+                                </div>
+                                <div class="form-group">
+                                    <label>Description (optional)</label>
+                                    <input type="text" id="desigDesc" class="form-control" placeholder="Homeroom teacher with full class access" title="Description" />
+                                </div>
+                                <div class="form-group">
+                                    <label>Section Permissions</label>
+                                    <div id="desigPermissionGrid" class="mt-1"></div>
+                                </div>
+                                <div class="flex gap-1 mt-1">
+                                    <button type="submit" class="btn-portal btn-primary flex-1" id="desigSubmitBtn">
+                                        <i class="fas fa-save"></i> <span id="desigBtnText">Create Designation</span>
+                                    </button>
+                                    <button type="button" class="btn-portal btn-secondary" id="desigCancelBtn" style="display:none;" onclick="cancelDesignationEdit()">
+                                        Cancel
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="card">
+                            <h3>Designation List</h3>
+                            <div class="table-responsive mt-1">
+                                <table class="portal-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Staff Count</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="designationTableBody">
+                                        <tr><td colspan="4" class="text-center text-muted py-3">Loading...</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </section>

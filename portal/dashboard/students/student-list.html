@@ -1,0 +1,67 @@
+<div class="card">
+    <div class="flex flex-between align-center mb-1-5">
+        <div class="flex gap-1 flex-1">
+            <input type="text" id="slSearchInput" class="form-control flex-1 max-w-400" placeholder="Search by name, ID, phone..." title="Search Students" />
+            <select id="slClassFilter" class="w-auto" title="Filter by Class">
+                <option value="">All Classes</option>
+            </select>
+        </div>
+        <div class="flex gap-0-75">
+            <button class="btn-portal btn-ghost hidden" id="slBulkDeleteBtn" onclick="slHandleBulkDelete()" title="Delete Selected">
+                <i class="fas fa-trash"></i> Delete (<span id="slSelectedCount">0</span>)
+            </button>
+            <button class="btn-portal btn-secondary" onclick="window.slExportStudentData()" title="Export to Excel">
+                <i class="fas fa-file-excel"></i> Export Excel
+            </button>
+            <button class="btn-portal btn-primary" onclick="window.showSection('addStudent')" title="Add New Student">
+                <i class="fas fa-plus"></i> Add Student
+            </button>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th class="w-10"><input type="checkbox" id="slSelectAll" title="Select All" /></th>
+                    <th>ID</th>
+                    <th>Roll No</th>
+                    <th>Reg No</th>
+                    <th>Name</th>
+                    <th>Class/Sec</th>
+                    <th>Session</th>
+                    <th>Father Name</th>
+                    <th>Mother Name</th>
+                    <th>Mobile</th>
+                    <th>DOB</th>
+                    <th>Gender</th>
+                    <th>Category</th>
+                    <th>Caste</th>
+                    <th>Religion</th>
+                    <th>Aadhar</th>
+                    <th>PEN</th>
+                    <th>RFID No</th>
+                    <th>Guardian</th>
+                    <th>G.Phone</th>
+                    <th>Current Address</th>
+                    <th>Permanent Address</th>
+                    <th>City</th>
+                    <th>Hostel</th>
+                    <th>Transport</th>
+                    <th>Join Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="slTableBody">
+                <tr><td colspan="27" class="text-center text-muted p-2"><i class="fas fa-spinner fa-spin mr-1"></i> Loading...</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="slPagination" class="mt-1-5 flex justify-center gap-1 align-center">
+        <button id="slPrevBtn" class="btn-portal btn-ghost" onclick="slGoToPage('prev')" disabled><i class="fas fa-chevron-left"></i> Prev</button>
+        <span id="slPageInfo" class="text-sm text-muted">Page 1</span>
+        <button id="slNextBtn" class="btn-portal btn-ghost" onclick="slGoToPage('next')"><i class="fas fa-chevron-right"></i> Next</button>
+        <span id="slTotalInfo" class="text-sm text-muted ml-1"></span>
+    </div>
+</div>

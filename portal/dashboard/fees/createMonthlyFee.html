@@ -1,0 +1,45 @@
+<section id="createMonthlyFeeSection" class="dashboard-section hidden">
+                    <div class="header">
+                        <div>
+                            <h1>Generate Monthly Fees</h1>
+                            <p>Generate fee records for all students in a class for a specific month</p>
+                        </div>
+                    </div>
+                    <div class="card max-w-600 mx-auto">
+                        <form onsubmit="handleMonthlyFeeGenerate(event)">
+                            <div class="form-group">
+                                <label>Select Class</label>
+                                <select id="genFeeClass" class="form-control" required title="Select Class">
+                                    <option value="">-- Select Class --</option>
+                                    <option value="Play Group">Play Group</option>
+                                    <option value="Nursery">Nursery</option>
+                                    <option value="LKG">LKG</option>
+                                    <option value="UKG">UKG</option>
+                                    <option value="Class 1">Class 1</option>
+                                    <option value="Class 2">Class 2</option>
+                                    <option value="Class 3">Class 3</option>
+                                    <option value="Class 4">Class 4</option>
+                                    <option value="Class 5">Class 5</option>
+                                    <option value="Class 6">Class 6</option>
+                                    <option value="Class 7">Class 7</option>
+                                    <option value="Class 8">Class 8</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Fee Month</label>
+                                <input
+                                    type="text"
+                                    id="genFeeMonth"
+                                    class="form-control"
+                                    required
+                                    placeholder="YYYY-MM"
+                                    pattern="\d{4}-\d{2}"
+                                    title="Select Fee Month (YYYY-MM)"
+                                />
+                            </div>
+                            <button type="submit" class="btn-portal btn-primary w-full" title="Generate Fees Now">
+                                <i class="fas fa-magic"></i> Generate Fees Now
+                            </button>
+                        </form>
+                    </div>
+                </section>

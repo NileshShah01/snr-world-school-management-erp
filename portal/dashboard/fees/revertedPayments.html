@@ -1,0 +1,28 @@
+<section id="revertedPaymentsSection" class="dashboard-section hidden">
+                    <div class="header">
+                        <div>
+                            <h1><i class="fas fa-undo text-primary"></i> Reverted Payments Report</h1>
+                            <p>Audit trail of all cancelled/reverted payment receipts</p>
+                        </div>
+                        <button class="btn-portal btn-primary" onclick="loadRevertedPayments()">
+                            <i class="fas fa-sync"></i> Refresh
+                        </button>
+                    </div>
+                    <div class="table-container">
+                        <table class="portal-table">
+                            <thead>
+                                <tr>
+                                    <th>Receipt #</th>
+                                    <th>Student ID</th>
+                                    <th class="text-right">Amount</th>
+                                    <th>Reverted On</th>
+                                    <th>Reason</th>
+                                    <th>By</th>
+                                </tr>
+                            </thead>
+                            <tbody id="revertedPaymentsTableBody">
+                                <tr><td colspan="6" class="text-center text-muted p-2">Click "Refresh" to load</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>

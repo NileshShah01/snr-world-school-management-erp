@@ -1,0 +1,70 @@
+<section id="admitCardSplitterSection" class="dashboard-section card hidden">
+                    <div class="flex flex-between align-center mb-1-5">
+                        <div>
+                            <h3 class="mb-0-25"><i class="fas fa-magic"></i> Admit Card PDF Splitter</h3>
+                            <p class="text-xs text-muted">
+                                Upload one class-wise PDF. The tool will split it and assign each page to a student
+                                automatically.
+                            </p>
+                        </div>
+                        <div
+                            class="bg-amber-light text-amber-dark p-0-5-1 border-radius-0-5 text-xs font-600 border-amber"
+                        >
+                            <i class="fas fa-info-circle"></i> Sorting: Students are matched by ID sequence.
+                        </div>
+                    </div>
+
+                    <div class="grid-cols-1-2">
+                        <div class="bg-secondary p-1-5 border-radius-1 border">
+                            <div class="form-group mb-1-25">
+                                <label>1. Select Class</label>
+                                <select
+                                    id="idIndiv_class"
+                                    class="form-control"
+                                    title="Class"
+                                    onchange="idIndivLoadStudents()"
+                                >
+                                    <option value="">Select Session First</option>
+                                </select>
+                            </div>
+                            <div class="form-group mb-1-25">
+                                <label>2. Academic Year</label>
+                                <select
+                                    id="admitToolYear"
+                                    class="w-full p-0-75 border-radius-0-5 border"
+                                    title="Academic Year"
+                                >
+                                    <option value="2026">Year 2026</option>
+                                    <option value="2027">Year 2027</option>
+                                </select>
+                            </div>
+                            <div class="form-group mb-1-5">
+                                <label>3. Upload Class PDF</label>
+                                <input
+                                    type="file"
+                                    id="admitToolFile"
+                                    accept="application/pdf"
+                                    class="w-full"
+                                    title="Upload Class PDF"
+                                />
+                            </div>
+                            <button
+                                class="btn-portal btn-primary w-full p-1"
+                                onclick="processAdmitCardPdf()"
+                                title="Split & Assign Now"
+                            >
+                                <i class="fas fa-cogs"></i> Split & Assign Now
+                            </button>
+                        </div>
+
+                        <div
+                            class="bg-slate-dark text-slate-light p-1-5 border-radius-1 font-mono min-h-400 overflow-y-auto"
+                        >
+                            <div class="flex flex-between mb-1 border-slate-b pb-0-5">
+                                <span class="text-slate-muted">Processing Log Output</span>
+                                <span id="admitToolProgress" class="text-sky">Idle</span>
+                            </div>
+                            <div id="admitToolLog" class="text-xs line-height-1-5">> Waiting for input...</div>
+                        </div>
+                    </div>
+                </section>

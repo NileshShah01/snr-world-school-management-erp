@@ -1,0 +1,40 @@
+<section id="generatePayrollSection" class="dashboard-section hidden">
+                <div class="header">
+                    <div>
+                        <h1><i class="fas fa-cogs text-primary"></i> Generate Monthly Payroll</h1>
+                        <p>Generate salary records for all staff based on assigned structures</p>
+                    </div>
+                </div>
+                <div class="card max-w-600 mx-auto p-2">
+                    <div class="form-group">
+                        <label>Select Month</label>
+                        <input type="month" id="payrollMonth" class="form-control" onchange="loadMonthlyPayroll()">
+                    </div>
+                    <div class="grid-2 gap-1">
+                        <button class="btn-portal btn-primary" onclick="generateMonthlyPayroll()">
+                            <i class="fas fa-magic"></i> Generate Payroll
+                        </button>
+                        <button class="btn-portal" onclick="loadMonthlyPayroll()">
+                            <i class="fas fa-sync"></i> Refresh
+                        </button>
+                    </div>
+                </div>
+                <div class="table-container mt-1-5">
+                    <table class="portal-table">
+                        <thead>
+                            <tr>
+                                <th>Employee</th>
+                                <th>Designation</th>
+                                <th class="text-right">Earnings</th>
+                                <th class="text-right">Deductions</th>
+                                <th class="text-right">Net Pay</th>
+                                <th>Status</th>
+                                <th class="text-center">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="monthlyPayrollTableBody">
+                            <tr><td colspan="7" class="text-center text-muted p-2">Select a month to view payroll</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>

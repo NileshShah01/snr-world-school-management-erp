@@ -1,0 +1,60 @@
+<section id="publishResultsSection" class="dashboard-section card hidden">
+                    <div class="header mb-2">
+                        <h1>Publish Exam Results</h1>
+                        <p>Toggle final result visibility for students and parents</p>
+                    </div>
+                    <div class="glass-card p-1-5 mb-2 grid-4 gap-1 align-flex-end">
+                        <div class="form-group mb-0">
+                            <label>Academic Session</label>
+                            <select
+                                id="publishSessionSelect"
+                                class="form-control"
+                                onchange="PublishResultsUI.loadClasses()"
+                                title="Select Session"
+                            ></select>
+                        </div>
+                        <div class="form-group mb-0">
+                            <label>Class</label>
+                            <select
+                                id="publishClassSelect"
+                                class="form-control"
+                                onchange="PublishResultsUI.loadSections()"
+                                title="Select Class"
+                            ></select>
+                        </div>
+                        <div class="form-group mb-0">
+                            <label>Section</label>
+                            <select
+                                id="publishSectionSelect"
+                                class="form-control"
+                                onchange="PublishResultsUI.refresh()"
+                                title="Select Section"
+                            ></select>
+                        </div>
+                        <div class="form-group mb-0">
+                            <label>Assessment Term</label>
+                            <select
+                                id="publishExamSelect"
+                                class="form-control"
+                                onchange="PublishResultsUI.refresh()"
+                                title="Select Exam Term"
+                            ></select>
+                        </div>
+                    </div>
+                    <div class="glass-card p-0 overflow-hidden">
+                        <div class="table-responsive">
+                            <table class="portal-table">
+                                <thead>
+                                    <tr>
+                                        <th>Class Name</th>
+                                        <th>Evaluation Status</th>
+                                        <th class="text-right">Portal Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="publishStatusTableBody">
+                                    <!-- Dynamic rows -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>

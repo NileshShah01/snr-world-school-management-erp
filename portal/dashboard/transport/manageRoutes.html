@@ -1,0 +1,86 @@
+<section id="manageRoutesSection" class="dashboard-section card hidden">
+                    <div class="header mb-2">
+                        <div>
+                            <h1>Transport Route Management</h1>
+                            <p>Define school bus routes, stops, and driver details</p>
+                        </div>
+                        <button class="btn-portal btn-primary" onclick="toggleAddRouteForm()">
+                            <i class="fas fa-plus"></i> Add New Route
+                        </button>
+                    </div>
+
+                    <div id="addRouteFormWrapper" class="card p-2 mb-2 hidden">
+                        <form id="addRouteForm" onsubmit="ERPTransport.saveRoute(event)">
+                            <div class="grid-auto-200 gap-1-5 mb-1-5">
+                                <div class="form-group">
+                                    <label>Route Name</label>
+                                    <input
+                                        type="text"
+                                        id="route_name"
+                                        class="form-control"
+                                        placeholder="e.g. Route 01 - Saran"
+                                        required
+                                    />
+                                </div>
+                                <div class="form-group">
+                                    <label>Vehicle Number</label>
+                                    <input
+                                        type="text"
+                                        id="route_vehicle"
+                                        class="form-control"
+                                        placeholder="BR-01-XXXX"
+                                    />
+                                </div>
+                                <div class="form-group">
+                                    <label>Driver Name</label>
+                                    <input
+                                        type="text"
+                                        id="route_driver"
+                                        class="form-control"
+                                        placeholder="Enter Driver Name"
+                                    />
+                                </div>
+                            </div>
+                            <div class="form-group mb-1-5">
+                                <label>Pickup Stops (Comma separated)</label>
+                                <textarea
+                                    id="route_stops"
+                                    class="form-control"
+                                    rows="2"
+                                    placeholder="Stop A, Stop B, Stop C..."
+                                    title="Pickup Stops"
+                                ></textarea>
+                            </div>
+                            <div class="flex gap-1">
+                                <button type="submit" class="btn-portal btn-primary" title="Save Route">
+                                    Save Route
+                                </button>
+                                <button
+                                    type="button"
+                                    class="btn-portal btn-ghost"
+                                    onclick="toggleAddRouteForm()"
+                                    title="Cancel"
+                                >
+                                    Cancel
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="table-container">
+                        <table class="portal-table">
+                            <thead>
+                                <tr>
+                                    <th>Route Name</th>
+                                    <th>Vehicle No</th>
+                                    <th>Driver</th>
+                                    <th>Stops</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="routeListBody">
+                                <!-- Populated by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>

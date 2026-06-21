@@ -4,6 +4,7 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title id="studentPortalTitle">Student Dashboard</title>
+        <link rel="manifest" href="/manifest.json" />
         <link rel="stylesheet" href="/css/portal.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -34,10 +35,16 @@
                 <!-- Student Mini Profile in Sidebar -->
                 <div class="sidebar-profile">
                     <div id="sidebarStudentPhoto" class="sidebar-avatar">
-                        <i class="fas fa-user-graduate"></i>
+                        <i class="fas fa-user-graduate" id="sidebarAvatarIcon"></i>
+                        <i class="fas fa-users" id="sidebarParentIcon" style="display:none;"></i>
                     </div>
-                    <h4 id="sidebarStudentName">Loading...</h4>
-                    <p id="sidebarStudentClass" class="text-xs uppercase letter-spacing-1">Class - Sec</p>
+                    <div style="flex:1;min-width:0;">
+                        <h4 id="sidebarStudentName">Loading...</h4>
+                        <p id="sidebarParentLabel" class="text-xs text-muted" style="display:none;">Parent</p>
+                        <p id="sidebarStudentClass" class="text-xs uppercase letter-spacing-1">Class - Sec</p>
+                        <p id="sidebarStudentSubLabel" class="text-xs text-muted" style="display:none;"></p>
+                        <select id="parentChildSwitcher" class="input mt-1" style="display:none;"></select>
+                    </div>
                 </div>
 
                 <nav class="nav-menu">
@@ -74,12 +81,28 @@
                     <a href="#library" class="nav-link" onclick="showPortalSection('library')">
                         <i class="fas fa-book"></i> <span>My Library</span>
                     </a>
+                    <a href="#certificates" class="nav-link" onclick="showPortalSection('certificates')">
+                        <i class="fas fa-stamp"></i> <span>Certificates</span>
+                    </a>
                 </nav>
 
                 <div class="mt-auto pt-8">
+                    <button class="dark-mode-toggle" onclick="toggleDarkMode()" title="Toggle Dark Mode">
+                        <i class="fas fa-moon" id="darkModeIcon"></i>
+                        <span id="darkModeLabel">Dark Mode</span>
+                        <div class="toggle-track">
+                            <div class="toggle-thumb"></div>
+                        </div>
+                    </button>
+                    <button id="changePwdBtn" style="display:none;"
+                        onclick="openChangePwdModal()"
+                        class="nav-link w-full bg-transparent border-none cursor-pointer text-blue-300 mt-1"
+                    >
+                        <i class="fas fa-key"></i> <span>Change Password</span>
+                    </button>
                     <button
                         onclick="logoutStudent()"
-                        class="nav-link w-full bg-transparent border-none cursor-pointer text-red-300"
+                        class="nav-link w-full bg-transparent border-none cursor-pointer text-red-300 mt-1"
                     >
                         <i class="fas fa-sign-out-alt"></i> <span>Logout Portal</span>
                     </button>
@@ -413,19 +436,12 @@
 
                     <div class="card mt-2">
                         <h3><i class="fas fa-history"></i> Attendance History</h3>
-                        <div class="table-responsive mt-1-5">
-                            <table class="portal-table">
-                                <thead>
-                                    <tr>
-                                        <th>Date</th>
-                                        <th>Status</th>
-                                        <th>Remarks</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="studentAttendanceTable">
-                                    <!-- Populated by JS -->
-                                </tbody>
-                            </table>
+                        <div class="grid-auto-300 mt-1-5" id="attendanceCardsGrid">
+                            <!-- Populated by JS -->
+                        </div>
+                        <div id="noAttendanceMsg" class="text-center py-3 text-muted" style="display:none;">
+                            <i class="fas fa-calendar-check text-3xl opacity-20 mb-1 block"></i>
+                            <p>No attendance records found.</p>
                         </div>
                     </div>
                 </section>
@@ -535,46 +551,36 @@
                                 <p id="feeTotalBalance">₹0</p>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="card">
-                        <h3 class="mb-1-5"><i class="fas fa-history"></i> Payment Receipts</h3>
-                        <div class="table-responsive">
-                            <table class="portal-table">
-                                <thead>
-                                    <tr>
-                                        <th>Receipt No</th>
-                                        <th>Date</th>
-                                        <th>Payment Mode</th>
-                                        <th>Amount</th>
-                                        <th class="text-right">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="studentPaymentsTable">
-                                    <!-- Populated by JS -->
-                                </tbody>
-                            </table>
+                        <div class="stat-card border-left-primary cursor-pointer" onclick="payOnlineTotal()">
+                            <div class="stat-icon flex-center bg-blue-light text-primary">
+                                <i class="fas fa-credit-card"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Quick Pay</h3>
+                                <p class="text-primary font-bold" id="feePayNowBtn">Pay Now →</p>
+                            </div>
                         </div>
                     </div>
 
                     <div class="card">
-                        <h3 class="mb-1-5"><i class="fas fa-list-ol"></i> Detailed Fee Ledger</h3>
-                        <div class="table-responsive">
-                            <table class="portal-table">
-                                <thead>
-                                    <tr>
-                                        <th>Month / Period</th>
-                                        <th>Particulars</th>
-                                        <th>Due Amount</th>
-                                        <th>Paid Amount</th>
-                                        <th>Balance</th>
-                                        <th>Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="studentLedgerTable">
-                                    <!-- Populated by JS -->
-                                </tbody>
-                            </table>
+                        <h3 class="mb-1-5"><i class="fas fa-history"></i> Payment Receipts</h3>
+                        <div class="timeline" id="feeReceiptsTimeline">
+                            <!-- Populated by JS -->
+                        </div>
+                        <div id="noFeeReceiptsMsg" class="text-center py-3 text-muted" style="display:none;">
+                            <i class="fas fa-receipt text-3xl opacity-20 mb-1 block"></i>
+                            <p>No payment receipts found.</p>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h3 class="mb-1-5"><i class="fas fa-list-ol"></i> Fee Ledger</h3>
+                        <div class="accordion" id="feeLedgerAccordion">
+                            <!-- Populated by JS -->
+                        </div>
+                        <div id="noFeeLedgerMsg" class="text-center py-3 text-muted" style="display:none;">
+                            <i class="fas fa-file-invoice text-3xl opacity-20 mb-1 block"></i>
+                            <p>No fee ledger entries found.</p>
                         </div>
                     </div>
                 </section>
@@ -689,19 +695,41 @@
                     </div>
                     <div class="card">
                         <h3><i class="fas fa-book"></i> Currently Issued</h3>
-                        <div class="table-responsive mt-1-5">
-                            <table class="portal-table">
-                                <thead>
-                                    <tr>
-                                        <th>Book Title</th>
-                                        <th>Issued On</th>
-                                        <th>Due Date</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="studentLibraryTable">
-                                    <!-- Populated by JS -->
-                                </tbody>
-                            </table>
+                        <div class="grid-auto-300 mt-1-5" id="libraryCardsGrid">
+                            <!-- Populated by JS -->
+                        </div>
+                        <div id="noLibraryBooksMsg" class="text-center py-3 text-muted" style="display:none;">
+                            <i class="fas fa-book-open text-3xl opacity-20 mb-1 block"></i>
+                            <p>No books currently issued.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- CERTIFICATES SECTION -->
+                <section id="certificatesSection" class="portal-section hidden">
+                    <div class="section-header-pill">
+                        <div class="flex-1">
+                            <h1 class="text-2xl secondary m-0">Certificates & Documents</h1>
+                            <p class="text-sm text-muted m-0">Download official school certificates and documents</p>
+                        </div>
+                    </div>
+                    <div class="card p-2">
+                        <div class="grid-2 gap-1 mb-1-5" id="certActionsGrid">
+                            <div class="card p-1-5 text-center hover-lift cursor-pointer" onclick="requestCertificate('bonafide')">
+                                <div class="icon-box flex-center bg-primary white mx-auto mb-0-5 shadow-sm"><i class="fas fa-plus"></i></div>
+                                <p class="text-xs font-600 m-0">Request Bonafide</p>
+                            </div>
+                            <div class="card p-1-5 text-center hover-lift cursor-pointer" onclick="requestCertificate('slc')">
+                                <div class="icon-box flex-center bg-amber white mx-auto mb-0-5 shadow-sm"><i class="fas fa-plus"></i></div>
+                                <p class="text-xs font-600 m-0">Request SLC/TC</p>
+                            </div>
+                        </div>
+                        <div class="grid-auto-300" id="certificatesCardsGrid">
+                            <!-- Populated by JS -->
+                        </div>
+                        <div id="noCertificatesMsg" class="text-center py-3 text-muted" style="display:none;">
+                            <i class="fas fa-certificate text-4xl opacity-20 mb-1 block"></i>
+                            <p>No certificates available yet. Contact the school office to request one.</p>
                         </div>
                     </div>
                 </section>
@@ -730,11 +758,84 @@
             </div>
         </div>
 
-        <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-        <script src="/js/firebase-config.js"></script>
-        <script src="/js/access-control.js"></script>
-        <script src="/js/student-auth.js"></script>
-        <script src="/js/student-dashboard.js"></script>
+        <!-- Change Password Modal -->
+        <div id="changePwdModal" class="modal-overlay hidden">
+            <div class="modal-content" style="max-width: 420px;">
+                <div class="modal-header">
+                    <h3><i class="fas fa-key"></i> Change Password</h3>
+                    <button onclick="closeChangePwdModal()" class="close-btn">&times;</button>
+                </div>
+                <div class="modal-body-scroll">
+                    <div class="form-group">
+                        <label>Username</label>
+                        <input type="text" id="cpUsername" class="input" readonly style="background:var(--bg-gray);">
+                    </div>
+                    <div class="form-group">
+                        <label>Current Password</label>
+                        <input type="password" id="cpOldPassword" class="input" placeholder="Enter current password">
+                    </div>
+                    <div class="form-group">
+                        <label>New Password</label>
+                        <input type="password" id="cpNewPassword" class="input" placeholder="Enter new password (min 6 chars)">
+                    </div>
+                    <div class="form-group">
+                        <label>Confirm New Password</label>
+                        <input type="password" id="cpConfirmPassword" class="input" placeholder="Re-enter new password">
+                    </div>
+                    <div id="cpError" class="text-sm text-rose-500 mt-1" style="display:none;"></div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn-portal" onclick="closeChangePwdModal()">Cancel</button>
+                    <button class="btn-portal btn-primary" onclick="submitChangePassword()" id="cpSubmitBtn">
+                        <i class="fas fa-save"></i> Update Password
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+        <script async src="https://checkout.razorpay.com/v1/checkout.js"></script>
+        <script defer src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+        <script defer src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+        <script defer src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+        <script defer src="https://www.gstatic.com/firebasejs/9.23.0/firebase-functions-compat.js"></script>
+        <script defer src="/js/firebase-config.js"></script>
+        <script defer src="/js/media-loader.js?v=1.0"></script>
+        <script defer src="/js/access-control.js"></script>
+        <script defer src="/js/student-auth.js"></script>
+        <script defer src="/js/student-dashboard.js"></script>
+
+        <!-- DARK MODE SCRIPT -->
+        <script>
+            function toggleDarkMode() {
+                document.body.classList.toggle('dark-mode');
+                var isDark = document.body.classList.contains('dark-mode');
+                localStorage.setItem('darkMode', isDark);
+                updateDarkModeUI(isDark);
+            }
+            function updateDarkModeUI(isDark) {
+                var icon = document.getElementById('darkModeIcon');
+                var label = document.getElementById('darkModeLabel');
+                if (icon) icon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+                if (label) label.textContent = isDark ? 'Light Mode' : 'Dark Mode';
+            }
+            (function() {
+                var saved = localStorage.getItem('darkMode');
+                var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+                if (saved === 'true' || (saved === null && prefersDark)) {
+                    document.body.classList.add('dark-mode');
+                    updateDarkModeUI(true);
+                }
+            })();
+        </script>
+
+        <!-- Service Worker -->
+        <script defer>
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', function () {
+                    navigator.serviceWorker.register('/sw.js').catch(function () {});
+                });
+            }
+        </script>
     </body>
 </html>

@@ -1,0 +1,65 @@
+<section id="manageAllResultsSection" class="dashboard-section card hidden">
+                    <div class="header mb-2">
+                        <h1>Examination Birds-Eye View</h1>
+                        <p>Global oversight of result entry status across all classes and subjects</p>
+                    </div>
+                    <div class="glass-card p-1-5 mb-2 grid-5 gap-1 align-flex-end">
+                        <div class="form-group mb-0">
+                            <label>Session</label>
+                            <select id="manageResultsSession" class="form-control" title="Select Session"></select>
+                        </div>
+                        <div class="form-group mb-0">
+                            <label>Class</label>
+                            <select
+                                id="manageResultsClass"
+                                class="form-control"
+                                onchange="loadManageResultsSections()"
+                                title="Select Class"
+                            ></select>
+                        </div>
+                        <div class="form-group mb-0">
+                            <label>Section</label>
+                            <select
+                                id="manageResultsSectionSelect"
+                                class="form-control"
+                                title="Select Section"
+                            ></select>
+                        </div>
+                        <div class="form-group mb-0">
+                            <label>Exam</label>
+                            <select
+                                id="manageResultsExam"
+                                class="form-control"
+                                onchange="loadManageResultsSubjects()"
+                                title="Select Exam"
+                            ></select>
+                        </div>
+                        <div class="form-group mb-0">
+                            <label>Subject</label>
+                            <select
+                                id="manageResultsSubject"
+                                class="form-control"
+                                onchange="refreshManageResultsTable()"
+                                title="Select Subject"
+                            ></select>
+                        </div>
+                    </div>
+                    <div class="table-container">
+                        <div class="table-responsive">
+                            <table class="portal-table">
+                                <thead>
+                                    <tr>
+                                        <th>Roll</th>
+                                        <th>Name</th>
+                                        <th>Score</th>
+                                        <th>Grade</th>
+                                        <th class="text-right">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="manageResultsTableBody">
+                                    <!-- Populated via JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>

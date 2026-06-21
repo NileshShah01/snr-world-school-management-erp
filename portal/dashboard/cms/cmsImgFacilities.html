@@ -1,0 +1,250 @@
+<section id="cmsImgFacilitiesSection" class="dashboard-section hidden">
+                    <div class="card">
+                        <h3><i class="fas fa-image"></i> Facilities Page Images</h3>
+                        <p class="text-xs text-muted mb-1-5">
+                            Update all imagery on the Facilities page (Hero, Slider, Features, and Gallery).
+                        </p>
+
+                        <form id="cmsFacilitiesForm">
+                            <div class="grid-cols-2 gap-1-5">
+                                <div class="form-group grid-column-full">
+                                    <label class="font-bold">Hero Banner</label>
+                                    <input
+                                        type="file"
+                                        id="facHeroUrl"
+                                        accept="image/*"
+                                        onchange="previewCmsImage(event, 'facHero_preview')"
+                                        class="form-control"
+                                        title="Hero Banner Image"
+                                    />
+                                    <div id="facHero_preview" class="image-preview-mini"></div>
+                                </div>
+
+                                <div class="form-group grid-column-full mt-1">
+                                    <label class="font-bold">Scrolling Slider (8 Images)</label>
+                                    <div id="facSliderInputs" class="grid-cols-2 gap-0-5 mt-0-5">
+                                        <div class="form-group">
+                                            <input
+                                                type="file"
+                                                class="fac-slider-file form-control"
+                                                accept="image/*"
+                                                onchange="previewCmsImage(event, 'fac_s_1_preview')"
+                                                title="Slider Image 1"
+                                            />
+                                            <div id="fac_s_1_preview" class="image-preview-mini"></div>
+                                        </div>
+                                        <div class="form-group">
+                                            <input
+                                                type="file"
+                                                class="fac-slider-file form-control"
+                                                accept="image/*"
+                                                onchange="previewCmsImage(event, 'fac_s_2_preview')"
+                                                title="Slider Image 2"
+                                            />
+                                            <div id="fac_s_2_preview" class="image-preview-mini"></div>
+                                        </div>
+                                        <div class="form-group">
+                                            <input
+                                                type="file"
+                                                class="fac-slider-file form-control"
+                                                accept="image/*"
+                                                onchange="previewCmsImage(event, 'fac_s_3_preview')"
+                                                title="Slider Image 3"
+                                            />
+                                            <div id="fac_s_3_preview" class="image-preview-mini"></div>
+                                        </div>
+                                        <div class="form-group">
+                                            <input
+                                                type="file"
+                                                class="fac-slider-file form-control"
+                                                accept="image/*"
+                                                onchange="previewCmsImage(event, 'fac_s_4_preview')"
+                                                title="Slider Image 4"
+                                            />
+                                            <div id="fac_s_4_preview" class="image-preview-mini"></div>
+                                        </div>
+                                        <div class="form-group">
+                                            <input
+                                                type="file"
+                                                class="fac-slider-file form-control"
+                                                accept="image/*"
+                                                onchange="previewCmsImage(event, 'fac_s_5_preview')"
+                                                title="Slider Image 5"
+                                            />
+                                            <div id="fac_s_5_preview" class="image-preview-mini"></div>
+                                        </div>
+                                        <div class="form-group">
+                                            <input
+                                                type="file"
+                                                class="fac-slider-file form-control"
+                                                accept="image/*"
+                                                onchange="previewCmsImage(event, 'fac_s_6_preview')"
+                                                title="Slider Image 6"
+                                            />
+                                            <div id="fac_s_6_preview" class="image-preview-mini"></div>
+                                        </div>
+                                        <div class="form-group">
+                                            <input
+                                                type="file"
+                                                class="fac-slider-file form-control"
+                                                accept="image/*"
+                                                onchange="previewCmsImage(event, 'fac_s_7_preview')"
+                                                title="Slider Image 7"
+                                            />
+                                            <div id="fac_s_7_preview" class="image-preview-mini"></div>
+                                        </div>
+                                        <div class="form-group">
+                                            <input
+                                                type="file"
+                                                class="fac-slider-file form-control"
+                                                accept="image/*"
+                                                onchange="previewCmsImage(event, 'fac_s_8_preview')"
+                                                title="Slider Image 8"
+                                            />
+                                            <div id="fac_s_8_preview" class="image-preview-mini"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group grid-column-full mt-1">
+                                    <label class="font-bold">Interactive Feature Cards (6 Images)</label>
+                                    <div id="facFeatureInputs" class="grid-cols-2 gap-0-5 mt-0-5">
+                                        <div class="form-group">
+                                            <input
+                                                type="file"
+                                                class="fac-feature-file form-control"
+                                                accept="image/*"
+                                                onchange="previewCmsImage(event, 'fac_f_1_preview')"
+                                                title="Feature Card 1"
+                                            />
+                                            <div id="fac_f_1_preview" class="image-preview-mini"></div>
+                                        </div>
+                                        <div class="form-group">
+                                            <input
+                                                type="file"
+                                                class="fac-feature-file form-control"
+                                                accept="image/*"
+                                                onchange="previewCmsImage(event, 'fac_f_2_preview')"
+                                                title="Feature Card 2"
+                                            />
+                                            <div id="fac_f_2_preview" class="image-preview-mini"></div>
+                                        </div>
+                                        <div class="form-group">
+                                            <input
+                                                type="file"
+                                                class="fac-feature-file form-control"
+                                                accept="image/*"
+                                                onchange="previewCmsImage(event, 'fac_f_3_preview')"
+                                                title="Feature Card 3"
+                                            />
+                                            <div id="fac_f_3_preview" class="image-preview-mini"></div>
+                                        </div>
+                                        <div class="form-group">
+                                            <input
+                                                type="file"
+                                                class="fac-feature-file form-control"
+                                                accept="image/*"
+                                                onchange="previewCmsImage(event, 'fac_f_4_preview')"
+                                                title="Feature Card 4"
+                                            />
+                                            <div id="fac_f_4_preview" class="image-preview-mini"></div>
+                                        </div>
+                                        <div class="form-group">
+                                            <input
+                                                type="file"
+                                                class="fac-feature-file form-control"
+                                                accept="image/*"
+                                                onchange="previewCmsImage(event, 'fac_f_5_preview')"
+                                                title="Feature Card 5"
+                                            />
+                                            <div id="fac_f_5_preview" class="image-preview-mini"></div>
+                                        </div>
+                                        <div class="form-group">
+                                            <input
+                                                type="file"
+                                                class="fac-feature-file form-control"
+                                                accept="image/*"
+                                                onchange="previewCmsImage(event, 'fac_f_6_preview')"
+                                                title="Feature Card 6"
+                                            />
+                                            <div id="fac_f_6_preview" class="image-preview-mini"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group grid-column-full mt-1">
+                                    <label class="font-bold">Facilities Gallery (6 Images)</label>
+                                    <div id="facGalleryInputs" class="grid-cols-2 gap-0-5 mt-0-5">
+                                        <div class="form-group">
+                                            <input
+                                                type="file"
+                                                class="fac-gallery-file form-control"
+                                                accept="image/*"
+                                                onchange="previewCmsImage(event, 'fac_g_1_preview')"
+                                                title="Gallery Image 1"
+                                            />
+                                            <div id="fac_g_1_preview" class="image-preview-mini"></div>
+                                        </div>
+                                        <div class="form-group">
+                                            <input
+                                                type="file"
+                                                class="fac-gallery-file form-control"
+                                                accept="image/*"
+                                                onchange="previewCmsImage(event, 'fac_g_2_preview')"
+                                                title="Gallery Image 2"
+                                            />
+                                            <div id="fac_g_2_preview" class="image-preview-mini"></div>
+                                        </div>
+                                        <div class="form-group">
+                                            <input
+                                                type="file"
+                                                class="fac-gallery-file form-control"
+                                                accept="image/*"
+                                                onchange="previewCmsImage(event, 'fac_g_3_preview')"
+                                                title="Gallery Image 3"
+                                            />
+                                            <div id="fac_g_3_preview" class="image-preview-mini"></div>
+                                        </div>
+                                        <div class="form-group">
+                                            <input
+                                                type="file"
+                                                class="fac-gallery-file form-control"
+                                                accept="image/*"
+                                                onchange="previewCmsImage(event, 'fac_g_4_preview')"
+                                                title="Gallery Image 4"
+                                            />
+                                            <div id="fac_g_4_preview" class="image-preview-mini"></div>
+                                        </div>
+                                        <div class="form-group">
+                                            <input
+                                                type="file"
+                                                class="fac-gallery-file form-control"
+                                                accept="image/*"
+                                                onchange="previewCmsImage(event, 'fac_g_5_preview')"
+                                                title="Gallery Image 5"
+                                            />
+                                            <div id="fac_g_5_preview" class="image-preview-mini"></div>
+                                        </div>
+                                        <div class="form-group">
+                                            <input
+                                                type="file"
+                                                class="fac-gallery-file form-control"
+                                                accept="image/*"
+                                                onchange="previewCmsImage(event, 'fac_g_6_preview')"
+                                                title="Gallery Image 6"
+                                            />
+                                            <div id="fac_g_6_preview" class="image-preview-mini"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button
+                                type="submit"
+                                class="btn-portal btn-primary mt-2"
+                                title="Save All Facilities Images"
+                            >
+                                <i class="fas fa-save"></i> Save All Facilities Images
+                            </button>
+                        </form>
+                    </div>
+                </section>

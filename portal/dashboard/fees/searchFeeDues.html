@@ -1,0 +1,174 @@
+<section id="searchFeeDuesSection" class="dashboard-section hidden">
+                    <div class="header mb-2">
+                        <div>
+                            <h1>Defaulter List (Parents Who Didn't Pay)</h1>
+                            <p>Identify and manage students with outstanding fee arrears</p>
+                        </div>
+                        <div class="flex gap-0-75">
+                            <button
+                                onclick="exportDuesToExcel()"
+                                class="btn-portal bg-emerald text-white"
+                                title="Export Dues List"
+                            >
+                                <i class="fas fa-file-excel"></i> Export Dues List
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Filters -->
+                    <div class="card mb-1-5 bg-slate-light p-1-25">
+                        <div class="grid-4 gap-1-25 align-flex-end">
+                            <div class="form-group">
+                                <label>Academic Session</label>
+                                <select
+                                    id="duesSessionFilter"
+                                    class="form-control"
+                                    onchange="
+                                        loadClassesForDues();
+                                        loadFeeDues();
+                                    "
+                                    title="Select Session"
+                                ></select>
+                            </div>
+                            <div class="form-group">
+                                <label>Target Class</label>
+                                <select
+                                    id="duesClassFilter"
+                                    class="form-control"
+                                    onchange="loadFeeDues()"
+                                    title="Select Class"
+                                >
+                                    <option value="">Select Class</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Fee From Date</label>
+                                <input type="date" id="duesFromDate" class="form-control" onchange="loadFeeDues()" title="Filter fees generated on/after this date" />
+                            </div>
+                            <div class="form-group">
+                                <label>Fee To Date</label>
+                                <input type="date" id="duesToDate" class="form-control" onchange="loadFeeDues()" title="Filter fees generated on/before this date" />
+                            </div>
+                            <div class="form-group-flex flex gap-1 align-center" style="grid-column: span 2;">
+                                <label class="flex align-center gap-0-5 checkbox-label">
+                                    <input type="checkbox" id="duesIncludePrevYear" onchange="loadFeeDues()" />
+                                    <span>Include Previous Year Dues</span>
+                                </label>
+                                <label class="flex align-center gap-0-5">
+                                    <span class="text-sm text-muted">View:</span>
+                                    <select id="duesViewMode" class="form-control form-control-sm" onchange="loadFeeDues()" style="width:130px">
+                                        <option value="student">Student-wise</option>
+                                        <option value="fee">Fee-wise (Detailed)</option>
+                                    </select>
+                                </label>
+                                <button
+                                    onclick="loadFeeDues()"
+                                    class="btn-portal btn-primary"
+                                    title="Refresh Defaulter List"
+                                >
+                                    <i class="fas fa-search"></i> Refresh
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Summary Bar -->
+                    <div id="duesSummaryBar" class="stats-grid mb-2 hidden">
+                        <div class="stat-card bg-rose-light border-rose">
+                            <div class="stat-icon bg-rose text-white"><i class="fas fa-users-slash"></i></div>
+                            <div class="stat-info">
+                                <h3>Defaulter Count</h3>
+                                <p id="duesTotalDefaulters">0</p>
+                            </div>
+                        </div>
+                        <div class="stat-card bg-amber-light border-amber">
+                            <div class="stat-icon bg-amber text-white"><i class="fas fa-hand-holding-dollar"></i></div>
+                            <div class="stat-info">
+                                <h3>Total Outstanding</h3>
+                                <p id="duesTotalAmount">₹0</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Results Table -->
+                    <div class="table-container">
+                        <table class="portal-table">
+                            <thead>
+                                <tr>
+                                    <th>Student ID</th>
+                                    <th>Student Details</th>
+                                    <th>Class/Sec</th>
+                                    <th>Father's Name</th>
+                                    <th>Mobile Number</th>
+                                    <th>Dues Summary</th>
+                                    <th>Remarks</th>
+                                    <th class="text-right">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="feeDuesTableBody">
+                                <tr>
+                                    <td colspan="8" class="text-center p-3 text-muted">
+                                        <i class="fas fa-filter text-2xl opacity-20 mb-1 block"></i>
+                                        Select Class to view defaulters
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <!-- Detailed Breakdown Modal Content (Hidden, cloned into modal as needed) -->
+                        <div id="duesBreakdownTemplate" class="hidden">
+                            <div class="dues-breakdown-container">
+                                <div
+                                    class="dues-student-profile flex gap-1-5 mb-2 p-1-5 bg-slate-light border-radius-1 border"
+                                >
+                                    <div
+                                        class="dues-photo w-18 h-18 border-radius-12 bg-slate-dark border-2 border-primary overflow-hidden"
+                                    >
+                                        <img
+                                            id="duesModalPhoto"
+                                            src=""
+                                            class="w-full h-full object-cover"
+                                            alt="Student Photo"
+                                        />
+                                    </div>
+                                    <div class="dues-meta">
+                                        <h2 id="duesModalName" class="mb-0-25">Name</h2>
+                                        <p id="duesModalSid" class="text-sm text-slate-muted font-600 mb-0-75">
+                                            SID: 0000
+                                        </p>
+                                        <div class="grid-2 gap-1 text-sm">
+                                            <div><b>Father:</b> <span id="duesModalFather">...</span></div>
+                                            <div><b>Phone:</b> <span id="duesModalPhone">...</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <h4 class="mb-1">
+                                    <i class="fas fa-list-check text-primary"></i> Month-wise Pending Breakdown
+                                </h4>
+                                <div class="table-container">
+                                    <table class="portal-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Month / Year</th>
+                                                <th>Scheduled Amount</th>
+                                                <th>Paid So Far</th>
+                                                <th>Outstanding</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="duesModalTableBody"></tbody>
+                                    </table>
+                                </div>
+                                <div class="mt-1-5 text-right">
+                                    <button
+                                        class="btn-portal btn-primary"
+                                        onclick="alert('Notification system integration coming soon!')"
+                                        title="Send WhatsApp Due Reminder"
+                                    >
+                                        <i class="fab fa-whatsapp"></i> Send Due Reminder
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>

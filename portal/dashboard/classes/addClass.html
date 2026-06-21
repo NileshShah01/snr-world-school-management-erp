@@ -1,0 +1,67 @@
+<section id="addClassSection" class="dashboard-section hidden">
+                    <div class="header">
+                        <div>
+                            <h1>Manage Classes</h1>
+                            <p>Define classes/standards for the active session</p>
+                        </div>
+                    </div>
+                    <div class="grid-cols-1-2 gap-1-5">
+                        <div class="card">
+                            <h3>Add New Class</h3>
+                            <form id="addClassForm" onsubmit="handleClassSubmit(event)" class="mt-1">
+                                <div class="form-group">
+                                    <label>Session</label>
+                                    <select
+                                        id="classSessionSelect"
+                                        class="form-control"
+                                        required
+                                        title="Select Session"
+                                    ></select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Class Name (e.g., Class 6th)</label>
+                                    <input
+                                        type="text"
+                                        id="classNameInput"
+                                        class="form-control"
+                                        placeholder="Class 1st"
+                                        required
+                                        title="Class Name"
+                                    />
+                                </div>
+                                <div class="form-group">
+                                    <label>Sort Order (Number)</label>
+                                    <input
+                                        type="number"
+                                        id="classSortOrder"
+                                        class="form-control"
+                                        value="1"
+                                        required
+                                        title="Sort Order"
+                                    />
+                                </div>
+                                <button type="submit" class="btn-portal btn-primary w-full" title="Add Class">
+                                    <i class="fas fa-plus"></i> Add Class
+                                </button>
+                            </form>
+                        </div>
+                        <div class="card">
+                            <h3>Class List</h3>
+                            <div class="table-responsive mt-1">
+                                <table class="portal-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Order</th>
+                                            <th>Class Name</th>
+                                            <th>Sections</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="classesTableBody">
+                                        <!-- Dynamic content -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </section>

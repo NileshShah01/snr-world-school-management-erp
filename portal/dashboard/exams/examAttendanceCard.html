@@ -1,0 +1,23 @@
+<section id="examAttendanceCardSection" class="dashboard-section card hidden">
+                    <div class="header mb-2">
+                        <h1>Exam Attendance Sheets</h1>
+                        <p>Generate printable signature sheets for examination halls</p>
+                    </div>
+                    <div class="glass-card p-1-5 mb-2 grid-4 gap-1 align-flex-end">
+                        <div class="form-group mb-0">
+                            <label>Session</label>
+                            <select id="attnSessionSelect" class="form-control" title="Select Session"></select>
+                        </div>
+                        <div class="form-group mb-0">
+                            <label>Class</label>
+                            <select id="attnClassSelect" class="form-control" title="Select Class"></select>
+                        </div>
+                        <div class="form-group mb-0">
+                            <label>Exam</label>
+                            <select id="attnExamSelect" class="form-control" title="Select Exam Term"></select>
+                        </div>
+                        <button class="btn-portal btn-primary h-42" onclick="generateAttendanceCards()">
+                            <i class="fas fa-print mr-1"></i> Generate Sheets
+                        </button>
+                    </div>
+                </section>

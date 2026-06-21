@@ -1,0 +1,691 @@
+﻿{
+    "route":  "page-setup",
+    "title":  "Education Desk",
+    "pageHeading":  "Website Menu Setup",
+    "forms":  [
+                  {
+                      "action":  "page-setup",
+                      "checkboxes":  [
+
+                                     ],
+                      "selects":  [
+
+                                  ],
+                      "fields":  [
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "1",
+                                         "name":  "parent_priv_input_1",
+                                         "id":  "parent_priv_input_1",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "50",
+                                         "name":  "parent_priv_input_50",
+                                         "id":  "parent_priv_input_50",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "51",
+                                         "name":  "child_priv_input_51",
+                                         "id":  "50",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "52",
+                                         "name":  "child_priv_input_52",
+                                         "id":  "50",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "53",
+                                         "name":  "child_priv_input_53",
+                                         "id":  "50",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "54",
+                                         "name":  "child_priv_input_54",
+                                         "id":  "50",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "55",
+                                         "name":  "child_priv_input_55",
+                                         "id":  "50",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "56",
+                                         "name":  "child_priv_input_56",
+                                         "id":  "50",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "57",
+                                         "name":  "child_priv_input_57",
+                                         "id":  "50",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "100",
+                                         "name":  "parent_priv_input_100",
+                                         "id":  "parent_priv_input_100",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "101",
+                                         "name":  "child_priv_input_101",
+                                         "id":  "100",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "102",
+                                         "name":  "parent_priv_input_102",
+                                         "id":  "parent_priv_input_102",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "103",
+                                         "name":  "child_priv_input_103",
+                                         "id":  "102",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "104",
+                                         "name":  "child_priv_input_104",
+                                         "id":  "102",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "105",
+                                         "name":  "child_priv_input_105",
+                                         "id":  "102",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "106",
+                                         "name":  "child_priv_input_106",
+                                         "id":  "102",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "107",
+                                         "name":  "child_priv_input_107",
+                                         "id":  "100",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "108",
+                                         "name":  "parent_priv_input_108",
+                                         "id":  "parent_priv_input_108",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "109",
+                                         "name":  "child_priv_input_109",
+                                         "id":  "108",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "110",
+                                         "name":  "child_priv_input_110",
+                                         "id":  "108",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "111",
+                                         "name":  "child_priv_input_111",
+                                         "id":  "100",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "112",
+                                         "name":  "child_priv_input_112",
+                                         "id":  "100",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "150",
+                                         "name":  "parent_priv_input_150",
+                                         "id":  "parent_priv_input_150",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "151",
+                                         "name":  "child_priv_input_151",
+                                         "id":  "150",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "152",
+                                         "name":  "child_priv_input_152",
+                                         "id":  "150",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "153",
+                                         "name":  "child_priv_input_153",
+                                         "id":  "150",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "200",
+                                         "name":  "parent_priv_input_200",
+                                         "id":  "parent_priv_input_200",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "201",
+                                         "name":  "child_priv_input_201",
+                                         "id":  "200",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "202",
+                                         "name":  "child_priv_input_202",
+                                         "id":  "200",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "203",
+                                         "name":  "child_priv_input_203",
+                                         "id":  "200",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "204",
+                                         "name":  "child_priv_input_204",
+                                         "id":  "200",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "205",
+                                         "name":  "child_priv_input_205",
+                                         "id":  "200",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "206",
+                                         "name":  "child_priv_input_206",
+                                         "id":  "200",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "250",
+                                         "name":  "parent_priv_input_250",
+                                         "id":  "parent_priv_input_250",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "251",
+                                         "name":  "parent_priv_input_251",
+                                         "id":  "parent_priv_input_251",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "253",
+                                         "name":  "child_priv_input_253",
+                                         "id":  "251",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "252",
+                                         "name":  "child_priv_input_252",
+                                         "id":  "250",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "300",
+                                         "name":  "parent_priv_input_300",
+                                         "id":  "parent_priv_input_300",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "301",
+                                         "name":  "child_priv_input_301",
+                                         "id":  "300",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "350",
+                                         "name":  "parent_priv_input_350",
+                                         "id":  "parent_priv_input_350",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "400",
+                                         "name":  "parent_priv_input_400",
+                                         "id":  "parent_priv_input_400",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "401",
+                                         "name":  "child_priv_input_401",
+                                         "id":  "400",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "402",
+                                         "name":  "child_priv_input_402",
+                                         "id":  "400",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "450",
+                                         "name":  "parent_priv_input_450",
+                                         "id":  "parent_priv_input_450",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "451",
+                                         "name":  "child_priv_input_451",
+                                         "id":  "450",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "452",
+                                         "name":  "child_priv_input_452",
+                                         "id":  "450",
+                                         "type":  "checkbox"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "",
+                                         "name":  "hidden_parent_priv_fields",
+                                         "id":  "hidden_parent_priv_fields",
+                                         "type":  "hidden"
+                                     },
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "",
+                                         "name":  "hidden_child_priv_fields",
+                                         "id":  "hidden_child_priv_fields",
+                                         "type":  "hidden"
+                                     }
+                                 ],
+                      "radios":  [
+
+                                 ],
+                      "method":  "POST",
+                      "enctype":  ""
+                  },
+                  {
+                      "action":  "add-designation",
+                      "checkboxes":  [
+
+                                     ],
+                      "selects":  [
+
+                                  ],
+                      "fields":  [
+                                     {
+                                         "placeholder":  "",
+                                         "value":  "",
+                                         "name":  "edit_designation",
+                                         "id":  "edit_designation",
+                                         "type":  "hidden"
+                                     }
+                                 ],
+                      "radios":  [
+
+                                 ],
+                      "method":  "GET",
+                      "enctype":  ""
+                  }
+              ],
+    "ajaxEndpoints":  {
+
+                      },
+    "links":  [
+                  "home",
+                  "employee-profile",
+                  "/employee/emp-logout",
+                  "/app/dashboard",
+                  "add-employee",
+                  "search-employee",
+                  "add-designation",
+                  "add-department",
+                  "upload-employee",
+                  "employee-id-print",
+                  "add-batch",
+                  "add-course",
+                  "add-course-details",
+                  "add-subject",
+                  "add-non-subject",
+                  "add-syllabus",
+                  "all-syllabus",
+                  "add-time-table",
+                  "view-time-table",
+                  "time-table-assign",
+                  "view-time-table-assign",
+                  "employee-time-table",
+                  "session-time-table",
+                  "start-admission",
+                  "add-primary-source",
+                  "add-admission-enquiry",
+                  "my-admission-enquiry",
+                  "all-admission-enquiry",
+                  "enquiry-report",
+                  "upload-enquiry",
+                  "add-student",
+                  "search-student",
+                  "upload-student",
+                  "elective-subject-mapping",
+                  "promote-student",
+                  "student-id-print",
+                  "student-pickup-id-print",
+                  "student-rfid-update",
+                  "hostel-search-student",
+                  "transport-search-student",
+                  "add-course-fee-type",
+                  "add-transport-fee-type",
+                  "manage-course-fee",
+                  "course-fee-structure",
+                  "manage-transport-route-fee",
+                  "course-fee-payment",
+                  "monthly-fee-payment",
+                  "add-course-fee-payment",
+                  "demand-receipt",
+                  "bulk-discount",
+                  "bulk-extra-fee",
+                  "late-fee-fine-rule",
+                  "employee-attendance",
+                  "view-employee-attendance",
+                  "view-all-employee-attendance",
+                  "student-daily-attendance",
+                  "view-student-daily-attendance",
+                  "view-all-student-daily-attendance",
+                  "smart-card-student-attendance",
+                  "attendance-monthly-report",
+                  "add-order",
+                  "my-order",
+                  "all-order",
+                  "create-study-document",
+                  "view-study-document",
+                  "create-homework",
+                  "manage-homework",
+                  "update-homework-report",
+                  "download-homework-report",
+                  "setup-exam-grading-config",
+                  "manage-exam",
+                  "manage-exam-schedule",
+                  "view-exam-schedule",
+                  "publish-exam-schedule",
+                  "exam-hall-ticket",
+                  "exam-attendance-card",
+                  "student-exam-attendance",
+                  "view-student-exam-attendance",
+                  "exam-hall-plan",
+                  "exam-hall-detail",
+                  "exam-sitting-plan",
+                  "manage-exam-subject-result",
+                  "add-exam-subject-result",
+                  "manage-exam-result",
+                  "view-exam-result",
+                  "manage-nonsubject-result",
+                  "view-nonsubject-result",
+                  "publish-exam-result",
+                  "update-report-card-remarks",
+                  "generate-report-card",
+                  "view-report-card",
+                  "publish-report-card",
+                  "employee-leave-type",
+                  "employee-leave-assign",
+                  "add-employee-leave",
+                  "apply-self-employee-leave",
+                  "approve-employee-leave",
+                  "manage-salary-head",
+                  "manage-salary-structure",
+                  "assign-salary-structure",
+                  "salary-payment",
+                  "salary-payment-process",
+                  "delete-salary-payment-process",
+                  "print-salary-payslip",
+                  "create-salary-loan",
+                  "approve-salary-loan",
+                  "approved-salary-loan",
+                  "manage-salary-emi-payment",
+                  "view-salary-loan-transaction",
+                  "salary-loan-report",
+                  "my-salary-loan",
+                  "manage-vehicle-detail",
+                  "manage-driver-detail",
+                  "manage-stoppage",
+                  "manage-transport-route",
+                  "assign-stoppage-to-route",
+                  "assign-student-to-route",
+                  "student-transport-report",
+                  "add-event-and-holiday",
+                  "view-event-and-holiday",
+                  "email-template",
+                  "sms-template",
+                  "system-sms-template",
+                  "sms-balance",
+                  "whatsapp-balance",
+                  "notification-configuration",
+                  "dashboard-configuration",
+                  "parent-login-manage",
+                  "create-parent-login",
+                  "add-online-class",
+                  "all-online-class",
+                  "attend-online-class",
+                  "student-communication",
+                  "student-app-communication",
+                  "student-whatsapp-communication",
+                  "employee-communication",
+                  "print-notice",
+                  "notice-board-management",
+                  "daily-dairy-manage",
+                  "school-newsletter",
+                  "school-leaving-certificate",
+                  "student-bonafide-certificate",
+                  "create-finance-account",
+                  "add-finance-account-head",
+                  "add-finance-expense-record",
+                  "add-finance-income-record",
+                  "account-balance-transfer",
+                  "finance-account-statement",
+                  "finance-daily-register",
+                  "finance-profit-and-loss",
+                  "add-product-category",
+                  "add-product",
+                  "product-inventory-stock-in",
+                  "product-inventory-stock-out",
+                  "manage-product-inventory",
+                  "product-additional-fields-mapping",
+                  "add-product-rate-plan",
+                  "all-product-rate-plan",
+                  "product-tax-rule",
+                  "download-payment-receipt-pdf",
+                  "download-payment-receipt",
+                  "download-due-payment",
+                  "due-payment-with-detail",
+                  "admission-report",
+                  "receipt-revert-report",
+                  "flash-news",
+                  "page-setup",
+                  "page-content-setup"
+              ],
+    "jsFunctions":  [
+                        "getNewDesignation",
+                        "getSubChildPriv",
+                        "childPrivileges",
+                        "getSubmitWithPrivileges"
+                    ],
+    "dtColumns":  [
+
+                  ],
+    "jsEvents":  [
+                     "onchange=getSubChildPriv(this,1)",
+                     "onchange=getSubChildPriv(this,50)",
+                     "onchange=getSubChildPriv(this,100)",
+                     "onchange=getSubChildPriv(this,102)",
+                     "onchange=getSubChildPriv(this,108)",
+                     "onchange=getSubChildPriv(this,150)",
+                     "onchange=getSubChildPriv(this,200)",
+                     "onchange=getSubChildPriv(this,250)",
+                     "onchange=getSubChildPriv(this,251)",
+                     "onchange=getSubChildPriv(this,300)",
+                     "onchange=getSubChildPriv(this,350)",
+                     "onchange=getSubChildPriv(this,400)",
+                     "onchange=getSubChildPriv(this,450)",
+                     "onclick=getSubmitWithPrivileges()"
+                 ],
+    "layoutClasses":  [
+                          "col-md-3",
+                          "col-md-12"
+                      ],
+    "sessionOpts":  [
+
+                    ],
+    "sidebarNav":  [
+                       {
+                           "label":  "Log Out",
+                           "icon":  "fa fa-sign-out pull-right",
+                           "href":  "/employee/emp-logout"
+                       },
+                       {
+                           "label":  "",
+                           "icon":  "fa fa-envelope-o",
+                           "href":  "javascript:;"
+                       }
+                   ],
+    "cssAssets":  [
+                      "/static/vendors/bootstrap/dist/css/bootstrap.min.css",
+                      "/static/vendors/font-awesome/css/font-awesome.min.css",
+                      "/static/vendors/nprogress/nprogress.css",
+                      "/static/vendors/iCheck/skins/flat/green.css",
+                      "/static/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css",
+                      "/static/vendors/animate.css/animate.min.css",
+                      "/static/vendors/jqvmap/dist/jqvmap.min.css",
+                      "/static/vendors/bootstrap-daterangepicker/daterangepicker.css",
+                      "/static/css/jquery-ui.min.css",
+                      "/static/vendors/select2/dist/css/select2.min.css",
+                      "/static/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css",
+                      "/static/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css",
+                      "/static/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css",
+                      "/static/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css",
+                      "/static/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css",
+                      "/static/vendors/pnotify/dist/pnotify.css",
+                      "/static/vendors/pnotify/dist/pnotify.buttons.css",
+                      "/static/vendors/pnotify/dist/pnotify.nonblock.css",
+                      "/static/assets/clockpicker/bootstrap-clockpicker.min.css",
+                      "/static/assets/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.css",
+                      "/static/build/css/custom.min.css?v=2.6"
+                  ],
+    "jsAssets":  [
+                     "/static/vendors/jquery/dist/jquery.min.js",
+                     "/static/vendors/bootstrap/dist/js/bootstrap.min.js?v=1.1",
+                     "/static/vendors/fastclick/lib/fastclick.js",
+                     "/static/vendors/nprogress/nprogress.js",
+                     "/static/vendors/Chart.js/dist/Chart.min.js",
+                     "/static/vendors/echarts/dist/echarts.min.js",
+                     "/static/vendors/gauge.js/dist/gauge.min.js",
+                     "/static/vendors/iCheck/icheck.min.js",
+                     "/static/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js",
+                     "/static/vendors/skycons/skycons.js",
+                     "/static/vendors/Flot/jquery.flot.js",
+                     "/static/vendors/Flot/jquery.flot.pie.js",
+                     "/static/vendors/Flot/jquery.flot.time.js",
+                     "/static/vendors/Flot/jquery.flot.stack.js",
+                     "/static/vendors/Flot/jquery.flot.resize.js",
+                     "/static/vendors/flot.orderbars/js/jquery.flot.orderBars.js",
+                     "/static/vendors/flot-spline/js/jquery.flot.spline.min.js",
+                     "/static/vendors/flot.curvedlines/curvedLines.js",
+                     "/static/vendors/DateJS/build/date.js",
+                     "/static/vendors/jqvmap/dist/jquery.vmap.js",
+                     "/static/vendors/jqvmap/dist/maps/jquery.vmap.world.js",
+                     "/static/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js",
+                     "/static/vendors/moment/min/moment.min.js",
+                     "/static/vendors/bootstrap-daterangepicker/daterangepicker.js?v=1.4",
+                     "/static/vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js",
+                     "/static/vendors/jquery.hotkeys/jquery.hotkeys.js",
+                     "/static/vendors/google-code-prettify/src/prettify.js",
+                     "/static/vendors/jquery.tagsinput/src/jquery.tagsinput.js",
+                     "/static/vendors/switchery/dist/switchery.min.js",
+                     "/static/vendors/select2/dist/js/select2.full.min.js",
+                     "/static/vendors/parsleyjs/dist/parsley.min.js",
+                     "/static/vendors/autosize/dist/autosize.min.js",
+                     "/static/vendors/devbridge-autocomplete/dist/jquery.autocomplete.min.js",
+                     "/static/vendors/starrr/dist/starrr.js",
+                     "/static/vendors/datatables.net/js/jquery.dataTables.min.js",
+                     "/static/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js",
+                     "/static/vendors/datatables.net-buttons/js/dataTables.buttons.min.js",
+                     "/static/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js",
+                     "/static/vendors/datatables.net-buttons/js/buttons.flash.min.js",
+                     "/static/vendors/datatables.net-buttons/js/buttons.html5.min.js",
+                     "/static/vendors/datatables.net-buttons/js/buttons.print.min.js",
+                     "/static/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js",
+                     "/static/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js",
+                     "/static/vendors/datatables.net-responsive/js/dataTables.responsive.min.js",
+                     "/static/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js",
+                     "/static/vendors/jszip/dist/jszip.min.js",
+                     "/static/vendors/pdfmake/build/pdfmake.min.js",
+                     "/static/vendors/pdfmake/build/vfs_fonts.js",
+                     "/static/vendors/pnotify/dist/pnotify.js",
+                     "/static/vendors/pnotify/dist/pnotify.buttons.js",
+                     "/static/vendors/pnotify/dist/pnotify.nonblock.js",
+                     "/static/assets/clockpicker/bootstrap-clockpicker.min.js?v=1.6",
+                     "/static/assets/jquery-validation/js/jquery.validate.js",
+                     "/static/assets/bootstrap-switch/dist/js/bootstrap-switch.js",
+                     "/static/build/js/custom.js?v=4.2",
+                     "/static/build/js/common.js?v=2.4"
+                 ],
+    "images":  [
+                   "https://doc3.educationdesk.in/photos/enterprise_0/base64img/1704006565240.jpg",
+                   "https://doc3.educationdesk.in/photos/college_259/profile/1724204681494.jpg"
+               ],
+    "modals":  [
+
+               ],
+    "uploads":  [
+
+                ],
+    "htmlSize":  84262
+}

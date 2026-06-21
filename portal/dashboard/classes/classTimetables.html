@@ -1,0 +1,40 @@
+<section id="classTimetablesSection" class="dashboard-section card hidden">
+    <div class="header mb-2">
+        <div>
+            <h1>Class Timetables</h1>
+            <p>Manage weekly schedules for all classes</p>
+        </div>
+        <button class="btn-portal btn-primary" onclick="showSection('createTimetable')" title="Add New Timetable">
+            <i class="fas fa-plus mr-1"></i> Add Timetable
+        </button>
+    </div>
+    <div class="glass-card p-1-5 mb-2 grid-3 gap-1 align-flex-end">
+        <div class="form-group mb-0">
+            <label>Session</label>
+            <select id="ttSessionSelect" class="form-control" onchange="initERPTimetable()" title="Select Session"></select>
+        </div>
+        <div class="form-group mb-0">
+            <label>Class</label>
+            <select id="ttClassSelect" class="form-control" onchange="initERPTimetable()" title="Select Class"></select>
+        </div>
+        <button class="btn-portal btn-ghost h-42" onclick="initERPTimetable()" title="Refresh List">
+            <i class="fas fa-sync mr-1"></i> Refresh
+        </button>
+    </div>
+    <div class="table-container">
+        <div class="table-responsive">
+            <table class="portal-table">
+                <thead>
+                    <tr>
+                        <th>Class</th>
+                        <th>Last Updated</th>
+                        <th>Type</th>
+                        <th class="text-right">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="timetableListBody">
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>

@@ -6,7 +6,13 @@
   "scripts": {
     "lint": "eslint \"**/*.{js,html}\" && stylelint \"**/*.css\"",
     "format": "prettier --write \"**/*.{js,html,css}\"",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prebuild": "node scripts/check-firebase-config.js",
+    "build": "echo \"Build complete — no bundler needed for this project\"",
+    "deploy:school": "npm run build && firebase deploy --only hosting:school",
+    "deploy:platform": "npm run build && firebase deploy --only hosting:platform",
+    "deploy": "npm run build && firebase deploy --only hosting",
+    "deploy:all": "npm run build && firebase deploy"
   },
   "repository": {
     "type": "git",

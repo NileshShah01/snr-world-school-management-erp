@@ -1,11 +1,11 @@
 <header class="site-header">
     <div class="header-container">
         <div class="logo-section">
-            <img src="./images/ApexPublicSchoolLogo.png" class="logo" id="header-logo" alt="School Logo" />
+            <img src="" class="logo" id="header-logo" data-school-field="logoUrl" alt="School Logo" />
             <div class="school-info">
-                <h1 id="header-school-name">Apex Public School</h1>
-                <span class="school-location" id="header-school-location">Anjani Bazar</span>
-                <p class="school-udise" id="header-school-udise-reg">UDISE: 10171706503 | Registration: 2111449</p>
+                <h1 data-school-field="schoolName">Loading…</h1>
+                <span class="school-location" data-school-field="schoolLocation">Loading…</span>
+                <p class="school-udise" data-school-field="schoolUdiseReg">Loading…</p>
             </div>
         </div>
         <div class="menu-toggle" id="menuToggle">
@@ -14,23 +14,24 @@
         <nav class="menu" id="menu">
             <div class="mobile-menu-header">
                 <i class="fas fa-times close-menu" id="closeMenuBtn"></i>
-                <img src="./images/ApexPublicSchoolLogo.png" class="mobile-logo" id="mobile-header-logo" alt="School Logo" />
-                <p class="mobile-school-name" id="mobile-school-name">Apex Public School</p>
+                <img src="" class="mobile-logo" id="mobile-header-logo" data-school-field="logoUrl" alt="School Logo" />
+                <p class="mobile-school-name" data-school-field="schoolName">Loading…</p>
             </div>
-            <a href="./" title="Go to Home"><i class="fas fa-home"></i> Home</a>
-            <a href="about.html" title="Learn more About Us"><i class="fas fa-info-circle"></i> About</a>
-            <a href="academics.html" title="View Academic Programs"><i class="fas fa-book"></i> Academics</a>
-            <a href="admissions.html" title="Admission Information"><i class="fas fa-user-plus"></i> Admissions</a>
-            <a href="facilities.html" title="Our Facilities"><i class="fas fa-school"></i> Facilities</a>
-            <a href="gallery.html" title="View Gallery"><i class="fas fa-images"></i> Gallery</a>
-            <a href="contact.html" title="Contact Us"><i class="fas fa-envelope"></i> Contact</a>
-            <a href="inquiry.html" title="Submit Inquiry"><i class="fas fa-question-circle"></i> Inquiry</a>
+            <a href="./" data-i18n="nav.home" data-i18n-attr="title:nav.title.home" title="Go to Home"><i class="fas fa-home"></i> <span data-i18n="nav.home">Home</span></a>
+            <a href="about.html" data-i18n-attr="title:nav.title.about" title="Learn more About Us"><i class="fas fa-info-circle"></i> <span data-i18n="nav.about">About</span></a>
+            <a href="academics.html" data-i18n-attr="title:nav.title.academics" title="View Academic Programs"><i class="fas fa-book"></i> <span data-i18n="nav.academics">Academics</span></a>
+            <a href="admissions.html" data-i18n-attr="title:nav.title.admissions" title="Admission Information"><i class="fas fa-user-plus"></i> <span data-i18n="nav.admissions">Admissions</span></a>
+            <a href="facilities.html" data-i18n-attr="title:nav.title.facilities" title="Our Facilities"><i class="fas fa-school"></i> <span data-i18n="nav.facilities">Facilities</span></a>
+            <a href="gallery.html" data-i18n-attr="title:nav.title.gallery" title="View Gallery"><i class="fas fa-images"></i> <span data-i18n="nav.gallery">Gallery</span></a>
+            <a href="contact.html" data-i18n-attr="title:nav.title.contact" title="Contact Us"><i class="fas fa-envelope"></i> <span data-i18n="nav.contact">Contact</span></a>
+            <a href="inquiry.html" data-i18n-attr="title:nav.title.inquiry" title="Submit Inquiry"><i class="fas fa-question-circle"></i> <span data-i18n="nav.inquiry">Inquiry</span></a>
+            <a href="privacy.html" data-i18n-attr="title:nav.title.privacy" title="Privacy Policy"><i class="fas fa-shield-alt"></i> <span data-i18n="nav.privacy">Privacy</span></a>
             <div class="header-buttons d-flex gap-sm align-items-center">
-                <a href="portal/student-login.html" class="btn-portal-nav" title="Student/Parent Portal Login"
-                    ><i class="fas fa-user-graduate"></i> Student</a
+                <a href="portal/student-login.html" id="headerStudentLogin" class="btn-portal-nav" data-i18n-attr="title:nav.title.student" title="Student/Parent Portal Login"
+                    ><i class="fas fa-user-graduate"></i> <span data-i18n="nav.student">Student</span></a
                 >
-                <a href="portal/admin-login.html" class="btn-portal-nav admin-btn" title="Administrator Login"
-                    ><i class="fas fa-user-shield"></i> Admin</a
+                <a href="portal/admin-login.html" id="headerAdminLogin" class="btn-portal-nav admin-btn" data-i18n-attr="title:nav.title.admin" title="Administrator Login"
+                    ><i class="fas fa-user-shield"></i> <span data-i18n="nav.admin">Admin</span></a
                 >
             </div>
         </nav>

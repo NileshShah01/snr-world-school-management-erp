@@ -1,0 +1,2628 @@
+﻿<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html lang="en">
+  <head>
+    	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Education Desk</title>
+
+    <!-- Bootstrap -->
+    <link href="/static/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="/static/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="/static/vendors/nprogress/nprogress.css" rel="stylesheet">
+    <!-- iCheck -->
+    <link href="/static/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+    <!-- bootstrap-progressbar -->
+    <link href="/static/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
+    <!-- Animate.css -->
+    <link href="/static/vendors/animate.css/animate.min.css" rel="stylesheet">
+    <!-- JQVMap -->
+    <link href="/static/vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet"/>
+    <!-- bootstrap-daterangepicker -->
+    <link href="/static/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/jquery-ui.min.css">
+    <!-- Select2 -->
+    <link href="/static/vendors/select2/dist/css/select2.min.css" rel="stylesheet">
+	<!-- Datatables -->
+    <link href="/static/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <link href="/static/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+    <link href="/static/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+    <link href="/static/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+    <link href="/static/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
+    <link href="/static/vendors/pnotify/dist/pnotify.css" rel="stylesheet">
+    <link href="/static/vendors/pnotify/dist/pnotify.buttons.css" rel="stylesheet">
+    <link href="/static/vendors/pnotify/dist/pnotify.nonblock.css" rel="stylesheet">
+    
+    <!-- ClockPicker Stylesheet -->
+	<link rel="stylesheet" type="text/css" href="/static/assets/clockpicker/bootstrap-clockpicker.min.css">
+	
+	<link rel="stylesheet" type="text/css" href="/static/assets/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.css">
+    
+    <!-- Custom Theme Style -->
+    <link href="/static/build/css/custom.min.css?v=2.6" rel="stylesheet">
+    <link rel="shortcut icon" href="/static/favicon.ico"/>
+    <style type="text/css">
+    	label.error {
+		    color: red;
+		}
+		input.error {
+		    border-color: red;
+		}
+		body {
+    		background: #a21a46;
+    	}
+    	.nav.side-menu>li>a {
+    		margin-bottom: 4px;
+		}
+		.nav>li>a {
+		    position: relative;
+		    display: block;
+		    padding: 6px 15px 6px;
+		}
+		.left_col {
+		    background: #a21b46;
+		}
+		.nav.side-menu>li.active>a {
+			background: none;
+			background-color: #b3071f;
+		}
+		.nav-md ul.nav.child_menu li:after {
+	    	border-left: 1px solid #676767;
+		}
+		.nav-md ul.nav.child_menu li:before {
+	    	background: #a9a9a9;
+		}
+		.nav-sm ul.nav.child_menu {
+		    background: #a21a46;
+	    }
+	    .nav-sm .nav.side-menu li a i {
+	    	font-size: 20px !important;
+	    }
+	    .nav-sm .nav.side-menu li a {
+		    font-size: 10px;
+		    padding: 5px 5px;
+		}
+		.nav-sm ul.nav.child_menu li {
+		    padding: 0 10px;
+		    border-bottom: 1px solid #6d6d6d;
+		}
+		.nav.child_menu {
+    		background-color: rgb(26, 62, 162);
+		}
+		.pay-text span {
+		    font-weight: bold;
+		}
+		.pay-text {
+		    font-size: 16px;
+		}
+    </style>
+    <script type="text/javascript">
+    var windowLocTxt = window.location.href;
+	var localHost = ":8080";
+    if (window.location.protocol == 'http:' && windowLocTxt.indexOf(localHost) == -1) {
+        console.log("you are accessing us via an insecure protocol (HTTP). Redirecting you to HTTPS.");
+        window.location.href = window.location.href.replace('http:', 'https:');
+    }
+    </script>
+    
+   	
+    <style type="text/css">
+    	.profile_img {
+		    border: 1px solid #dadada;
+		    cursor: pointer;
+		    min-height: 217px;
+		}
+		.profile_img_change{
+			display:none;
+			position: absolute;
+    		top: 0px;
+    		cursor: pointer;
+		}
+		.profile_img_loader{
+			display:none;
+			position: absolute;
+    		top: 0px;
+    		cursor: pointer;
+		}
+		.profile_img_change img{
+			width:100%;
+		}
+		.profile-pic-section {
+		    padding: 12px;
+		    width: 250px;
+		    height: 250px;
+		    overflow: hidden;
+		}
+		.profile-pic-section .x_content{
+		 	overflow: hidden;
+   			height: 97%;
+    		margin: 0;
+		}
+		
+		.checkbox.inline {
+		    display: inline-block;
+		    margin-right: 10px;
+		}
+		
+		.hidediv{
+			display: none;
+		}
+	   #camera_photo{
+	        width: 320px;
+	        height: 240px;
+	        border: 1px solid black;
+	        margin: 0 auto;
+    		margin-bottom: 10px;
+	    }
+    </style>
+    <link href="/static/vendors/cropper/dist/cropper.min.css" rel="stylesheet">
+  </head>
+
+  <body class="nav-md">
+    <div class="container body">
+      <div class="main_container">
+
+		
+
+
+
+
+
+
+
+
+
+
+
+<!-- top navigation -->
+        <div class="top_nav">
+          <div class="nav_menu">
+           	<nav>
+              	<div class="nav toggle">
+                	<a id="menu_toggle"><i class="fa fa-bars"></i></a>
+              	</div>
+              	<div class="navbar nav_title" style="border: 0;">
+              		<a href="home" class="site_title"><img style="width: auto;" src="https://doc3.educationdesk.in/photos/enterprise_0/base64img/1704006565240.jpg"/></a>
+           		</div>
+           		
+              <ul class="nav navbar-nav navbar-right">
+                <li class="">
+                  <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    <img src="https://doc3.educationdesk.in/photos/college_259/profile/1724204681494.jpg" alt="">APEX PUBLIC SCHOOL
+                    <span class=" fa fa-angle-down"></span>
+                  </a>
+                  <ul class="dropdown-menu dropdown-usermenu pull-right">
+                    <li><a href="employee-profile">Profile</a></li>
+                    <li><a href="javascript:;">Help</a></li>
+                    <li><a href="/employee/emp-logout"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+                  </ul>
+                </li>
+
+                <li role="presentation" class="dropdown" style="display: none;">
+                  <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
+                    <i class="fa fa-envelope-o"></i>
+                    <span class="badge bg-green">6</span>
+                  </a>
+                  <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
+                    <li>
+                      <a>
+                        <span class="image"><img src="/static/images/img.jpg" alt="Profile Image" /></span>
+                        <span>
+                          <span>John Smith</span>
+                          <span class="time">3 mins ago</span>
+                        </span>
+                        <span class="message">
+                          Film festivals used to be do-or-die moments for movie makers. They were where...
+                        </span>
+                      </a>
+                    </li>
+                    <li>
+                      <a>
+                        <span class="image"><img src="/static/images/img.jpg" alt="Profile Image" /></span>
+                        <span>
+                          <span>John Smith</span>
+                          <span class="time">3 mins ago</span>
+                        </span>
+                        <span class="message">
+                          Film festivals used to be do-or-die moments for movie makers. They were where...
+                        </span>
+                      </a>
+                    </li>
+                    <li>
+                      <a>
+                        <span class="image"><img src="/static/images/img.jpg" alt="Profile Image" /></span>
+                        <span>
+                          <span>John Smith</span>
+                          <span class="time">3 mins ago</span>
+                        </span>
+                        <span class="message">
+                          Film festivals used to be do-or-die moments for movie makers. They were where...
+                        </span>
+                      </a>
+                    </li>
+                    <li>
+                      <a>
+                        <span class="image"><img src="/static/images/img.jpg" alt="Profile Image" /></span>
+                        <span>
+                          <span>John Smith</span>
+                          <span class="time">3 mins ago</span>
+                        </span>
+                        <span class="message">
+                          Film festivals used to be do-or-die moments for movie makers. They were where...
+                        </span>
+                      </a>
+                    </li>
+                    <li>
+                      <div class="text-center">
+                        <a>
+                          <strong>See All Alerts</strong>
+                          <i class="fa fa-angle-right"></i>
+                        </a>
+                      </div>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </nav>
+            
+          </div>
+          	
+        </div>
+        <!-- /top navigation -->
+        
+		
+
+
+
+
+
+
+
+
+<div class="col-md-3 left_col left-menu-side">
+          <div class="left_col scroll-view">
+
+            <div class="clearfix"></div>
+
+            <!-- menu profile quick info -->
+            <!--<div class="profile clearfix">
+              <div class="profile_pic">
+                <img src="/static/images/img.jpg" alt="..." class="img-circle profile_img">
+              </div>
+              <div class="profile_info">
+                <span>Welcome,</span>
+                <h2>John Doe</h2>
+              </div>
+            </div>-->
+            <!-- /menu profile quick info -->
+
+            <!--<br />-->
+
+            <!-- sidebar menu -->
+            <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+              <div class="menu_section">
+                <ul class="nav side-menu">
+                
+                
+                  	<li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="home">Dashboard</a></li>
+                      
+                      		<li><a href="/app/dashboard">Dashboard v2</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                 
+                
+                  	<li><a><i class="fa fa-user"></i> Employee <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="add-employee">Add Employee</a></li>
+                      
+                      		<li><a href="search-employee">Employee Search</a></li>
+                      
+                      		<li><a href="add-designation">Designation</a></li>
+                      
+                      		<li><a href="add-department">Department</a></li>
+                      
+                      		<li><a href="upload-employee">Upload Employee</a></li>
+                      
+                      		<li><a href="employee-id-print">Employee ID Print</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                 
+                
+                  	<li><a><i class="fa fa-book"></i> Class Management <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="add-batch">Add Session</a></li>
+                      
+                      		<li><a href="add-course">Add Class</a></li>
+                      
+                      		<li><a href="add-course-details">Add Class Details</a></li>
+                      
+                      		<li><a href="add-subject">Add Subject</a></li>
+                      
+                      		<li><a href="add-non-subject">Add Non-Subject</a></li>
+                      
+                      		<li><a href="add-syllabus">Add Syllabus</a></li>
+                      
+                      		<li><a href="all-syllabus">Manage Syllabus</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                 
+                
+                  	<li><a><i class="fa fa-calendar"></i> Time Table <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="add-time-table">Add Time Table</a></li>
+                      
+                      		<li><a href="view-time-table">View Time Table</a></li>
+                      
+                      		<li><a href="time-table-assign">Time Table Assign</a></li>
+                      
+                      		<li><a href="view-time-table-assign">View Time Table Assign</a></li>
+                      
+                      		<li><a href="employee-time-table">View Employee Time Table</a></li>
+                      
+                      		<li><a href="session-time-table">View Session Time Table</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                 
+                
+                  	<li><a><i class="fa fa-slack"></i> Admission &amp; Enquiry <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="start-admission">Start Admission</a></li>
+                      
+                      		<li><a href="add-primary-source">Add Primary Source</a></li>
+                      
+                      		<li><a href="add-admission-enquiry">Admission Enquiry</a></li>
+                      
+                      		<li><a href="my-admission-enquiry">My Admission Enquiry</a></li>
+                      
+                      		<li><a href="all-admission-enquiry">All Admission Enquiry</a></li>
+                      
+                      		<li><a href="enquiry-report">Enquiry Report</a></li>
+                      
+                      		<li><a href="upload-enquiry">Upload Enquiry</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                 
+                
+                  	<li><a><i class="fa fa-graduation-cap"></i> Student <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="add-student">Add Student</a></li>
+                      
+                      		<li><a href="search-student">Search Student</a></li>
+                      
+                      		<li><a href="upload-student">Upload Student</a></li>
+                      
+                      		<li><a href="elective-subject-mapping">Elective Subject Mapping</a></li>
+                      
+                      		<li><a href="promote-student">Promote Student</a></li>
+                      
+                      		<li><a href="student-id-print">Student ID Print</a></li>
+                      
+                      		<li><a href="student-pickup-id-print">Pickup ID Print</a></li>
+                      
+                      		<li><a href="student-rfid-update">Student Bulk Update</a></li>
+                      
+                      		<li><a href="hostel-search-student">Hostel Student Report</a></li>
+                      
+                      		<li><a href="transport-search-student">Transport Student Report</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                 
+                 
+                
+                  	<li><a><i class="fa fa-rupee"></i> Fees Management <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="add-course-fee-type">Class Fee Type</a></li>
+                      
+                      		<li><a href="add-transport-fee-type">Transport Fee Type</a></li>
+                      
+                      		<li><a href="manage-course-fee">Manage Class Fee</a></li>
+                      
+                      		<li><a href="course-fee-structure">Class Fee Structure</a></li>
+                      
+                      		<li><a href="manage-transport-route-fee">Transport Fee Manage</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                 
+                 
+                
+                  	<li><a><i class="fa fa-money"></i> Payments <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="course-fee-payment">Student Fee Payment</a></li>
+                      
+                      		<li><a href="monthly-fee-payment">Monthly Fee Payment</a></li>
+                      
+                      		<li><a href="add-course-fee-payment">Add Fee Payment</a></li>
+                      
+                      		<li><a href="demand-receipt">Demand Receipt</a></li>
+                      
+                      		<li><a href="bulk-discount">Bulk Discount</a></li>
+                      
+                      		<li><a href="bulk-extra-fee">Bulk Add Extra Fee</a></li>
+                      
+                      		<li><a href="late-fee-fine-rule">Late Fee Fine Rule</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                 
+                 
+                
+                  	<li><a><i class="fa fa-check-square-o"></i> Attendance <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="employee-attendance">Employee Attendance</a></li>
+                      
+                      		<li><a href="view-employee-attendance">View Employee Attendance</a></li>
+                      
+                      		<li><a href="view-all-employee-attendance">View All Employee Attendance</a></li>
+                      
+                      		<li><a href="student-daily-attendance">Student Attendance</a></li>
+                      
+                      		<li><a href="view-student-daily-attendance">Download Student Attendance</a></li>
+                      
+                      		<li><a href="view-all-student-daily-attendance">All Student Daily Attendance</a></li>
+                      
+                      		<li><a href="smart-card-student-attendance">Smart Card Attendance</a></li>
+                      
+                      		<li><a href="attendance-monthly-report">Attendance Monthly Report</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                 
+                
+                  	<li><a><i class="fa fa-truck"></i> Order <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="add-order">Add Order</a></li>
+                      	
+                      		<li><a href="my-order">My Order</a></li>
+                      	
+                      		<li><a href="all-order">All Order</a></li>
+                      	
+                    	</ul>
+                  	</li>
+                 
+                 
+                 
+                
+                  	<li><a><i class="fa fa-book"></i> Study Document <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="create-study-document">Create Study Document</a></li>
+                      
+                      		<li><a href="view-study-document">View Study Document</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                 
+                 
+                
+                  	<li><a><i class="fa fa-file-word-o"></i> Homework <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="create-homework">Create Homework</a></li>
+                      
+                      		<li><a href="manage-homework">Manage Homework</a></li>
+                      
+                      		<li><a href="update-homework-report">Update Homework Report</a></li>
+                      
+                      		<li><a href="download-homework-report">Download Homework Report</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                 
+                 
+                
+                  	<li><a><i class="fa fa-shield"></i> Exam Management <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="setup-exam-grading-config">Setup Exam Grading</a></li>
+                      
+                      		<li><a href="manage-exam">Manage Exam</a></li>
+                      
+                      		<li><a href="manage-exam-schedule">Manage Exam Schedule</a></li>
+                      
+                      		<li><a href="view-exam-schedule">View Exam Schedule</a></li>
+                      
+                      		<li><a href="publish-exam-schedule">Publish Exam Schedule</a></li>
+                      
+                      		<li><a href="exam-hall-ticket">Exam Hall Ticket</a></li>
+                      
+                      		<li><a href="exam-attendance-card">Exam Attendance Card</a></li>
+                      
+                      		<li><a href="student-exam-attendance">Student Exam Attendance</a></li>
+                      
+                      		<li><a href="view-student-exam-attendance">View Exam Attendance</a></li>
+                      
+                      		<li><a href="exam-hall-plan">Exam Hall Plan</a></li>
+                      
+                      		<li><a href="exam-hall-detail">Exam Hall Detail</a></li>
+                      
+                      		<li><a href="exam-sitting-plan">Exam Sitting Plan</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                 
+                 
+                
+                  	<li><a><i class="fa fa-flag-checkered"></i> Result Management <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="manage-exam-subject-result">Manage Exam Result</a></li>
+                      
+                      		<li><a href="add-exam-subject-result">Add Exam Result</a></li>
+                      
+                      		<li><a href="manage-exam-result">Manage All Exam Result</a></li>
+                      
+                      		<li><a href="view-exam-result">View All Exam Result</a></li>
+                      
+                      		<li><a href="manage-nonsubject-result">Manage NonSubject Result</a></li>
+                      
+                      		<li><a href="view-nonsubject-result">View NonSubject Result</a></li>
+                      
+                      		<li><a href="publish-exam-result">Publish Exam Result</a></li>
+                      
+                      		<li><a href="update-report-card-remarks">Report Card Remarks</a></li>
+                      
+                      		<li><a href="generate-report-card">Generate Report Card</a></li>
+                      
+                      		<li><a href="view-report-card">View Report Card</a></li>
+                      
+                      		<li><a href="publish-report-card">Publish Report Card</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                 
+                 
+                
+                  	<li><a><i class="fa fa-coffee"></i> Employee Leave <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="employee-leave-type">Leave Type</a></li>
+                      
+                      		<li><a href="employee-leave-assign">Leave Assign</a></li>
+                      
+                      		<li><a href="add-employee-leave">Add Leave</a></li>
+                      
+                      		<li><a href="apply-self-employee-leave">Apply Leave</a></li>
+                      
+                      		<li><a href="approve-employee-leave">Approve Leave</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                 
+                  
+                
+                  	<li><a><i class="fa fa-rupee"></i> Employee Salary <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="manage-salary-head">Manage Salary Head</a></li>
+                      
+                      		<li><a href="manage-salary-structure">Salary Structure</a></li>
+                      
+                      		<li><a href="assign-salary-structure">Assign Salary Structure</a></li>
+                      
+                      		<li><a href="salary-payment">Create Salary Payment</a></li>
+                      
+                      		<li><a href="salary-payment-process">Salary Payment Process</a></li>
+                      
+                      		<li><a href="delete-salary-payment-process">Delete Pending Salary</a></li>
+                      
+                      		<li><a href="print-salary-payslip">Print Payslip</a></li>
+                      
+                      		<li><a href="create-salary-loan">Create Salary Loan</a></li>
+                      
+                      		<li><a href="approve-salary-loan">Approve Salary Loan</a></li>
+                      
+                      		<li><a href="approved-salary-loan">All Approved Loan</a></li>
+                      
+                      		<li><a href="manage-salary-emi-payment">Add Salary Loan EMI</a></li>
+                      
+                      		<li><a href="view-salary-loan-transaction">View Salary Loan Transaction</a></li>
+                      
+                      		<li><a href="salary-loan-report">Salary Loan Report</a></li>
+                      
+                      		<li><a href="my-salary-loan">My Salary Loan</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                 
+                 
+                
+                  	<li><a><i class="fa fa-taxi"></i> Transport <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="manage-vehicle-detail">Manage Vehicle Detail</a></li>
+                      
+                      		<li><a href="manage-driver-detail">Manage Driver Detail</a></li>
+                      
+                      		<li><a href="manage-stoppage">Manage Stoppage</a></li>
+                      
+                      		<li><a href="manage-transport-route">Manage Transport Route</a></li>
+                      
+                      		<li><a href="assign-stoppage-to-route">Assign Stoppage To Route</a></li>
+                      
+                      		<li><a href="assign-student-to-route">Assign Student To Route</a></li>
+                      
+                      		<li><a href="student-transport-report">Student Transport Report</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                
+                 
+                 
+                
+                  	<li><a><i class="fa fa-th"></i> Holiday <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="add-event-and-holiday">Add Event & Holiday</a></li>
+                      
+                      		<li><a href="view-event-and-holiday">View Event & Holiday</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                 
+                 
+                
+                  	<li><a><i class="fa fa-gear"></i> Configuration <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="email-template">Email Template</a></li>
+                      
+                      		<li><a href="sms-template">Sms Template</a></li>
+                      
+                      		<li><a href="system-sms-template">System Sms Template</a></li>
+                      
+                      		<li><a href="sms-balance">SMS Balance</a></li>
+                      
+                      		<li><a href="whatsapp-balance">WhatsApp Balance</a></li>
+                      
+                      		<li><a href="notification-configuration">Notification Configuration</a></li>
+                      
+                      		<li><a href="dashboard-configuration">Dashboard Configuration</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                 
+                 
+                
+                  	<li><a><i class="fa fa-android"></i> Mobile App <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="parent-login-manage">Parent Login Manage</a></li>
+                      
+                      		<li><a href="create-parent-login">Create Parent Login</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                 
+                 
+                
+                  	<li><a><i class="fa fa-object-group"></i> Online Class <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="add-online-class">Add Online Class</a></li>
+                      
+                      		<li><a href="all-online-class">All Online Class</a></li>
+                      
+                      		<li><a href="attend-online-class">Attend Online Class</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                 
+                 
+                
+                  	<li><a><i class="fa fa-bullhorn"></i> Communication <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="student-communication">Student Communication</a></li>
+                      
+                      		<li><a href="student-app-communication">Student App Communication</a></li>
+                      
+                      		<li><a href="student-whatsapp-communication">Whatsapp Communication</a></li>
+                      
+                      		<li><a href="employee-communication">Employee Communication</a></li>
+                      
+                      		<li><a href="print-notice">Notice Print</a></li>
+                      
+                      		<li><a href="notice-board-management">Notice Board</a></li>
+                      
+                      		<li><a href="daily-dairy-manage">Daily Dairy</a></li>
+                      
+                      		<li><a href="school-newsletter">School Newsletter</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                 
+                 
+                
+                  	<li><a><i class="fa fa-file-excel-o"></i> Certificate <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="school-leaving-certificate">School Leaving</a></li>
+                      
+                      		<li><a href="student-bonafide-certificate">Student Bonafide</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                 
+                 
+                
+                  	<li><a><i class="fa fa-bank"></i> Finance <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="create-finance-account">Create Finance Account</a></li>
+                      
+                      		<li><a href="add-finance-account-head">Income & Expense Head</a></li>
+                      
+                      		<li><a href="add-finance-expense-record">Record Expense</a></li>
+                      
+                      		<li><a href="add-finance-income-record">Record Income</a></li>
+                      
+                      		<li><a href="account-balance-transfer">Account Balance Transfer</a></li>
+                      
+                      		<li><a href="finance-account-statement">Account Statement</a></li>
+                      
+                      		<li><a href="finance-daily-register">Daily Register</a></li>
+                      
+                      		<li><a href="finance-profit-and-loss">Profit And Loss</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                 
+                 
+                
+                  	<li><a><i class="fa fa-cubes"></i> Product Inventory <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="add-product-category">Manage Category</a></li>
+                      
+                      		<li><a href="add-product">Manage Product</a></li>
+                      
+                      		<li><a href="product-inventory-stock-in">Inventory Stock In</a></li>
+                      
+                      		<li><a href="product-inventory-stock-out">Inventory Stock Out</a></li>
+                      
+                      		<li><a href="manage-product-inventory">View Inventory Transaction</a></li>
+                      
+                      		<li><a href="product-additional-fields-mapping">Inventory Additional Fields</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                 
+                
+                  	<li><a><i class="fa fa-tasks"></i> Rate Plan And Tax <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="add-product-rate-plan">Add Rate Plan</a></li>
+                      	
+                      		<li><a href="all-product-rate-plan">All Rate Plan</a></li>
+                      	
+                      		<li><a href="product-tax-rule">Product Tax Rule</a></li>
+                      	
+                    	</ul>
+                  	</li>
+                 
+                 
+                
+                  	<li><a><i class="fa fa-bar-chart-o"></i> Reports <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="download-payment-receipt-pdf">Download Receipt PDF</a></li>
+                      
+                      		<li><a href="download-payment-receipt">Download Receipt Details</a></li>
+                      
+                      		<li><a href="download-due-payment">Download Due Payment</a></li>
+                      
+                      		<li><a href="due-payment-with-detail">Due Payment With Detail</a></li>
+                      
+                      		<li><a href="admission-report">New Admission Report</a></li>
+                      
+                      		<li><a href="receipt-revert-report">Receipt Revert Report</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                 
+                 
+                
+                  	<li><a><i class="fa fa-wordpress"></i> Website <span class="fa fa-chevron-down"></span></a>
+                    	<ul class="nav child_menu">
+                    	
+                      		<li><a href="flash-news">Flash News</a></li>
+                      
+                      		<li><a href="page-setup">Page Setup</a></li>
+                      
+                      		<li><a href="page-content-setup">Page Content Setup</a></li>
+                      
+                    	</ul>
+                  	</li>
+                 
+                 
+                </ul>
+              </div>
+            </div>
+            <!-- /sidebar menu -->
+
+            <!-- /menu footer buttons -->
+<!--             <div class="sidebar-footer hidden-small"> -->
+<!--               <a data-toggle="tooltip" data-placement="top" title="Settings"> -->
+<!--                 <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> -->
+<!--               </a> -->
+<!--               <a data-toggle="tooltip" data-placement="top" title="FullScreen"> -->
+<!--                 <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span> -->
+<!--               </a> -->
+<!--               <a data-toggle="tooltip" data-placement="top" title="Lock"> -->
+<!--                 <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span> -->
+<!--               </a> -->
+<!--               <a data-toggle="tooltip" data-placement="top" title="Logout"> -->
+<!--                 <span class="glyphicon glyphicon-off" aria-hidden="true"></span> -->
+<!--               </a> -->
+<!--             </div> -->
+            <!-- /menu footer buttons -->
+          </div>
+        </div>
+        
+        <!-- page content -->
+        <div class="right_col" role="main">
+          <div class="">
+            <div class="page-title">
+              <div class="title_left">
+                <h3>Add Student</h3>
+              </div>
+            </div>
+
+            <div class="clearfix"></div>
+            
+			
+			
+			
+			
+            <form data-parsley-validate name="add-student" action="add-student" method="post">
+            	<input type="hidden" name="customer_id" value="0">
+				<input type="hidden" name="enquiry_id" value="0">
+				<textarea name="enquiry_remarks" style="display: none" rows="" cols=""></textarea>
+            <div class="row">
+		         <div class="col-md-12 col-sm-12 col-xs-12">
+	                <div class="x_panel">
+	                	<div class="x_title">
+		                    <h2>Basic Information</h2>
+		                    <div class="clearfix"></div>
+	                  	</div>
+	                  	<div class="x_content">
+	                  		<div class="row">
+		                  		<div class="col-md-12 col-sm-12 col-xs-12">
+		                  			<div class="col-md-3 col-sm-3 col-xs-12 profile_left">
+						              	<div class="x_panel profile-pic-section" style="padding: 12px;">
+						                  	<div class="x_content">
+								       			<div class="profile_img" onmouseover="changeImgDilogShow()">
+								                 	<div id="crop-avatar">
+								                   		<img id="profile_pic_url_img" class="img-responsive avatar-view" src="/static/images/student_profile_default.jpg" alt="Avatar" title="Change the avatar">
+								                   		<input type="hidden" name="profile_pic_url" id="profile_pic_url" value="/static/images/student_profile_default.jpg"/>
+								                 	</div>
+								               </div>
+								               <div class="profile_img_change"  onmouseleave="changeImgDilogHide()">
+								                 	<div id="crop-avatar-img">
+								                   		<img class="img-responsive avatar-view" src="/static/images/change_profile_img_white.png" alt="Avatar" title="Click To Change the avatar">
+								                 	</div>
+								               </div>
+								               <div id="profile_img_loader" class="profile_img_loader">
+								                 	<div id="crop-avatar-img-loader">
+								                   		<img class="img-responsive avatar-view" src="/static/images/cloud_upload.gif" alt="Avatar" title="Click To Change the avatar">
+								                 	</div>
+								               </div>
+								            </div>
+								         </div>
+								     </div>
+								     <div class="col-md-9 col-sm-9 col-xs-12">
+								     	<div class="col-md-6">
+			                      			<div class="form-group">
+						                      	<label>Name*</label>
+						                      	<input type="text" autocomplete="off" data-parsley-pattern="^[a-zA-Z\s.]+$" data-parsley-maxlength="150" data-parsley-trigger="keyup" name="name" class="form-control" required placeholder="Enter Name" value="">
+						                      	<input type="hidden" name="student_id" value="0"/>
+						                    </div>
+			                      		</div>
+			                      		<div class="col-md-6">
+			                      			<div class="form-group has-feedback">
+						                      	<label class="control-label">Date of Birth</label>
+						                      	<input id="date_of_birth" name="date_of_birth" data-parsley-pattern="^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/(19|20)\d{2}$" data-parsley-trigger="keyup" class="form-control has-feedback-left" placeholder="Select DOB" type="text" autocomplete="off"  value="" />
+						                      	<span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true" style="top: 21px;"></span>
+						                    </div>
+			                      		</div>
+			                      		<div class="col-md-6">
+			                      			<div class="form-group">
+						                      	<label>Phone*</label>
+						                      	<input type="text" data-parsley-type="number" data-parsley-minlength="10" data-parsley-maxlength="10" autocomplete="off" data-parsley-trigger="keyup" name="phone" class="form-control required" placeholder="Enter Phone" value="" />
+						                    </div>
+			                      		</div>
+			                      		<div class="col-md-6">
+			                      			<div class="form-group">
+						                      	<label>Email</label>
+						                      	<input type="email" data-parsley-type="email" autocomplete="off"  name="email" data-parsley-maxlength="48" data-parsley-trigger="keyup" class="form-control" placeholder="Enter Email" value="">
+						                    </div>
+			                      		</div>
+			                      		<div class="col-md-6">
+			                      			<div class="form-group">
+						                      	<label>Gender</label>
+						                      	<select name="gender" class="select2box form-control">
+						                      		<option></option>
+						                      		<option  value="Male">Male</option>
+						                      		<option  value="Female">Female</option>
+						                      	</select>
+						                    </div>
+			                      		</div>
+			                      		<div class="col-md-6">
+			                      			<div class="form-group">
+						                      	<label>Blood Group</label>
+						                      	<select name="blood_group" class="select2box form-control">
+						                      		<option></option>
+						                      		<option  value="A+">A+</option>
+						                      		<option  value="A-">A-</option>
+						                      		<option  value="B+">B+</option>
+						                      		<option  value="B-">B-</option>
+						                      		<option  value="AB+">AB+</option>
+						                      		<option  value="AB-">AB-</option>
+						                      		<option  value="O+">O+</option>
+						                      		<option  value="O-">O-</option>
+						                      	</select>
+						                    </div>
+			                      		</div>
+			                      		<div class="col-md-6">
+			                      			<div class="form-group">
+						                      	<label>Smart Card Number</label>
+						                      	<input type="text" data-parsley-type="number" autocomplete="off" data-parsley-maxlength="20" data-parsley-trigger="keyup" id="rf_id_number" name="rf_id_number" class="form-control" placeholder="Enter Smart Card Number" value="">
+						                    </div>
+			                      		</div>
+			                      		<div class="col-md-6">
+			                      			<div class="form-group">
+						                      	<label>Aadhar Number</label>
+						                      	<input type="text" data-parsley-type="number" data-parsley-minlength="12" data-parsley-maxlength="12" data-parsley-trigger="keyup" autocomplete="off"  name="aadhar_number" class="form-control" placeholder="Enter Aadhar Number" value="">
+						                    </div>
+			                      		</div>
+			                      		<div class="col-md-6">
+			                      			<div class="form-group">
+						                      	<label>Religion</label>
+						                      	<select name="student_religion" class="select2box form-control" onchange="selectOther('student_religion',this)">
+						                      		<option></option>
+						                      		
+							                      		<option  value="Hindu">Hindu</option>
+						                      		
+							                      		<option  value="Islam">Islam</option>
+						                      		
+							                      		<option  value="Muslim">Muslim</option>
+						                      		
+							                      		<option  value="Christian">Christian</option>
+						                      		
+							                      		<option  value="Sikh">Sikh</option>
+						                      		
+							                      		<option  value="Buddhist">Buddhist</option>
+						                      		
+							                      		<option  value="Other">Other</option>
+						                      		
+						                      	</select>
+						                    </div>
+			                      		</div>
+			                      		<div id="student_religion_other" class="col-md-6" style="display:none;">
+			                      			<div class="form-group">
+						                      	<label>Religion Other</label>
+						                      	<input type="text" autocomplete="off" data-parsley-pattern="^[a-zA-Z\s.]+$" data-parsley-trigger="keyup" name="student_religion_other" class="form-control" placeholder="Enter Religion Other" value="">
+						                    </div>
+			                      		</div>
+			                      		<div class="col-md-6">
+			                      			<div class="form-group">
+						                      	<label>Student Category</label>
+						                      	<select id="student_category" name="student_category" class="select2box form-control" onchange="selectOther('student_category',this)">
+						                      		<option></option>
+						                      		
+							                      		<option  value="General">General</option>
+						                      		
+							                      		<option  value="OBC">OBC</option>
+						                      		
+							                      		<option  value="SC">SC</option>
+						                      		
+							                      		<option  value="ST">ST</option>
+						                      		
+							                      		<option  value="RTE">RTE</option>
+						                      		
+							                      		<option  value="EBC">EBC</option>
+						                      		
+							                      		<option  value="Other">Other</option>
+						                      		
+						                      	</select>
+						                    </div>
+			                      		</div>
+			                      		<div id="student_category_other" class="col-md-6" style="display:none;">
+			                      			<div class="form-group">
+						                      	<label>Category Other</label>
+						                      	<input type="text" autocomplete="off" data-parsley-pattern="^[a-zA-Z\s.]+$" data-parsley-maxlength="50" data-parsley-trigger="keyup" name="student_category_other" class="form-control" placeholder="Enter Category Other" value="">
+						                    </div>
+			                      		</div>
+			                      		<div class="col-md-6">
+			                      			<div class="form-group">
+						                      	<label>Student Caste</label>
+						                      	<input type="text" autocomplete="off" data-parsley-pattern="^[a-zA-Z\s.]+$" data-parsley-trigger="keyup" name="student_cast" class="form-control" placeholder="Enter Student Cast" value="">
+						                    </div>
+			                      		</div>
+			                      		<div class="col-md-6">
+			                      			<div class="form-group">
+						                      	<label>Height(In Feet Eg: 3.5)</label>
+						                      	<input type="text" autocomplete="off"  name="total_height" class="form-control" placeholder="Enter Student Height" value="">
+						                    </div>
+			                      		</div>
+			                      		<div class="col-md-6">
+			                      			<div class="form-group">
+						                      	<label>Weight(In Kg Eg: 33.5)</label>
+						                      	<input type="text" autocomplete="off" name="total_weight" class="form-control" placeholder="Enter Student Weight" value="">
+						                    </div>
+			                      		</div>
+			                      		<div class="col-md-6">
+			                      			<div class="form-group">
+						                      	<label>Student P.E.N</label>
+						                      	<input type="text" autocomplete="off"  name="pen_number" class="form-control" data-parsley-maxlength="25" data-parsley-trigger="keyup" placeholder="Enter Student P.E.N" value="">
+						                    </div>
+			                      		</div>
+			                      		<div class="col-md-6">
+			                      			<div class="form-group">
+						                      	<label>Student APAAR No</label>
+						                      	<input type="text" autocomplete="off" data-parsley-type="number" data-parsley-minlength="12" data-parsley-maxlength="12" data-parsley-trigger="keyup" name="apaar_number" class="form-control" placeholder="Enter Student APAAR" value="">
+						                    </div>
+			                      		</div>
+			                      		<div class="col-md-6">
+			                      			<div class="form-group">
+						                      	<label>Father's Aadhar Number</label>
+						                      	<input type="text" autocomplete="off" data-parsley-minlength="12" data-parsley-maxlength="12" name="father_aadhar_number" class="form-control" placeholder="Enter Father's Aadhar Number" value="">
+						                    </div>
+			                      		</div>
+			                      		<div class="col-md-6">
+			                      			<div class="form-group">
+						                      	<label>Mother's Aadhar Number</label>
+						                      	<input type="text" autocomplete="off" data-parsley-type="number" data-parsley-minlength="12" data-parsley-maxlength="12" data-parsley-trigger="keyup" name="mother_aadhar_number" class="form-control" placeholder="Enter Mother's Aadhar Number" value="">
+						                    </div>
+			                      		</div>
+			                      		<div class="col-md-3" style="margin-top: 13px;">
+			                      			<div class="checkbox">
+					                            <label class="no-padding">
+					                              <input name="enabled" type="checkbox" class="flat" checked="checked" > Enabled
+					                            </label>
+				                          	</div>
+			                      		</div>
+			                      		<div class="col-md-3"></div>
+			                      		<div class="col-md-12">
+			                      			<div class="form-group">
+						                      	<label>Remarks</label>
+						                      	<textarea rows="" cols="" class="form-control" name="remarks"></textarea>
+						                    </div>
+			                      		</div>
+								     </div>
+		                  		</div>
+		                  	</div>
+	                  	</div>
+	                </div>
+	             </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                	<div class="x_title">
+	                    <h2>Academic Information</h2>
+	                    <div class="clearfix"></div>
+                  	</div>
+                  	<div class="x_content">
+                  		
+                  		<input type="hidden" id="academic_row_count" name="academic_row_count" value="1"/>
+                  		
+	                      	<div class="row" id="academic_row_1">
+	                   			<div class="col-md-3">
+	                      			<div class="form-group">
+				                      	<label>Course/Class Name</label>
+				                      	<input type="text" autocomplete="off"  name="academic_course_name_1" class="form-control" placeholder="Enter Course/Class Name">
+				                    </div>
+	                      		</div>
+	                      		<div class="col-md-2">
+	                      			<div class="form-group">
+				                      	<label>Passing Year</label>
+				                      	<input type="text" autocomplete="off" data-parsley-type="number" name="academic_passing_year_1" class="form-control" placeholder="Enter Passing Year" >
+				                    </div>
+	                      		</div>
+	                      		<div class="col-md-2">
+	                      			<div class="form-group">
+				                      	<label>Total Marks or Grade</label>
+				                      	<input type="text" autocomplete="off"  name="academic_total_marks_1" class="form-control" placeholder="Enter Marks or Grade" >
+				                    </div>
+	                      		</div>
+	                      		<div class="col-md-3">
+	                      			<div class="form-group">
+				                      	<label>College/School Name</label>
+				                      	<input type="text" autocomplete="off"  name="academic_college_name_1" class="form-control" placeholder="Enter College/School Name" >
+				                    </div>
+	                      		</div>
+	                      		<div class="col-md-2" style="margin-top: 24px;">
+	                      			<button type="button" onclick="addAcademicDetail()" class="btn btn-primary"><i class="fa fa-plus"></i></button>
+	                      		</div>
+	                      	</div>
+                      	
+                      	<div id="academic_rows"></div>
+                  	</div>
+                </div>
+                <div class="x_panel">
+                	<div class="x_title">
+	                    <h2>Admission Information</h2>
+	                    <div class="clearfix"></div>
+	                    
+                  	</div>
+                  	<div class="x_content">
+                  		<div class="row">
+                  		
+                  		
+                      	</div>
+                      	<div class="row">
+                   			<div class="col-md-3 ">
+                      			<div class="form-group">
+			                      	<label>Session*</label>
+			                      	<select id="course_batch" name="course_batch" class="select2box form-control required" onchange="loadParentCourse(this);">
+			                      		<option></option>
+			                      		
+			                      				
+			                      				<option value="525" > 2023-2024 </option>
+			                      				
+			                      			
+			                      				
+			                      				<option value="616" > 2024-2025 </option>
+			                      				
+			                      			
+			                      				
+			                      				<option value="786" > 2025-2026 </option>
+			                      				
+			                      			
+			                      				
+			                      				<option value="1127" > 2026-2027 </option>
+			                      				
+			                      			
+			                      	</select>
+			                    </div>
+                      		</div>
+                      		<div class="col-md-3 ">
+                      			<div class="form-group">
+			                      	<label>Fee Plan*</label>
+			                      	<select id="fee_plan_type" name="fee_plan_type" class="select2box form-control required" onchange="loadParentCourse('#course_batch');">
+			                      		<option value="REGULAR"  >REGULAR</option>
+			                      		<option value="PROMOTION"  >PROMOTION</option>
+			                      		
+			                      	</select>
+			                    </div>
+                      		</div>
+                      		<div class="col-md-6 " id="course_main_div">
+                      			<div class="form-group">
+			                      	<label>Class*</label>
+			                      	<select id="course_main" name="parent_course" class="select2box form-control required" onchange="loadFeeForCourse(this);">
+			                      		<option></option>
+			                      	</select>
+			                    </div>
+                      		</div>
+                      		<div class="col-md-3" id="course_section_div" style="display: none">
+                      			<div class="form-group">
+			                      	<label>Section*</label>
+			                      	<select id="course_section" name="section" class="select2box form-control">
+			                      		<option></option>
+			                      	</select>
+			                    </div>
+                      		</div>
+                      		<div class="col-md-3">
+                      			<div class="form-group">
+			                      	<label>Admission No</label>
+			                      	<input type="text" autocomplete="off"  name="admission_no" class="form-control" placeholder="Enter Admission No" value="">
+			                    </div>
+                      		</div>
+                      		<div class="col-md-3">
+                      			<div class="form-group">
+			                      	<label>Joining Date</label>
+			                      	<input type="text" autocomplete="off"  name="joining_date" class="form-control date-picker" placeholder="Select Joining Date" value="">
+			                    </div>
+                      		</div>
+                      		<div class="col-md-3">
+                      			<div class="form-group">
+			                      	<label>Registration No</label>
+			                      	<input type="text" autocomplete="off" data-parsley-maxlength="30" data-parsley-trigger="keyup" name="student_code" class="form-control" placeholder="Enter Student Registration" value="574">
+			                    </div>
+                      		</div>
+                      		<div class="col-md-3">
+                      			<div class="form-group">
+			                      	<label>Roll Number</label>
+			                      	<input type="text" autocomplete="off" data-parsley-maxlength="5" data-parsley-trigger="keyup" name="roll_code" class="form-control" placeholder="Class Roll No" value="">
+			                    </div>
+                      		</div>
+                      	</div>
+                  	</div>
+                </div>
+                <div id="fee_info" class="row">
+                </div>
+                
+                <div class="row" id="extra-fee-add-div-main" style="display: none">
+		        	<div class="col-md-12 col-sm-12 col-xs-12">
+		                <div class="x_panel">
+		                	<div class="x_title">
+			                    <h2>Add Additional Fee Amount</h2>
+			                    <div class="clearfix"></div>
+		                  	</div>
+		                  	<div class="x_content">
+		                  		<input type="hidden" id="additional_fee_add_count" name="additinal_fee_add_count" value="1"/>
+		                      	<div id="additional_fee_row">
+		                      	</div>
+		                  	</div>
+		                </div>
+		            </div>
+	            </div>
+	            
+	            <div class="row">
+		   			<div class="col-md-12 col-sm-12 col-xs-12">
+			                <div class="x_panel">
+			                	<div class="x_title">
+				                    <h2>Hostel Information</h2>
+				                    <div class="clearfix"></div>
+			                  	</div>
+			                  	<div class="x_content">
+			                      	<div class="row">
+			                      		<div class="col-md-4">
+			                      			<div style="clear: both">
+				                      			<label>Hostel Required*</label>
+			                      			</div>
+			                      			<div class="checkbox inline">
+					                            <label class="no-padding">
+				                             		 <input name="hostel_alloted" class="flat" value="no"  type="checkbox"> Yes
+					                            </label>
+				                          	</div>
+			                      		</div>
+			                      		<div class="col-md-4">
+			                      			<div class="form-group">
+						                      	<label>Hostel Name :</label>
+						                      	<input type="text" autocomplete="off"  name="hostel_name" class="form-control" placeholder="Hostel Name" value="">
+						                    </div>
+			                      		</div>
+			                      		<div class="col-md-4">
+			                      			<div class="form-group">
+						                      	<label>Hostel Room No :</label>
+						                      	<input type="text" autocomplete="off"  name="hostel_room_no" class="form-control" placeholder="Hostel Room Number" value="">
+						                    </div>
+			                      		</div>
+			                      	</div>
+			                    </div>
+			                </div>
+			           </div>
+			   	</div>
+			   	<div class="row">
+		   			<div class="col-md-12 col-sm-12 col-xs-12">
+			                <div class="x_panel">
+			                	<div class="x_title">
+				                    <h2>Transport Information</h2>
+				                    <div class="clearfix"></div>
+			                  	</div>
+			                  	<div class="x_content">
+			                      	<div class="row">
+			                      		<div class="col-md-4">
+			                      			<div style="clear: both">
+				                      			<label>Transport Required*</label>
+			                      			</div>
+			                      			<div class="checkbox inline">
+					                            <label class="no-padding">
+				                             		 <input name="transport_alloted" class="flat" value="no"  type="checkbox"> Yes
+					                            </label>
+				                          	</div>
+			                      		</div>
+			                      		<div class="col-md-4">
+			                      			<div class="form-group">
+						                      	<label>Transport Route Name :</label>
+						                      	<input type="text" autocomplete="off"  name="transport_route_name" class="form-control" placeholder="Transport Route Name" value="">
+						                    </div>
+			                      		</div>
+			                      		<div class="col-md-4">
+			                      			<div class="form-group">
+						                      	<label>Bus No :</label>
+						                      	<input type="text" autocomplete="off"  name="transport_bus_no" class="form-control" placeholder="Bus Number" value="">
+						                    </div>
+			                      		</div>
+			                      	</div>
+			                    </div>
+			                </div>
+			           </div>
+			   	</div>
+                
+                <div class="x_panel">
+                	<div class="x_title">
+	                    <h2>Parent and Communication Details</h2>
+	                    <div class="clearfix"></div>
+                  	</div>
+                  	<div class="x_content">
+                      	<div class="row">
+                   			<div class="col-md-6">
+                      			<div class="form-group">
+			                      	<label>Father Name*</label>
+			                      	<input type="text" autocomplete="off" data-parsley-pattern="^[a-zA-Z\s.]+$" data-parsley-trigger="keyup" name="father_name" class="form-control" required placeholder="Enter Father Name" value="">
+			                    </div>
+                      		</div>
+                      		<div class="col-md-6">
+                      			<div class="form-group">
+			                      	<label>Mother Name</label>
+			                      	<input type="text" autocomplete="off" data-parsley-pattern="^[a-zA-Z\s.]+$" data-parsley-trigger="keyup" name="mother_name" class="form-control" placeholder="Enter Mother Name" value="">
+			                    </div>
+                      		</div>
+                      		<div class="col-md-6">
+                      			<div class="form-group">
+			                      	<label>Father Occupation</label>
+			                      	<input type="text" autocomplete="off" data-parsley-pattern="^[a-zA-Z0-9\s.]+$" data-parsley-trigger="keyup" name="father_occupation" class="form-control" placeholder="Enter Father Occupation" value="">
+			                    </div>
+                      		</div>
+                      		<div class="col-md-6">
+                      			<div class="form-group">
+			                      	<label>Mother Occupation</label>
+			                      	<input type="text" autocomplete="off" data-parsley-pattern="^[a-zA-Z0-9\s.]+$" data-parsley-trigger="keyup" name="mother_occupation" class="form-control" placeholder="Enter Mother Occupation" value="">
+			                    </div>
+                      		</div>
+                      		<div class="col-md-6">
+                      			<div class="form-group">
+			                      	<label>Father Qualification</label>
+			                      	
+			                      	<select name="father_qualification" placeholder="Select Father Qualification" class="select2box form-control" onchange="selectOther('father_qualification',this)">
+			                      		<option></option>
+			                      		
+				                      		<option  value="Under Matric">Under Matric</option>
+			                      		
+				                      		<option  value="10th">10th</option>
+			                      		
+				                      		<option  value="12th">12th</option>
+			                      		
+				                      		<option  value="Graduate">Graduate</option>
+			                      		
+				                      		<option  value="Post Graduate">Post Graduate</option>
+			                      		
+				                      		<option  value="Master Graduate">Master Graduate</option>
+			                      		
+				                      		<option  value="Other">Other</option>
+			                      		
+			                      	</select>
+			                    </div>
+                      		</div>
+                      		<div id="father_qualification_other" class="col-md-6" style="display:none;">
+                      			<div class="form-group">
+			                      	<label>Father Qualification Other</label>
+			                      	<input type="text" autocomplete="off" data-parsley-pattern="^[a-zA-Z0-9\s.]+$" data-parsley-trigger="keyup" name="father_qualification_other" class="form-control" placeholder="Enter Father Qualification Other" value="">
+			                    </div>
+                      		</div>
+                      		<div class="col-md-6">
+                      			<div class="form-group">
+			                      	<label>Mother Qualification</label>
+			                      	
+			                      	<select name="mother_qualification" placeholder="Select Mother Qualification" class="select2box form-control" onchange="selectOther('mother_qualification',this)">
+			                      		<option></option>
+			                      		
+				                      		<option  value="Under Matric">Under Matric</option>
+			                      		
+				                      		<option  value="10th">10th</option>
+			                      		
+				                      		<option  value="12th">12th</option>
+			                      		
+				                      		<option  value="Graduate">Graduate</option>
+			                      		
+				                      		<option  value="Post Graduate">Post Graduate</option>
+			                      		
+				                      		<option  value="Master Graduate">Master Graduate</option>
+			                      		
+				                      		<option  value="Other">Other</option>
+			                      		
+			                      	</select>
+			                    </div>
+                      		</div>
+                      		<div id="mother_qualification_other" class="col-md-6" style="display:none;">
+                      			<div class="form-group">
+			                      	<label>Mother Qualification Other</label>
+			                      	<input type="text" autocomplete="off" data-parsley-pattern="^[a-zA-Z0-9\s.]+$" data-parsley-trigger="keyup" name="mother_qualification_other" class="form-control" placeholder="Enter Mother Qualification Other" value="">
+			                    </div>
+                      		</div>
+                      		<div class="col-md-6">
+                      			<div class="form-group">
+			                      	<label>Guardian Name</label>
+			                      	<input type="text" autocomplete="off" data-parsley-pattern="^[a-zA-Z\s.]+$" data-parsley-trigger="keyup" name="guardian_name" class="form-control" placeholder="Enter Guardian Name" value="">
+			                    </div>
+                      		</div>
+                      		<div class="col-md-6">
+                      			<div class="form-group">
+			                      	<label>Guardian Phone</label>
+			                      	<input type="text" autocomplete="off" data-parsley-type="number" data-parsley-minlength="10" data-parsley-maxlength="10" name="guardian_phone" class="form-control" placeholder="Enter Guardian Phone" value="">
+			                    </div>
+                      		</div>
+                      		<div class="col-md-6">
+                      			<div class="form-group">
+			                      	<label>Guardian Email</label>
+			                      	<input type="text" autocomplete="off"  name="guardian_email" class="form-control" placeholder="Enter Guardian Email" value="">
+			                    </div>
+                      		</div>
+                      		<div class="col-md-3">
+                      			<div class="form-group">
+			                      	<label>City</label>
+			                      	<input type="text" autocomplete="off" data-parsley-pattern="^[a-zA-Z0-9\s.]+$" data-parsley-trigger="keyup" name="city" class="form-control" placeholder="Enter City" value="">
+			                    </div>
+                      		</div>
+                      		<div class="col-md-3">
+                      			<div class="form-group">
+			                      	<label>Pincode</label>
+			                      	<input type="text" autocomplete="off" data-parsley-type="number" data-parsley-minlength="6" data-parsley-maxlength="6" data-parsley-trigger="keyup" name="pincode" class="form-control" placeholder="Enter Pincode" value="">
+			                    </div>
+                      		</div>
+                      		<div class="col-md-6">
+                      			<div class="form-group">
+			                      	<label>Current Address</label>
+			                      	<textarea name="current_address" class="form-control" rows="" cols="" placeholder="Enter Current Address"></textarea>
+			                    </div>
+                      		</div>
+                      		<div class="col-md-6">
+                      			<div class="form-group">
+			                      	<label>Permanent Address</label>
+			                      	<textarea name="parmanent_address" class="form-control" rows="" cols="" placeholder="Enter Parmanent Address"></textarea>
+			                    </div>
+                      		</div>
+                      	</div>
+                  	</div>
+                </div>
+                <div class="x_panel">
+                	<div class="x_title">
+	                    <h2>Upload Document <small>[pdf,doc and jpeg file accepted and Max 1MB each]</small></h2>
+	                    <button onclick="uploadDocumentPopUp()" type="button" class="btn btn-primary pull-right">Upload Files</button>
+	                    <div class="clearfix"></div>
+                  	</div>
+                  	<div class="x_content">
+                      	<div class="row">
+                      		<div class="col-md-12">
+                      			<div id="file-upload-details"></div>
+                      		</div>
+                   			<div class="col-md-12">
+                      			<table class="table table-striped table-bordered dt-responsive nowrap">
+                      				<thead>
+                      					<tr>
+                      						<th>File Name</th>
+                      						<th>Status</th>
+                      						<th>Download/View</th>
+                      						<th>Remove</th>
+                      					</tr>
+                      				</thead>
+                      				<tbody id="document_table_tbody">
+                      					
+                      				</tbody>
+                      			</table>
+                      			<div id="file_append">
+                      			</div>
+                      		</div>
+                      		
+                      	</div>
+                  	</div>
+                </div>
+                <div class="x_panel">
+                  	<div class="x_content">
+                  		<div class="col-md-12 text-right">
+		            		<button type="submit" class="btn btn-success">Submit</button>
+		            		
+		            	</div>
+                  	</div>
+                </div>
+              </div>
+            </div>
+           </form>
+<!--            Change Picture Pop Up Starts -->
+<!-- 			<div class="modal fade" id="upload-student-profile-image" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> -->
+<!-- 				<div class="modal-dialog"> -->
+<!-- 					<div class="modal-content"> -->
+<!-- 						<div class="modal-header"> -->
+<!-- 							<button type="button" class="close" data-dismiss="modal"> -->
+<!-- 								<span aria-hidden="true">&times;</span><span class="sr-only">Close</span> -->
+<!-- 							</button> -->
+<!-- 							<h4 class="modal-title" id="myModalLabel">Profile Picture</h4> -->
+<!-- 						</div> -->
+<!-- 						<form id="profilePictureUpload" name="profilePictureUpload"	action="/employee/profile-img-upload" method="POST"	enctype="multipart/form-data"> -->
+<!-- 							<div class="modal-body"> -->
+<!-- 								<div class="form-group"> -->
+<!-- 									<label for="exampleInputFile">Choose browse to select picture</label> <input type="file" id="profile_image" -->
+<!-- 										name="profile_image" accept="image/x-png, image/gif, image/jpeg" /> -->
+		
+<!-- 								</div> -->
+<!-- 								<div id="error_msg_pic" style="color: red; display: none">Please -->
+<!-- 									make sure your file is in png, jpg or bmp format and less than 1 -->
+<!-- 									MB.</div> -->
+<!-- 							</div> -->
+<!-- 						</form> -->
+<!-- 						<div class="modal-footer"> -->
+<!-- 							<input onclick="uploadPicJqueryForm()" type="button" -->
+<!-- 								class="btn btn-primary" value="Upload"> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
+			<!-- Change Picture Pop Up Ends -->
+			<div class="modal fade" id="upload-document" tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">
+								<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+							</button>
+							<h4 class="modal-title">Document Upload </h4>
+						</div>
+						<form id="uploadDocument" name="uploadDocument"	action="/employee/document-upload" method="POST" enctype="multipart/form-data">
+							<div class="modal-body">
+								<div class="row">
+									
+		                      		
+									<div id="other_name_div" class="col-md-6" style="display: block; ">
+										<div class="form-group">
+											<label>Other File Name*</label>
+											<input id="file_name" type="text" autocomplete="off"  class="form-control" name="file_name"/>
+										</div>
+									</div>
+									<div class="col-md-12">
+										<div class="form-group">
+											<label for="document_input">Choose browse to select file</label>
+											<input  type="file" id="document_input" name="document_input" />
+										</div>
+									</div>
+									<div class="col-md-12">
+										<div id="doc_error_msg_pic" style="color: red; display: none">Please make sure your file is less than 1 MB.</div>
+									</div>
+								</div>
+							</div>
+						</form>
+						<div class="modal-footer">
+							<input onclick="uploadDocumentForm()" type="button"	class="btn btn-primary" value="Upload">
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Change Picture Pop Up Starts -->
+			<div class="modal fade bs-modal-lg" id="upload-student-profile-image" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog modal-lg">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">
+								<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+							</button>
+							<h4 class="modal-title" id="myModalLabel">Profile Picture</h4>
+						</div>
+						<form id="profilePictureUpload" name="profilePictureUpload"	action="/employee/profile-img-upload" method="POST"	enctype="multipart/form-data">
+							<div class="modal-body">
+								<div class="row">
+									<div class="col-md-12 text-center" style="margin-bottom: 5px;">
+										<div class="btn-group docs-buttons">
+                        					<button type="button" class="btn btn-primary crop-action" data-method="reset" title="Reset" style="margin-right: 2px;">
+	                          					<span class="docs-tooltip" data-toggle="tooltip" title="$().cropper(&quot;reset&quot;)">
+	                            					<span class="fa fa-refresh"></span>
+	                          					</span>
+                        					</button>
+                        					<label class="btn btn-primary btn-upload" for="inputImage" title="Upload image file">
+				                          		<input type="file" class="sr-only" id="inputImage" name="file" accept="image/*">
+				                          		<span class="docs-tooltip" data-toggle="tooltip" title="Import image with Blob URLs">
+				                            		<span class="fa fa-upload"></span>
+				                          		</span>
+				                        	</label>
+				                        	<button type="button" class="btn btn-primary crop-action" data-method="getCroppedCanvas" data-option="{ &quot;width&quot;: 320, &quot;height&quot;: 180 }" style="margin-left: 1px;">
+                          						<span class="docs-tooltip" data-toggle="tooltip" title="$().cropper(&quot;getCroppedCanvas&quot;, { width: 320, height: 180 })">
+                            						Crop and Save
+                          						</span>
+                        					</button>
+                        					<div class="btn-group">
+					                        	<button type="button" class="btn btn-primary" data-method="rotate" data-option="-45" title="Rotate Left">
+					                          		<span class="docs-tooltip" data-toggle="tooltip" title="Rotate Left">
+					                            		<span class="fa fa-rotate-left"></span>
+					                          		</span>
+					                        	</button>
+					                        	<button type="button" class="btn btn-primary" data-method="rotate" data-option="45" title="Rotate Right">
+					                          		<span class="docs-tooltip" data-toggle="tooltip" title="Rotate Right">
+					                            		<span class="fa fa-rotate-right"></span>
+					                          		</span>
+					                        	</button>
+					                        	<button type="button" class="btn btn-primary" title="Click Photo" onclick="clickPhotoAttach()">
+					                          		<span class="docs-tooltip" data-toggle="tooltip" title="Click Photo">
+					                            		<span class="fa fa-camera"></span>
+					                          		</span>
+					                        	</button>
+					                      	</div>
+                      					</div>
+									</div>
+									<div id="camera_photo_div" class="col-md-12 text-center" style="display: none;">
+										<div id="camera_photo"></div>
+										<button type="button" class="btn btn-primary" title="Click Photo" onclick="clickPhoto()"><span class="fa fa-camera"></span> Click Photo</button>
+									</div>
+									<div class="col-md-12">
+										<div id="profile_photo_div"></div>
+									</div>
+								</div>
+								<div class="form-group" style="display: none">
+									<label for="exampleInputFile">Choose browse to select picture</label> <input type="file" id="profile_image"
+										name="profile_image" accept="image/x-png, image/gif, image/jpeg" />
+		
+								</div>
+								<div id="error_msg_pic" style="color: red; display: none">Please
+									make sure your file is in png, jpg or bmp format and less than 1
+									MB.</div>
+							</div>
+						</form>
+						<div class="modal-footer docs-buttons">
+							<input type="button" class="btn btn-primary crop-action" data-method="getCroppedCanvas" data-option="{ &quot;width&quot;: 320, &quot;height&quot;: 180 }" value="Crop And Save">
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Change Picture Pop Up Ends -->
+			<!-- Show the cropped image in modal -->
+            <div class="modal fade docs-cropped" id="getCroppedCanvasModal" aria-hidden="true" aria-labelledby="getCroppedCanvasTitle" role="dialog" tabindex="-1">
+            	<div class="modal-dialog">
+                	<div class="modal-content">
+                    	<div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                              <h4 class="modal-title" id="getCroppedCanvasTitle">Cropped</h4>
+                         </div>
+                       	<div class="modal-body">
+                       		<div class="row">
+                       			<div class="col-md-12 text-center modal-body-text-center"></div>
+                       		</div>
+                       	</div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                              <a class="btn btn-primary" id="download" href="javascript:void(0);" download="cropped.png">Download</a>
+                            </div>
+                      	</div>
+                 	</div>
+          	</div>
+          	<!-- /.modal -->
+          </div>
+        </div>
+        <!-- /page content -->
+
+        	<!-- footer content -->
+        <footer>
+          <div class="pull-right">
+            Â©2025 Education Desk. All Rights Reserved.
+          </div>
+          <div class="clearfix"></div>
+        </footer>
+        <!-- /footer content -->
+        <div id="sys_loader_" style="display: none;">
+           <div id="sys_loader_bg" class="loader-backbg">
+           </div>
+           	<div class="loader-body-cls">
+          		<div class="spinner" role="spinner" style="float: left;margin-right: 15px;margin-top: 3px;">
+           			<div class="spinner-icon"></div>
+           		</div>
+           		Please Wait...
+           	</div>
+         </div>
+        <!-- jQuery -->
+    <script src="/static/vendors/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="/static/vendors/bootstrap/dist/js/bootstrap.min.js?v=1.1"></script>
+    <!-- FastClick -->
+    <script src="/static/vendors/fastclick/lib/fastclick.js"></script>
+    <!-- NProgress -->
+    <script src="/static/vendors/nprogress/nprogress.js"></script>
+    <!-- Chart.js -->
+    <script src="/static/vendors/Chart.js/dist/Chart.min.js"></script>
+    <!-- ECharts -->
+    <script src="/static/vendors/echarts/dist/echarts.min.js"></script>
+    <!-- gauge.js -->
+    <script src="/static/vendors/gauge.js/dist/gauge.min.js"></script>
+    <!-- iCheck -->
+    <script src="/static/vendors/iCheck/icheck.min.js"></script>
+    <!-- bootstrap-progressbar -->
+    <script src="/static/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+    <!-- iCheck -->
+    <script src="/static/vendors/iCheck/icheck.min.js"></script>
+    <!-- Skycons -->
+    <script src="/static/vendors/skycons/skycons.js"></script>
+    <!-- Flot -->
+    <script src="/static/vendors/Flot/jquery.flot.js"></script>
+    <script src="/static/vendors/Flot/jquery.flot.pie.js"></script>
+    <script src="/static/vendors/Flot/jquery.flot.time.js"></script>
+    <script src="/static/vendors/Flot/jquery.flot.stack.js"></script>
+    <script src="/static/vendors/Flot/jquery.flot.resize.js"></script>
+    <!-- Flot plugins -->
+    <script src="/static/vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script>
+    <script src="/static/vendors/flot-spline/js/jquery.flot.spline.min.js"></script>
+    <script src="/static/vendors/flot.curvedlines/curvedLines.js"></script>
+    <!-- DateJS -->
+    <script src="/static/vendors/DateJS/build/date.js"></script>
+    <!-- JQVMap -->
+    <script src="/static/vendors/jqvmap/dist/jquery.vmap.js"></script>
+    <script src="/static/vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
+    <script src="/static/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
+    <!-- bootstrap-daterangepicker -->
+    <script src="/static/vendors/moment/min/moment.min.js"></script>
+    <script src="/static/vendors/bootstrap-daterangepicker/daterangepicker.js?v=1.4"></script>
+    
+    <!-- bootstrap-wysiwyg -->
+    <script src="/static/vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js"></script>
+    <script src="/static/vendors/jquery.hotkeys/jquery.hotkeys.js"></script>
+    <script src="/static/vendors/google-code-prettify/src/prettify.js"></script>
+    <!-- jQuery Tags Input -->
+    <script src="/static/vendors/jquery.tagsinput/src/jquery.tagsinput.js"></script>
+    <!-- Switchery -->
+    <script src="/static/vendors/switchery/dist/switchery.min.js"></script>
+    <!-- Select2 -->
+    <script src="/static/vendors/select2/dist/js/select2.full.min.js"></script>
+    <!-- Parsley -->
+    <script src="/static/vendors/parsleyjs/dist/parsley.min.js"></script>
+    <!-- Autosize -->
+    <script src="/static/vendors/autosize/dist/autosize.min.js"></script>
+    <!-- jQuery autocomplete -->
+    <script src="/static/vendors/devbridge-autocomplete/dist/jquery.autocomplete.min.js"></script>
+    <!-- starrr -->
+    <script src="/static/vendors/starrr/dist/starrr.js"></script>
+    
+    <!-- Datatables -->
+    <script src="/static/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="/static/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    <script src="/static/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/static/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+    <script src="/static/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
+    <script src="/static/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
+    <script src="/static/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
+    <script src="/static/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js"></script>
+    <script src="/static/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js"></script>
+    <script src="/static/vendors/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="/static/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js"></script>
+    <script src="/static/vendors/jszip/dist/jszip.min.js"></script>
+    <script src="/static/vendors/pdfmake/build/pdfmake.min.js"></script>
+    <script src="/static/vendors/pdfmake/build/vfs_fonts.js"></script>
+    <script src="/static/vendors/pnotify/dist/pnotify.js"></script>
+    <script src="/static/vendors/pnotify/dist/pnotify.buttons.js"></script>
+    <script src="/static/vendors/pnotify/dist/pnotify.nonblock.js"></script>
+    
+    <!-- ClockPicker script -->
+	<script type="text/javascript" src="/static/assets/clockpicker/bootstrap-clockpicker.min.js?v=1.6"></script>
+    
+    <script type="text/javascript" src="/static/assets/jquery-validation/js/jquery.validate.js"></script>
+    <script type="text/javascript" src="/static/assets/bootstrap-switch/dist/js/bootstrap-switch.js"></script>
+    
+    <!-- Custom Theme Scripts -->
+    <script src="/static/build/js/custom.js?v=4.2"></script>
+    <script src="/static/build/js/common.js?v=2.4"></script>
+    <script>
+    document.addEventListener("click", function (e) {
+        const link = e.target.closest("a");
+        if (!link) return; // Not inside an <a>
+
+        const url = link.getAttribute("href");
+        if (url.includes("doc3") && url.includes("pdf")) {
+            e.preventDefault();
+            console.log(url);
+            const version = Date.now();
+            const newUrl = url.includes("?")?(url+"&version="+version):(url+"?version="+version);
+            console.log(newUrl);
+            window.open(newUrl, "_blank");
+        }
+    });
+    </script>
+
+        <script src="/static/js/jquery-ui.min.js" type="text/javascript"></script>
+		<script src="/static/js/jquery.form.js" type="text/javascript"></script>
+		<script src="/static/vendors/cropper/dist/cropper.min.js"></script>
+		<script type="text/javascript" src="/static/js/webcamjs/webcam.min.js"></script>
+      </div>
+    </div>
+	<script type="text/javascript">
+		var courseIdEdit = 0;
+		var courseSection = '';
+		$(function(){
+			$("#rf_id_number").bind("keypress", function (e) {  
+				if (e.keyCode == 13) {  
+					return false;  
+				}
+			});
+			
+			
+			var currentYear = 2025;
+			$("#date_of_birth").datepicker({
+				dateFormat : 'dd/mm/yy',
+				maxDate : new Date,
+				yearRange : "1975:" + currentYear,
+				changeMonth : true,
+				changeYear : true,
+				defaultDate : new Date(2000, 00, 01)
+			});
+			
+			$(".profile_img_change").click(function(){
+				$("#upload-student-profile-image").modal('show');
+				$("#profile_photo_view").remove();
+				$(".cropper-container.cropper-bg").remove();
+				$(".crop-action").hide();
+			});
+			
+			$('#re_admission').on('ifChecked', function () { 
+				$("#course_batch").addClass("required");
+				$("#fee_plan_type").addClass("required");
+				$("#course_main").addClass("required");
+				$(".hidediv").toggle();
+			});
+			
+			$('#re_admission').on('ifUnchecked', function () { 
+				$("#course_batch").removeClass("required");
+				$("#fee_plan_type").removeClass("required");
+				$("#course_main").removeClass("required");
+				$(".hidediv").toggle();
+			});
+			
+			$('#update_admission').on('ifChecked', function () { 
+				$("#course_batch").addClass("required");
+				$("#fee_plan_type").addClass("required");
+				$("#course_main").addClass("required");
+				$(".hidediv").toggle();
+			});
+			
+			$('#update_admission').on('ifUnchecked', function () { 
+				$("#course_batch").removeClass("required");
+				$("#fee_plan_type").removeClass("required");
+				$("#course_main").removeClass("required");
+				$(".hidediv").toggle();
+			});
+		});
+		function editFun(batchId){
+			$("#edit_batch_id").val(batchId);
+			$("#editFrom").submit();
+		}
+		
+		function loadParentCourse(htmlObj){
+			console.log(htmlObj);
+			var batchId = $(htmlObj).val();
+			$("#course_main").html("");
+			selectBoxInit("#course_main");
+			if(batchId > 0){
+				NProgress.start();
+				$.ajax({
+					url: "/employee/get-parent-course?course_batch_id="+batchId,
+					type:"post",
+					success: function(msg){
+						NProgress.done();
+						$("#course_main").html(msg);
+						$("#course_main").val(courseIdEdit);
+						selectBoxInit("#course_main");
+					},error:function(){
+						NProgress.done();
+					}
+				});
+			}
+		}
+		
+		function changeImgDilogShow(){
+			$(".profile_img_change").fadeIn(500);
+		}
+		
+		function changeImgDilogHide(){
+			$(".profile_img_change").fadeOut(500);
+		}
+		
+		function uploadPicJqueryForm() {
+			$("#error_msg_pic").hide();
+			var photoSelected = $("#profile_image").val();
+			if (photoSelected != "") {
+				$('#upload-student-profile-image').modal('hide');
+				$("#profile_img_loader").show();
+				$("#profilePictureUpload").ajaxForm({
+					success : function(data) {
+						if (data != "") {
+							$('#upload-student-profile-image').modal('hide')
+							$("#profile_pic_url").val(data);
+							$("#profile_pic_url_img").attr("src", data);
+							$('#profile_pic_url_img').load(function(){
+								$("#profile_img_loader").hide();
+						  	});
+						}
+					},
+					error : function(data){
+						$("#profile_img_loader").hide();
+					},
+					dataType : "text"
+				}).submit();
+			} else {
+				$("#error_msg_pic").html(
+						"Please select png, jpg or bmp format files.");
+				$("#error_msg_pic").show();
+			}
+		}
+		
+		$(document).on("change","#profile_image",function(e) {
+			checkFile(e);
+		});
+		
+		function checkFile(e) {
+			$("#error_msg_pic").hide();
+			var file_list = e.target.files;
+
+			for (var i = 0, file; file = file_list[i]; i++) {
+				var sFileName = file.name;
+
+				var sFileExtension = sFileName.split('.')[sFileName.split('.').length - 1]
+						.toLowerCase();
+				var iFileSize = file.size;
+				var iConvert = (file.size / 104857).toFixed(2);
+
+				if (!(sFileExtension === "BMP" || sFileExtension === "bmp"
+						|| sFileExtension === "PNG" || sFileExtension === "png"
+						|| sFileExtension === "JPG" || sFileExtension === "jpg"
+						|| sFileExtension === "JPEG" || sFileExtension === "jpeg")
+						|| iFileSize > 1048576) {
+					var txt = "File type : " + sFileExtension + "\n\n";
+					txt += "Size: " + iConvert + " MB \n\n";
+					txt += "Please make sure your file is in png, jpg or bmp format and less than 1 MB.\n\n";
+					$("#profile_image").val("");
+					$("#error_msg_pic")
+							.html(
+									"Please make sure your file is in png, jpg or bmp format and less than 1 MB.");
+					$("#error_msg_pic").show();
+					/* console.log(txt); */
+				}
+			}
+		}
+		
+		function removeAcademicDetail(divId){
+			$("#academic_row_"+divId).remove();
+		}
+		
+		var academicRowCount = 1;
+		
+		function addAcademicDetail(){
+			academicRowCount = academicRowCount + 1;
+			var academicHtml = 	'<div class="row" id="academic_row_'+academicRowCount+'">'+
+						   			'<div class="col-md-3">'+
+						  			'<div class="form-group">'+
+						              	'<label>Course/Class Name</label>'+
+						              	'<input type="text" autocomplete="off"  name="academic_course_name_'+academicRowCount+'" class="form-control" placeholder="Enter Course/Class Name">'+
+						            '</div>'+
+						  		'</div>'+
+						  		'<div class="col-md-2">'+
+						  			'<div class="form-group">'+
+						              	'<label>Passing Year</label>'+
+						              	'<input type="text" autocomplete="off"  name="academic_passing_year_'+academicRowCount+'" class="form-control" placeholder="Enter Passing Year" >'+
+						            '</div>'+
+						  		'</div>'+
+						  		'<div class="col-md-2">'+
+						  			'<div class="form-group">'+
+						              	'<label>Total Marks or Grade</label>'+
+						              	'<input type="text" autocomplete="off"  name="academic_total_marks_'+academicRowCount+'" class="form-control" placeholder="Enter Marks or Grade" >'+
+						            '</div>'+
+						  		'</div>'+
+						  		'<div class="col-md-3">'+
+						  			'<div class="form-group">'+
+						              	'<label>College/School Name</label>'+
+						              	'<input type="text" autocomplete="off"  name="academic_college_name_'+academicRowCount+'" class="form-control" placeholder="Enter College/School Name" >'+
+						            '</div>'+
+						  		'</div>'+
+						  		'<div class="col-md-2" style="margin-top: 24px;">'+
+						  			'<button type="button" onclick="removeAcademicDetail('+academicRowCount+')" class="btn btn-primary"><i class="fa fa-minus"></i></button>'+
+						  		'</div>'+
+						  	'</div>';
+				$("#academic_rows").append(academicHtml);
+				$("#academic_row_count").val(academicRowCount);
+		}
+		
+		function uploadDocumentPopUp(){
+			$("#upload-document").modal();
+		}
+		
+		var documentUploadCount = 1;
+		var fileCheck = true;
+		function uploadDocumentForm() {
+			var documentSelected = $("#document_input").val();
+			var fileName = $("#file_name").val();
+			if (documentSelected != "" && fileName!="" && fileCheck) {
+				$("#upload-document").modal('hide');
+				$("#doc_error_msg_pic").hide();
+				showLoader();
+				$("#uploadDocument").ajaxForm({
+					success : function(data) {
+						if (data != "") {							
+							$("#file_append").append("<input id='document_"+documentUploadCount+"' type='hidden' name='document_url_detail' />");
+							$("#document_"+documentUploadCount).val(fileName+"#####"+data);
+							var tableTrHtml = "<tr id='tr_doc_"+documentUploadCount+"'><td>"+fileName+"</td><td>Success</td><td><a download href='"+data+"' target='_blank'>Download</a></td><td style='cursor:pointer;' onclick='removeDoc("+documentUploadCount+")'>Remove</td> </tr>";
+							$("#document_table_tbody").append(tableTrHtml);
+							console.log(data);
+							document.getElementById("uploadDocument").reset();
+							hideLoader();
+							documentUploadCount++;
+							fileCheck = true;
+						}
+					},
+					error : function(data){
+						var tableTrHtml = "<tr id='tr_doc_"+documentUploadCount+"'><td>"+fileName+"</td><td>Error</td><td>-</td><td onclick='removeDoc("+documentUploadCount+")'>Remove</td> </tr>";
+						$("#document_table_tbody").append(tableTrHtml);
+						hideLoader();
+					},
+					dataType : "text"
+				}).submit();
+			} else {
+				$("#doc_error_msg_pic").html("Please enter file name and select a file.");
+				$("#doc_error_msg_pic").show();
+			}
+		}
+		
+		$(document).on("change","#document_input",function(e) {
+			checkDocumentFile(e);
+		});
+		
+		function checkDocumentFile(e) {
+			$("#doc_error_msg_pic").hide();
+			var file_list = e.target.files;
+			fileCheck = true;
+			for (var i = 0, file; file = file_list[i]; i++) {
+				var sFileName = file.name;
+
+				var sFileExtension = sFileName.split('.')[sFileName.split('.').length - 1]
+						.toLowerCase();
+				var iFileSize = file.size;
+				var iConvert = (file.size / 104857).toFixed(2);
+
+				if (!(sFileExtension === "PDF" || sFileExtension === "pdf"
+						|| sFileExtension === "doc" || sFileExtension === "DOC"
+						|| sFileExtension === "JPG" || sFileExtension === "jpg"
+						|| sFileExtension === "JPEG" || sFileExtension === "jpeg")
+						|| iFileSize > 1048576) {
+					var txt = "File type : " + sFileExtension + "\n\n";
+					txt += "Size: " + iConvert + " MB \n\n";
+					txt += "Please make sure your file is in png, jpg or bmp format and less than 1 MB.\n\n";
+					$("#doc_error_msg_pic").html("Please make sure your file is in pdf, jpg or doc format and less than 1 MB.");
+					$("#doc_error_msg_pic").show();
+					fileCheck = false;
+				}
+			}
+		}
+		
+		function removeDoc(docId){
+			$("#document_"+docId).remove();
+			$("#tr_doc_"+docId).remove();
+		}
+		
+		function loadFeeForCourse(htmlObj){
+			
+			addExtraPayment();
+			loadCourseSection();
+		}
+		
+		function addExtraPayment(){
+			
+			var batchId = $("#course_batch").val();
+			var countId = parseInt($("#additional_fee_add_count").val());
+			if(batchId > 0){
+				NProgress.start();
+				$.ajax({
+					url: "/employee/get-fee-type-extra-add-payment?batch_id="+batchId+"&count_id="+countId,
+					type:"post",
+					success: function(msg){
+						$("#extra-fee-add-div-main").show();
+						$("#additional_fee_row").append(msg);
+						$("#additional_fee_add_count").val(countId+1);
+						NProgress.done();
+					},error:function(){
+						NProgress.done();
+					}
+				});
+			}
+			
+		}
+		
+		function addExtraPaymentOption(countId,htmlobj){
+			
+			var batchId = $("#course_batch").val();
+			var courseFeeTypeId = $(htmlobj).val();
+			var courseId = $("#course_main").val();
+			if(batchId > 0){
+				NProgress.start();
+				$.ajax({
+					url: "/employee/get-fee-type-extra-add-payment?batch_id="+batchId+"&count_id="+countId+"&course_fee_type_id="+courseFeeTypeId+"&course_id="+courseId,
+					type:"post",
+					success: function(msg){
+						$("#add_payment_div_"+countId).replaceWith(msg);
+						NProgress.done();
+					},error:function(){
+						NProgress.done();
+					}
+				});
+			}
+			
+		}
+		
+		function downloadFeesStructure(courseName){
+		}
+		
+		function loadStoppageForRoute(htmlObj,routeType){
+			$("#"+routeType+"_route_stoppage").html("");
+			selectBoxInit("#"+routeType+"_route_stoppage");
+			$("#"+routeType+"_route_fee").html("");
+			selectBoxInit("#"+routeType+"_route_fee");
+			var routeId = $(htmlObj).val();
+			if(routeId > 0){
+				NProgress.start();
+				$.ajax({
+					url: "/employee/get-transport-route-stoppage-option?transport_route_id="+routeId,
+					type:"post",
+					success: function(msg){
+						$("#"+routeType+"_route_stoppage").html(msg);
+						NProgress.done();
+						selectBoxInit("#"+routeType+"_route_stoppage");
+						
+						loadTransportFee(htmlObj,routeType);
+						
+					},error:function(){
+						NProgress.done();
+					}
+				});
+			}
+		}
+		
+		function loadTransportFee(htmlObj,routeType){
+			var routeId = $(htmlObj).val();
+			$("#"+routeType+"_route_fee").html("");
+			selectBoxInit("#"+routeType+"_route_fee");
+			if(routeId > 0){
+				NProgress.start();
+				$.ajax({
+					url: "/employee/get-transport-route-fee-option?transport_route_id="+routeId,
+					type:"post",
+					success: function(msg){
+						$("#"+routeType+"_route_fee").html(msg);
+						NProgress.done();
+						selectBoxInit("#"+routeType+"_route_fee");
+						
+					},error:function(){
+						NProgress.done();
+					}
+				});
+			}
+		}
+		
+		$(function(){
+			$('.tranport_type_cls').on('ifChecked', function () { 
+				$(".transport-div").hide()
+				if($(this).val() === "1_way"){
+					$(".transport-1-div").show();
+				}else if($(this).val() === "2_way"){
+					$(".transport-1-div").show();
+					$(".transport-2-div").show();
+				}
+			});
+			
+		});
+		
+		function loadCourseSection(){
+			var courseId = $("#course_main").val();
+			if(courseId > 0){
+				NProgress.start();
+				$("#course_section").html("<option></option>");
+				$("#course_section").removeClass("required");
+				selectBoxInit("#course_section");
+				$.ajax({
+					url: "get-parent-course-section?course_id="+courseId,
+					type:"post",
+					success: function(msg){
+						NProgress.done();
+						if(msg == ""){
+							$("#course_section_div").hide();
+						}else{
+							$("#course_section").addClass("required");
+							$("#course_section_div").show();
+							$("#course_section").html("<option></option>"+msg);
+							$("#course_section").val(courseSection);
+							selectBoxInit("#course_section");
+						}
+					},error:function(){
+						$("#course_section_div").hide();
+						NProgress.done();
+					}
+				});
+			}
+		}
+		
+		function removeExtraPayment(divId){
+			$("#add_payment_div_"+divId).remove();
+		}
+		
+		$(document).on("change","#inputImage",function(e) {
+			//checkFile(e);
+			//$("#profile_photo_view").remove();
+			for (var i = 0; i < e.originalEvent.srcElement.files.length; i++) {
+		        var file = e.originalEvent.srcElement.files[i];
+		        var img = document.createElement("img");
+		        img.id = "profile_photo_view";
+		        img.style = "max-height:300px";
+		        var reader = new FileReader();
+		        reader.onloadend = function() {
+		             img.src = reader.result;
+			         reLoadCrop();
+			        $(".crop-action").show();
+		        }
+		        reader.readAsDataURL(file);
+		        $("#profile_photo_div").after(img);
+		        break;
+		    }
+		});
+		
+		function reLoadCrop() { 
+	        var $image = $('#profile_photo_view');
+	        var $download = $('#download');
+	        var $dataX = $('#dataX');
+	        var $dataY = $('#dataY');
+	        var $dataHeight = $('#dataHeight');
+	        var $dataWidth = $('#dataWidth');
+	        var $dataRotate = $('#dataRotate');
+	        var $dataScaleX = $('#dataScaleX');
+	        var $dataScaleY = $('#dataScaleY');
+	        var options = {
+	              aspectRatio: 1 / 1,
+	              preview: '.img-preview',
+	              crop: function (e) {
+	                $dataX.val(Math.round(e.x));
+	                $dataY.val(Math.round(e.y));
+	                $dataHeight.val(Math.round(e.height));
+	                $dataWidth.val(Math.round(e.width));
+	                $dataRotate.val(e.rotate);
+	                $dataScaleX.val(e.scaleX);
+	                $dataScaleY.val(e.scaleY);
+	              }
+	            };
+
+
+	        // Tooltip
+	        $('[data-toggle="tooltip"]').tooltip();
+
+
+	        // Cropper
+	        $image.on({
+	          'build.cropper': function (e) {
+	            console.log(e.type);
+	          },
+	          'built.cropper': function (e) {
+	            console.log(e.type);
+	          },
+	          'cropstart.cropper': function (e) {
+	            console.log(e.type, e.action);
+	          },
+	          'cropmove.cropper': function (e) {
+	            console.log(e.type, e.action);
+	          },
+	          'cropend.cropper': function (e) {
+	            console.log(e.type, e.action);
+	          },
+	          'crop.cropper': function (e) {
+	            console.log(e.type, e.x, e.y, e.width, e.height, e.rotate, e.scaleX, e.scaleY);
+	          },
+	          'zoom.cropper': function (e) {
+	            console.log(e.type, e.ratio);
+	          }
+	        }).cropper(options);
+
+
+	        // Buttons
+	        if (!$.isFunction(document.createElement('canvas').getContext)) {
+	          $('button[data-method="getCroppedCanvas"]').prop('disabled', true);
+	        }
+
+	        if (typeof document.createElement('cropper').style.transition === 'undefined') {
+	          $('button[data-method="rotate"]').prop('disabled', true);
+	          $('button[data-method="scale"]').prop('disabled', true);
+	        }
+
+
+	        // Download
+	        if (typeof $download[0].download === 'undefined') {
+	          $download.addClass('disabled');
+	        }
+
+
+	        // Options
+	        $('.docs-toggles').on('change', 'input', function () {
+	          var $this = $(this);
+	          var name = $this.attr('name');
+	          var type = $this.prop('type');
+	          var cropBoxData;
+	          var canvasData;
+
+	          if (!$image.data('cropper')) {
+	            return;
+	          }
+
+	          if (type === 'checkbox') {
+	            options[name] = $this.prop('checked');
+	            cropBoxData = $image.cropper('getCropBoxData');
+	            canvasData = $image.cropper('getCanvasData');
+
+	            options.built = function () {
+	              $image.cropper('setCropBoxData', cropBoxData);
+	              $image.cropper('setCanvasData', canvasData);
+	            };
+	          } else if (type === 'radio') {
+	            options[name] = $this.val();
+	          }
+
+	          $image.cropper('destroy').cropper(options);
+	        });
+
+
+	        // Methods
+	        $('.docs-buttons').on('click', '[data-method]', function () {
+	          var $this = $(this);
+	          var data = $this.data();
+	          var $target;
+	          var result;
+
+	          if ($this.prop('disabled') || $this.hasClass('disabled')) {
+	            return;
+	          }
+
+	          if ($image.data('cropper') && data.method) {
+	            data = $.extend({}, data); // Clone a new one
+
+	            if (typeof data.target !== 'undefined') {
+	              $target = $(data.target);
+
+	              if (typeof data.option === 'undefined') {
+	                try {
+	                  data.option = JSON.parse($target.val());
+	                } catch (e) {
+	                  console.log(e.message);
+	                }
+	              }
+	            }
+
+	            result = $image.cropper(data.method, data.option, data.secondOption);
+
+	            switch (data.method) {
+	              case 'scaleX':
+	              case 'scaleY':
+	                $(this).data('option', -data.option);
+	                break;
+
+	              case 'getCroppedCanvas':
+	                if (result) {
+
+	                  // Bootstrap's Modal
+	                  //$('#getCroppedCanvasModal').modal().find('.modal-body-text-center').html(result);
+
+	                  if (!$download.hasClass('disabled')) {
+	                    $download.attr('href', result.toDataURL());
+		                $('#upload-student-profile-image').modal('hide')
+	                    $("#profile_img_loader").show();
+	                    $.ajax({
+	                        url: "upload-profile-img-data",
+	                        type: "POST",
+	                        data: {"image":result.toDataURL()},
+	                        success: function (data) {
+	                        	if (data != "") {
+	    							$("#profile_pic_url").val(data);
+	    							$("#profile_pic_url_img").attr("src", data);
+	    							$("#profile_img_loader").hide();
+	    						}
+	                        },
+	                        error: function(err){
+	                        	$("#profile_img_loader").hide();
+	                        }
+	                    });
+	                  }
+	                }
+
+	                break;
+	            }
+
+	            if ($.isPlainObject(result) && $target) {
+	              try {
+	                $target.val(JSON.stringify(result));
+	              } catch (e) {
+	                console.log(e.message);
+	              }
+	            }
+
+	          }
+	        });
+
+	        // Keyboard
+	        $(document.body).on('keydown', function (e) {
+	          if (!$image.data('cropper') || this.scrollTop > 300) {
+	            return;
+	          }
+
+	          switch (e.which) {
+	            case 37:
+	              e.preventDefault();
+	              $image.cropper('move', -1, 0);
+	              break;
+
+	            case 38:
+	              e.preventDefault();
+	              $image.cropper('move', 0, -1);
+	              break;
+
+	            case 39:
+	              e.preventDefault();
+	              $image.cropper('move', 1, 0);
+	              break;
+
+	            case 40:
+	              e.preventDefault();
+	              $image.cropper('move', 0, 1);
+	              break;
+	          }
+	        });
+
+	        // Import image
+	        var $inputImage = $('#inputImage');
+	        var URL = window.URL || window.webkitURL;
+	        var blobURL;
+
+	        if (URL) {
+	          $inputImage.change(function () {
+	            var files = this.files;
+	            var file;
+
+	            if (!$image.data('cropper')) {
+	              return;
+	            }
+
+	            if (files && files.length) {
+	              file = files[0];
+
+	              if (/^image\/\w+$/.test(file.type)) {
+	                blobURL = URL.createObjectURL(file);
+	                $image.one('built.cropper', function () {
+	                  // Revoke when load complete
+	                  URL.revokeObjectURL(blobURL);
+	                }).cropper('reset').cropper('replace', blobURL);
+	                $inputImage.val('');
+	              } else {
+	                window.alert('Please choose an image file.');
+	              }
+	            }
+	          });
+	        } else {
+	          $inputImage.prop('disabled', true).parent().addClass('disabled');
+	        }
+	      }
+		
+		function selectOther(selectName,htmlObj){
+			var selectedVal = $(htmlObj).val();
+			if(selectedVal === "Other"){
+				$("#"+selectName+"_other").show();
+			}else{
+				$("#"+selectName+"_other").hide();
+			}
+		}
+		
+		$(function(){
+			$('#upload-student-profile-image').on('hidden.bs.modal', function () {
+				disableCamera();
+			});
+		});
+		
+		function disableCamera(){
+			try{
+				Webcam.reset('#camera_photo');
+				$("#camera_photo_div").hide();
+			}catch(eRrr){
+			}
+		}
+		function clickPhotoAttach(){
+			try{
+				Webcam.reset('#camera_photo');
+			}catch(eRrr){
+			}
+			$("#camera_photo").html("");
+			$("#camera_photo_div").show();
+			Webcam.set({
+				width: 320,
+				height: 240,
+				image_format: 'jpeg',
+				jpeg_quality: 90
+			});
+			Webcam.attach('#camera_photo');
+		}
+		function clickPhoto(){
+			showLoader();
+			try{
+				Webcam.snap( function(data_uri) {
+					setTimeout(function(){
+						var img = document.createElement("img");
+				        img.id = "profile_photo_view";
+				        img.style = "max-height:300px";
+		             	img.src = data_uri;
+				        $("#profile_photo_div").after(img);
+			         	reLoadCrop();
+			        	$(".crop-action").show();
+			        	hideLoader();
+			        	$("#camera_photo_div").hide();
+			        	Webcam.reset('#camera_photo');
+			        	$("#camera_photo").html("");
+					},1000);
+				});
+			}catch(eRrr){
+				hideLoader();
+				console.error(eRrr);
+			}
+		}
+		
+		function changeDocumentName(htmlObj){
+			$("#file_name").val("");
+			$("#other_name_div").hide();
+			var selectedVal = $(htmlObj).val();
+			if(selectedVal!=""){
+				if(selectedVal == "other"){
+					$("#other_name_div").show();
+				}else{
+					$("#file_name").val(selectedVal);
+				}
+			}
+		}
+
+	</script>
+  </body>
+</html>
+

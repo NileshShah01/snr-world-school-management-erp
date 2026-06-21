@@ -183,7 +183,7 @@ async function handleGradingSubmit(event) {
 }
 
 async function deleteGradingRule(id) {
-    if (!confirm('Delete this grading rule?')) return;
+    if (!await window.showConfirmModal({ title: 'Delete Grading Rule', message: 'Delete this grading rule?', icon: 'fa-balance-scale', confirmText: 'Delete', danger: true })) return;
     try {
         setLoading(true);
         await schoolDoc('gradingRules', id).delete();
@@ -265,7 +265,7 @@ async function handleExamSubmit(event) {
 }
 
 async function deleteExam(id) {
-    if (!confirm('Delete this exam term?')) return;
+    if (!await window.showConfirmModal({ title: 'Delete Exam', message: 'Delete this exam term?', icon: 'fa-file-alt', confirmText: 'Delete', danger: true })) return;
     try {
         setLoading(true);
         await schoolDoc('exams', id).delete();
@@ -520,7 +520,7 @@ window.scheduleAddPaper = function() {
 
 // Delete a paper card (front-end and Firestore)
 window.schedulePaperDelete = async function(btn, docId) {
-    if (!confirm('Remove this paper?')) return;
+    if (!await window.showConfirmModal({ title: 'Remove Paper', message: 'Remove this paper?', icon: 'fa-file', confirmText: 'Remove', danger: true })) return;
     const card = btn.closest('[data-paper-doc]');
     if (card) card.remove();
     if (docId && docId !== '') {
@@ -1258,7 +1258,7 @@ async function refreshManageResultsTable() {
 }
 
 async function deleteMarkRecord(id) {
-    if (!confirm('Delete this mark record?')) return;
+    if (!await window.showConfirmModal({ title: 'Delete Mark Record', message: 'Delete this mark record?', icon: 'fa-trash-alt', confirmText: 'Delete', danger: true })) return;
     try {
         await schoolDoc('marks', id).delete();
         showToast('Record deleted', 'success');
@@ -1798,7 +1798,7 @@ async function previewSingleReportCard(isDownload = false) {
             return;
         }
 
-        if (!confirm(`Generate report cards for all students in ${cls} - ${sec}?`)) return;
+        if (!await window.showConfirmModal({ title: 'Generate Report Cards', message: 'Generate report cards for all students in ' + cls + ' - ' + sec + '?', icon: 'fa-file-pdf', confirmText: 'Generate' })) return;
 
         try {
             setLoading(true);

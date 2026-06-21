@@ -1,0 +1,23 @@
+<section id="cmsStaffSection" class="dashboard-section card hidden">
+                    <div class="flex-between align-center mb-1-5">
+                        <h3><i class="fas fa-chalkboard-teacher text-primary"></i> Manage Teachers & Staff</h3>
+                        <div class="flex gap-0-5">
+                            <button
+                                class="btn-portal btn-success"
+                                onclick="exportToCSV('staff')"
+                                title="Export Staff CSV"
+                            >
+                                <i class="fas fa-file-csv"></i> Export CSV
+                            </button>
+                            <button
+                                class="btn-portal btn-primary"
+                                onclick="openCmsModal('staff')"
+                                title="Add Staff Member"
+                            >
+                                <i class="fas fa-plus"></i> Add Staff Member
+                            </button>
+                        </div>
+                    </div>
+                    <!-- List -->
+                    <div id="staffListAdmin" class="grid-auto-200 gap-1-5"></div>
+                </section>

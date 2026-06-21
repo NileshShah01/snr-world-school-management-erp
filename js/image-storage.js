@@ -89,6 +89,84 @@
     }
 
     /**
+     * Read a File as an Image element (for canvas operations).
+     */
+    function fileToImage(file) {
+        return fileToDataUri(file).then(dataUri => new Promise((resolve, reject) => {
+            const img = new Image();
+            img.onload = () => resolve(img);
+            img.onerror = () => reject(new Error('Image decode failed'));
+            img.src = dataUri;
+        }));
+    }
+
+    /**
+     * Compress an image iteratively until its Base64 size is under targetSizeKB.
+     * Strategy: reduce JPEG quality first (1.0 → 0.1), then reduce max dimension (1600 → 400).
+     * Returns a data URI string.
+     */
+    async function compressImageUnder(file, targetSizeKB) {
+        targetSizeKB = targetSizeKB || 200;
+        if (!file || !file.type || !file.type.startsWith('image/')) {
+            const uri = await fileToDataUri(file);
+            return uri;
+        }
+        if (file.type === 'image/gif') {
+            return await fileToDataUri(file);
+        }
+
+        const img = await fileToImage(file);
+        let quality = 0.85;
+        let maxDim = 1600;
+        const minDim = 400;
+        const step = 0.05;
+
+        while (true) {
+            let w = img.width;
+            let h = img.height;
+            if (w > maxDim || h > maxDim) {
+                const ratio = Math.min(maxDim / w, maxDim / h);
+                w = Math.round(w * ratio);
+                h = Math.round(h * ratio);
+            }
+
+            const canvas = document.createElement('canvas');
+            canvas.width = w;
+            canvas.height = h;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, w, h);
+
+            const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/jpeg', quality));
+            if (!blob) return await fileToDataUri(file);
+
+            const uri = await fileToDataUri(blob);
+            const v = validateDataUri(uri, targetSizeKB * 1024);
+            if (v.ok) return uri;
+
+            // Reduce quality first
+            if (quality > 0.1) {
+                quality = Math.max(0.1, quality - step);
+                continue;
+            }
+            // Then reduce dimensions
+            if (maxDim > minDim) {
+                quality = 0.85;
+                maxDim = Math.max(minDim, maxDim - 200);
+                continue;
+            }
+            // Give up — return best effort
+            return uri;
+        }
+    }
+
+    /**
+     * Convenience wrapper: compress to 200 KB.
+     */
+    function compressImageUnder200KB(file) {
+        return compressImageUnder(file, 200);
+    }
+
+    /**
      * Validate a Base64 data URI's decoded size.
      */
     function validateDataUri(dataUri, maxBytes) {
@@ -165,6 +243,8 @@
     const api = {
         fileToDataUri,
         compressImage,
+        compressImageUnder,
+        compressImageUnder200KB,
         saveFile,
         validateDataUri,
         formatBytes,

@@ -1,0 +1,64 @@
+<section id="addManualPaperSection" class="dashboard-section card hidden">
+                    <div class="header mb-2 text-center">
+                        <h1>Upload Question Paper</h1>
+                        <p>Manually upload a PDF or Image of a question paper</p>
+                    </div>
+                    <div class="card max-w-600 mx-auto p-2">
+                        <form id="erp_manualUploadForm" onsubmit="handleManualPaperUpload(event)">
+                            <div class="grid-2 gap-1 mb-1">
+                                <div class="form-group mb-0">
+                                    <label>Session</label>
+                                    <select
+                                        id="erp_uploadQpSession"
+                                        class="form-control"
+                                        required
+                                        title="Select Session"
+                                    ></select>
+                                </div>
+                                <div class="form-group mb-0">
+                                    <label>Exam</label>
+                                    <select
+                                        id="erp_uploadQpExam"
+                                        class="form-control"
+                                        required
+                                        title="Select Exam"
+                                    ></select>
+                                </div>
+                            </div>
+                            <div class="grid-2 gap-1 mb-1-5">
+                                <div class="form-group mb-0">
+                                    <label>Class</label>
+                                    <select
+                                        id="erp_uploadQpClass"
+                                        class="form-control"
+                                        required
+                                        title="Select Class"
+                                    ></select>
+                                </div>
+                                <div class="form-group mb-0">
+                                    <label>Subject</label>
+                                    <select
+                                        id="erp_uploadQpSubject"
+                                        class="form-control"
+                                        required
+                                        title="Select Subject"
+                                    ></select>
+                                </div>
+                            </div>
+                            <div class="form-group mb-1-5">
+                                <label>Paper File (PDF/Image)</label>
+                                <input
+                                    type="file"
+                                    id="erp_manualPaperFile"
+                                    class="form-control"
+                                    accept=".pdf,image/*"
+                                    required
+                                    title="Select File"
+                                />
+                            </div>
+                            <button type="submit" class="btn-portal btn-primary w-full">
+                                <i class="fas fa-check-circle mr-1"></i> Confirm Upload
+                            </button>
+                        </form>
+                    </div>
+                </section>

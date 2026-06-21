@@ -1,0 +1,59 @@
+<section id="cmsHeroSection" class="dashboard-section card hidden">
+                    <h3><i class="fas fa-image"></i> Hero Slider Images</h3>
+                    <p class="text-sm text-muted mb-1-5">
+                        Enter URLs for the 4 homepage slideshow images. Use Google Photos, Imgur, or any direct image
+                        link.
+                    </p>
+                    <form id="cmsHeroForm" class="grid gap-1-25">
+                        <div class="form-group">
+                            <label>Slide 1 Image</label>
+                            <input
+                                type="file"
+                                id="hero_1"
+                                accept="image/*"
+                                onchange="previewCmsImage(event, 'hero_1_preview')"
+                                title="Select Hero Slide 1 Image"
+                            />
+                            <div id="hero_1_preview" class="image-preview-mini"></div>
+                        </div>
+                        <div class="form-group">
+                            <label>Slide 2 Image</label>
+                            <input
+                                type="file"
+                                id="hero_2"
+                                accept="image/*"
+                                onchange="previewCmsImage(event, 'hero_2_preview')"
+                                title="Select Hero Slide 2 Image"
+                            />
+                            <div id="hero_2_preview" class="image-preview-mini"></div>
+                        </div>
+                        <div class="form-group">
+                            <label>Slide 3 Image</label>
+                            <input
+                                type="file"
+                                id="hero_3"
+                                accept="image/*"
+                                onchange="previewCmsImage(event, 'hero_3_preview')"
+                                title="Select Hero Slide 3 Image"
+                            />
+                            <div id="hero_3_preview" class="image-preview-mini"></div>
+                        </div>
+                        <div class="form-group">
+                            <label>Slide 4 Image</label>
+                            <input
+                                type="file"
+                                id="hero_4"
+                                accept="image/*"
+                                onchange="previewCmsImage(event, 'hero_4_preview')"
+                                title="Select Hero Slide 4 Image"
+                            />
+                            <div id="hero_4_preview" class="image-preview-mini"></div>
+                        </div>
+                        <div id="cmsHeroLoading" class="hidden text-center text-primary">
+                            <i class="fas fa-spinner fa-spin"></i> Processing...
+                        </div>
+                        <button type="submit" id="cmsHeroSaveBtn" class="btn-portal btn-primary">
+                            <i class="fas fa-save"></i> Save Slider Images
+                        </button>
+                    </form>
+                </section>

@@ -1,0 +1,39 @@
+<section id="bulkExtraFeeSection" class="dashboard-section card hidden">
+                    <div class="header mb-1-5">
+                        <div>
+                            <h1 class="text-primary"><i class="fas fa-plus-circle"></i> Bulk Add Extra Fee</h1>
+                            <p>Add one-off charges (Library, Annual, Exam) to a whole class</p>
+                        </div>
+                    </div>
+                    <div class="card p-1-5 border-left-primary-thick bg-slate-50">
+                        <div class="grid-3 gap-1">
+                            <div class="form-group">
+                                <label>Session</label>
+                                <select id="befSession" class="form-control duesSessionFilter"></select>
+                            </div>
+                            <div class="form-group">
+                                <label>Class</label>
+                                <select id="befClass" class="form-control duesClassFilter"></select>
+                            </div>
+                            <div class="form-group">
+                                <label>Fee Type</label>
+                                <input type="text" id="befType" class="form-control" placeholder="e.g. Annual Charge" />
+                            </div>
+                        </div>
+                        <div class="grid-3 gap-1 mt-1">
+                            <div class="form-group">
+                                <label>Amount (₹)</label>
+                                <input type="number" id="befAmount" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label>Due Date</label>
+                                <input type="date" id="befDueDate" class="form-control" />
+                            </div>
+                            <div class="form-group flex align-end">
+                                <button class="btn-portal btn-primary w-full h-42" onclick="applyBulkExtraFee()">
+                                    <i class="fas fa-plus-circle"></i> Apply to All Students
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>

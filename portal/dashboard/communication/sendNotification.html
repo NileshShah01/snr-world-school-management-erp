@@ -1,0 +1,51 @@
+<section id="sendNotificationSection" class="dashboard-section" style="display: none">
+                <div class="section-header">
+                    <h1>Send Notification</h1>
+                </div>
+                <div class="card p-20">
+                    <form id="sendNotifForm" onsubmit="ERPNotifications.sendNotification(event)">
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <label class="form-label">Session</label>
+                                <select class="form-control" id="notif_sessionSelect" onchange="ERPNotifications.loadClasses()">
+                                    <option value="">Select Session</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Class</label>
+                                <select class="form-control" id="notif_classSelect" onchange="ERPNotifications.loadSections()">
+                                    <option value="All">All Classes</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Section</label>
+                                <select class="form-control" id="notif_sectionSelect">
+                                    <option value="All">All Sections</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Notification Type</label>
+                                <select class="form-control" id="notif_type">
+                                    <option value="In-App">In-App</option>
+                                    <option value="WhatsApp">WhatsApp</option>
+                                    <option value="SMS">SMS</option>
+                                    <option value="Email">Email</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Title</label>
+                                <input type="text" class="form-control" id="notif_title" placeholder="Notification title" required />
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">Message</label>
+                                <textarea class="form-control" id="notif_message" rows="4" placeholder="Type your message here..." required></textarea>
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-paper-plane"></i> Send Notification
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </section>

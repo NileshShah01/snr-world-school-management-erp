@@ -4,7 +4,7 @@
  */
 
 async function initManualUpload() {
-    console.log("Initializing Manual Upload Tool...");
+    console.log('Initializing Manual Upload Tool...');
     const sessionSelect = document.getElementById('mrcu_session');
     const classSelect = document.getElementById('mrcu_class');
     const examSelect = document.getElementById('mrcu_exam');
@@ -14,45 +14,45 @@ async function initManualUpload() {
     if (classSelect) classSelect.innerHTML = '<option value="">Select Session First</option>';
     if (examSelect) examSelect.innerHTML = '<option value="">Loading Exams...</option>';
 
-    try {
-        // 1. Load Sessions using standard ERP logic
-        const sessions = await db.collection('sessions').orderBy('name', 'desc').get();
-        if (sessionSelect) {
-            sessionSelect.innerHTML = '<option value="">Select Session</option>';
-            sessions.forEach(doc => {
-                const data = doc.data();
-                const option = document.createElement('option');
-                option.value = data.name;
-                option.textContent = data.name;
-                sessionSelect.appendChild(option);
-            });
-            
-            // Auto-select current session if available
-            if (window.CURRENT_SESSION) {
-                sessionSelect.value = window.CURRENT_SESSION;
-                loadMrcuClasses();
+        try {
+            // 1. Load Sessions using standard ERP logic
+            const sessions = await schoolData('sessions').orderBy('name', 'desc').get();
+            if (sessionSelect) {
+                sessionSelect.innerHTML = '<option value="">Select Session</option>';
+                sessions.forEach(doc => {
+                    const data = doc.data();
+                    const option = document.createElement('option');
+                    option.value = data.name;
+                    option.textContent = data.name;
+                    sessionSelect.appendChild(option);
+                });
+                
+                // Auto-select current session if available
+                if (window.CURRENT_SESSION) {
+                    sessionSelect.value = window.CURRENT_SESSION;
+                    loadMrcuClasses();
+                }
+
+                sessionSelect.onchange = loadMrcuClasses;
             }
 
-            sessionSelect.onchange = loadMrcuClasses;
-        }
+            // 2. Load Exams using standard ERP logic
+            const exams = await schoolData('exams').orderBy('name', 'asc').get();
+            if (examSelect) {
+                examSelect.innerHTML = '<option value="">Select Exam Term</option>';
+                exams.forEach(doc => {
+                    const data = doc.data();
+                    const option = document.createElement('option');
+                    option.value = doc.id;
+                    option.textContent = data.name;
+                    examSelect.appendChild(option);
+                });
+            }
 
-        // 2. Load Exams using standard ERP logic
-        const exams = await db.collection('exams').orderBy('name', 'asc').get();
-        if (examSelect) {
-            examSelect.innerHTML = '<option value="">Select Exam Term</option>';
-            exams.forEach(doc => {
-                const data = doc.data();
-                const option = document.createElement('option');
-                option.value = doc.id;
-                option.textContent = data.name;
-                examSelect.appendChild(option);
-            });
+        } catch (error) {
+            console.error('Error initializing MRCU:', error);
+            showToast('Error loading configuration', 'error');
         }
-
-    } catch (error) {
-        console.error("Error initializing MRCU:", error);
-        showToast("Error loading configuration", "error");
-    }
 }
 
 async function loadMrcuClasses() {
@@ -63,7 +63,7 @@ async function loadMrcuClasses() {
     classSelect.innerHTML = '<option value="">Loading Classes...</option>';
     
     try {
-        const classes = await db.collection('classes').where('session', '==', session).get();
+        const classes = await schoolData('classes').where('session', '==', session).get();
         classSelect.innerHTML = '<option value="">Select Class</option>';
         classes.forEach(doc => {
             const data = doc.data();
@@ -73,7 +73,7 @@ async function loadMrcuClasses() {
             classSelect.appendChild(option);
         });
     } catch (error) {
-        console.error("Error loading classes:", error);
+        console.error('Error loading classes:', error);
     }
 }
 
@@ -83,15 +83,15 @@ async function loadMrcuStudents() {
     if (!classId || !container) return;
 
     container.innerHTML = '<div class="text-center p-2"><i class="fas fa-spinner fa-spin"></i> Loading Students...</div>';
-
+    
     try {
-        const students = await db.collection('students')
+        const students = await schoolData('students')
             .where('classId', '==', classId)
             .orderBy('name', 'asc')
             .get();
 
         if (students.empty) {
-            container.innerHTML = '<p class="text-center p-2 text-muted">No students found in this class.</p>';
+            showEmptyState(container, { icon: 'fa-users', message: 'No students found in this class.' });
             return;
         }
 
@@ -109,7 +109,7 @@ async function loadMrcuStudents() {
         html += '</div>';
         container.innerHTML = html;
     } catch (error) {
-        console.error("Error loading students:", error);
+        console.error('Error loading students:', error);
         container.innerHTML = '<p class="text-center p-2 text-red">Error loading students.</p>';
     }
 }
@@ -133,13 +133,13 @@ async function handleManualUpload() {
     const isPublished = document.getElementById('mrcu_published').checked;
     
     if (!studentId || !session || !examId || !fileInput.files[0]) {
-        customAlert("Please fill all fields and select a PDF file.", "warning");
+        customAlert('Please fill all fields and select a PDF file.', 'warning');
         return;
     }
 
     const file = fileInput.files[0];
     if (file.type !== 'application/pdf') {
-        customAlert("Please upload a valid PDF file.", "error");
+        customAlert('Please upload a valid PDF file.', 'error');
         return;
     }
 
@@ -167,8 +167,8 @@ async function handleManualUpload() {
         percentText.textContent = '50%';
 
         const docId = `${studentId}_${session}_${examId}`;
-        
-        await db.collection('reports').doc(docId).set({
+
+        await schoolDoc('reports', docId).set({
             studentId,
             session,
             examId,
@@ -185,15 +185,15 @@ async function handleManualUpload() {
         setTimeout(() => {
             setLoading(false);
             progressArea.classList.add('hidden');
-            customAlert("Report Card uploaded successfully and linked to student portal!", "success");
+            customAlert('Report Card uploaded successfully and linked to student portal!', 'success');
             resetMrcu();
         }, 500);
 
     } catch (error) {
-        console.error("Upload failed:", error);
+        console.error('Upload failed:', error);
         setLoading(false);
         progressArea.classList.add('hidden');
-        customAlert("Upload failed: " + error.message, "error");
+        customAlert('Upload failed: ' + error.message, 'error');
     }
 }
 

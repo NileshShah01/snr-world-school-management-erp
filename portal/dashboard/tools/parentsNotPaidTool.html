@@ -1,0 +1,39 @@
+<section id="parentsNotPaidToolSection" class="dashboard-section hidden">
+    <div class="flex flex-between align-center mb-1">
+        <div>
+            <h1><i class="fas fa-user-clock text-amber"></i> Parents Not Paid Tool</h1>
+            <p class="text-sm text-muted">Cross-reference dues and payment Excel files to identify pending payments</p>
+        </div>
+    </div>
+
+    <div class="card p-1-5">
+        <div class="grid gap-1" style="grid-template-columns:1fr 1fr;">
+            <div>
+                <label class="form-label">Dues / Pending File <span class="text-red">*</span></label>
+                <input type="file" id="fee_duesFile" class="form-control" accept=".xlsx,.xls" onchange="updateFileName('fee_duesFile','fee_duesStatus')" />
+                <small class="text-muted" id="fee_duesStatus"></small>
+            </div>
+            <div>
+                <label class="form-label">Paid / Monthly Payment File <span class="text-red">*</span></label>
+                <input type="file" id="fee_paidFile" class="form-control" accept=".xlsx,.xls" onchange="updateFileName('fee_paidFile','fee_paidStatus')" />
+                <small class="text-muted" id="fee_paidStatus"></small>
+            </div>
+        </div>
+
+        <div class="flex gap-0-75 mt-1">
+            <button class="btn-portal btn-primary" onclick="processFeeData()"><i class="fas fa-play"></i> Analyze</button>
+            <button class="btn-portal btn-ghost" onclick="resetFeeTool()"><i class="fas fa-undo"></i> Reset</button>
+        </div>
+    </div>
+
+    <div id="fee_resultsArea" class="card p-1-5 mt-1" style="display:none;">
+        <div class="flex flex-between align-center mb-1">
+            <p class="font-600 text-sm" id="fee_summaryText"></p>
+            <div class="flex gap-0-5">
+                <button class="btn-portal btn-sm btn-success" onclick="downloadFeeExcel()"><i class="fas fa-file-excel"></i> Excel</button>
+                <button class="btn-portal btn-sm btn-primary" onclick="downloadFeePdf()"><i class="fas fa-file-pdf"></i> PDF Report</button>
+            </div>
+        </div>
+        <div id="fee_resultsGrid"></div>
+    </div>
+</section>

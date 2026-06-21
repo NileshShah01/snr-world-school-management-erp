@@ -1,0 +1,54 @@
+<section id="certificateHistorySection" class="dashboard-section hidden">
+                <div class="header">
+                    <div>
+                        <h1><i class="fas fa-history text-primary"></i> Certificate History</h1>
+                        <p>Audit trail of all issued certificates with reprint and void options</p>
+                    </div>
+                    <button class="btn-portal btn-primary" onclick="loadCertHistory()">
+                        <i class="fas fa-sync"></i> Refresh
+                    </button>
+                </div>
+                <div class="card p-1-5 mb-1-5">
+                    <div class="grid-4 gap-1">
+                        <div class="form-group">
+                            <label>Type</label>
+                            <select id="certHistoryType" class="form-control" onchange="loadCertHistory()">
+                                <option value="">All Types</option>
+                                <option value="bonafide">Bonafide</option>
+                                <option value="slc">SLC</option>
+                                <option value="tc">Transfer Certificate</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Class</label>
+                            <input type="text" id="certHistoryClass" class="form-control" placeholder="e.g. 10" onchange="loadCertHistory()" />
+                        </div>
+                        <div class="form-group">
+                            <label>From Date</label>
+                            <input type="date" id="certHistoryFrom" class="form-control" onchange="loadCertHistory()" />
+                        </div>
+                        <div class="form-group">
+                            <label>To Date</label>
+                            <input type="date" id="certHistoryTo" class="form-control" onchange="loadCertHistory()" />
+                        </div>
+                    </div>
+                </div>
+                <div class="table-container">
+                    <table class="portal-table">
+                        <thead>
+                            <tr>
+                                <th>Ref No</th>
+                                <th>Type</th>
+                                <th>Student</th>
+                                <th>Class</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="certHistoryTableBody">
+                            <tr><td colspan="7" class="text-center text-muted p-2">Click "Refresh" to load</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>

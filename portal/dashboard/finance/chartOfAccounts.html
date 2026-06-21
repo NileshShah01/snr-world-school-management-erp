@@ -1,0 +1,27 @@
+<section id="chartOfAccountsSection" class="dashboard-section hidden">
+                <div class="header">
+                    <div>
+                        <h1><i class="fas fa-sitemap text-primary"></i> Chart of Accounts</h1>
+                        <p>Manage account heads for Assets, Liabilities, Income, Expenses, and Equity</p>
+                    </div>
+                    <button class="btn-portal btn-primary" onclick="openAddFinanceAccountModal()">
+                        <i class="fas fa-plus"></i> Add Account
+                    </button>
+                </div>
+                <div class="table-container">
+                    <table class="portal-table">
+                        <thead>
+                            <tr>
+                                <th>Code</th>
+                                <th>Account Name</th>
+                                <th>Type</th>
+                                <th class="text-right">Opening Balance</th>
+                                <th class="text-center">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="financeAccountTableBody">
+                            <tr><td colspan="5" class="text-center text-muted p-2">Loading accounts...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>

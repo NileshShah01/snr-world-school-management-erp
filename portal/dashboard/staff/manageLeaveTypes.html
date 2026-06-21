@@ -1,0 +1,27 @@
+<section id="manageLeaveTypesSection" class="dashboard-section hidden">
+                <div class="header">
+                    <div>
+                        <h1><i class="fas fa-tags text-primary"></i> Leave Types</h1>
+                        <p>Define leave categories: Casual, Sick, Earned, etc.</p>
+                    </div>
+                    <button class="btn-portal btn-primary" onclick="openAddLeaveTypeModal()">
+                        <i class="fas fa-plus"></i> Add Leave Type
+                    </button>
+                </div>
+                <div class="table-container">
+                    <table class="portal-table">
+                        <thead>
+                            <tr>
+                                <th>Leave Type</th>
+                                <th>Days/Year</th>
+                                <th>Paid/Unpaid</th>
+                                <th>Carry Forward</th>
+                                <th class="text-center">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leaveTypeTableBody">
+                            <tr><td colspan="5" class="text-center text-muted p-2">Loading...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>

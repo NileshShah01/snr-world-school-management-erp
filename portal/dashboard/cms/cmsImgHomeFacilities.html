@@ -1,0 +1,126 @@
+<section id="cmsImgHomeFacilitiesSection" class="dashboard-section hidden">
+                    <div class="card">
+                        <h3><i class="fas fa-home"></i> Home Page "Our Modern Facilities"</h3>
+                        <p class="text-xs text-muted mb-1-5">
+                            Edit the 8 facilities shown in the rotating slider on the home page.
+                        </p>
+
+                        <form id="cmsHomeFacilitiesForm">
+                            <div id="homeFacilitiesList" class="grid-cols-2 gap-1-5">
+                                <!-- Generate inputs for 8 facilities -->
+                                <div class="facility-cms-item bg-slate-light p-1 border-radius-0-75 border-slate">
+                                    <label class="font-bold block mb-0-5">Facility 1</label>
+                                    <input
+                                        type="text"
+                                        class="f-name form-control mb-0-5"
+                                        placeholder="Name (e.g. Smart Classrooms)"
+                                        title="Facility 1 Name"
+                                    />
+                                    <input
+                                        type="file"
+                                        id="f_home_1"
+                                        class="f-file form-control"
+                                        accept="image/*"
+                                        onchange="previewCmsImage(event, 'f_home_1_preview')"
+                                        title="Facility 1 Image"
+                                    />
+                                    <div id="f_home_1_preview" class="image-preview-mini"></div>
+                                </div>
+                                <div class="facility-cms-item bg-slate-light p-1 border-radius-0-75 border-slate">
+                                    <label class="font-bold block mb-0-5">Facility 2</label>
+                                    <input type="text" class="f-name form-control mb-0-5" title="Facility 2 Name" />
+                                    <input
+                                        type="file"
+                                        id="f_home_2"
+                                        class="f-file form-control"
+                                        accept="image/*"
+                                        onchange="previewCmsImage(event, 'f_home_2_preview')"
+                                        title="Facility 2 Image"
+                                    />
+                                    <div id="f_home_2_preview" class="image-preview-mini"></div>
+                                </div>
+                                <div class="facility-cms-item bg-slate-light p-1 border-radius-0-75 border-slate">
+                                    <label class="font-bold block mb-0-5">Facility 3</label>
+                                    <input type="text" class="f-name form-control mb-0-5" title="Facility 3 Name" />
+                                    <input
+                                        type="file"
+                                        id="f_home_3"
+                                        class="f-file form-control"
+                                        accept="image/*"
+                                        onchange="previewCmsImage(event, 'f_home_3_preview')"
+                                        title="Facility 3 Image"
+                                    />
+                                    <div id="f_home_3_preview" class="image-preview-mini"></div>
+                                </div>
+                                <div class="facility-cms-item bg-slate-light p-1 border-radius-0-75 border-slate">
+                                    <label class="font-bold block mb-0-5">Facility 4</label>
+                                    <input type="text" class="f-name form-control mb-0-5" title="Facility 4 Name" />
+                                    <input
+                                        type="file"
+                                        id="f_home_4"
+                                        class="f-file form-control"
+                                        accept="image/*"
+                                        onchange="previewCmsImage(event, 'f_home_4_preview')"
+                                        title="Facility 4 Image"
+                                    />
+                                    <div id="f_home_4_preview" class="image-preview-mini"></div>
+                                </div>
+                                <div class="facility-cms-item bg-slate-light p-1 border-radius-0-75 border-slate">
+                                    <label class="font-bold block mb-0-5">Facility 5</label>
+                                    <input type="text" class="f-name form-control mb-0-5" title="Facility 5 Name" />
+                                    <input
+                                        type="file"
+                                        id="f_home_5"
+                                        class="f-file form-control"
+                                        accept="image/*"
+                                        onchange="previewCmsImage(event, 'f_home_5_preview')"
+                                        title="Facility 5 Image"
+                                    />
+                                    <div id="f_home_5_preview" class="image-preview-mini"></div>
+                                </div>
+                                <div class="facility-cms-item bg-slate-light p-1 border-radius-0-75 border-slate">
+                                    <label class="font-bold block mb-0-5">Facility 6</label>
+                                    <input type="text" class="f-name form-control mb-0-5" title="Facility 6 Name" />
+                                    <input
+                                        type="file"
+                                        id="f_home_6"
+                                        class="f-file form-control"
+                                        accept="image/*"
+                                        onchange="previewCmsImage(event, 'f_home_6_preview')"
+                                        title="Facility 6 Image"
+                                    />
+                                    <div id="f_home_6_preview" class="image-preview-mini"></div>
+                                </div>
+                                <div class="facility-cms-item bg-slate-light p-1 border-radius-0-75 border-slate">
+                                    <label class="font-bold block mb-0-5">Facility 7</label>
+                                    <input type="text" class="f-name form-control mb-0-5" title="Facility 7 Name" />
+                                    <input
+                                        type="file"
+                                        id="f_home_7"
+                                        class="f-file form-control"
+                                        accept="image/*"
+                                        onchange="previewCmsImage(event, 'f_home_7_preview')"
+                                        title="Facility 7 Image"
+                                    />
+                                    <div id="f_home_7_preview" class="image-preview-mini"></div>
+                                </div>
+                                <div class="facility-cms-item bg-slate-light p-1 border-radius-0-75 border-slate">
+                                    <label class="font-bold block mb-0-5">Facility 8</label>
+                                    <input type="text" class="f-name form-control mb-0-5" title="Facility 8 Name" />
+                                    <input
+                                        type="file"
+                                        id="f_home_8"
+                                        class="f-file form-control"
+                                        accept="image/*"
+                                        onchange="previewCmsImage(event, 'f_home_8_preview')"
+                                        title="Facility 8 Image"
+                                    />
+                                    <div id="f_home_8_preview" class="image-preview-mini"></div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn-portal btn-primary mt-2" title="Save Home Facilities">
+                                <i class="fas fa-save"></i> Save Home Facilities
+                            </button>
+                        </form>
+                    </div>
+                </section>

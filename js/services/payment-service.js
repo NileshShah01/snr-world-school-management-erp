@@ -4,25 +4,47 @@
 const PaymentService = {
     /**
      * Records a payment and updates related fee records atomically.
-     * @param {Object} paymentData { studentId, amount, method, remarks, session }
+     * @param {Object} paymentData { studentId, amount, method, remarks, session, reference, feeIds (optional - for manual allocation) }
      */
     async recordPayment(paymentData) {
-        const { studentId, amount, method, remarks, session, reference } = paymentData;
+        const { studentId, amount, method, remarks, session, reference, feeIds } = paymentData;
         
         if (!studentId || isNaN(amount) || amount <= 0) {
             throw new Error('Invalid payment data provided.');
         }
 
         const db = window.db || firebase.firestore();
-        const receiptNo = 'R-' + Math.floor(Math.random() * 900000 + 100000);
+        // Unique receipt: R-YYYYMMDD-TIMESTAMP-RANDOM4 (collision-proof)
+        const now = new Date();
+        const datePart = now.getFullYear().toString() +
+            String(now.getMonth() + 1).padStart(2, '0') +
+            String(now.getDate()).padStart(2, '0');
+        const timePart = Date.now().toString().slice(-6);
+        const randPart = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
+        const receiptNo = `R-${datePart}-${timePart}${randPart}`;
         
-        return db.runTransaction(async (transaction) => {
-            // 1. Fetch pending fees for the student
-            const feeQuery = schoolData('fees')
+        // Fetch pending fees outside the transaction (Firestore transactions don't support query reads)
+        let pendingFeeDocs;
+        if (feeIds && feeIds.length > 0) {
+            // Manual allocation: fetch ONLY selected fees
+            const feePromises = feeIds.map(id => schoolData('fees').doc(id).get());
+            const feeDocs = await Promise.all(feePromises);
+            pendingFeeDocs = feeDocs.filter(d => d.exists);
+        } else {
+            // Auto-allocation (FIFO): fetch all pending/partial fees
+            const feeQuerySnap = await schoolData('fees')
                 .where('studentId', '==', studentId)
-                .where('status', 'in', ['pending', 'partial']);
-            
-            const feeSnap = await transaction.get(feeQuery);
+                .where('status', 'in', ['pending', 'partial'])
+                .get();
+            pendingFeeDocs = feeQuerySnap.docs;
+        }
+
+        return db.runTransaction(async (transaction) => {
+            // 1. Re-fetch each fee document inside the transaction for atomicity
+            const feeDocs = await Promise.all(
+                pendingFeeDocs.map(d => transaction.get(d.ref))
+            );
+            const feeSnap = { docs: feeDocs.filter(d => d.exists) };
             
             // 2. Allocation Logic (FIFO)
             let remainingAmount = amount;
@@ -90,7 +112,7 @@ const PaymentService = {
             // 4. Commit all fee updates
             updates.forEach(upd => transaction.update(upd.ref, upd.data));
 
-            return { paymentId: paymentRef.id, paymentId: paymentRef.id, receiptNo };
+            return { paymentId: paymentRef.id, receiptNo };
         });
     },
 

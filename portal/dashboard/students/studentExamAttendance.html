@@ -1,0 +1,64 @@
+<section id="studentExamAttendanceSection" class="dashboard-section card hidden">
+                    <div class="header mb-2">
+                        <h1>Attendance Marking (Subject)</h1>
+                        <p>Record student presence/absence for a specific subject exam</p>
+                    </div>
+                    <div class="glass-card p-1-5 mb-2 grid-5 gap-1 align-flex-end">
+                        <div class="form-group mb-0">
+                            <label>Session</label>
+                            <select
+                                id="examAttSession"
+                                class="form-control"
+                                onchange="loadExamAttClasses()"
+                                title="Select Session"
+                            ></select>
+                        </div>
+                        <div class="form-group mb-0">
+                            <label>Class</label>
+                            <select
+                                id="examAttClass"
+                                class="form-control"
+                                onchange="loadExamAttSubjects()"
+                                title="Select Class"
+                            ></select>
+                        </div>
+                        <div class="form-group mb-0">
+                            <label>Exam</label>
+                            <select
+                                id="examAttExam"
+                                class="form-control"
+                                onchange="refreshExamAttGrid()"
+                                title="Select Exam"
+                            ></select>
+                        </div>
+                        <div class="form-group mb-0">
+                            <label>Subject</label>
+                            <select
+                                id="examAttSubject"
+                                class="form-control"
+                                onchange="refreshExamAttGrid()"
+                                title="Select Subject"
+                            ></select>
+                        </div>
+                        <button class="btn-portal btn-primary h-42" onclick="saveExamAttendance()">
+                            <i class="fas fa-save mr-1"></i> Save Marks
+                        </button>
+                    </div>
+                    <div class="table-container">
+                        <div class="table-responsive">
+                            <table class="portal-table">
+                                <thead>
+                                    <tr>
+                                        <th>Roll No</th>
+                                        <th>Student Name</th>
+                                        <th>Status</th>
+                                        <th>Remarks</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="examAttGridBody">
+                                    <!-- Populated via JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>

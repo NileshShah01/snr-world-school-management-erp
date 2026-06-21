@@ -1,0 +1,61 @@
+<section id="dsrRequestsSection" class="dashboard-section card hidden">
+    <div class="header mb-2">
+        <div>
+            <h1><i class="fas fa-shield-alt text-primary"></i> Data Subject Requests</h1>
+            <p class="text-sm text-muted">Manage access, deletion, and export requests under DPDP Act 2023</p>
+        </div>
+        <div class="header-actions">
+            <button class="btn-portal btn-ghost" onclick="loadDsrRequests()">
+                <i class="fas fa-sync-alt"></i> Refresh
+            </button>
+        </div>
+    </div>
+
+    <div class="flex gap-1 mb-2">
+        <div class="stat-card flex-1">
+            <p class="stat-value text-primary" id="dsrPendingCount">0</p>
+            <p class="stat-label">Pending</p>
+        </div>
+        <div class="stat-card flex-1">
+            <p class="stat-value text-success" id="dsrApprovedCount">0</p>
+            <p class="stat-label">Approved</p>
+        </div>
+        <div class="stat-card flex-1">
+            <p class="stat-value text-danger" id="dsrRejectedCount">0</p>
+            <p class="stat-label">Rejected</p>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="portal-table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Requester</th>
+                    <th>Contact</th>
+                    <th>Type</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="dsrTableBody">
+                <tr><td colspan="6" class="text-center text-muted py-3">Loading...</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Approve & Export Modal -->
+    <div id="dsrExportModal" class="modal-overlay hidden">
+        <div class="modal card" style="max-width:700px;">
+            <div class="flex flex-between align-center mb-1-5">
+                <h3><i class="fas fa-file-export"></i> Export Data</h3>
+                <button class="btn-portal btn-ghost btn-sm" onclick="closeDsrModal()"><i class="fas fa-times"></i></button>
+            </div>
+            <pre id="dsrExportPreview" class="p-1 bg-secondary border-radius-0-5 text-xs" style="max-height:400px;overflow:auto;white-space:pre-wrap;"></pre>
+            <div class="flex gap-1 mt-1-5">
+                <button class="btn-portal btn-primary" onclick="downloadDsrExport()"><i class="fas fa-download"></i> Download JSON</button>
+                <button class="btn-portal btn-ghost" onclick="closeDsrModal()">Close</button>
+            </div>
+        </div>
+    </div>
+</section>

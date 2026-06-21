@@ -1,0 +1,27 @@
+<section id="balanceSheetReportSection" class="dashboard-section hidden">
+                <div class="header">
+                    <div>
+                        <h1><i class="fas fa-file-invoice-dollar text-primary"></i> Balance Sheet</h1>
+                        <p>School's financial position: Assets, Liabilities, and Equity</p>
+                    </div>
+                    <button class="btn-portal btn-primary" onclick="generateBalanceSheet()">
+                        <i class="fas fa-sync"></i> Refresh
+                    </button>
+                </div>
+                <div class="card p-1-5">
+                    <div class="table-container">
+                        <table class="portal-table">
+                            <thead>
+                                <tr>
+                                    <th>Code</th>
+                                    <th>Account</th>
+                                    <th class="text-right">Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody id="balanceSheetBody">
+                                <tr><td colspan="3" class="text-center text-muted p-2">Click "Refresh" to generate report</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>

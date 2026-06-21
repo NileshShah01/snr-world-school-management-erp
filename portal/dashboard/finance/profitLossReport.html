@@ -1,0 +1,27 @@
+<section id="profitLossReportSection" class="dashboard-section hidden">
+                <div class="header">
+                    <div>
+                        <h1><i class="fas fa-chart-pie text-green"></i> Profit & Loss Statement</h1>
+                        <p>Income vs Expenses overview for the current period</p>
+                    </div>
+                    <button class="btn-portal btn-primary" onclick="generateProfitLoss()">
+                        <i class="fas fa-sync"></i> Refresh
+                    </button>
+                </div>
+                <div class="card p-1-5">
+                    <div class="table-container">
+                        <table class="portal-table">
+                            <thead>
+                                <tr>
+                                    <th>Code</th>
+                                    <th>Account</th>
+                                    <th class="text-right">Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody id="plReportBody">
+                                <tr><td colspan="3" class="text-center text-muted p-2">Click "Refresh" to generate report</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>

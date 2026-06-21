@@ -1,0 +1,40 @@
+<section id="bulkImportSection" class="dashboard-section card hidden">
+                    <h3>Bulk Student Import</h3>
+                    <div class="bg-secondary p-1-5 border-radius-0-5 my-1-5 flex flex-between align-center">
+                        <div>
+                            <p class="font-600">Download Excel Template</p>
+                            <p class="text-xs text-muted">Use this format to ensure correct import</p>
+                        </div>
+                        <button
+                            class="btn-portal btn-secondary"
+                            onclick="downloadExcelTemplate('students')"
+                            title="Get Template"
+                        >
+                            <i class="fas fa-file-excel"></i> Get Template
+                        </button>
+                    </div>
+                    <form id="bulkImportForm">
+                        <div class="form-group">
+                            <label>Select Excel File (.xlsx, .xls)</label>
+                            <input
+                                type="file"
+                                id="excelFile"
+                                accept=".xlsx, .xls"
+                                required
+                                class="form-control"
+                                title="Select Excel File"
+                            />
+                        </div>
+                        <button type="submit" class="btn-portal btn-primary" title="Start Bulk Import">
+                            Start Bulk Import
+                        </button>
+                    </form>
+                    <div id="importStats" class="mt-2 hidden">
+                        <div class="bg-gray-light p-1 border-radius-0-5">
+                            <p>
+                                Processed: <span id="currentImport" class="font-700">0</span> /
+                                <span id="totalImport">0</span>
+                            </p>
+                        </div>
+                    </div>
+                </section>

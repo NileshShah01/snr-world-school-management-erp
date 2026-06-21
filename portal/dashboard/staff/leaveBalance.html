@@ -1,0 +1,27 @@
+<section id="leaveBalanceSection" class="dashboard-section hidden">
+                <div class="header">
+                    <div>
+                        <h1><i class="fas fa-hourglass-half text-primary"></i> Leave Balance</h1>
+                        <p>View remaining leave balances for all employees</p>
+                    </div>
+                    <button class="btn-portal btn-primary" onclick="loadLeaveBalances()">
+                        <i class="fas fa-sync"></i> Refresh
+                    </button>
+                </div>
+                <div class="table-container">
+                    <table class="portal-table">
+                        <thead>
+                            <tr>
+                                <th>Employee</th>
+                                <th>Designation</th>
+                                <th class="text-center">Casual</th>
+                                <th class="text-center">Sick</th>
+                                <th class="text-center">Earned</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leaveBalanceTableBody">
+                            <tr><td colspan="5" class="text-center text-muted p-2">Click "Refresh" to load balances</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>

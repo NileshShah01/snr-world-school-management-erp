@@ -1,0 +1,158 @@
+<section id="studentIdPrintSection" class="dashboard-section hidden">
+                    <div class="header">
+                        <div>
+                            <h1>Premium ID Card Generator</h1>
+                            <p>Design and print professional student identity cards</p>
+                        </div>
+                    </div>
+
+                    <div class="grid-2-1 mt-1-5">
+                        <div>
+                            <!-- Step 1: Selection & Configuration -->
+                            <div class="card mb-1-5">
+                                <h3 class="mb-1-25"><i class="fas fa-id-card primary"></i> Configuration</h3>
+                                <div class="grid-2 gap-1-25">
+                                    <div class="form-group">
+                                        <label>Search Student</label>
+                                        <div id="idPrintSearchContainer"></div>
+                                        <input type="hidden" id="idPrintSid" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Orientation</label>
+                                        <select
+                                            id="idCardOrientation"
+                                            class="form-control"
+                                            onchange="updateIdPreview()"
+                                            title="Select ID Card Orientation"
+                                        >
+                                            <option value="vertical">Vertical (Standard)</option>
+                                            <option value="horizontal">Horizontal</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="mt-1-5">
+                                    <label class="font-700 text-main">Select Design Template</label>
+                                    <div class="template-gallery" id="idTemplateGallery">
+                                        <!-- Populated by JS -->
+                                    </div>
+                                    <input type="hidden" id="selectedIdTemplate" value="template1" />
+                                </div>
+                            </div>
+
+                            <!-- Step 2: Individual Student (Session → Class → Student) -->
+                            <div class="card mb-1-5 border-left-primary-thick">
+                                <h3 class="mb-1"><i class="fas fa-user primary"></i> Individual Student</h3>
+                                <p class="text-xs text-muted mb-1-25">
+                                    Browse Session → Class → Student to load a specific student's ID card into the
+                                    preview.
+                                </p>
+                                <div class="grid-3 gap-1">
+                                    <div class="form-group">
+                                        <label>Session</label>
+                                        <select
+                                            id="idIndiv_session"
+                                            class="form-control"
+                                            title="Session"
+                                            onchange="idIndivLoadClasses()"
+                                        >
+                                            <option value="">Select Session</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Class</label>
+                                        <select
+                                            id="idIndiv_class"
+                                            class="form-control"
+                                            title="Class"
+                                            onchange="idIndivLoadStudents()"
+                                        >
+                                            <option value="">Select Session First</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Student</label>
+                                        <select
+                                            id="idIndiv_student"
+                                            class="form-control"
+                                            title="Student"
+                                            onchange="idIndivPreview()"
+                                        >
+                                            <option value="">Select Class First</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Step 3: Batch Options -->
+                            <div class="card">
+                                <h3 class="mb-1"><i class="fas fa-layer-group primary"></i> Batch Generation</h3>
+                                <p class="text-xs text-muted mb-1-25">
+                                    Select Session &amp; Class to generate ID cards for all students at once.
+                                </p>
+                                <div class="grid-3 gap-1">
+                                    <div class="form-group">
+                                        <label>Session</label>
+                                        <select
+                                            id="idGen_session"
+                                            class="form-control"
+                                            title="Select Session"
+                                            onchange="idGenLoadClasses()"
+                                        >
+                                            <option value="">Select Session</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Class</label>
+                                        <select
+                                            id="idBatchClassSelect"
+                                            class="form-control"
+                                            title="Select Class for Batch Generation"
+                                        ></select>
+                                    </div>
+                                    <div class="form-group flex align-end">
+                                        <button
+                                            onclick="generateBatchIdCards()"
+                                            class="btn-portal btn-ghost w-full"
+                                            title="Generate Batch PDF"
+                                        >
+                                            <i class="fas fa-file-pdf"></i> Batch PDF
+                                        </button>
+                                    </div>
+                                </div>
+                                <div id="idBatchStudentCount" class="text-xs text-muted mt-0-75"></div>
+                            </div>
+                        </div>
+
+                        <aside>
+                            <!-- Step 3: Live Preview -->
+                            <div class="card sticky-top">
+                                <h3 class="mb-1-25 text-center">Live Preview</h3>
+                                <div
+                                    id="idCardPreviewContainer"
+                                    class="flex flex-center min-h-400 bg-secondary border-radius-12 border-2 border-dashed overflow-hidden p-1-5"
+                                >
+                                    <div class="text-muted text-center">
+                                        <i class="fas fa-eye-slash text-4xl opacity-20 block mb-1"></i>
+                                        Select a student to see preview
+                                    </div>
+                                </div>
+                                <div class="mt-1-5 flex flex-col gap-0-75">
+                                    <button
+                                        onclick="generateSingleIdCard()"
+                                        class="btn-portal btn-primary w-full"
+                                        title="Download Selected ID"
+                                    >
+                                        <i class="fas fa-download"></i> Download Selected ID
+                                    </button>
+                                    <button
+                                        onclick="printIdPreview()"
+                                        class="btn-portal btn-secondary w-full"
+                                        title="Direct Print"
+                                    >
+                                        <i class="fas fa-print"></i> Direct Print
+                                    </button>
+                                </div>
+                            </div>
+                        </aside>
+                    </div>
+                </section>

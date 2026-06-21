@@ -1,0 +1,30 @@
+<section id="searchStudentFeeSection" class="dashboard-section hidden">
+                    <div class="header">
+                        <div>
+                            <h1><i class="fas fa-file-invoice-dollar primary"></i> Student Fee Ledger</h1>
+                            <p>Detailed payment history and itemized dues (Competitor Benchmark)</p>
+                        </div>
+                    </div>
+                    <div class="card mb-2 p-1-5 border-left-primary-thick">
+                        <div class="grid-cols-2-1 gap-1 align-flex-end">
+                            <div class="form-group m-0">
+                                <label>Search Student</label>
+                                <div
+                                    id="feeSearchSidContainer"
+                                    class="form-control"
+                                    title="Search Student Container"
+                                ></div>
+                                <input type="hidden" id="feeSearchSid" />
+                            </div>
+                            <button onclick="searchStudentFees()" class="btn-portal btn-primary h-42">
+                                <i class="fas fa-search"></i> Refresh Ledger
+                            </button>
+                        </div>
+                    </div>
+                    <div id="feeSearchResults" class="card p-0 overflow-hidden">
+                        <div class="p-4 text-center text-slate-muted">
+                            <i class="fas fa-search text-3xl opacity-01 mb-1"></i>
+                            <p>Search for a student to see their complete fee lifecycle.</p>
+                        </div>
+                    </div>
+                </section>

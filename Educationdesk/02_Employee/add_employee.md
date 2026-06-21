@@ -1,0 +1,235 @@
+﻿# Employee
+
+Route: /employee/add-employee
+
+Title: Education Desk
+
+HTML Size: 74.9 KB
+
+## Forms
+
+### Form 1
+- Action: add-employee
+- Method: POST
+
+#### Input Fields
+| Name | Type | Placeholder | Default |
+|------|------|-------------|---------|
+| employee_id | hidden |  | 0 |
+| profile_pic_url | hidden |  | /static/images/user.png |
+| name | text | Enter Name |  |
+| phone | text | Enter Phone |  |
+| email | text | Enter Email |  |
+| city | text | Enter City |  |
+| joining_date | text | Select Joining Date |  |
+| emp_code | text | Enter Employee Code |  |
+| father_name | text | Enter Father's Name |  |
+| husband_name | text | Enter Husband Name |  |
+| rf_id_number | text | Enter RFID Number |  |
+| qualification | text | Enter Qualification |  |
+| emp_work_exp_row_count | hidden |  | 1 |
+| employer_name_1 | text | Previous Employer Name |  |
+| emp_role_1 | text | Enter Role |  |
+| total_exp_1 | text | Enter Total Experience |  |
+| user_name | text | Enter User Name |  |
+| password | text | Enter Password |  |
+| is_email_send | checkbox |  |  |
+| enabled | checkbox |  |  |
+
+#### Selects
+- department: 2 options
+  -  = 
+  -  = 
+- designation: 2 options
+  -  = 
+  -  = 
+- reporting_to: 16 options
+- blood_group: 8 options
+  -  = 
+  -  = 
+  -  = 
+  -  = 
+  -  = 
+  -  = 
+  -  = 
+  -  = 
+
+### Form 2
+- Action: /employee/profile-img-upload
+- Method: POST
+- Enctype: multipart/form-data
+
+#### Input Fields
+| Name | Type | Placeholder | Default |
+|------|------|-------------|---------|
+| profile_image | file |  |  |
+
+### Form 3
+- Action: /employee/document-upload
+- Method: POST
+- Enctype: multipart/form-data
+
+#### Input Fields
+| Name | Type | Placeholder | Default |
+|------|------|-------------|---------|
+| file_name | text |  |  |
+| document_input | file |  |  |
+
+## AJAX Endpoints
+
+- check-user-availability
+
+## Data Table Columns
+
+1. File Name
+2. Status
+3. Download/View
+4. Remove
+
+## JS Functions
+
+- fillUserName()
+- getUserNameAvailability()
+- changeImgDilogShow()
+- changeImgDilogHide()
+- uploadPicJqueryForm()
+- checkFile()
+- removeEmpWorkExpDetail()
+- addEmpWorkExperienceDet()
+- uploadDocumentPopUp()
+- uploadDocumentForm()
+- checkDocumentFile()
+- removeDoc()
+
+## Inline Events
+
+- onclick=addEmpWorkExperienceDet()
+- onclick=uploadDocumentPopUp()
+- onclick=getUserNameAvailability()
+- onclick=uploadPicJqueryForm()
+- onclick=uploadDocumentForm()
+- onclick=removeEmpWorkExpDetail('+workExpRowCount+')
+
+## Sidebar
+
+- Log Out -> /employee/emp-logout
+-  -> javascript:;
+
+## Assets
+
+### CSS (21)
+- /static/vendors/bootstrap/dist/css/bootstrap.min.css
+- /static/vendors/font-awesome/css/font-awesome.min.css
+- /static/vendors/nprogress/nprogress.css
+- /static/vendors/iCheck/skins/flat/green.css
+- /static/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css
+- /static/vendors/animate.css/animate.min.css
+- /static/vendors/jqvmap/dist/jqvmap.min.css
+- /static/vendors/bootstrap-daterangepicker/daterangepicker.css
+- /static/css/jquery-ui.min.css
+- /static/vendors/select2/dist/css/select2.min.css
+- /static/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css
+- /static/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css
+- /static/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css
+- /static/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css
+- /static/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css
+- /static/vendors/pnotify/dist/pnotify.css
+- /static/vendors/pnotify/dist/pnotify.buttons.css
+- /static/vendors/pnotify/dist/pnotify.nonblock.css
+- /static/assets/clockpicker/bootstrap-clockpicker.min.css
+- /static/assets/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.css
+- /static/build/css/custom.min.css?v=2.6
+
+### JS (58)
+- /static/vendors/jquery/dist/jquery.min.js
+- /static/vendors/bootstrap/dist/js/bootstrap.min.js?v=1.1
+- /static/vendors/fastclick/lib/fastclick.js
+- /static/vendors/nprogress/nprogress.js
+- /static/vendors/Chart.js/dist/Chart.min.js
+- /static/vendors/echarts/dist/echarts.min.js
+- /static/vendors/gauge.js/dist/gauge.min.js
+- /static/vendors/iCheck/icheck.min.js
+- /static/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js
+- /static/vendors/skycons/skycons.js
+- /static/vendors/Flot/jquery.flot.js
+- /static/vendors/Flot/jquery.flot.pie.js
+- /static/vendors/Flot/jquery.flot.time.js
+- /static/vendors/Flot/jquery.flot.stack.js
+- /static/vendors/Flot/jquery.flot.resize.js
+- /static/vendors/flot.orderbars/js/jquery.flot.orderBars.js
+- /static/vendors/flot-spline/js/jquery.flot.spline.min.js
+- /static/vendors/flot.curvedlines/curvedLines.js
+- /static/vendors/DateJS/build/date.js
+- /static/vendors/jqvmap/dist/jquery.vmap.js
+- /static/vendors/jqvmap/dist/maps/jquery.vmap.world.js
+- /static/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js
+- /static/vendors/moment/min/moment.min.js
+- /static/vendors/bootstrap-daterangepicker/daterangepicker.js?v=1.4
+- /static/vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js
+- /static/vendors/jquery.hotkeys/jquery.hotkeys.js
+- /static/vendors/google-code-prettify/src/prettify.js
+- /static/vendors/jquery.tagsinput/src/jquery.tagsinput.js
+- /static/vendors/switchery/dist/switchery.min.js
+- /static/vendors/select2/dist/js/select2.full.min.js
+- /static/vendors/parsleyjs/dist/parsley.min.js
+- /static/vendors/autosize/dist/autosize.min.js
+- /static/vendors/devbridge-autocomplete/dist/jquery.autocomplete.min.js
+- /static/vendors/starrr/dist/starrr.js
+- /static/vendors/datatables.net/js/jquery.dataTables.min.js
+- /static/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js
+- /static/vendors/datatables.net-buttons/js/dataTables.buttons.min.js
+- /static/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js
+- /static/vendors/datatables.net-buttons/js/buttons.flash.min.js
+- /static/vendors/datatables.net-buttons/js/buttons.html5.min.js
+- /static/vendors/datatables.net-buttons/js/buttons.print.min.js
+- /static/vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js
+- /static/vendors/datatables.net-keytable/js/dataTables.keyTable.min.js
+- /static/vendors/datatables.net-responsive/js/dataTables.responsive.min.js
+- /static/vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js
+- /static/vendors/jszip/dist/jszip.min.js
+- /static/vendors/pdfmake/build/pdfmake.min.js
+- /static/vendors/pdfmake/build/vfs_fonts.js
+- /static/vendors/pnotify/dist/pnotify.js
+- /static/vendors/pnotify/dist/pnotify.buttons.js
+- /static/vendors/pnotify/dist/pnotify.nonblock.js
+- /static/assets/clockpicker/bootstrap-clockpicker.min.js?v=1.6
+- /static/assets/jquery-validation/js/jquery.validate.js
+- /static/assets/bootstrap-switch/dist/js/bootstrap-switch.js
+- /static/build/js/custom.js?v=4.2
+- /static/build/js/common.js?v=2.4
+- /static/js/jquery-ui.min.js
+- /static/js/jquery.form.js
+
+## Uploads
+
+- profile_image
+- document_input
+
+## Links (168)
+
+- home
+- employee-profile
+- /employee/emp-logout
+- /app/dashboard
+- add-employee
+- search-employee
+- add-designation
+- add-department
+- upload-employee
+- employee-id-print
+- add-batch
+- add-course
+- add-course-details
+- add-subject
+- add-non-subject
+- add-syllabus
+- all-syllabus
+- add-time-table
+- view-time-table
+- time-table-assign
+- ... and 148 more
+
+## Layout
+
+Grid: col-md-3, col-md-12, col-md-9, col-md-6, col-md-2, col-md-4
+

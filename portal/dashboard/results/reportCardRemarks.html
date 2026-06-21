@@ -1,0 +1,62 @@
+<section id="reportCardRemarksSection" class="dashboard-section card hidden">
+                    <div class="header mb-2">
+                        <h1>Remarks & Co-Scholastic</h1>
+                        <p>Enter teacher remarks and grades for non-academic activities</p>
+                    </div>
+                    <div class="glass-card p-1-5 mb-2 grid-4 gap-1 align-flex-end">
+                        <div class="form-group mb-0">
+                            <label>Session</label>
+                            <select
+                                id="remarkSessionSelect"
+                                class="form-control"
+                                title="Select Session"
+                                onchange="loadRemarkClasses()"
+                            ></select>
+                        </div>
+                        <div class="form-group mb-0">
+                            <label>Class</label>
+                            <select
+                                id="remarkClassSelect"
+                                class="form-control"
+                                title="Select Class"
+                                onchange="loadRemarkSections()"
+                            ></select>
+                        </div>
+                        <div class="form-group mb-0">
+                            <label>Section</label>
+                            <select
+                                id="remarkSectionSelect"
+                                class="form-control"
+                                title="Select Section"
+                                onchange="loadRemarksGrid()"
+                            ></select>
+                        </div>
+                        <div class="form-group mb-0">
+                            <label>Exam</label>
+                            <select
+                                id="remarkExamSelect"
+                                class="form-control"
+                                title="Select Exam"
+                                onchange="loadRemarksGrid()"
+                            ></select>
+                        </div>
+                    </div>
+                    <div class="table-container">
+                        <div class="table-responsive">
+                            <table class="portal-table">
+                                <thead>
+                                    <tr>
+                                        <th>Student Name</th>
+                                        <th>General Remarks</th>
+                                        <th>Art/Craft</th>
+                                        <th>Discipline</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="remarksGridBody">
+                                    <!-- Populated via JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>

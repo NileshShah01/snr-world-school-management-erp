@@ -1,0 +1,55 @@
+<section id="addNonSubjectSection" class="dashboard-section hidden">
+                    <div class="header">
+                        <div>
+                            <h1>Non-Scholastic Subjects</h1>
+                            <p>Define co-curricular and personal development areas</p>
+                        </div>
+                    </div>
+                    <div class="grid-cols-1-2 gap-1-5">
+                        <div class="card p-1-5">
+                            <h3>New Non-Scholastic Area</h3>
+                            <form id="addNonSubjectForm" onsubmit="handleNonSubjectSubmit(event)" class="mt-1">
+                                <div class="form-group">
+                                    <label>Area Name (e.g., Discipline, Arts)</label>
+                                    <input
+                                        type="text"
+                                        id="nonSubjectNameInput"
+                                        class="form-control"
+                                        placeholder="Discipline"
+                                        required
+                                        title="Area Name"
+                                    />
+                                </div>
+                                <div class="form-group">
+                                    <label>Description (Optional)</label>
+                                    <textarea
+                                        id="nonSubjectDescInput"
+                                        class="form-control"
+                                        placeholder="Brief details about grading parameters..."
+                                        title="Description"
+                                    ></textarea>
+                                </div>
+                                <button type="submit" class="btn-portal btn-primary w-full" title="Add Area">
+                                    <i class="fas fa-plus"></i> Add Area
+                                </button>
+                            </form>
+                        </div>
+                        <div class="card p-1-5">
+                            <h3>Non-Scholastic Areas</h3>
+                            <div class="table-responsive mt-1">
+                                <table class="portal-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Area Name</th>
+                                            <th>Description</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="nonSubjectsTableBody">
+                                        <!-- Dynamic content -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </section>

@@ -1,0 +1,29 @@
+<section id="staffAttendanceMarkSection" class="dashboard-section hidden">
+                <div class="header">
+                    <div>
+                        <h1><i class="fas fa-user-check text-primary"></i> Staff Attendance</h1>
+                        <p>Mark daily attendance for all employees</p>
+                    </div>
+                </div>
+                <div class="card max-w-400 mx-auto p-1-5 mb-1-5">
+                    <div class="form-group">
+                        <label>Date</label>
+                        <input type="date" id="staffAttDate" class="form-control" onchange="loadStaffForAttendance()">
+                    </div>
+                </div>
+                <div class="table-container">
+                    <table class="portal-table">
+                        <thead>
+                            <tr>
+                                <th>Employee</th>
+                                <th>Designation</th>
+                                <th>Status</th>
+                                <th class="text-center">Mark Attendance</th>
+                            </tr>
+                        </thead>
+                        <tbody id="staffAttendanceTableBody">
+                            <tr><td colspan="4" class="text-center text-muted p-2">Select a date to mark attendance</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>

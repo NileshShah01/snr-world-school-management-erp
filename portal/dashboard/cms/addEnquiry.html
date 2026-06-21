@@ -1,0 +1,80 @@
+<section id="addEnquirySection" class="dashboard-section hidden">
+                    <div class="header">
+                        <div>
+                            <h1>Add Admission Enquiry</h1>
+                            <p>Capture details of prospective students</p>
+                        </div>
+                    </div>
+                    <div class="card max-w-800 mx-auto p-2">
+                        <form id="enquiryForm" onsubmit="saveEnquiry(event)">
+                            <div class="grid-2 gap-1-25">
+                                <div class="form-group">
+                                    <label>Student Name</label>
+                                    <input
+                                        type="text"
+                                        id="enq_name"
+                                        class="form-control"
+                                        required
+                                        placeholder="Name of student"
+                                        title="Student Name"
+                                    />
+                                </div>
+                                <div class="form-group">
+                                    <label>Father Name</label>
+                                    <input
+                                        type="text"
+                                        id="enq_father"
+                                        class="form-control"
+                                        required
+                                        placeholder="Father's name"
+                                        title="Father Name"
+                                    />
+                                </div>
+                                <div class="form-group">
+                                    <label>Mobile Number</label>
+                                    <input
+                                        type="text"
+                                        id="enq_mobile"
+                                        class="form-control"
+                                        required
+                                        placeholder="10-digit mobile"
+                                        title="Mobile Number"
+                                    />
+                                </div>
+                                <div class="form-group">
+                                    <label>Class Required</label>
+                                    <select id="enq_class" class="form-control" required title="Select Class">
+                                        <option value="">Select Class</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Source of Enquiry</label>
+                                    <select id="enq_source" class="form-control" title="Enquiry Source">
+                                        <option value="Direct Walk-in">Direct Walk-in</option>
+                                        <option value="Online/Website">Online/Website</option>
+                                        <option value="Social Media">Social Media</option>
+                                        <option value="Reference">Reference</option>
+                                        <option value="Advertisement">Advertisement</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Next Follow-up Date</label>
+                                    <input type="date" id="enq_followup" class="form-control" title="Follow-up Date" />
+                                </div>
+                            </div>
+                            <div class="form-group mt-1-25">
+                                <label>Remarks</label>
+                                <textarea
+                                    id="enq_remarks"
+                                    class="form-control"
+                                    rows="3"
+                                    placeholder="Additional notes..."
+                                    title="Remarks"
+                                ></textarea>
+                            </div>
+                            <button type="submit" class="btn-portal btn-primary w-full mt-1-5" title="Save Enquiry">
+                                <i class="fas fa-save"></i> Save Enquiry
+                            </button>
+                        </form>
+                    </div>
+                </section>

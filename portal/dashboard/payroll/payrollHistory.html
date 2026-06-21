@@ -1,0 +1,32 @@
+<section id="payrollHistorySection" class="dashboard-section hidden">
+                <div class="header">
+                    <div>
+                        <h1><i class="fas fa-history text-primary"></i> Payroll History</h1>
+                        <p>View all past payroll runs and payment status</p>
+                    </div>
+                </div>
+                <div class="card max-w-400 mx-auto p-1-5 mb-1-5">
+                    <div class="form-group">
+                        <label>Filter by Month</label>
+                        <input type="month" id="payrollHistoryMonth" class="form-control" onchange="loadPayrollHistory()">
+                    </div>
+                </div>
+                <div class="table-container">
+                    <table class="portal-table">
+                        <thead>
+                            <tr>
+                                <th>Employee</th>
+                                <th>Month</th>
+                                <th class="text-right">Earnings</th>
+                                <th class="text-right">Deductions</th>
+                                <th class="text-right">Net Pay</th>
+                                <th>Status</th>
+                                <th class="text-center">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="payrollHistoryBody">
+                            <tr><td colspan="7" class="text-center text-muted p-2">Select a month to view history</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>

@@ -1,0 +1,28 @@
+<section id="trialBalanceSection" class="dashboard-section hidden">
+                <div class="header">
+                    <div>
+                        <h1><i class="fas fa-balance-scale text-primary"></i> Trial Balance</h1>
+                        <p>Verify that total debits equal total credits across all accounts</p>
+                    </div>
+                    <button class="btn-portal btn-primary" onclick="generateTrialBalance()">
+                        <i class="fas fa-sync"></i> Refresh
+                    </button>
+                </div>
+                <div class="card p-1-5">
+                    <div class="table-container">
+                        <table class="portal-table">
+                            <thead>
+                                <tr>
+                                    <th>Code</th>
+                                    <th>Account Name</th>
+                                    <th class="text-right">Debit (Dr)</th>
+                                    <th class="text-right">Credit (Cr)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="trialBalanceBody">
+                                <tr><td colspan="4" class="text-center text-muted p-2">Click "Refresh" to generate report</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>

@@ -1,0 +1,194 @@
+<section id="classFeePaymentSection" class="dashboard-section hidden">
+                    <div class="header">
+                        <div>
+                            <h1><i class="fas fa-cash-register text-primary"></i> Fee Collection Dashboard</h1>
+                            <p>Search students, record payments, and generate official receipts</p>
+                        </div>
+                    </div>
+
+                    <div class="grid-cols-1-2 gap-2">
+                        <!-- Left: Student Selector & Quick Info -->
+                        <div class="flex flex-col gap-1-5">
+                            <div class="card p-1-5">
+                                <h3 class="mb-1 text-base">1. Select Student</h3>
+                                <!-- Dual Search Mode Toggle (matches Education Desk) -->
+                                <div class="flex gap-1 mb-1">
+                                    <label class="flex items-center gap-0-5 cursor-pointer">
+                                        <input type="radio" name="feeSearchMode" value="quick" checked onchange="toggleFeeSearchMode('quick')">
+                                        <span class="text-sm">Quick Search</span>
+                                    </label>
+                                    <label class="flex items-center gap-0-5 cursor-pointer">
+                                        <input type="radio" name="feeSearchMode" value="dropdown" onchange="toggleFeeSearchMode('dropdown')">
+                                        <span class="text-sm">Class Filter</span>
+                                    </label>
+                                </div>
+                                <!-- Quick Search: Free-text by name/ID/phone/father -->
+                                <div id="feeQuickSearchBox">
+                                    <input type="text" id="feeQuickSearchInput" class="form-control"
+                                        placeholder="Type Name, ID, Phone, or Father Name..."
+                                        oninput="handleFeeQuickSearch(this.value)" autocomplete="off" />
+                                    <div id="feeQuickSearchResults" class="hidden" style="max-height:250px;overflow-y:auto;border:1px solid var(--border);border-radius:var(--radius);margin-top:4px;background:var(--bg-white)"></div>
+                                    <input type="hidden" id="feeCollectorSid" />
+                                </div>
+                                <!-- Dropdown Search: Cascading class filter -->
+                                <div id="feeDropdownSearchBox" class="hidden">
+                                    <div
+                                        id="feeCollectorSidContainer"
+                                        class="searchable-select"
+                                        title="Search Student Select"
+                                    ></div>
+                                </div>
+
+                                <div id="fcStudentQuickInfo" class="mt-1-5 hidden">
+                                    <div class="text-center mb-1">
+                                        <img
+                                            id="fcStudentPhoto"
+                                            src="https://ui-avatars.com/api/?name=Admin&background=0284c7&color=fff"
+                                            class="avatar-100 border-3-primary object-cover"
+                                            alt="Student Photo"
+                                        />
+                                        <h3 id="fcStudentName" class="mt-0-5 mb-0-25">Student Name</h3>
+                                        <p id="fcStudentClassSection" class="text-xs text-muted m-0">Class 5 - A</p>
+                                    </div>
+                                    <div class="card bg-sky-light p-1 border-sky">
+                                        <div class="flex flex-between mb-0-5">
+                                            <span class="text-xs">Total Fee:</span>
+                                            <b id="fcTotalFee">₹0</b>
+                                        </div>
+                                        <div class="flex flex-between mb-0-5">
+                                            <span class="text-xs">Total Paid:</span>
+                                            <b id="fcTotalPaid" class="text-success">₹0</b>
+                                        </div>
+                                        <div class="pt-0-5 border-top border-sky flex flex-between">
+                                            <span class="font-bold">Balance Due:</span>
+                                            <b id="fcTotalBalance" class="text-danger text-lg">₹0</b>
+                                        </div>
+                                    </div>
+                                    <!-- Payment Remarks (admin notes about student's payment behavior) -->
+                                    <div class="mt-1-5 p-1" style="background:var(--bg-slate-light);border-radius:var(--radius)">
+                                        <label class="text-xs font-bold text-muted">
+                                            <i class="fas fa-sticky-note"></i> Payment Remarks
+                                        </label>
+                                        <textarea id="studentPaymentRemarks" class="form-control" rows="2"
+                                            placeholder="e.g. Father requested installment plan, Scholarship eligible, etc."
+                                            style="margin-top:4px;font-size:0.8rem"></textarea>
+                                        <button type="button" class="btn-portal btn-ghost mt-0-5" style="font-size:0.75rem;padding:2px 8px"
+                                            onclick="saveStudentPaymentRemarks()">
+                                            <i class="fas fa-save"></i> Save Remarks
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card p-1-5">
+                                <h3 class="mb-1 text-base">2. Payment Entry</h3>
+                                <form id="feePaymentForm" onsubmit="handleFeePayment(event)">
+                                    <div class="form-group">
+                                        <label>Amount Recieved (₹)</label>
+                                        <input
+                                            type="number"
+                                            id="payAmount"
+                                            required
+                                            placeholder="Enter amount..."
+                                            class="form-control text-2xl font-bold"
+                                            title="Payment Amount"
+                                        />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Payment Mode</label>
+                                        <select id="payMode" class="form-control" required title="Payment Mode">
+                                            <option value="Cash">Cash</option>
+                                            <option value="UPI / QR">UPI / QR Code</option>
+                                            <option value="Bank Transfer">Bank Transfer</option>
+                                            <option value="Cheque">Cheque</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Reference / Transaction ID</label>
+                                        <input
+                                            type="text"
+                                            id="payRef"
+                                            placeholder="Optional for Cash..."
+                                            class="form-control"
+                                            title="Transaction ID"
+                                        />
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Remarks</label>
+                                        <textarea
+                                            id="payRemarks"
+                                            rows="2"
+                                            class="form-control"
+                                            placeholder="Optional notes..."
+                                            title="Payment Remarks"
+                                        ></textarea>
+                                    </div>
+                                    <button
+                                        type="submit"
+                                        class="btn-portal btn-primary w-full p-1"
+                                        title="Complete Payment"
+                                    >
+                                        <i class="fas fa-check-circle"></i> Complete Payment
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- Right: Detailed Ledger & History -->
+                        <div class="flex flex-col gap-1-5">
+                            <div class="card p-1-5">
+                                <h3 class="mb-1 text-base">
+                                    <i class="fas fa-list-ul text-primary"></i> Individual Fee Ledger
+                                </h3>
+                                <div class="table-container max-h-400 overflow-y-auto">
+                                    <table class="portal-table">
+                                        <thead>
+                                            <tr>
+                                                <th style="width:30px"></th>
+                                                <th>Month / Period</th>
+                                                <th>Fee Name</th>
+                                                <th>Scheduled</th>
+                                                <th>Paid</th>
+                                                <th>Outstanding</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="fcLedgerTableBody">
+                                            <tr>
+                                                <td colspan="6" class="text-center p-2 text-muted">
+                                                    Select student to see ledger
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="card p-1-5">
+                                <h3 class="mb-1 text-base">
+                                    <i class="fas fa-history text-secondary"></i> Recent Payments (Receipts)
+                                </h3>
+                                <div class="table-container">
+                                    <table class="portal-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Receipt No</th>
+                                                <th>Date</th>
+                                                <th>Amount</th>
+                                                <th>Mode</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="fcPaymentsTableBody">
+                                            <tr>
+                                                <td colspan="5" class="text-center p-2 text-muted">
+                                                    No history available
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>

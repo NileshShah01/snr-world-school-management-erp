@@ -1,0 +1,56 @@
+<section id="viewAttendanceStatsSection" class="dashboard-section card hidden">
+    <div class="header mb-2">
+        <div>
+            <h1>Attendance Reports</h1>
+            <p>View and analyze student attendance trends</p>
+        </div>
+        <div class="header-actions">
+            <button class="btn-portal btn-ghost" onclick="exportAttendanceReport()">
+                <i class="fas fa-download"></i> Export Report
+            </button>
+        </div>
+    </div>
+
+    <div class="attendance-filter-row glass-card p-1-5 mb-2 grid-auto-150 gap-1 align-flex-end">
+        <div class="form-group mb-0">
+            <label>Session</label>
+            <select id="attStatsSession" class="form-control" onchange="loadAttendanceStats()">
+                <option value="">Select Session</option>
+            </select>
+        </div>
+        <div class="form-group mb-0">
+            <label>Class</label>
+            <select id="attStatsClass" class="form-control" onchange="loadAttendanceStats()">
+                <option value="">All Classes</option>
+            </select>
+        </div>
+        <div class="form-group mb-0">
+            <label>Month</label>
+            <select id="attStatsMonth" class="form-control" onchange="loadAttendanceStats()">
+                <option value="">Select Month</option>
+            </select>
+        </div>
+    </div>
+
+    <div id="attStatsSummary" class="grid grid-3 gap-1 mb-2"></div>
+
+    <div class="table-responsive">
+        <table class="portal-table">
+            <thead>
+                <tr>
+                    <th>Student ID</th>
+                    <th>Name</th>
+                    <th>Class</th>
+                    <th>Section</th>
+                    <th>Present</th>
+                    <th>Absent</th>
+                    <th>Leave</th>
+                    <th>Percentage</th>
+                </tr>
+            </thead>
+            <tbody id="attStatsBody">
+                <tr><td colspan="8" class="text-center text-muted py-3">Select filters to view attendance stats.</td></tr>
+            </tbody>
+        </table>
+    </div>
+</section>

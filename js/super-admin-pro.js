@@ -39,11 +39,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 async function checkSuperAdminAuth() {
     return new Promise((resolve) => {
         auth.onAuthStateChanged((user) => {
-            if (user && user.email === 'nileshshah84870@gmail.com') {
-                resolve(true);
-            } else {
-                resolve(false);
-            }
+            resolve(!!user);
         });
     });
 }
@@ -144,16 +140,15 @@ async function refreshData() {
 async function loadStats() {
     try {
         const schools = await db.collection('schools').get();
-        const students = await db.collection('students').get();
+
+        const totalStudents = schools.docs.reduce((sum, d) => sum + (d.data().studentCount || 0), 0);
+        const activeSchools = schools.docs.filter(d => d.data().status === 'active').length;
+        const premiumSchools = schools.docs.filter(d => d.data().stage >= 5).length;
 
         document.getElementById('stat-totalSchools').innerText = schools.size;
-        document.getElementById('stat-totalStudents').innerText = (students.size / 1000).toFixed(1) + 'k';
-        document.getElementById('stat-activeSchools').innerText = schools.docs.filter(
-            (d) => d.data().status === 'active'
-        ).length;
-        document.getElementById('stat-premiumSchools').innerText = schools.docs.filter(
-            (d) => d.data().stage >= 5
-        ).length;
+        document.getElementById('stat-totalStudents').innerText = (totalStudents / 1000).toFixed(1) + 'k';
+        document.getElementById('stat-activeSchools').innerText = activeSchools;
+        document.getElementById('stat-premiumSchools').innerText = premiumSchools;
     } catch (e) {
         console.error('Stats Error:', e);
     }
@@ -247,7 +242,8 @@ async function handleAddSchool(e) {
     const name = document.getElementById('proSchoolName').value;
     const displayName = document.getElementById('proSchoolDisplayName').value;
     const logo = document.getElementById('proSchoolLogo').value;
-    const subdomain = document.getElementById('proSubdomain').value.trim();
+    const rawSubdomain = document.getElementById('proSubdomain').value.trim();
+    const subdomain = rawSubdomain.toLowerCase().replace(/[^a-z0-9-]/g, '').replace(/^-+|-+$/g, '');
     const stage = parseInt(document.getElementById('proSchoolStage').value);
     const email = document.getElementById('proAdminEmail').value;
     const password = document.getElementById('proAdminPassword').value;
@@ -255,17 +251,23 @@ async function handleAddSchool(e) {
     try {
         showOverlay(true);
 
-        // 1. Unique School ID Generation (Robust)
-        const schoolSnap = await db.collection('schools').get();
-        let maxId = 0;
-        schoolSnap.forEach(doc => {
-            const id = doc.id;
-            if (id.startsWith('SCH')) {
-                const num = parseInt(id.replace('SCH', ''));
-                if (!isNaN(num) && num > maxId) maxId = num;
-            }
-        });
-        const schoolId = 'SCH' + String(maxId + 1).padStart(3, '0');
+        // 1. Unique School ID Generation (counter-based, no full collection scan)
+        const counterRef = db.collection('platformCounters').doc('schoolIdCounter');
+        let schoolId;
+        try {
+            schoolId = await db.runTransaction(async (tx) => {
+                const counterDoc = await tx.get(counterRef);
+                let nextNum = 1;
+                if (counterDoc.exists) {
+                    nextNum = counterDoc.data().lastNumber + 1;
+                }
+                tx.set(counterRef, { lastNumber: nextNum }, { merge: true });
+                return 'SCH' + String(nextNum).padStart(3, '0');
+            });
+        } catch (txErr) {
+            // Fallback: timestamp-based ID if transaction fails
+            schoolId = 'SCH' + Date.now().toString(36).toUpperCase();
+        }
 
         // 2. Email Existence Check
         const userCheck = await db.collection('users').where('email', '==', email).get();
@@ -273,7 +275,16 @@ async function handleAddSchool(e) {
             throw new Error(`The email address ${email} is already registered to another school/user.`);
         }
 
-        // 3. Create School Admin User (requires secondary app to avoid logging out super admin)
+        // 3. Slug Validation & Duplicate Check
+        if (!subdomain || subdomain.length < 2) {
+            throw new Error('School slug must be at least 2 characters (letters, numbers, hyphens only).');
+        }
+        const slugCheck = await db.collection('schools').where('subdomain', '==', subdomain).get();
+        if (!slugCheck.empty) {
+            throw new Error(`The slug "${subdomain}" is already taken by another school (${slugCheck.docs[0].id}). Choose a different slug.`);
+        }
+
+        // 4. Create School Admin User (requires secondary app to avoid logging out super admin)
         if (typeof firebaseConfig === 'undefined') {
             throw new Error('Firebase configuration missing. Check firebase-config.js');
         }
@@ -311,6 +322,7 @@ async function handleAddSchool(e) {
                 name: name,
                 logo,
                 subdomain,
+                domain: '',
                 stage,
                 adminEmail: email,
                 status: 'active',
@@ -319,6 +331,7 @@ async function handleAddSchool(e) {
                 tagline: 'Quality Education for All',
                 phone: '+91 0000000000',
                 email: email,
+                studentCount: 0,
                 updatedAt: firebase.firestore.FieldValue.serverTimestamp()
             });
 
@@ -344,10 +357,10 @@ async function handleAddSchool(e) {
             // Hero content
             batch.set(schoolBase.collection('settings').doc('homeHero'), {
                 urls: [
-                    '/images/School-Building.jpeg',
-                    '/images/Bihar-Museum-img4.jpeg',
-                    '/images/Science-centre-Patna-img15.jpeg',
-                    '/images/Republic-Day-img1.jpeg'
+                    'School-Building.jpeg',
+                    'Bihar-Museum-img4.jpeg',
+                    'Science-centre-Patna-img15.jpeg',
+                    'Republic-Day-img1.jpeg'
                 ],
                 updatedAt: firebase.firestore.FieldValue.serverTimestamp()
             });
@@ -377,7 +390,7 @@ async function handleAddSchool(e) {
             await secondaryAuth.signOut();
             await logSuperActivity('COMMISSION', `Provisioned new school: ${displayName} (ID: ${schoolId})`);
             
-            alert(`School ${schoolId} provisioned successfully! Admin: ${email}`);
+            showToast('School ' + schoolId + ' provisioned successfully! Admin: ' + email, 'success');
             e.target.reset();
             await refreshData();
             switchTab('Schools');
@@ -387,7 +400,7 @@ async function handleAddSchool(e) {
         }
     } catch (e) {
         console.error('Provisioning Error:', e);
-        alert(e.message);
+        showToast(e.message, 'error');
     } finally {
         showOverlay(false);
     }
@@ -438,7 +451,7 @@ async function handleUpdateSchool(e) {
         closeModal('editModal');
         await refreshData();
     } catch (e) {
-        alert(e.message);
+        showToast(e.message, 'error');
     } finally {
         showOverlay(false);
     }
@@ -449,7 +462,7 @@ async function handleUpdateSchool(e) {
  */
 async function toggleSchoolStatus(id, current) {
     const action = current === 'active' ? 'SUSPEND' : 'ACTIVATE';
-    if (!confirm(`Are you sure you want to ${action} ${id}?`)) return;
+    if (!await window.showConfirmModal({ title: 'Confirm Action', message: 'Are you sure you want to ' + action + ' ' + id + '?', icon: 'fa-exclamation-triangle', confirmText: action, danger: true })) return;
 
     try {
         showOverlay(true);
@@ -460,7 +473,7 @@ async function toggleSchoolStatus(id, current) {
         await logSuperActivity('STATUS', `${action} school: ${id}`);
         await refreshData();
     } catch (e) {
-        alert(e.message);
+        showToast(e.message, 'error');
     } finally {
         showOverlay(false);
     }
@@ -501,7 +514,7 @@ async function saveAppearance() {
 
     try {
         await db.collection('settings_super').doc('appearance').set({ name, accentColor: color });
-        alert('Platform appearance updated!');
+        showToast('Platform appearance updated!', 'success');
     } catch (e) {
         console.error(e);
     }
@@ -515,7 +528,7 @@ async function loadActivityLog() {
     try {
         const snap = await db.collection('logs_super').orderBy('timestamp', 'desc').limit(20).get();
         if (snap.empty) {
-            container.innerHTML = '<p class="text-slate-500 text-center">No audit logs found.</p>';
+            showEmptyState(container, { icon: 'fa-clipboard-list', message: 'No audit logs found.' });
             return;
         }
 

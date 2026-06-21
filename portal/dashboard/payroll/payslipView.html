@@ -1,0 +1,21 @@
+<section id="payslipViewSection" class="dashboard-section hidden">
+                <div class="header">
+                    <div>
+                        <h1><i class="fas fa-file-invoice text-primary"></i> Payslip View</h1>
+                        <p>Search and view individual employee payslips</p>
+                    </div>
+                </div>
+                <div class="card max-w-600 mx-auto p-2">
+                    <div class="form-group">
+                        <label>Select Employee</label>
+                        <select id="payslipStaffSelect" class="form-control" onchange="loadPayslipForStaff()">
+                            <option value="">-- Select Employee --</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Select Month</label>
+                        <input type="month" id="payslipMonth" class="form-control" onchange="loadPayslipForStaff()">
+                    </div>
+                </div>
+                <div id="payslipDisplayArea" class="mt-1-5"></div>
+            </section>

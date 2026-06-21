@@ -1,0 +1,96 @@
+<section id="demandReceiptSection" class="dashboard-section hidden">
+                    <div class="header">
+                        <h1>Demand Fee Receipt</h1>
+                        <p>Generate batch billing reminders for students</p>
+                    </div>
+
+                    <div class="card mt-1-5">
+                        <h3><i class="fas fa-file-invoice-dollar primary"></i> Student Demand Fee Receipt</h3>
+                        <div class="grid-4 gap-1-5 mt-1-25">
+                            <div class="form-group">
+                                <label>Session*</label>
+                                <select id="demandSessionSelect" class="form-control" onchange="loadDemandClasses()" title="Select Session"></select>
+                            </div>
+                            <div class="form-group">
+                                <label>Class*</label>
+                                <select id="demandClassSelect" class="form-control" onchange="loadDemandSections()" title="Select Class"></select>
+                            </div>
+                            <div class="form-group">
+                                <label>Section</label>
+                                <select id="demandSectionSelect" class="form-control" onchange="loadDemandStudents()" title="Select Section">
+                                    <option value="">All Sections</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Student (optional)</label>
+                                <select id="demandStudentSelect" class="form-control" title="Select Student">
+                                    <option value="">All Students</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>From Month</label>
+                                <select id="demandFromMonth" class="form-control" title="From month">
+                                    <option value="">Earliest</option>
+                                    <option value="0">January</option>
+                                    <option value="1">February</option>
+                                    <option value="2">March</option>
+                                    <option value="3">April</option>
+                                    <option value="4">May</option>
+                                    <option value="5">June</option>
+                                    <option value="6">July</option>
+                                    <option value="7">August</option>
+                                    <option value="8">September</option>
+                                    <option value="9">October</option>
+                                    <option value="10">November</option>
+                                    <option value="11">December</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Till Month*</label>
+                                <select id="demandTillMonth" class="form-control" title="Generate dues till this month">
+                                    <option value="0">January</option>
+                                    <option value="1">February</option>
+                                    <option value="2" selected>March</option>
+                                    <option value="3">April</option>
+                                    <option value="4">May</option>
+                                    <option value="5">June</option>
+                                    <option value="6">July</option>
+                                    <option value="7">August</option>
+                                    <option value="8">September</option>
+                                    <option value="9">October</option>
+                                    <option value="10">November</option>
+                                    <option value="11">December</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Due Date*</label>
+                                <input type="date" id="demandDueDate" class="form-control" title="Select Due Date" />
+                            </div>
+                        </div>
+
+                        <div class="flex gap-2 mt-1-5">
+                            <label class="flex align-center gap-0-5 checkbox-label">
+                                <input type="checkbox" id="demandIncludePrevious" checked />
+                                <span>All Previous Year Due Include</span>
+                            </label>
+                            <label class="flex align-center gap-0-5 checkbox-label">
+                                <input type="checkbox" id="demandCombineFees" />
+                                <span>Fee Detail Combined</span>
+                            </label>
+                        </div>
+
+                        <div class="mt-2 flex gap-1 justify-end">
+                            <button class="btn-portal btn-primary" onclick="generateBatchDemandReceipts()">
+                                <i class="fas fa-print"></i> Generate
+                            </button>
+                            <button class="btn-portal btn-secondary" onclick="printDemandReceipts()">
+                                <i class="fas fa-print"></i> Print
+                            </button>
+                            <button class="btn-portal btn-secondary" onclick="exportDemandPDF()">
+                                <i class="fas fa-file-pdf"></i> Download PDF
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="demandReceiptPrintContainer" style="display:none;"></div>
+                </section>

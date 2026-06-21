@@ -1,0 +1,113 @@
+<section id="assignHomeworkSection" class="dashboard-section card hidden">
+                    <div class="header mb-2">
+                        <div>
+                            <h1>Assign New Homework</h1>
+                            <p>Publish daily assignments and attachments for students</p>
+                        </div>
+                    </div>
+
+                    <form id="homeworkForm" onsubmit="handleHomeworkSubmit(event)">
+                        <div class="grid-cols-2-1 gap-2">
+                            <div class="space-y-6">
+                                <div class="form-group">
+                                    <label>Homework Title <span class="text-danger">*</span></label>
+                                    <input
+                                        type="text"
+                                        id="hw_title"
+                                        class="form-control"
+                                        placeholder="e.g. Mathematics - Algebra Exercise 2.1"
+                                        required
+                                        title="Homework Title"
+                                    />
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Detailed Description <span class="text-danger">*</span></label>
+                                    <textarea
+                                        id="hw_description"
+                                        class="form-control min-h-200"
+                                        placeholder="Write homework details here..."
+                                        required
+                                        title="Homework Description"
+                                    ></textarea>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Attachment (PDF/Image)</label>
+                                    <input
+                                        type="file"
+                                        id="hw_file"
+                                        class="form-control"
+                                        accept="image/*,application/pdf"
+                                        title="Select Attachment"
+                                    />
+                                    <p class="text-xs text-muted mt-0-5">
+                                        Optional: Upload worksheet or question paper
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="glass-card p-1-5 h-fit">
+                                <h3 class="mb-1-25 text-base">Target & Schedule</h3>
+
+                                <div class="form-group">
+                                    <label>Session</label>
+                                    <select
+                                        id="hw_sessionSelect"
+                                        class="form-control"
+                                        onchange="loadHomeworkClasses()"
+                                        required
+                                        title="Select Session"
+                                    ></select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Class</label>
+                                    <select
+                                        id="hw_classSelect"
+                                        class="form-control"
+                                        onchange="updateHomeworkSections()"
+                                        required
+                                        title="Select Class"
+                                    ></select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Section</label>
+                                    <select id="hw_sectionSelect" class="form-control" required title="Select Section">
+                                        <option value="All">All Sections</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Subject</label>
+                                    <select
+                                        id="hw_subjectSelect"
+                                        class="form-control"
+                                        required
+                                        title="Select Subject"
+                                    ></select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Deadline / For Date</label>
+                                    <input type="date" id="hw_date" class="form-control" title="Select Deadline Date" />
+                                </div>
+
+                                <div class="mt-2">
+                                    <button
+                                        type="submit"
+                                        id="hw_formSubmitBtn"
+                                        class="btn-portal btn-primary w-full"
+                                        title="Assign Homework"
+                                    >
+                                        <i class="fas fa-paper-plane"></i> Assign Homework
+                                    </button>
+                                    <button type="reset" class="btn-portal btn-ghost w-full mt-0-5" title="Reset Form">
+                                        Reset Form
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </section>

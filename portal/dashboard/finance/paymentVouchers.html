@@ -1,0 +1,27 @@
+<section id="paymentVouchersSection" class="dashboard-section hidden">
+                <div class="header">
+                    <div>
+                        <h1><i class="fas fa-money-bill-wave text-red"></i> Payment Vouchers</h1>
+                        <p>All outgoing payment records</p>
+                    </div>
+                    <button class="btn-portal btn-primary" onclick="openAddVoucherModal()">
+                        <i class="fas fa-plus"></i> New Payment
+                    </button>
+                </div>
+                <div class="table-container">
+                    <table class="portal-table">
+                        <thead>
+                            <tr>
+                                <th>Voucher #</th>
+                                <th>Date</th>
+                                <th>Paid To</th>
+                                <th>Amount</th>
+                                <th class="text-center">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="paymentVoucherTableBody">
+                            <tr><td colspan="5" class="text-center text-muted p-2">Loading payment vouchers...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>

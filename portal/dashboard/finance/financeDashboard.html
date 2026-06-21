@@ -1,0 +1,50 @@
+<section id="financeDashboardSection" class="dashboard-section hidden">
+                <div class="header">
+                    <div>
+                        <h1><i class="fas fa-chart-line text-primary"></i> Finance Dashboard</h1>
+                        <p>Overview of school finances, recent transactions, and key metrics</p>
+                    </div>
+                </div>
+                <div class="grid-4 gap-1-5 mb-2">
+                    <div class="card p-1-5 text-center">
+                        <div class="text-muted text-sm mb-0-5">Total Income</div>
+                        <div class="text-xl font-bold text-green" id="finDashIncome">\u20B90</div>
+                    </div>
+                    <div class="card p-1-5 text-center">
+                        <div class="text-muted text-sm mb-0-5">Total Expenses</div>
+                        <div class="text-xl font-bold text-red" id="finDashExpense">\u20B90</div>
+                    </div>
+                    <div class="card p-1-5 text-center">
+                        <div class="text-muted text-sm mb-0-5">Net Balance</div>
+                        <div class="text-xl font-bold text-primary" id="finDashBalance">\u20B90</div>
+                    </div>
+                    <div class="card p-1-5 text-center">
+                        <div class="text-muted text-sm mb-0-5">This Month Vouchers</div>
+                        <div class="text-xl font-bold" id="finDashVoucherCount">0</div>
+                    </div>
+                </div>
+                <div class="grid-2 gap-1-5">
+                    <div class="card p-1-5">
+                        <h3 class="mb-1"><i class="fas fa-clock text-primary"></i> Recent Vouchers</h3>
+                        <div class="table-container" style="max-height:300px;overflow-y:auto">
+                            <table class="portal-table">
+                                <thead><tr><th>#</th><th>Type</th><th>Date</th><th>Amount</th></tr></thead>
+                                <tbody id="finDashRecentVouchers">
+                                    <tr><td colspan="4" class="text-center text-muted">Loading...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card p-1-5">
+                        <h3 class="mb-1"><i class="fas fa-balance-scale text-primary"></i> Account Balances</h3>
+                        <div class="table-container" style="max-height:300px;overflow-y:auto">
+                            <table class="portal-table">
+                                <thead><tr><th>Account</th><th>Type</th><th class="text-right">Balance</th></tr></thead>
+                                <tbody id="finDashAccountBalances">
+                                    <tr><td colspan="3" class="text-center text-muted">Loading...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>

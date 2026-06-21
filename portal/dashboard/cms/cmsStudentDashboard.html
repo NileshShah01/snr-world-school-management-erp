@@ -1,0 +1,236 @@
+<section id="cmsStudentDashboardSection" class="dashboard-section hidden">
+                    <div class="bg-indigo-blue text-white p-2 border-radius-1 flex align-center gap-1-5 mb-2">
+                        <i class="fas fa-chalkboard text-3xl opacity-90"></i>
+                        <div>
+                            <h2 class="m-0 mb-0-5 text-2xl">Student Dashboard Control</h2>
+                            <p class="m-0 opacity-85 text-sm">
+                                Manage what students see when they log into their dashboard. Changes appear live
+                                immediately.
+                            </p>
+                        </div>
+                    </div>
+                    <form id="cmsStudentDashboardForm">
+                        <div class="card p-2 mb-1-5">
+                            <h3 class="mb-1-5 flex align-center gap-0-75">
+                                <i class="fas fa-bullhorn text-primary"></i> Exam Announcement Banner
+                            </h3>
+                            <div class="form-group">
+                                <label>Exam Heading (e.g., "Final Examination March, 2026")</label>
+                                <input
+                                    type="text"
+                                    id="cms_examHeading"
+                                    class="form-control text-base"
+                                    placeholder="Final Examination March, 2026"
+                                    title="Exam Heading"
+                                />
+                            </div>
+                            <div class="form-group">
+                                <label>Exam Notice / Additional Message</label>
+                                <textarea
+                                    id="cms_examNotice"
+                                    rows="3"
+                                    class="form-control"
+                                    placeholder="Example: Exams begin on March 23rd. Please carry your Admit Card. Arrive 30 mins early."
+                                    title="Exam Notice"
+                                ></textarea>
+                            </div>
+                        </div>
+
+                        <div class="card p-2 mb-1-5">
+                            <h3 class="mb-1-5 flex align-center gap-0-75">
+                                <i class="fas fa-toggle-on text-success"></i> Student Dashboard Modules
+                            </h3>
+                            <p class="text-xs text-muted mb-1-5">
+                                Toggle visibility of specific sections in the Student Portal Sidebar.
+                            </p>
+                            <div class="grid-auto-200 gap-1">
+                                <div
+                                    class="form-group flex align-center gap-0-75 bg-gray-light p-0-75 border-radius-0-5 border"
+                                >
+                                    <input
+                                        type="checkbox"
+                                        id="cms_showHomework"
+                                        class="w-18 h-18"
+                                        checked
+                                        title="Show Homework"
+                                    />
+                                    <label class="m-0 font-600">Homework Section</label>
+                                </div>
+                                <div
+                                    class="form-group flex align-center gap-0-75 bg-gray-light p-0-75 border-radius-0-5 border"
+                                >
+                                    <input
+                                        type="checkbox"
+                                        id="cms_showFees"
+                                        class="w-18 h-18"
+                                        checked
+                                        title="Show Fees"
+                                    />
+                                    <label class="m-0 font-600">Fees & Receipts</label>
+                                </div>
+                                <div
+                                    class="form-group flex align-center gap-0-75 bg-gray-light p-0-75 border-radius-0-5 border"
+                                >
+                                    <input
+                                        type="checkbox"
+                                        id="cms_showExams"
+                                        class="w-18 h-18"
+                                        checked
+                                        title="Show Exams"
+                                    />
+                                    <label class="m-0 font-600">Exams & Results</label>
+                                </div>
+                                <div
+                                    class="form-group flex align-center gap-0-75 bg-gray-light p-0-75 border-radius-0-5 border"
+                                >
+                                    <input
+                                        type="checkbox"
+                                        id="cms_showMaterials"
+                                        class="w-18 h-18"
+                                        checked
+                                        title="Show Question Papers"
+                                    />
+                                    <label class="m-0 font-600">Question Papers</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card p-2 mb-1-5">
+                            <h3 class="mb-1-5 flex align-center gap-0-75">
+                                <i class="fas fa-link text-indigo"></i> Important Links
+                            </h3>
+                            <p class="text-xs text-muted mb-1">
+                                Add helpful links (e.g. Video Lectures, External Portals) to the student dashboard home.
+                            </p>
+                            <div id="cmsImportanLinksList" class="flex flex-col gap-0-75 mb-1-5">
+                                <!-- Dynamic items -->
+                            </div>
+                            <button
+                                type="button"
+                                onclick="addCmsImportantLink()"
+                                class="btn-portal btn-ghost w-full border-dashed-2 bg-white-opacity-02"
+                                title="Add New Link"
+                            >
+                                <i class="fas fa-plus"></i> Add New Link
+                            </button>
+                        </div>
+
+                        <div class="card p-2 mb-1-5">
+                            <h3 class="mb-1-5 flex align-center gap-0-75">
+                                <i class="fas fa-home text-amber"></i> Homepage Widgets
+                            </h3>
+                            <div class="grid-2 gap-1">
+                                <div class="form-group flex align-center gap-1 bg-gray-light p-1 border-radius-0-5">
+                                    <input
+                                        type="checkbox"
+                                        id="cms_showAttendance"
+                                        class="w-20 h-20"
+                                        title="Show Attendance Analytics"
+                                    />
+                                    <label class="m-0 flex-1">Show Attendance Analytics</label>
+                                </div>
+                                <div class="form-group flex align-center gap-1 bg-gray-light p-1 border-radius-0-5">
+                                    <input
+                                        type="checkbox"
+                                        id="cms_showPrincipalMessage"
+                                        class="w-20 h-20"
+                                        title="Show Principal's Desk"
+                                    />
+                                    <label class="m-0 flex-1">Show Principal's Desk</label>
+                                </div>
+                            </div>
+                            <div class="form-group mt-1-5">
+                                <label>Principal's Daily Message</label>
+                                <textarea
+                                    id="cms_principalMessage"
+                                    rows="2"
+                                    class="form-control"
+                                    placeholder="Enter a message for students..."
+                                    title="Principal Message"
+                                ></textarea>
+                            </div>
+                        </div>
+
+                        <div class="sticky-bottom bg-white p-1-5 border-radius-1 shadow-sm border z-100">
+                            <button
+                                type="submit"
+                                class="btn-portal btn-primary w-full p-1 text-lg flex-center"
+                                title="Apply Selection & Save Global Config"
+                            >
+                                <i class="fas fa-cloud-upload-alt"></i> Apply Selection & Save Global Config
+                            </button>
+                        </div>
+                    </form>
+
+                    <!-- ATTENDANCE MANAGEMENT -->
+                    <div class="card p-2 mb-1-5">
+                        <h3 class="mb-1-5 flex align-center gap-0-75">
+                            <i class="fas fa-user-check text-amber" title="Student Attendance Control"></i> Student
+                            Attendance Control
+                        </h3>
+                        <p class="text-sm text-muted mb-1-5">
+                            Update a student's attendance percentage. This will reflect in their dashboard immediately.
+                        </p>
+
+                        <div class="bg-gray-light p-1-5 border-radius-0-75 border">
+                            <div class="grid-cols-2-1 gap-1 align-flex-end">
+                                <div class="form-group m-0">
+                                    <label>Search Student</label>
+                                    <div id="attendanceStudentSelect"></div>
+                                    <input type="hidden" id="att_studentId" />
+                                </div>
+                                <div class="grid-2 gap-1 align-flex-end">
+                                    <div class="form-group m-0">
+                                        <label>For Month</label>
+                                        <input
+                                            type="text"
+                                            id="att_month"
+                                            class="form-control w-full"
+                                            placeholder="YYYY-MM"
+                                            pattern="\d{4}-\d{2}"
+                                            title="Select Month (YYYY-MM)"
+                                        />
+                                    </div>
+                                    <div class="form-group m-0">
+                                        <label>Percentage (%)</label>
+                                        <input
+                                            type="number"
+                                            id="att_percent"
+                                            min="0"
+                                            max="100"
+                                            class="form-control w-full"
+                                            placeholder="85"
+                                            title="Attendance Percentage"
+                                        />
+                                    </div>
+                                </div>
+                                <button
+                                    onclick="updateStudentAttendance()"
+                                    class="btn-portal btn-primary h-42"
+                                    title="Update Attendance"
+                                >
+                                    <i class="fas fa-plus"></i> Update
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- PREVIEW CARD -->
+                    <div class="card p-2">
+                        <h3 class="mb-1"><i class="fas fa-eye text-slate-muted"></i> Live Preview</h3>
+                        <div
+                            id="examBannerPreview"
+                            class="bg-indigo-blue text-white p-1-25-2 border-radius-1 flex align-center gap-1-25"
+                        >
+                            <div class="text-3xl">📋</div>
+                            <div>
+                                <h2 id="previewTitle" class="text-lg font-800 m-0 mb-0-25">
+                                    Final Examination March, 2026
+                                </h2>
+                                <p id="previewNotice" class="text-sm m-0 text-white-opacity-80">
+                                    Exams begin on March 23rd. Please carry your Admit Card.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>

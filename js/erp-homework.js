@@ -186,8 +186,7 @@ async function loadHomeworkHistory() {
         const snap = await schoolData('homework').orderBy('timestamp', 'desc').limit(20).get();
 
         if (snap.empty) {
-            list.innerHTML =
-                '<p style="text-align:center; padding:2rem; color:var(--text-muted);">No homework history found.</p>';
+            showEmptyState(list, { icon: 'fa-history', message: 'No homework history found.' });
             return;
         }
 
@@ -232,7 +231,7 @@ async function loadHomeworkHistory() {
 }
 
 async function deleteHomework(id) {
-    if (!confirm('Are you sure you want to delete this homework?')) return;
+    if (!await window.showConfirmModal({ title: 'Delete Homework', message: 'Are you sure you want to delete this homework?', icon: 'fa-book-open', confirmText: 'Delete', danger: true })) return;
     try {
         showLoading(true);
         await schoolDoc('homework', id).delete();
@@ -269,7 +268,153 @@ async function editHomework(id) {
     }
 }
 
-// Hook into window
+async function initHomeworkGrading() {
+    _populateGradingFilters();
+    await loadHomeworkWithStats();
+}
+
+function _populateGradingFilters() {
+    const sel = document.getElementById('hwGradeSession');
+    if (sel && erpState.sessions) {
+        sel.innerHTML = '<option value="">All Sessions</option>' +
+            erpState.sessions.map(s => `<option value="${s.id}" ${s.active?'selected':''}>${s.name}</option>`).join('');
+    }
+    const clsSel = document.getElementById('hwGradeClass');
+    if (clsSel && erpState.classes) {
+        clsSel.innerHTML = '<option value="">All Classes</option>' +
+            erpState.classes.map(c => `<option value="${c.name}">${c.name}</option>`).join('');
+    }
+}
+
+async function loadHomeworkWithStats() {
+    const list = document.getElementById('gradeHomeworkList');
+    if (!list) return;
+    try {
+        list.innerHTML = '<div style="text-align:center;padding:2rem;"><i class="fas fa-spinner fa-spin"></i> Loading...</div>';
+        const sessFilter = document.getElementById('hwGradeSession')?.value;
+        const clsFilter = document.getElementById('hwGradeClass')?.value;
+        let snap = await schoolData('homework').orderBy('timestamp', 'desc').limit(50).get();
+        let docs = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+        if (sessFilter) docs = docs.filter(d => d.session === sessFilter || d.sessionId === sessFilter);
+        if (clsFilter) docs = docs.filter(d => d.class === clsFilter);
+        if (docs.length === 0) {
+            showEmptyState(list, { icon: 'fa-book-open', message: 'No homework found.' });
+            return;
+        }
+        for (const d of docs) {
+            const subSnap = await schoolData('homework').doc(d.id).collection('submissions').get();
+            d._totalSubmissions = subSnap.size;
+            d._gradedCount = subSnap.docs.filter(s => s.data().status === 'graded').length;
+        }
+        list.innerHTML = docs.map(d => {
+            const subInfo = d._totalSubmissions > 0
+                ? `<span style="font-size:0.8rem;color:var(--text-muted);">${d._gradedCount}/${d._totalSubmissions} graded</span>`
+                : '<span style="font-size:0.8rem;color:var(--text-muted);">No submissions</span>';
+            return `<div class="card" style="margin-bottom:0.75rem;border-left:4px solid ${d._totalSubmissions > 0 ? (d._gradedCount === d._totalSubmissions ? '#22c55e' : '#f59e0b') : '#6b7280'};cursor:pointer;" onclick="toggleSubmissionsPanel('${d.id}')">
+                <div style="display:flex;justify-content:space-between;align-items:center;">
+                    <div>
+                        <span class="badge" style="background:var(--bg-gray);">${escHtml(d.subject)}</span>
+                        <span class="badge" style="background:var(--primary);color:white;">${escHtml(d.class)} (${escHtml(d.section||'All')})</span>
+                        <h4 style="margin:0.25rem 0 0;">${escHtml(d.title)}</h4>
+                        ${subInfo}
+                    </div>
+                    <div><i class="fas fa-chevron-down" style="color:var(--text-muted);transition:transform 0.2s;"></i></div>
+                </div>
+                <div id="subPanel_${d.id}" class="hidden" style="margin-top:0.75rem;padding-top:0.75rem;border-top:1px solid var(--border-color);">
+                    <div style="text-align:center;padding:1rem;"><i class="fas fa-spinner fa-spin"></i></div>
+                </div>
+            </div>`;
+        }).join('');
+    } catch (e) {
+        console.error('Error loading homework stats:', e);
+        list.innerHTML = '<p style="text-align:center;color:var(--danger);padding:2rem;">Error loading homework.</p>';
+    }
+}
+
+async function toggleSubmissionsPanel(homeworkId) {
+    const panel = document.getElementById('subPanel_' + homeworkId);
+    if (!panel) return;
+    const isHidden = panel.classList.contains('hidden');
+    document.querySelectorAll('[id^="subPanel_"]').forEach(p => { if (p.id !== 'subPanel_' + homeworkId) p.classList.add('hidden'); });
+    if (isHidden) {
+        panel.classList.remove('hidden');
+        await loadSubmissionsForHomework(homeworkId);
+    } else {
+        panel.classList.add('hidden');
+    }
+}
+
+async function loadSubmissionsForHomework(homeworkId) {
+    const panel = document.getElementById('subPanel_' + homeworkId);
+    if (!panel) return;
+    try {
+        const subSnap = await schoolData('homework').doc(homeworkId).collection('submissions').orderBy('submittedAt', 'desc').get();
+        if (subSnap.empty) {
+            showEmptyState(panel, { icon: 'fa-inbox', message: 'No submissions yet.' });
+            return;
+        }
+        panel.innerHTML = subSnap.docs.map(sd => {
+            const s = sd.data();
+            const statusBadge = s.status === 'graded'
+                ? `<span class="badge" style="background:#22c55e;color:white;">Graded: ${s.marks ?? '-'}</span>`
+                : `<span class="badge" style="background:#f59e0b;color:white;">Pending</span>`;
+            const subDate = s.submittedAt ? new Date(s.submittedAt.seconds * 1000).toLocaleString() : 'N/A';
+            const fileLink = s.fileData ? `<a href="${s.fileData}" target="_blank" class="btn-portal btn-ghost btn-sm"><i class="fas fa-file"></i> View</a>` : '';
+            const feedbackHtml = s.feedback ? `<p style="font-size:0.8rem;color:var(--text-muted);margin-top:0.25rem;"><strong>Feedback:</strong> ${escHtml(s.feedback)}</p>` : '';
+            const gradeForm = s.status === 'graded' ? '' : `
+                <div style="margin-top:0.5rem;display:flex;gap:0.5rem;align-items:center;flex-wrap:wrap;">
+                    <input type="number" id="marks_${homeworkId}_${sd.id}" placeholder="Marks" style="width:80px;padding:4px 8px;font-size:0.8rem;border:1px solid var(--border-color);border-radius:0.375rem;" />
+                    <input type="text" id="feedback_${homeworkId}_${sd.id}" placeholder="Feedback" style="flex:1;min-width:120px;padding:4px 8px;font-size:0.8rem;border:1px solid var(--border-color);border-radius:0.375rem;" />
+                    <button onclick="saveGrade('${homeworkId}','${sd.id}')" class="btn-portal btn-primary btn-sm"><i class="fas fa-check"></i> Grade</button>
+                </div>`;
+            return `<div style="padding:0.5rem 0;border-bottom:1px solid var(--border-color);">
+                <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.5rem;">
+                    <span style="font-weight:600;">${escHtml(s.studentName || sd.id)}</span>
+                    ${statusBadge}
+                    <span style="font-size:0.75rem;color:var(--text-muted);">${subDate}</span>
+                    ${fileLink}
+                </div>
+                ${s.textResponse ? `<p style="font-size:0.85rem;margin:0.25rem 0 0;color:var(--text-main);">${escHtml(s.textResponse)}</p>` : ''}
+                ${feedbackHtml}
+                ${gradeForm}
+            </div>`;
+        }).join('');
+    } catch (e) {
+        console.error('Error loading submissions:', e);
+        panel.innerHTML = '<p style="color:var(--danger);padding:0.5rem;">Error loading submissions.</p>';
+    }
+}
+
+async function saveGrade(homeworkId, submissionId) {
+    const marks = document.getElementById(`marks_${homeworkId}_${submissionId}`)?.value;
+    const feedback = document.getElementById(`feedback_${homeworkId}_${submissionId}`)?.value;
+    if (marks === '' || marks === null) { showToast('Please enter marks', 'error'); return; }
+    try {
+        showLoading(true);
+        await schoolData('homework').doc(homeworkId).collection('submissions').doc(submissionId).update({
+            marks: parseFloat(marks),
+            feedback: feedback || '',
+            status: 'graded',
+            gradedAt: firebase.firestore.FieldValue.serverTimestamp(),
+            gradedBy: window.currentUserId || 'admin'
+        });
+        showToast('Grade saved');
+        await loadSubmissionsForHomework(homeworkId);
+        await loadHomeworkWithStats();
+    } catch (e) {
+        showToast('Error saving grade: ' + e.message, 'error');
+    } finally {
+        showLoading(false);
+    }
+}
+
+function escHtml(str) {
+    if (!str) return '';
+    const d = document.createElement('div');
+    d.textContent = str;
+    return d.innerHTML;
+}
+
 window.initERPHomework = initERPHomework;
 window.loadHomeworkClasses = loadHomeworkClasses;
 window.updateHomeworkSections = updateHomeworkSections;
@@ -277,3 +422,7 @@ window.handleHomeworkSubmit = handleHomeworkSubmit;
 window.deleteHomework = deleteHomework;
 window.editHomework = editHomework;
 window.loadHomeworkHistory = loadHomeworkHistory;
+window.initHomeworkGrading = initHomeworkGrading;
+window.loadHomeworkWithStats = loadHomeworkWithStats;
+window.toggleSubmissionsPanel = toggleSubmissionsPanel;
+window.saveGrade = saveGrade;

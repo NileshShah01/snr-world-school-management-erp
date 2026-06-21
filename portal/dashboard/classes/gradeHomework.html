@@ -1,0 +1,19 @@
+<section id="gradeHomeworkSection" class="dashboard-section card hidden">
+    <div class="header mb-2">
+        <div>
+            <h1>Grade Homework</h1>
+            <p>Review and grade student homework submissions</p>
+        </div>
+    </div>
+    <div class="glass-card p-1-5 mb-2 grid-2 gap-1 align-flex-end" style="max-width:500px;">
+        <div class="form-group mb-0">
+            <label>Session</label>
+            <select id="hwGradeSession" class="form-control" onchange="initHomeworkGrading()" title="Filter Session"></select>
+        </div>
+        <div class="form-group mb-0">
+            <label>Class</label>
+            <select id="hwGradeClass" class="form-control" onchange="initHomeworkGrading()" title="Filter Class"></select>
+        </div>
+    </div>
+    <div id="gradeHomeworkList"></div>
+</section>

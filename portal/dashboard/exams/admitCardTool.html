@@ -1,0 +1,27 @@
+<section id="admitCardToolSection" class="dashboard-section card hidden">
+                    <div class="header mb-2">
+                        <h1>Admit Card Generator</h1>
+                        <p>Generate and printable hall tickets for students</p>
+                    </div>
+                    <div class="glass-card p-1-5 mb-2 grid-4 gap-1 align-flex-end">
+                        <div class="form-group mb-0">
+                            <label>Session</label>
+                            <select id="admitSessionSelect" class="form-control" title="Select Session"></select>
+                        </div>
+                        <div class="form-group mb-0">
+                            <label>Class</label>
+                            <select id="admitClassSelect" class="form-control" title="Select Class"></select>
+                        </div>
+                        <div class="form-group mb-0">
+                            <label>Exam Term</label>
+                            <select id="admitExamSelect" class="form-control" title="Select Exam Term"></select>
+                        </div>
+                        <button class="btn-portal btn-primary h-42" onclick="generateHallTicketsForTool()">
+                            <i class="fas fa-id-card mr-1"></i> Generate PDF
+                        </button>
+                    </div>
+                    <div class="glass-card p-2 text-center text-muted">
+                        <i class="fas fa-id-card text-4xl opacity-20 block mb-1"></i>
+                        <p>Select Session, Class and Exam to generate printable admit cards</p>
+                    </div>
+                </section>

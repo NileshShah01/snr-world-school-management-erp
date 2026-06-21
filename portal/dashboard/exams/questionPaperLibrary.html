@@ -1,0 +1,77 @@
+<section id="questionPaperLibrarySection" class="dashboard-section card hidden">
+                    <div class="header mb-2">
+                        <div>
+                            <h1>Question Paper Library</h1>
+                            <p>Manage and publish examination papers to students</p>
+                        </div>
+                        <div class="flex gap-1">
+                            <a href="question-formatter/index.html" target="_blank" class="btn-portal btn-ghost">
+                                <i class="fas fa-magic mr-1"></i> AI Formatter
+                            </a>
+                            <button
+                                class="btn-portal btn-primary"
+                                onclick="showSection('addManualPaper')"
+                                title="Manual Upload"
+                            >
+                                <i class="fas fa-plus mr-1"></i> Manual Upload
+                            </button>
+                        </div>
+                    </div>
+                    <div class="glass-card p-1-5 mb-2 grid-4 gap-1">
+                        <div class="form-group mb-0">
+                            <label>Session</label>
+                            <select
+                                id="erp_qpSessionFilter"
+                                class="form-control"
+                                onchange="loadQuestionPapers()"
+                                title="Select Session"
+                            ></select>
+                        </div>
+                        <div class="form-group mb-0">
+                            <label>Exam</label>
+                            <select
+                                id="erp_qpExamFilter"
+                                class="form-control"
+                                onchange="loadQuestionPapers()"
+                                title="Select Exam"
+                            ></select>
+                        </div>
+                        <div class="form-group mb-0">
+                            <label>Class</label>
+                            <select
+                                id="erp_qpClassFilter"
+                                class="form-control"
+                                onchange="loadQuestionPapers()"
+                                title="Select Class"
+                            ></select>
+                        </div>
+                        <div class="form-group mb-0">
+                            <label>Subject</label>
+                            <select
+                                id="erp_qpSubjectFilter"
+                                class="form-control"
+                                onchange="loadQuestionPapers()"
+                                title="Select Subject"
+                            ></select>
+                        </div>
+                    </div>
+                    <div class="table-container">
+                        <div class="table-responsive">
+                            <table class="portal-table">
+                                <thead>
+                                    <tr>
+                                        <th>Subject</th>
+                                        <th>Class</th>
+                                        <th>Term</th>
+                                        <th>Author</th>
+                                        <th>Status</th>
+                                        <th class="text-right">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="erp_paperLibraryTableBody">
+                                    <!-- Populated via JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>

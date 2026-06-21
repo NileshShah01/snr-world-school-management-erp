@@ -1,0 +1,45 @@
+<section id="addClassDetailsSection" class="dashboard-section hidden">
+                    <div class="header">
+                        <div>
+                            <h1>Class Details & Sections</h1>
+                            <p>Manage sections and specific details for each class</p>
+                        </div>
+                    </div>
+                    <div class="card p-1-5">
+                        <div class="flex align-flex-end gap-1 flex-wrap">
+                            <div class="form-group min-w-200">
+                                <label>Select Class</label>
+                                <select
+                                    id="detailsClassSelect"
+                                    class="form-control"
+                                    onchange="loadClassDetails()"
+                                    title="Select Class"
+                                ></select>
+                            </div>
+                            <div class="form-group min-w-200">
+                                <label>Add Section (e.g., B)</label>
+                                <input
+                                    type="text"
+                                    id="newSectionInput"
+                                    class="form-control"
+                                    placeholder="A, B, C..."
+                                    title="New Section Name"
+                                />
+                            </div>
+                            <button
+                                onclick="handleAddSection()"
+                                class="btn-portal btn-primary mb-1-25"
+                                title="Add Section"
+                            >
+                                <i class="fas fa-plus"></i> Add Section
+                            </button>
+                        </div>
+
+                        <div class="mt-2">
+                            <h3>Active Sections</h3>
+                            <div id="activeSectionsList" class="flex flex-wrap gap-0-75 mt-1">
+                                <!-- Dynamic section tags -->
+                            </div>
+                        </div>
+                    </div>
+                </section>

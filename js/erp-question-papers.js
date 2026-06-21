@@ -108,7 +108,7 @@ async function handleManualPaperUpload(event) {
     const subjectId = document.getElementById('erp_uploadQpSubject').value;
 
     if (!session || !exam || !className || !subjectId) {
-        alert('Please fill all details before uploading.');
+        showToast('Please fill all details before uploading.', 'error');
         return;
     }
 
@@ -178,7 +178,7 @@ async function togglePublishPaper(id, status) {
 }
 
 async function deletePaper(id) {
-    if (!confirm('Are you sure you want to archive this paper? It will be removed from the portal.')) return;
+    if (!await window.showConfirmModal({ title: 'Archive Paper', message: 'Are you sure you want to archive this paper? It will be removed from the portal.', icon: 'fa-archive', confirmText: 'Archive', danger: true })) return;
     try {
         await schoolDoc('questionPapers', id).update({
             status: 'archived',
@@ -220,10 +220,10 @@ async function viewPaper(id) {
             // Base64 data URI is opened directly in a new tab.
             const href = content.fileData || content.fileUrl;
             if (!href) throw new Error('No file data for this paper.');
-            window.open(href, '_blank');
+            window.open(href, '_blank', 'noopener,noreferrer');
         } else {
             localStorage.setItem('editPaperData', JSON.stringify(content.paperData));
-            window.open('question-formatter/index.html?edit=true&paperId=' + id, '_blank');
+            window.open('question-formatter/index.html?edit=true&paperId=' + id, '_blank', 'noopener,noreferrer');
         }
     } catch (e) {
         showToast(e.message, 'error');

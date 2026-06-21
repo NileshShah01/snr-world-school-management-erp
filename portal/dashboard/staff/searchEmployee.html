@@ -1,0 +1,52 @@
+<section id="searchEmployeeSection" class="dashboard-section" style="display: none">
+                <div class="section-header">
+                    <h1>Employee Directory</h1>
+                </div>
+                <div class="card p-20">
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" id="empSearchInput" placeholder="Search by name, phone, or ID..." oninput="filterEmployeeList()" />
+                        </div>
+                        <div class="col-md-3">
+                            <select class="form-control" id="empFilterDesignation" onchange="filterEmployeeList()">
+                                <option value="">All Designations</option>
+                                <option value="Principal">Principal</option>
+                                <option value="PGT">PGT</option>
+                                <option value="TGT">TGT</option>
+                                <option value="PRT">PRT</option>
+                                <option value="NTT">NTT</option>
+                                <option value="Accountant">Accountant</option>
+                                <option value="AdminStaff">Admin Staff</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <select class="form-control" id="empFilterStatus" onchange="filterEmployeeList()">
+                                <option value="">All Status</option>
+                                <option value="active">Active</option>
+                                <option value="onLeave">On Leave</option>
+                                <option value="resigned">Resigned</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <button class="btn btn-primary w-100" onclick="loadEmployeeList()"><i class="fas fa-sync"></i> Refresh</button>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Employee ID</th>
+                                    <th>Designation</th>
+                                    <th>Phone</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="employeeListBody">
+                                <tr><td colspan="6" class="text-center text-muted py-4">No employees loaded. Click Refresh.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>

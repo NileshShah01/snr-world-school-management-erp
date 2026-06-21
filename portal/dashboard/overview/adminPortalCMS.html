@@ -1,0 +1,104 @@
+<section id="adminPortalCMSSection" class="dashboard-section hidden card">
+                    <div class="header">
+                        <div>
+                            <h1>Admin Portal CMS</h1>
+                            <p>Customize your dashboard experience and school branding</p>
+                        </div>
+                        <button class="btn-portal btn-primary" onclick="saveAdminPortalCMS()">
+                            <i class="fas fa-save"></i> Save Changes
+                        </button>
+                    </div>
+
+                    <div class="grid-2 gap-2 mt-2">
+                        <!-- Branding Column -->
+                        <div class="card p-1-5">
+                            <h3 class="mb-1-5 border-bottom pb-0-75">
+                                <i class="fas fa-brush primary"></i> Branding & Identity
+                            </h3>
+
+                            <div class="form-group mb-1-5">
+                                <label class="mb-0-5 d-block font-600">School Logo</label>
+                                <div
+                                    class="flex-center flex-column p-1 border-dashed border-radius-12 bg-light mb-1 preview-container-logo"
+                                >
+                                    <img
+                                        id="cms_logoPreview"
+                                        data-snr-media="ApexPublicSchoolLogo.png"
+                                        class="preview-img-logo"
+                                        alt="Logo Preview"
+                                    />
+                                    <p id="cms_logoStatus" class="text-xs text-muted mt-0-5">Current Logo</p>
+                                </div>
+                                <input
+                                    type="file"
+                                    id="cms_logoInput"
+                                    class="form-control"
+                                    accept="image/*"
+                                    onchange="previewImage(this, 'cms_logoPreview')"
+                                    title="Upload School Logo"
+                                />
+                                <p class="text-xs text-muted mt-0-5 italic">Recommended: Transparent PNG, 200x200px</p>
+                            </div>
+
+                            <div class="form-group mb-1-5">
+                                <label class="mb-0-5 d-block font-600">Principal's Signature</label>
+                                <div
+                                    class="flex-center flex-column p-1 border-dashed border-radius-12 bg-light mb-1 preview-container-signature"
+                                >
+                                    <img
+                                        id="cms_signaturePreview"
+                                        data-snr-media="favicon.png"
+                                        class="preview-img-signature"
+                                        alt="Signature Preview"
+                                    />
+                                    <p id="cms_signatureStatus" class="text-xs text-muted mt-0-5">Current Signature</p>
+                                </div>
+                                <input
+                                    type="file"
+                                    id="cms_signatureInput"
+                                    class="form-control"
+                                    accept="image/*"
+                                    onchange="previewImage(this, 'cms_signaturePreview')"
+                                    title="Upload Principal's Signature"
+                                />
+                                <p class="text-xs text-muted mt-0-5 italic">
+                                    Used for automated report cards and ID cards
+                                </p>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="flex align-center gap-0-75 cursor-pointer">
+                                    <input
+                                        type="checkbox"
+                                        id="cms_showSchoolName"
+                                        checked
+                                        class="checkbox-custom-size"
+                                    />
+                                    <span class="font-600">Show School Name in Header</span>
+                                </label>
+                                <p class="text-xs text-muted mt-0-5 ml-1-5">
+                                    Enable to display school name next to logo in sidebar and header.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Quick Links Column -->
+                        <div class="card p-1-5">
+                            <h3 class="mb-1-5 border-bottom pb-0-75">
+                                <i class="fas fa-link primary"></i> Dashboard Quick Links
+                            </h3>
+                            <p class="text-sm text-muted mb-1-5">
+                                Manage the cards appearing on your Dashboard Home page.
+                            </p>
+
+                            <div id="cms_quickLinksList" class="mb-1-5 scrollable-list-max-400">
+                                <!-- Quick links will be rendered here -->
+                                <div class="text-center p-2 opacity-50">Loading quick links...</div>
+                            </div>
+
+                            <button class="btn-portal btn-ghost w-100" onclick="addQuickLinkRow()">
+                                <i class="fas fa-plus"></i> Add New Quick Link
+                            </button>
+                        </div>
+                    </div>
+                </section>

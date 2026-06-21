@@ -1,0 +1,329 @@
+<section id="addStudentSection" class="dashboard-section card hidden">
+                    <h3 id="formTitle">Add New Student</h3>
+                    <form id="studentForm" class="mt-2">
+                        <!-- Photo Upload -->
+                        <div class="flex align-center gap-2 mb-2 p-1-5 bg-secondary border-radius-0-75">
+                            <div
+                                id="photoPreview"
+                                class="avatar-100 bg-gray-light border-3-primary flex-shrink-0 flex align-center justify-center overflow-hidden student-photo-avatar-lg"
+                            >
+                                <img
+                                    id="proto_preview_img"
+                                    src=""
+                                    alt="Student Preview"
+                                    class="hidden student-photo-avatar-img"
+                                />
+                                <i id="photo_placeholder_icon" class="fas fa-user text-2xl text-muted"></i>
+                            </div>
+                            <div>
+                                <p class="font-700 mb-0-5">Student Photo</p>
+                                <p class="text-xs text-muted mb-0-75">
+                                    Upload a clear photo of the student (JPG/PNG, max 2MB)
+                                </p>
+                                <label
+                                    for="student_photo"
+                                    class="btn-portal btn-ghost cursor-pointer flex align-center gap-0-5"
+                                    title="Choose Photo"
+                                >
+                                    <i class="fas fa-camera"></i> Choose Photo
+                                </label>
+                                <input
+                                    type="file"
+                                    id="student_photo"
+                                    accept="image/*"
+                                    class="hidden"
+                                    onchange="previewPhoto(event)"
+                                />
+                                <span id="photoFileName" class="text-xs text-muted ml-0-75"></span>
+                            </div>
+                        </div>
+
+                        <p class="text-xs text-muted mb-1 font-700 text-uppercase letter-spacing-05">
+                            Mandatory Fields <span class="text-red">*</span>
+                        </p>
+                        <div class="grid-3 gap-1-25 mb-1-5">
+                            <div class="form-group">
+                                <label>Full Name <span class="text-red">*</span></label>
+                                <input
+                                    type="text"
+                                    id="student_name"
+                                    required
+                                    placeholder="Student's full name"
+                                    class="form-control"
+                                    title="Full Name"
+                                />
+                            </div>
+                            <div class="form-group">
+                                <label>Father's Name <span class="text-red">*</span></label>
+                                <input
+                                    type="text"
+                                    id="student_father"
+                                    required
+                                    placeholder="Father's full name"
+                                    class="form-control"
+                                    title="Father's Name"
+                                />
+                            </div>
+                            <div class="form-group">
+                                <label>Mobile Number <span class="text-red">*</span></label>
+                                <input
+                                    type="text"
+                                    id="student_phone"
+                                    required
+                                    placeholder="10-digit mobile number"
+                                    maxlength="10"
+                                    class="form-control"
+                                    title="Mobile Number"
+                                />
+                            </div>
+                        </div>
+
+                        <p class="text-xs text-muted mb-1 font-700 text-uppercase letter-spacing-05">
+                            Optional Details
+                        </p>
+                        <div class="grid-3 gap-1-25 mb-1-5">
+                            <div class="form-group">
+                                <label>Session <span class="text-red">*</span></label>
+                                <select
+                                    id="student_session"
+                                    required
+                                    onchange="loadClassesForRegistration()"
+                                    class="form-control"
+                                    title="Select Session"
+                                >
+                                    <option value="">Select Session</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Student ID</label>
+                                <input
+                                    type="text"
+                                    id="student_id"
+                                    placeholder="Auto-generated (1000+)"
+                                    readonly
+                                    class="bg-gray-light cursor-not-allowed form-control"
+                                    title="Student ID"
+                                />
+                            </div>
+                            <div class="form-group">
+                                <label>Class <span class="text-red">*</span></label>
+                                <select
+                                    id="student_class"
+                                    required
+                                    onchange="updateRegistrationSections()"
+                                    class="form-control"
+                                    title="Select Class"
+                                >
+                                    <option value="">Select Class</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Section <span class="text-red">*</span></label>
+                                <select id="student_section" required class="form-control" title="Select Section">
+                                    <option value="">Select Class First</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Roll No</label>
+                                <input type="text" id="student_roll_no" class="form-control" title="Roll No" />
+                            </div>
+                            <div class="form-group">
+                                <label>Reg No</label>
+                                <input type="text" id="student_reg_no" class="form-control" title="Reg No" />
+                            </div>
+                            <div class="form-group">
+                                <label>Join Date</label>
+                                <input type="date" id="student_join_date" class="form-control" title="Join Date" />
+                            </div>
+                        </div>
+
+                        <p class="text-xs text-muted mb-1 font-700 text-uppercase letter-spacing-05">
+                            Personal & Identity
+                        </p>
+                        <div class="grid-3 gap-1-25 mb-1-5">
+                            <div class="form-group">
+                                <label>Date of Birth</label>
+                                <input type="date" id="student_dob" class="form-control" title="Date of Birth" />
+                            </div>
+                            <div class="form-group">
+                                <label>Gender</label>
+                                <select id="student_gender" class="form-control" title="Select Gender">
+                                    <option value="">Select</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Student Aadhar</label>
+                                <input
+                                    type="text"
+                                    id="student_aadhar"
+                                    maxlength="12"
+                                    class="form-control"
+                                    title="Student Aadhar"
+                                />
+                            </div>
+                            <div class="form-group">
+                                <label>Religion</label>
+                                <select id="student_religion" class="form-control" title="Religion">
+                                    <option value="">Select Religion</option>
+                                    <option value="Hindu">Hindu</option>
+                                    <option value="Muslim">Muslim</option>
+                                    <option value="Buddhist">Buddhist</option>
+                                    <option value="Sikh">Sikh</option>
+                                    <option value="Jain">Jain</option>
+                                    <option value="Christian">Christian</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Category</label>
+                                <select id="student_category" class="form-control" title="Category">
+                                    <option value="">Select Category</option>
+                                    <option value="General">General Category (Unreserved)</option>
+                                    <option value="OBC">Other Backward Class (OBC/BC)</option>
+                                    <option value="EBC">Extremely Backward Class (EBC)</option>
+                                    <option value="SC">Scheduled Castes (SC)</option>
+                                    <option value="ST">Scheduled Tribes (ST)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Caste</label>
+                                <input type="text" id="student_caste" class="form-control" title="Caste" />
+                            </div>
+                            <div class="form-group">
+                                <label>PEN</label>
+                                <input type="text" id="student_pen" class="form-control" title="PEN" />
+                            </div>
+                            <div class="form-group">
+                                <label>Smart Card No</label>
+                                <input
+                                    type="text"
+                                    id="student_smart_card_no"
+                                    class="form-control"
+                                    title="Smart Card No"
+                                />
+                            </div>
+                        </div>
+
+                        <p class="text-xs text-muted mb-1 font-700 text-uppercase letter-spacing-05">Family Details</p>
+                        <div class="grid-3 gap-1-25 mb-1-5">
+                            <div class="form-group">
+                                <label>Mother's Name</label>
+                                <input type="text" id="student_mother" class="form-control" title="Mother's Name" />
+                            </div>
+                            <div class="form-group">
+                                <label>Father's Aadhar</label>
+                                <input
+                                    type="text"
+                                    id="student_father_aadhar"
+                                    maxlength="12"
+                                    class="form-control"
+                                    title="Father's Aadhar"
+                                />
+                            </div>
+                            <div class="form-group">
+                                <label>Mother's Aadhar</label>
+                                <input
+                                    type="text"
+                                    id="student_mother_aadhar"
+                                    maxlength="12"
+                                    class="form-control"
+                                    title="Mother's Aadhar"
+                                />
+                            </div>
+                            <div class="form-group">
+                                <label>Guardian Name</label>
+                                <input
+                                    type="text"
+                                    id="student_guardian_name"
+                                    class="form-control"
+                                    title="Guardian Name"
+                                />
+                            </div>
+                            <div class="form-group">
+                                <label>Guardian Phone</label>
+                                <input
+                                    type="text"
+                                    id="student_guardian_phone"
+                                    class="form-control"
+                                    title="Guardian Phone"
+                                />
+                            </div>
+                        </div>
+
+                        <p class="text-xs text-muted mb-1 font-700 text-uppercase letter-spacing-05">
+                            Address & Logistics
+                        </p>
+                        <div class="grid-2 gap-1-25 mb-1-5">
+                            <div class="form-group">
+                                <label>Current Address</label>
+                                <textarea
+                                    id="student_address"
+                                    rows="2"
+                                    class="form-control"
+                                    title="Current Address"
+                                ></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Permanent Address</label>
+                                <textarea
+                                    id="student_permanent_address"
+                                    rows="2"
+                                    class="form-control"
+                                    title="Permanent Address"
+                                ></textarea>
+                            </div>
+                        </div>
+                        <div class="grid-3 gap-1-25 mb-1-5">
+                            <div class="form-group">
+                                <label>City</label>
+                                <input type="text" id="student_city" class="form-control" title="City" />
+                            </div>
+                            <div class="form-group">
+                                <label>Hostel Facility</label>
+                                <select id="student_hostel" class="form-control" title="Hostel Facility">
+                                    <option value="No">No</option>
+                                    <option value="Yes">Yes</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Transport Facility</label>
+                                <select id="student_transport" class="form-control" title="Transport Facility">
+                                    <option value="No">No</option>
+                                    <option value="Yes">Yes</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mb-1-5 p-1-5 bg-secondary border-radius-0-75">
+                            <label class="flex align-start gap-0-75 cursor-pointer">
+                                <input type="checkbox" id="consentCheckbox" style="margin-top:0.25rem;" />
+                                <span class="text-sm">
+                                    I consent to the collection and processing of my child's data as per the
+                                    <a href="/privacy.html" target="_blank" class="text-primary">Privacy Policy</a>.
+                                    <span class="text-red">*</span>
+                                </span>
+                            </label>
+                        </div>
+
+                        <div id="uploadProgress" class="hidden mb-1">
+                            <p class="text-sm primary font-600">
+                                <i class="fas fa-spinner fa-spin"></i> Uploading photo...
+                            </p>
+                        </div>
+                        <div class="flex gap-1">
+                            <button type="submit" class="btn-portal btn-primary" id="saveBtn" title="Save Student">
+                                Save Student
+                            </button>
+                            <button
+                                type="button"
+                                class="btn-portal btn-ghost"
+                                onclick="showSection('studentList')"
+                                title="Cancel"
+                            >
+                                Cancel
+                            </button>
+                        </div>
+                    </form>
+                </section>

@@ -1,0 +1,71 @@
+<section id="addSessionSection" class="dashboard-section hidden">
+                    <div class="header">
+                        <div>
+                            <h1>Academic Sessions</h1>
+                            <p>Create and manage school academic years</p>
+                        </div>
+                    </div>
+                    <div class="grid-cols-1-2 gap-1-5">
+                        <div class="card">
+                            <h3>New Session</h3>
+                            <form id="addSessionForm" onsubmit="handleSessionSubmit(event)" class="mt-1">
+                                <div class="form-group">
+                                    <label>Session Name (e.g., 2024-25)</label>
+                                    <input
+                                        type="text"
+                                        id="sessionNameInput"
+                                        class="form-control"
+                                        placeholder="2024-25"
+                                        required
+                                        title="Session Name"
+                                    />
+                                </div>
+                                <div class="form-group">
+                                    <label>Start Date</label>
+                                    <input
+                                        type="date"
+                                        id="sessionStartDate"
+                                        class="form-control"
+                                        required
+                                        title="Start Date"
+                                    />
+                                </div>
+                                <div class="form-group">
+                                    <label>End Date</label>
+                                    <input
+                                        type="date"
+                                        id="sessionEndDate"
+                                        class="form-control"
+                                        required
+                                        title="End Date"
+                                    />
+                                </div>
+                                <div class="flex align-center gap-0-5 mb-1">
+                                    <input type="checkbox" id="sessionIsActive" title="Set as Active Session" />
+                                    <label for="sessionIsActive" class="m-0">Set as Active Session</label>
+                                </div>
+                                <button type="submit" class="btn-portal btn-primary w-full" title="Create Session">
+                                    <i class="fas fa-plus"></i> Create Session
+                                </button>
+                            </form>
+                        </div>
+                        <div class="card">
+                            <h3>Existing Sessions</h3>
+                            <div class="table-responsive mt-1">
+                                <table class="portal-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Session Name</th>
+                                            <th>Date Range</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="sessionsTableBody">
+                                        <!-- Dynamic content -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </section>

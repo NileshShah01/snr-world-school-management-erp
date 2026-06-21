@@ -1,0 +1,41 @@
+<section id="mapTransportSection" class="dashboard-section card hidden">
+                    <div class="header mb-2">
+                        <div>
+                            <h1>Assign Student Transport</h1>
+                            <p>Map students to specific routes and pickup points</p>
+                        </div>
+                    </div>
+
+                    <div class="glass-card p-2 max-w-600 mx-auto bg-secondary border-radius-1">
+                        <form id="mapTransportForm" onsubmit="ERPTransport.assignTransport(event)">
+                            <div class="form-group">
+                                <label>Select Student</label>
+                                <div id="map_student_select"></div>
+                                <input type="hidden" id="trans_student_id" />
+                            </div>
+                            <div class="form-group">
+                                <label>Select Route</label>
+                                <select
+                                    id="trans_route_select"
+                                    class="form-control"
+                                    onchange="ERPTransport.loadStops()"
+                                    required
+                                    title="Select Transport Route"
+                                ></select>
+                            </div>
+                            <div class="form-group">
+                                <label>Select Pickup Stop</label>
+                                <select id="trans_stop_select" class="form-control" required title="Select Pickup Stop">
+                                    <option value="">Select Route First</option>
+                                </select>
+                            </div>
+                            <button
+                                type="submit"
+                                class="btn-portal btn-primary w-full h-50 mt-2 text-lg border-radius-12"
+                                title="Map Transport"
+                            >
+                                <i class="fas fa-link"></i> Map Transport
+                            </button>
+                        </form>
+                    </div>
+                </section>

@@ -1,0 +1,23 @@
+<section id="employeeIdPrintSection" class="dashboard-section hidden">
+                    <div class="header">
+                        <div>
+                            <h1>Employee ID Card Generator</h1>
+                            <p>Generate printable identity cards for staff members</p>
+                        </div>
+                    </div>
+                    <div class="card max-w-600 mx-auto">
+                        <div class="form-group">
+                            <label>Select Employee</label>
+                            <select id="empIdSelect" class="form-control" title="Select Employee">
+                                <option value="">-- Select Employee --</option>
+                            </select>
+                        </div>
+                        <button
+                            onclick="generateEmployeeIdCard()"
+                            class="btn-portal btn-primary w-full mt-1-5"
+                            title="Generate & Print ID Card"
+                        >
+                            <i class="fas fa-print"></i> Generate & Print ID Card
+                        </button>
+                    </div>
+                </section>

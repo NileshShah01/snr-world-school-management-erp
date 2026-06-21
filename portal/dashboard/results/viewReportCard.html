@@ -1,0 +1,97 @@
+<section id="viewReportCardSection" class="dashboard-section card hidden">
+                    <div class="header mb-2">
+                        <h1>Report Card Preview</h1>
+                        <p>Generate and verify individual student report cards</p>
+                    </div>
+                    <div class="glass-card p-1-5 mb-2 grid-auto-180 gap-1 align-flex-end">
+                        <div class="form-group mb-0">
+                            <label>Session</label>
+                            <select
+                                id="rcPreviewSession"
+                                class="form-control"
+                                onchange="loadRcClasses()"
+                                title="Select Session"
+                            ></select>
+                        </div>
+                        <div class="form-group mb-0">
+                            <label>Class</label>
+                            <select
+                                id="rcPreviewClass"
+                                class="form-control"
+                                onchange="loadRcSections()"
+                                title="Select Class"
+                            ></select>
+                        </div>
+                        <div class="form-group mb-0">
+                            <label>Section</label>
+                            <select
+                                id="rcPreviewSection"
+                                class="form-control"
+                                onchange="loadRcStudents()"
+                                title="Select Section"
+                            ></select>
+                        </div>
+                        <div class="form-group mb-0">
+                            <label>Student</label>
+                            <select id="rcPreviewStudentSelect" class="form-control" title="Select Student (Optional)">
+                                <option value="All">All Students</option>
+                            </select>
+                        </div>
+                        <div class="form-group mb-0">
+                            <label>Exam Term</label>
+                            <select id="rcPreviewExam" class="form-control" title="Select Exam"></select>
+                        </div>
+                        <div class="form-group mb-0">
+                            <label>Format / Template</label>
+                            <select
+                                id="rcPreviewFormat"
+                                class="form-control"
+                                title="Select Format"
+                                onchange="previewSingleReportCard(false)"
+                            >
+                                <option value="premium">Premium Glassmorphic</option>
+                                <option value="himalayan">Standard Himalayan</option>
+                                <option value="classic">Classic Academic</option>
+                            </select>
+                        </div>
+                        <div class="flex gap-0-5">
+                            <button class="btn-portal btn-primary h-42 flex-1" onclick="previewSingleReportCard(false)">
+                                <i class="fas fa-eye mr-1"></i> Preview
+                            </button>
+                            <button
+                                class="btn-portal btn-secondary h-42"
+                                onclick="previewSingleReportCard(true)"
+                                title="Download PDF"
+                            >
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="grid-2-1 gap-1-5">
+                        <div class="card">
+                            <h3 class="mb-1-25"><i class="fas fa-info-circle primary"></i> How to use</h3>
+                            <div class="text-sm text-muted">
+                                <p class="mb-1">1. Select <b>Session</b>, <b>Class</b>, and <b>Section</b>.</p>
+                                <p class="mb-1">
+                                    2. Choose a specific <b>Student</b> for a real-data preview, or leave as "All" for a
+                                    template sample.
+                                </p>
+                                <p class="mb-1">3. Select the <b>Exam Term</b> and preferred <b>Format</b>.</p>
+                                <p>4. Click <b>Generate Preview</b> to view the result in the viewport.</p>
+                            </div>
+                            <div class="mt-2 text-center">
+                                <button class="btn btn-outline-primary btn-sm" onclick="downloadPreviewPdf()">
+                                    <i class="fas fa-download mr-1"></i> Download Sample PDF
+                                </button>
+                            </div>
+                        </div>
+
+                        <div id="rcPreviewContainer" class="preview-viewport card rc-preview-viewport">
+                            <div class="text-center text-muted">
+                                <i class="fas fa-file-pdf text-4xl opacity-20 block mb-1"></i>
+                                <p>Select criteria to generate preview</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>

@@ -28,27 +28,146 @@ service cloud.firestore {
     }
 
     function belongsToSchool(schoolId) {
-      return isSignedIn() && schoolId == request.auth.token.schoolId;
+      return isSignedIn() && (
+        schoolId == request.auth.token.schoolId ||
+        (exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.schoolId == schoolId)
+      );
+    }
+
+    function isStudent() {
+      return isSignedIn() &&
+        exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'student';
+    }
+
+    function isParent() {
+      return isSignedIn() &&
+        exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'parent';
+    }
+
+    // Prevents self-elevation: true if any privilege field is changing
+    function isRoleChanging() {
+      return (request.resource.data.keys().hasAny(['role', 'admin', 'permissions', 'schoolId', 'designationId', 'groups', 'isActive']))
+        && (
+          (request.resource.data.keys().hasAny(['role']) && resource.data.role != request.resource.data.role)
+          || (request.resource.data.keys().hasAny(['admin']) && resource.data.admin != request.resource.data.admin)
+          || (request.resource.data.keys().hasAny(['permissions']) && resource.data.permissions != request.resource.data.permissions)
+          || (request.resource.data.keys().hasAny(['schoolId']) && resource.data.schoolId != request.resource.data.schoolId)
+          || (request.resource.data.keys().hasAny(['designationId']) && resource.data.designationId != request.resource.data.designationId)
+          || (request.resource.data.keys().hasAny(['groups']) && resource.data.groups != request.resource.data.groups)
+          || (request.resource.data.keys().hasAny(['isActive']) && resource.data.isActive != request.resource.data.isActive)
+        );
+    }
+
+    // ===== Data Validation Helpers =====
+    function isString(v) { return v is string; }
+    function isNumber(v) { return v is number; }
+    function isBool(v) { return v is bool; }
+    function isTimestamp(v) { return v is timestamp; }
+    function isMap(v) { return v is map; }
+    function isList(v) { return v is list; }
+
+    function validStudentData() {
+      return isString(request.resource.data.name)
+        && isString(request.resource.data.class)
+        && request.resource.data.name.size() > 0;
+    }
+
+    function validFeeData() {
+      return isNumber(request.resource.data.amount)
+        && request.resource.data.amount > 0;
+    }
+
+    function validInquiryData() {
+      return isString(request.resource.data.parent);
     }
 
     // ===== School Hierarchy (multi-tenant root) =====
     match /schools/{schoolId} {
+      // School profile doc is public (name, logo, address for website display)
       allow read: if true;
       allow create, update: if isSuperAdmin();
       allow delete: if isSuperAdmin();
 
-      // Tenant isolation: writes only by members of this school
-      match /{allSubcollections=**} {
+      // Media library: public read (logos, photos, banners), admin write.
+      match /media/{mediaId} {
         allow read: if true;
+        allow write: if isAdmin() && belongsToSchool(schoolId);
+      }
+
+      // TODO Phase-1: Restrict parentUsers read to admin-only AFTER migrating parent login to Firebase Auth
+      // Currently public read is required for the legacy login flow (student-auth.js:116)
+      // which queries parentUsers by username before the parent is authenticated.
+      // Until migration: plaintext passwords are at risk. PRIORITY: Phase-1 task.
+      match /parentUsers/{docId} {
+        allow read: if true;
+        allow create: if isAdmin() && belongsToSchool(schoolId);
+        allow update: if isAdmin() && belongsToSchool(schoolId);
+        allow delete: if isAdmin() && belongsToSchool(schoolId);
+      }
+
+      // Public inquiry form: anyone can submit, admin can manage
+      match /inquiries/{docId} {
+        allow create: if true && validInquiryData();
+        allow read, update, delete: if isAdmin() && belongsToSchool(schoolId);
+      }
+
+      // TODO Phase-1: Restrict student reads per-user (admin reads all, student reads own, parent reads linked children)
+      // Currently requires only isSignedIn() because student login (student-auth.js:53) queries by phone pre-auth
+      // and parent login (student-auth.js:177) queries linked students by doc ID post-auth.
+      // Phase-1 will restructure login to use Firebase Auth FIRST, then read with authenticated tokens.
+      match /students/{docId} {
+        allow read: if isSignedIn() && belongsToSchool(schoolId);
+        allow create: if isAdmin() && belongsToSchool(schoolId) && validStudentData();
+        allow update: if isAdmin() && belongsToSchool(schoolId);
+        allow delete: if isAdmin() && belongsToSchool(schoolId);
+      }
+
+      // Data Subject Requests — admin-only (DPDP Act 2023)
+      match /dsrRequests/{docId} {
+        allow read, write: if isAdmin() && belongsToSchool(schoolId);
+      }
+      match /auditLog/{docId} {
+        allow create: if isSignedIn() && belongsToSchool(schoolId);
+        allow read: if isAdmin() && belongsToSchool(schoolId);
+        allow update, delete: if isAdmin() && belongsToSchool(schoolId);
+      }
+
+      // Fees: validate amount and required fields (consistent with catch-all role check)
+      match /fees/{docId} {
+        allow read: if (isAdmin() || isStudent() || isParent()) && belongsToSchool(schoolId);
+        allow create: if isAdmin() && belongsToSchool(schoolId) && validFeeData();
+        allow update: if isAdmin() && belongsToSchool(schoolId);
+        allow delete: if isAdmin() && belongsToSchool(schoolId);
+      }
+
+      // Razorpay payments: written by Cloud Functions (admin SDK, bypasses rules),
+      // readable by admin, student, parent
+      match /payments/{docId} {
+        allow read: if (isAdmin() || isStudent() || isParent()) && belongsToSchool(schoolId);
+        allow create, update, delete: if false;  // Cloud Functions only (admin SDK)
+      }
+
+      // Tenant isolation: signed-in members only (students/parents allow read too)
+      match /{subcollection}/{docId} {
+        allow read: if (isAdmin() || isStudent() || isParent()) && belongsToSchool(schoolId);
         allow write: if isAdmin() && belongsToSchool(schoolId);
       }
     }
 
     // ===== User profiles =====
+    // Self-update blocked for role fields to prevent self-elevation (G-SEC-02)
     match /users/{userId} {
       allow read: if isSignedIn() && (request.auth.uid == userId || isAdmin() || isSuperAdmin());
-      allow create: if isSignedIn() && request.auth.uid == userId;
-      allow update: if isSignedIn() && (request.auth.uid == userId || isAdmin() || isSuperAdmin());
+      // Admin can create user docs for students/parents (Firebase Auth migration)
+      allow create: if isSignedIn() && (request.auth.uid == userId || isAdmin() || isSuperAdmin());
+      allow update: if isSignedIn() && (
+        (request.auth.uid == userId && !isRoleChanging()) ||
+        isAdmin() ||
+        isSuperAdmin()
+      );
       allow delete: if isSuperAdmin();
     }
 
@@ -57,48 +176,58 @@ service cloud.firestore {
     }
 
     // ===== Legacy compat layer (top-level collections) =====
-    // Reads: public (website depends on this).
-    // Writes: admin only.
-    match /sessions/{docId}        { allow read: if true; allow write: if isAdmin(); }
-    match /classes/{docId}         { allow read: if true; allow write: if isAdmin(); }
-    match /students/{docId}        { allow read: if true; allow write: if isAdmin(); }
-    match /marks/{docId}           { allow read: if true; allow write: if isAdmin(); }
-    match /counters/{docId}        { allow read: if true; allow write: if isAdmin(); }
-    match /gradingRules/{docId}    { allow read: if true; allow write: if isAdmin(); }
-    match /exams/{docId}           { allow read: if true; allow write: if isAdmin(); }
-    match /schedules/{docId}       { allow read: if true; allow write: if isAdmin(); }
-    match /publications/{docId}    { allow read: if true; allow write: if isAdmin(); }
-    match /remarks/{docId}         { allow read: if true; allow write: if isAdmin(); }
-    match /exam_attendance/{docId} { allow read: if true; allow write: if isAdmin(); }
-    match /non_subject_marks/{docId} { allow read: if true; allow write: if isAdmin(); }
+    // Migrating to school subcollections — keep read open for backward compat
+    match /sessions/{docId}        { allow read: if true;   allow write: if isAdmin(); }
+    match /classes/{docId}         { allow read: if true;   allow write: if isAdmin(); }
+    match /counters/{docId}        { allow read: if isSignedIn(); allow write: if isAdmin(); }
+    // PII-restricted (require admin — student/parent dashboards need Firebase Auth)
+    match /students/{docId}        { allow read: if isAdmin(); allow write: if isAdmin(); }
+    match /marks/{docId}           { allow read: if isAdmin(); allow write: if isAdmin(); }
+    match /gradingRules/{docId}    { allow read: if isAdmin(); allow write: if isAdmin(); }
+    match /exams/{docId}           { allow read: if isAdmin(); allow write: if isAdmin(); }
+    match /schedules/{docId}       { allow read: if isAdmin(); allow write: if isAdmin(); }
+    match /publications/{docId}    { allow read: if isAdmin(); allow write: if isAdmin(); }
+    match /remarks/{docId}         { allow read: if isAdmin(); allow write: if isAdmin(); }
+    match /exam_attendance/{docId} { allow read: if isAdmin(); allow write: if isAdmin(); }
+    match /non_subject_marks/{docId} { allow read: if isAdmin(); allow write: if isAdmin(); }
 
-    // ===== CMS / Website content =====
-    match /notices/{docId}         { allow read: if true; allow write: if isAdmin(); }
-    match /reports/{docId}         { allow read: if true; allow write: if isAdmin(); }
-    match /admitcards/{docId}      { allow read: if true; allow write: if isAdmin(); }
-    match /settings/{docId}        { allow read: if true; allow write: if isAdmin(); }
-    match /events/{docId}          { allow read: if true; allow write: if isAdmin(); }
-    match /achievements/{docId}    { allow read: if true; allow write: if isAdmin(); }
-    match /testimonials/{docId}    { allow read: if true; allow write: if isAdmin(); }
-    match /holidays/{docId}        { allow read: if true; allow write: if isAdmin(); }
-    match /gallery/{docId}         { allow read: if true; allow write: if isAdmin(); }
-    match /staff/{docId}           { allow read: if true; allow write: if isAdmin(); }
-    match /timetables/{docId}      { allow read: if true; allow write: if isAdmin(); }
-    match /fees/{docId}            { allow read: if true; allow write: if isAdmin(); }
+    // ===== CMS / Website content (public — marketing site) =====
+    match /notices/{docId}         { allow read: if true;   allow write: if isAdmin(); }
+    match /settings/{docId}        { allow read: if true;   allow write: if isAdmin(); }
+    match /events/{docId}          { allow read: if true;   allow write: if isAdmin(); }
+    match /achievements/{docId}    { allow read: if true;   allow write: if isAdmin(); }
+    match /testimonials/{docId}    { allow read: if true;   allow write: if isAdmin(); }
+    match /holidays/{docId}        { allow read: if true;   allow write: if isAdmin(); }
+    match /gallery/{docId}         { allow read: if true;   allow write: if isAdmin(); }
+    match /staff/{docId}           { allow read: if true;   allow write: if isAdmin(); }
+    match /fees/{docId}            { allow read: if true;   allow write: if isAdmin(); }
+    // Restricted (internal — admin only)
+    match /reports/{docId}         { allow read: if isAdmin(); allow write: if isAdmin(); }
+    match /admitcards/{docId}      { allow read: if isAdmin(); allow write: if isAdmin(); }
+    match /timetables/{docId}      { allow read: if isAdmin(); allow write: if isAdmin(); }
 
-    // website_content: was public-write (line 51), now admin-only writes
+    // website_content: admin-only writes
     match /website_content/{docId} { allow read: if true; allow write: if isAdmin(); }
 
-    // Public contact form: intentionally public-write
+    // Public contact form: intentionally public-write (validated)
     match /inquiries/{docId} {
-      allow create: if true;
+      allow create: if true && validInquiryData();
       allow read, update, delete: if isAdmin();
+    }
+
+    // Platform demo requests: public can submit, super-admin can manage
+    match /demoRequests/{docId} {
+      allow create: if true && request.resource.data.keys().hasAny(['name', 'email']);
+      allow read, update, delete: if isSuperAdmin();
     }
 
     // SaaS / platform (super-admin only)
     match /saas_policy/{docId}     { allow read: if true; allow write: if isSuperAdmin(); }
     match /subscriptions/{docId}   { allow read: if isSuperAdmin(); allow write: if isSuperAdmin(); }
     match /tenants/{docId}         { allow read, write: if isSuperAdmin(); }
+
+    // Platform counters (super-admin only, used for global student ID and atomic counters)
+    match /platformCounters/{docId} { allow read, write: if isSuperAdmin(); }
 
     // ===== Global fallback (deny by default) =====
     match /{document=**} {

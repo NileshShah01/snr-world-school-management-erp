@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Inquiry | <span data-school-field="schoolName">School</span></title>
+        <meta
+            name="description"
+            content="Submit an admission inquiry for <span data-school-field="schoolName">School</span>. Enquire about admissions, academics, and facilities."
+        />
+        <meta property="og:title" content="Inquiry | <span data-school-field="schoolName">School</span>" />
+        <meta property="og:description" content="Submit an admission inquiry. Enquire about admissions, academics and facilities." />
+        <meta
+            property="og:image"
+            content="https://nileshshah01.github.io/Apex-public-school-test-01/images/site-preview.jpg"
+        />
+        <meta property="og:url" content="https://nileshshah01.github.io/Apex-public-school-test-01/inquiry.html" />
+        <link rel="icon" data-snr-favicon="favicon.png" href="data:," />
+
+        <link rel="stylesheet" href="/style.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+            rel="stylesheet"
+        />
+
+        <style>
+            body {
+                background: var(--bg-gray);
+                color: var(--text-main);
+            }
+
+            .page-header {
+                text-align: center;
+                padding: 5rem 2rem;
+                background: var(--glass-bg);
+                -webkit-backdrop-filter: blur(10px);
+                backdrop-filter: blur(10px);
+                margin-bottom: 2rem;
+            }
+
+            .page-header h1 {
+                font-size: 3rem;
+                font-weight: 800;
+                color: var(--primary);
+            }
+
+            .section {
+                max-width: 1100px;
+                margin: auto;
+                padding: 50px 20px;
+                background: rgba(255, 255, 255, 0.95);
+                border-radius: 6px;
+                margin-bottom: 30px;
+            }
+
+            .section-title {
+                text-align: center;
+                font-size: 2.25rem;
+                font-weight: 700;
+                color: var(--primary);
+                margin-bottom: 2.5rem;
+            }
+
+            .form-container {
+                max-width: 800px;
+                margin: 0 auto;
+                background: var(--white);
+                padding: 3rem;
+                border-radius: 1.5rem;
+                box-shadow: var(--shadow-lg);
+            }
+
+            .form-group {
+                margin-bottom: 1.5rem;
+            }
+
+            .form-group label {
+                display: block;
+                margin-bottom: 0.5rem;
+                font-weight: 600;
+                color: var(--text-main);
+            }
+
+            .form-control {
+                width: 100%;
+                padding: 1rem;
+                border: 1px solid var(--border);
+                border-radius: 0.75rem;
+                font-size: 1rem;
+                transition: all 0.3s ease;
+                background: var(--bg-gray);
+            }
+
+            .form-control:focus {
+                outline: none;
+                border-color: var(--primary);
+                background: var(--white);
+                box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.1);
+            }
+
+            select.form-control {
+                cursor: pointer;
+            }
+
+            .btn-submit {
+                width: 100%;
+                padding: 1.25rem;
+                background: var(--primary);
+                color: var(--white);
+                border: none;
+                border-radius: 0.75rem;
+                font-size: 1.1rem;
+                font-weight: 700;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 0.75rem;
+            }
+
+            .btn-submit:hover {
+                background: var(--secondary);
+                transform: translateY(-2px);
+                box-shadow: var(--shadow);
+            }
+
+            .btn-submit:disabled {
+                opacity: 0.7;
+                cursor: not-allowed;
+                transform: none;
+            }
+
+            .map-wrapper {
+                padding: 1rem;
+            }
+
+            .map-wrapper iframe {
+                width: 100%;
+                height: 400px;
+                border: 0;
+                border-radius: 0.75rem;
+            }
+        </style>
+    </head>
+
+    <body>
+        <header id="header" role="banner"></header>
+
+        <section class="page-header">
+            <h1 data-i18n="inquiry.page_title">Inquiry <span data-school-field="schoolName">School</span></h1>
+            <p data-school-field="schoolLocation">Loading…</p>
+        </section>
+
+        <section class="reveal">
+            <h2 class="section-title" data-i18n="inquiry.title">Submit an Inquiry</h2>
+            <div class="form-container">
+                <form id="inquiryForm" novalidate>
+                    <div class="grid gap-md mb-3">
+                        <div class="form-group mb-0">
+                            <label data-i18n="inquiry.parent_name">Parent Name <span class="text-secondary">*</span></label>
+                            <input
+                                type="text"
+                                id="inq_parentName"
+                                class="form-control"
+                                required
+                                data-i18n-attr="placeholder:inquiry.parent_name|title:inquiry.parent_name"
+                                placeholder="Parent's full name"
+                                title="Parent Name"
+                            />
+                        </div>
+                        <div class="form-group mb-0">
+                            <label data-i18n="inquiry.student_name">Student Name <span class="text-secondary">*</span></label>
+                            <input
+                                type="text"
+                                id="inq_studentName"
+                                class="form-control"
+                                required
+                                data-i18n-attr="placeholder:inquiry.student_name|title:inquiry.student_name"
+                                placeholder="Student's full name"
+                                title="Student Name"
+                            />
+                        </div>
+                    </div>
+
+                    <div class="grid gap-md mb-3">
+                        <div class="form-group mb-0">
+                            <label data-i18n="inquiry.class_sought">Class Sought <span class="text-secondary">*</span></label>
+                            <select
+                                id="inq_class"
+                                class="form-control"
+                                required
+                                data-i18n-attr="title:inquiry.class_sought"
+                                title="Select Class"
+                            >
+                                <option value="" data-i18n="inquiry.select_class">— Select Class —</option>
+                                <option value="Play Group">Play Group</option>
+                                <option value="Nursery">Nursery</option>
+                                <option value="LKG">LKG</option>
+                                <option value="UKG">UKG</option>
+                                <option value="Class 1">Class 1</option>
+                                <option value="Class 2">Class 2</option>
+                                <option value="Class 3">Class 3</option>
+                                <option value="Class 4">Class 4</option>
+                                <option value="Class 5">Class 5</option>
+                                <option value="Class 6">Class 6</option>
+                                <option value="Class 7">Class 7</option>
+                                <option value="Class 8">Class 8</option>
+                            </select>
+                        </div>
+                        <div class="form-group mb-0">
+                            <label data-i18n="inquiry.mobile">Mobile Number <span class="text-secondary">*</span></label>
+                            <input
+                                type="tel"
+                                id="inq_mobile"
+                                class="form-control"
+                                required
+                                maxlength="10"
+                                data-i18n-attr="placeholder:inquiry.mobile|title:inquiry.mobile"
+                                placeholder="10-digit mobile number"
+                                title="10-digit Mobile Number"
+                            />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label data-i18n="inquiry.email">Email</label>
+                        <input
+                            type="email"
+                            id="inq_email"
+                            class="form-control"
+                            data-i18n-attr="placeholder:inquiry.email|title:inquiry.email"
+                            placeholder="your@email.com (optional)"
+                            title="Email Address"
+                        />
+                    </div>
+
+                    <div class="form-group">
+                        <label data-i18n="inquiry.message">Message <span class="text-secondary">*</span></label>
+                        <textarea
+                            id="inq_message"
+                            class="form-control"
+                            required
+                            rows="4"
+                            data-i18n-attr="placeholder:inquiry.message|title:inquiry.message"
+                            placeholder="Your inquiry or question"
+                            title="Inquiry Message"
+                        ></textarea>
+                    </div>
+
+                    <input type="hidden" id="inq_source" value="website" />
+
+                    <button type="submit" class="btn-submit" title="Submit your inquiry">
+                        <i class="fa-solid fa-paper-plane"></i>
+                        <span data-i18n="inquiry.submit">Submit Inquiry</span>
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <section class="reveal">
+            <h2 class="section-title" data-i18n="inquiry.find_us">Find Us</h2>
+            <div class="form-container map-wrapper">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3620.019!2d85.0!3d24.0!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjTCsDAwJzAwLjAiTiA4NcKwMDAnMDAuMCJF!5e0!3m2!1sen!2sin!4v1"
+                    allowfullscreen=""
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"
+                    title="School Location on Google Maps"
+                ></iframe>
+            </div>
+        </section>
+
+        <footer id="footer" role="contentinfo"></footer>
+
+        <div id="floating-button"></div>
+
+        <script defer src="/script.js?v=1.4"></script>
+
+        <script defer src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+        <script defer src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+        <script defer src="/js/firebase-config.js?v=1.4"></script>
+        <script defer src="/js/app-check.js?v=1.0"></script>
+        <script defer src="/js/auth-guard.js?v=1.0"></script>
+        <script defer src="/js/cms-settings.js?v=1.4"></script>
+        <script defer src="/js/media-loader.js?v=1.0"></script>
+        <script defer src="/js/i18n.js"></script>
+        <script defer src="/js/rate-limiter.js?v=1.0"></script>
+        <script defer src="/js/image-storage.js?v=1.0"></script>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                document.getElementById('inquiryForm')?.addEventListener('submit', async function (e) {
+                e.preventDefault();
+                const btn = this.querySelector('button[type="submit"]');
+                const t = (window.SNR_I18N && window.SNR_I18N.t) || function (k, fb) { return fb || k; };
+
+                const parentName = document.getElementById('inq_parentName').value.trim();
+                const studentName = document.getElementById('inq_studentName').value.trim();
+                const classSought = document.getElementById('inq_class').value;
+                const mobile = document.getElementById('inq_mobile').value.trim();
+                const email = document.getElementById('inq_email').value.trim();
+                const message = document.getElementById('inq_message').value.trim();
+
+                if (mobile.length !== 10 || isNaN(mobile)) {
+                    showToast(t('inquiry.err_mobile', 'Please enter a valid 10-digit mobile number.'), 'error');
+                    return;
+                }
+
+                const limiter = (window.SNR_RATE_LIMITERS && window.SNR_RATE_LIMITERS.inquiry) || null;
+                if (limiter) {
+                    const r = limiter.check('inquiry:' + mobile);
+                    if (!r.allowed) {
+                        showToast(
+                            t('inquiry.err_rate', 'Too many submissions. Please wait a minute and try again.') +
+                            ' (' + limiter.formatRetryAfter(r.retryAfterMs) + ')',
+                            'error'
+                        );
+                        return;
+                    }
+                }
+
+                btn.disabled = true;
+                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> ' + t('inquiry.sending', 'Submitting...');
+
+                try {
+                    await schoolData('inquiries').add({
+                        schoolId: CURRENT_SCHOOL_ID,
+                        parentName: parentName,
+                        studentName: studentName,
+                        classSought: classSought,
+                        mobile: mobile,
+                        email: email || '',
+                        message: message,
+                        source: 'website',
+                        status: 'new',
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    });
+
+                    if (limiter) limiter.reset('inquiry:' + mobile);
+                    showToast(t('inquiry.sent_ok', 'Inquiry submitted successfully! We will contact you soon.'), 'success');
+                    this.reset();
+                } catch (err) {
+                    console.error('Inquiry submission failed:', err);
+                    if (limiter) limiter.allow('inquiry:' + mobile);
+                    showToast(t('inquiry.err_send', 'Failed to submit inquiry. Please try again or call us.'), 'error');
+                } finally {
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> ' + t('inquiry.submit', 'Submit Inquiry');
+                }
+            });
+            });
+        </script>
+    </body>
+</html>

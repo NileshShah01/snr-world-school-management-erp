@@ -1,0 +1,44 @@
+<section id="publishExamScheduleSection" class="dashboard-section card hidden">
+                    <div class="header mb-2">
+                        <h1>Publish Exam Schedules</h1>
+                        <p>Control the visibility of exam timetables in the Student Portal</p>
+                    </div>
+                    <div class="glass-card p-1-5 mb-2">
+                        <div class="grid-2 gap-1 align-flex-end">
+                            <div class="form-group mb-0">
+                                <label>Session</label>
+                                <select
+                                    id="publishSchedSessionSelect"
+                                    class="form-control"
+                                    onchange="loadPublishScheduleStatus()"
+                                    title="Filter by Session"
+                                ></select>
+                            </div>
+                            <div class="form-group mb-0">
+                                <label>Exam Term</label>
+                                <select
+                                    id="publishSchedExamSelect"
+                                    class="form-control"
+                                    onchange="loadPublishScheduleStatus()"
+                                    title="Select Exam Term"
+                                ></select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="glass-card p-0 overflow-hidden">
+                        <div class="table-responsive">
+                            <table class="portal-table">
+                                <thead>
+                                    <tr>
+                                        <th>Class Name</th>
+                                        <th>Schedule Status</th>
+                                        <th class="text-right">Portal Visibility</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="publishSchedTableBody">
+                                    <!-- Populated via JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>

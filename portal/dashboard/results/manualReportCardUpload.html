@@ -1,0 +1,107 @@
+<section
+                    id="manualReportCardUploadSection"
+                    class="dashboard-section hidden glass-card p-3 border-radius-2"
+                >
+                    <div class="text-center mb-3">
+                        <div class="icon-box bg-indigo-opacity-10 text-indigo mx-auto mb-1-5 icon-box-xl-rounded">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                        </div>
+                        <h2 class="text-secondary text-3xl font-800 mb-0-5">Manual Report Card Upload</h2>
+                        <p class="text-muted max-w-600 mx-auto">
+                            Upload student-specific PDF report cards for students to download from their portal.
+                        </p>
+                    </div>
+
+                    <div class="card p-2-5">
+                        <div class="grid-auto-200 gap-1-25">
+                            <div class="form-group">
+                                <label>Session</label>
+                                <select id="mrcu_session" class="form-control" title="Select Academic Session"></select>
+                            </div>
+                            <div class="form-group">
+                                <label>Class</label>
+                                <select
+                                    id="mrcu_class"
+                                    onchange="loadMrcuStudents()"
+                                    class="form-control"
+                                    title="Select Class Name"
+                                >
+                                    <option value="">Select Session First</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Assessment Term</label>
+                                <select id="mrcu_exam" class="form-control" title="Select Examination Term"></select>
+                            </div>
+                        </div>
+
+                        <div class="form-group mt-1-5">
+                            <label>Select Student</label>
+                            <div
+                                id="mrcu_studentContainer"
+                                class="p-1 border border-radius-0-5 bg-white-opacity-50 min-h-100 overflow-auto"
+                            >
+                                <p class="text-muted text-sm italic">Select a class to see students...</p>
+                            </div>
+                            <input type="hidden" id="mrcu_studentId" />
+                        </div>
+
+                        <div class="grid-2-col gap-1-5 mt-1-5 align-center">
+                            <div class="form-group">
+                                <label>Select Report Card (PDF)</label>
+                                <div class="flex gap-1 align-center">
+                                    <input
+                                        type="file"
+                                        id="mrcu_file"
+                                        accept=".pdf"
+                                        class="hidden"
+                                        onchange="updateFileName('mrcu_file', 'mrcu_fileStatus')"
+                                    />
+                                    <label
+                                        for="mrcu_file"
+                                        class="btn-portal bg-indigo text-white cursor-pointer flex-1 text-center py-0-8"
+                                    >
+                                        <i class="fas fa-file-pdf"></i> Choose PDF File
+                                    </label>
+                                    <div id="mrcu_fileStatus" class="text-sm font-600 text-indigo truncate max-w-200">
+                                        No file chosen
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Visibility Status</label>
+                                <div class="flex gap-1 align-center mt-0-5">
+                                    <label class="switch">
+                                        <input
+                                            type="checkbox"
+                                            id="mrcu_published"
+                                            checked
+                                            title="Publish Immediately"
+                                        />
+                                        <span class="slider round"></span>
+                                    </label>
+                                    <span class="text-sm font-600">Publish Immediately</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="text-center mt-2-5">
+                            <button
+                                onclick="handleManualUpload()"
+                                class="btn-portal btn-primary p-1-5 w-100 shadow-lg btn-rounded-12"
+                            >
+                                <i class="fas fa-cloud-upload-alt"></i> Upload & Link to Student Portal
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="mrcu_uploadProgress" class="hidden mt-2 p-1-5 bg-white border-radius-1 shadow-sm">
+                        <div class="flex flex-between mb-0-5">
+                            <span class="text-sm font-600">Uploading...</span>
+                            <span id="mrcu_percent" class="text-sm font-800 text-primary">0%</span>
+                        </div>
+                        <div class="h-8 bg-slate-light border-radius-full overflow-hidden">
+                            <div id="mrcu_progressBar" class="h-100 bg-primary transition-all w-0"></div>
+                        </div>
+                    </div>
+                </section>

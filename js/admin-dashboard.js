@@ -183,13 +183,104 @@ const MODULE_SECTIONS = {
     dsrRequests: 'tools/dsrRequests',
 };
 
+// ─── SECTION META for tab titles + breadcrumb ───
+const SECTION_META = {
+    dashboardOverview:        { label: 'Dashboard',              parent: null },
+    addSession:               { label: 'Sessions',               parent: 'Class Management' },
+    addClass:                 { label: 'Classes',                parent: 'Class Management' },
+    addSubject:               { label: 'Subjects',               parent: 'Class Management' },
+    addSyllabusSection:       { label: 'Syllabus',               parent: 'Class Management' },
+    addStudent:               { label: 'Add Student',            parent: 'Student Management' },
+    studentList:              { label: 'Search Students',        parent: 'Student Management' },
+    bulkImport:               { label: 'Bulk Import',            parent: 'Student Management' },
+    electiveMapping:          { label: 'Elective Mapping',       parent: 'Student Management' },
+    promotions:               { label: 'Promote Students',       parent: 'Student Management' },
+    studentBulkUpdate:        { label: 'Bulk Update',            parent: 'Student Management' },
+    studentRfidUpdate:        { label: 'RFID Update',            parent: 'Student Management' },
+    hostelReport:             { label: 'Hostel Report',          parent: 'Student Management' },
+    transportReport:          { label: 'Transport Report',       parent: 'Student Management' },
+    pickupIdPrint:            { label: 'Pickup ID Print',        parent: 'Student Management' },
+    addEnquiry:               { label: 'New Enquiry',            parent: 'Admission' },
+    searchEnquiry:            { label: 'Enquiries',              parent: 'Admission' },
+    studentAdmission:         { label: 'Admission Form',         parent: 'Admission' },
+    attendanceManagement:     { label: 'Mark Attendance',        parent: 'Attendance' },
+    viewAttendanceStats:      { label: 'Attendance Reports',     parent: 'Attendance' },
+    searchStudentFeeSection:  { label: 'Student Fee Payment',    parent: 'Fees' },
+    createMonthlyFeeSection:  { label: 'Monthly Fee Generation', parent: 'Fees' },
+    classFeePaymentSection:   { label: 'Add Fee Payment',        parent: 'Fees' },
+    demandReceiptSection:     { label: 'Demand Receipt',         parent: 'Fees' },
+    bulkFeeDiscountSection:   { label: 'Bulk Discount',          parent: 'Fees' },
+    bulkExtraFeeSection:      { label: 'Bulk Extra Fee',         parent: 'Fees' },
+    lateFeeRulesSection:      { label: 'Late Fee Rules',         parent: 'Fees' },
+    feeMasterSection:         { label: 'Fee Master',             parent: 'Fees' },
+    searchFeeDuesSection:     { label: 'Search Fee Dues',        parent: 'Fees' },
+    sendFeeMessageSection:    { label: 'Send Fee Message',       parent: 'Fees' },
+    examGrading:              { label: 'Grading Rules',          parent: 'Exams' },
+    manageExam:               { label: 'Create Exams',           parent: 'Exams' },
+    manageExamSchedule:       { label: 'Exam Timetable',         parent: 'Exams' },
+    viewExamSchedule:         { label: 'View Date-Sheet',        parent: 'Exams' },
+    publishExamSchedule:      { label: 'Publish Schedule',       parent: 'Exams' },
+    admitCardTool:            { label: 'Admit Card',             parent: 'Exams' },
+    examAttendanceCard:       { label: 'Exam Attendance',        parent: 'Exams' },
+    addResult:                { label: 'Add Results',            parent: 'Results' },
+    viewReportCard:           { label: 'Report Card',            parent: 'Results' },
+    publishResults:           { label: 'Publish Results',        parent: 'Results' },
+    bulkResultGenerator:      { label: 'Bulk Result Upload',     parent: 'Results' },
+    resultAnalytics:          { label: 'Result Analytics',       parent: 'Results' },
+    manageAllResults:         { label: 'Manage Results',         parent: 'Results' },
+    reportCardRemarks:        { label: 'Report Remarks',         parent: 'Results' },
+    sendNotification:         { label: 'Send Notification',      parent: 'Notifications' },
+    notificationHistory:      { label: 'Notification History',   parent: 'Notifications' },
+    bookCatalog:              { label: 'Book Catalog',           parent: 'Library' },
+    issueReturn:              { label: 'Issue / Return',         parent: 'Library' },
+    libraryTransactions:      { label: 'Library Transactions',   parent: 'Library' },
+    manageRoutes:             { label: 'Manage Routes',          parent: 'Transport' },
+    mapTransport:             { label: 'Assign Students',        parent: 'Transport' },
+    addEmployee:              { label: 'Add Employee',           parent: 'Employee' },
+    searchEmployee:           { label: 'Search Employees',       parent: 'Employee' },
+    bulkEmployeeUpdate:       { label: 'Bulk Update',            parent: 'Employee' },
+    employeeIdPrint:          { label: 'Employee ID Print',      parent: 'Employee' },
+    staffAttendanceMark:      { label: 'Staff Attendance',       parent: 'Employee' },
+    cmsHero:                  { label: 'Hero Slider',            parent: 'Website CMS' },
+    cmsTheme:                 { label: 'Theme',                  parent: 'Website CMS' },
+    cmsAdmission:             { label: 'Admission Settings',     parent: 'Website CMS' },
+    cmsGlobalStats:           { label: 'Global Stats',           parent: 'Website CMS' },
+    cmsGallery:               { label: 'Gallery',                parent: 'Website CMS' },
+    cmsStaff:                 { label: 'Staff Directory',        parent: 'Website CMS' },
+    cmsHolidays:              { label: 'Holidays',               parent: 'Website CMS' },
+    cmsEvents:                { label: 'Events',                 parent: 'Website CMS' },
+    cmsAchievements:          { label: 'Achievements',           parent: 'Website CMS' },
+    cmsTestimonials:          { label: 'Testimonials',           parent: 'Website CMS' },
+    cmsStudentDashboard:      { label: 'Student Dashboard Config', parent: 'Website CMS' },
+    financeDashboard:         { label: 'Finance Dashboard',      parent: 'Finance' },
+    chartOfAccounts:          { label: 'Chart of Accounts',      parent: 'Finance' },
+    journalEntry:             { label: 'Journal Entry',          parent: 'Finance' },
+    paymentVouchers:          { label: 'Payment Vouchers',       parent: 'Finance' },
+    receiptVouchers:          { label: 'Receipt Vouchers',       parent: 'Finance' },
+    trialBalance:             { label: 'Trial Balance',          parent: 'Finance' },
+    profitLossReport:         { label: 'Profit & Loss',          parent: 'Finance' },
+    balanceSheetReport:       { label: 'Balance Sheet',          parent: 'Finance' },
+    salaryStructure:          { label: 'Salary Structure',       parent: 'Payroll' },
+    staffSalary:              { label: 'Staff Salary',           parent: 'Payroll' },
+    generatePayroll:          { label: 'Generate Payroll',       parent: 'Payroll' },
+    payrollHistory:           { label: 'Payroll History',        parent: 'Payroll' },
+    payslipView:              { label: 'Payslip View',           parent: 'Payroll' },
+    salaryReports:            { label: 'Salary Reports',         parent: 'Payroll' },
+    websiteSettings:          { label: 'Website Settings',       parent: 'Settings' },
+    adminPortalCMS:           { label: 'Portal Branding',        parent: 'Settings' },
+    notices:                  { label: 'Notice Board',           parent: 'Communication' },
+    parentLoginSection:       { label: 'Parent Login Access',    parent: 'Communication' },
+    bonafideCertificateSection: { label: 'Bonafide Certificate', parent: 'Certificates' },
+    schoolLeavingCertificateSection: { label: 'School Leaving Certificate', parent: 'Certificates' },
+    transferCertificateSection: { label: 'Transfer Certificate', parent: 'Certificates' },
+    certificateHistorySection: { label: 'Certificate History',   parent: 'Certificates' },
+};
+
 window.showSection = function (sectionId, updateHash = true) {
     if (!sectionId) sectionId = 'dashboardOverview';
     // Normalize: strip trailing 'Section' from legacy nav links (admin-dashboard.html uses 'xxxSection')
     const normalizedId = sectionId.endsWith('Section') ? sectionId.slice(0, -7) : sectionId;
     window._currentSectionId = normalizedId;
-
-    console.log(`Showing section: ${sectionId} → normalized: ${normalizedId}`);
 
     // Load dynamic module if this section uses one
     if (MODULE_SECTIONS[normalizedId] && !window.SECTION_MODULES[MODULE_SECTIONS[normalizedId]]) {
@@ -257,6 +348,23 @@ window.showSection = function (sectionId, updateHash = true) {
                 if (submenu) submenu.classList.add('open');
             }
         }
+    }
+
+    // Update browser tab title and breadcrumb
+    const schoolName = document.getElementById('sidebarSchoolName')?.textContent || 'School';
+    const meta = SECTION_META[normalizedId];
+    if (meta) {
+        document.title = `${meta.label} | ${schoolName} ERP`;
+        const bcParent = document.getElementById('breadcrumbParent');
+        const bcCurrent = document.getElementById('breadcrumbCurrent');
+        const bcSep = document.getElementById('breadcrumbSep');
+        if (bcParent && bcCurrent) {
+            bcParent.textContent = meta.parent || '';
+            bcCurrent.textContent = meta.label;
+            if (bcSep) bcSep.style.display = meta.parent ? 'inline' : 'none';
+        }
+    } else {
+        document.title = `Admin Dashboard | ${schoolName}`;
     }
 
     // Update Section Title & Subtitle
@@ -559,6 +667,11 @@ window.showSection = function (sectionId, updateHash = true) {
         initERPParentLogin();
     }
 
+    // Dashboard Overview hook: load live KPI cards
+    if (sectionId === 'dashboardOverview' && typeof loadLiveDashboardKPIs === 'function') {
+        loadLiveDashboardKPIs();
+    }
+
     // Admin Profile hook
     if (sectionId === 'adminProfile') {
         populateAdminProfile();
@@ -704,18 +817,64 @@ function setLoading(show) {
     }
 }
 
-function showToast(message, type = 'success') {
-    const toast = document.getElementById('toast');
-    if (!toast) return;
-    toast.textContent = message;
-    toast.className = `badge badge-${type === 'success' ? 'success' : 'danger'}`;
-    toast.style.position = 'fixed';
-    toast.style.bottom = '2rem';
-    toast.style.right = '2rem';
-    toast.style.padding = '1rem 2rem';
-    toast.style.zIndex = '2000';
-    toast.style.display = 'block';
-    setTimeout(() => (toast.style.display = 'none'), 3000);
+function showToast(message, type = 'success', detail = '', duration = 0) {
+    const existing = document.getElementById('snrToast');
+    if (existing) existing.remove();
+
+    if (!duration) {
+        duration = Math.max(3000, message.length * 60 + (detail.length * 40));
+        if (type === 'error') duration = 0;
+    }
+
+    const icons = {
+        success: { icon: '✓', bg: '#dcfce7', color: '#15803d', border: '#10b981' },
+        error:   { icon: '✕', bg: '#fee2e2', color: '#b91c1c', border: '#ef4444' },
+        warning: { icon: '!', bg: '#fef3c7', color: '#b45309', border: '#f59e0b' },
+        info:    { icon: 'i', bg: '#eff6ff', color: '#1d4ed8', border: '#3b82f6' },
+    };
+    const style = icons[type] || icons.info;
+
+    const toast = document.createElement('div');
+    toast.id = 'snrToast';
+    toast.innerHTML = `
+        <div style="
+            position: fixed; bottom: 1.5rem; right: 1.5rem;
+            background: white; border-radius: 14px; padding: 1rem 1.25rem;
+            box-shadow: 0 8px 40px rgba(0,0,0,.18);
+            display: flex; align-items: flex-start; gap: 0.875rem;
+            z-index: 9999; max-width: 420px; min-width: 280px;
+            border-left: 4px solid ${style.border};
+            animation: toastSlideIn 0.25s ease;
+        ">
+            <div style="
+                width: 30px; height: 30px; min-width: 30px;
+                background: ${style.bg}; color: ${style.color};
+                border-radius: 50%; display: flex; align-items: center;
+                justify-content: center; font-weight: 800; font-size: 0.85rem;
+            ">${style.icon}</div>
+            <div style="flex:1; min-width:0">
+                <div style="font-weight:600; font-size:0.9rem; color:#1e293b; line-height:1.3">${message}</div>
+                ${detail ? `<div style="font-size:0.78rem; color:#64748b; margin-top:3px">${detail}</div>` : ''}
+            </div>
+            <button onclick="document.getElementById('snrToast')?.remove()" style="
+                background: none; border: none; color: #94a3b8;
+                cursor: pointer; font-size: 1rem; padding: 0;
+                line-height: 1; flex-shrink: 0;
+            ">✕</button>
+        </div>
+    `;
+
+    if (!document.getElementById('toastStyle')) {
+        const s = document.createElement('style');
+        s.id = 'toastStyle';
+        s.textContent = `@keyframes toastSlideIn { from { transform: translateX(120%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }`;
+        document.head.appendChild(s);
+    }
+
+    document.body.appendChild(toast);
+    if (duration > 0) {
+        setTimeout(() => document.getElementById('snrToast')?.remove(), duration);
+    }
 }
 
 async function loadInitialData(classFilterVal = '') {
@@ -4658,6 +4817,205 @@ async function reactivateDesignation(id) {
     } finally {
         setLoading(false);
     }
+}
+
+// ── GLOBAL SEARCH ──────────────────────────────────────────
+let _searchCache = { students: [], timestamp: 0 };
+
+async function runGlobalSearch(query) {
+    if (!query || query.length < 2) {
+        const el = document.getElementById('globalSearchResults');
+        if (el) el.innerHTML = '';
+        return;
+    }
+    query = query.toLowerCase().trim();
+    const resultsEl = document.getElementById('globalSearchResults');
+    if (!resultsEl) return;
+    resultsEl.style.display = 'block';
+    resultsEl.innerHTML = '<div style="padding:1rem;color:#94a3b8;font-size:0.83rem">Searching...</div>';
+
+    if (Date.now() - _searchCache.timestamp > 60000) {
+        try {
+            const snap = await schoolData('students').get();
+            _searchCache.students = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+            _searchCache.timestamp = Date.now();
+        } catch (e) { resultsEl.innerHTML = '<div style="padding:1rem;color:#ef4444">Search unavailable</div>'; return; }
+    }
+
+    const students = _searchCache.students.filter(s =>
+        (s.name || '').toLowerCase().includes(query) ||
+        (s.phone || '').includes(query) ||
+        (s.studentCode || '').toLowerCase().includes(query) ||
+        (s.fatherName || '').toLowerCase().includes(query)
+    ).slice(0, 8);
+
+    const sections = Object.entries(SECTION_META)
+        .filter(([id, m]) => m.label.toLowerCase().includes(query))
+        .slice(0, 4);
+
+    let html = '';
+    if (students.length) {
+        html += `<div style="padding:0.5rem 1rem 0.25rem;font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#94a3b8">Students</div>`;
+        students.forEach(s => {
+            html += `<div onclick="selectSearchStudent('${s.id}')" style="padding:0.65rem 1rem;display:flex;align-items:center;gap:0.75rem;cursor:pointer;border-bottom:1px solid #f8fafc" onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background=''">
+                <div style="width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#3b82f6,#8b5cf6);display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:0.75rem;flex-shrink:0">${(s.name || '?')[0].toUpperCase()}</div>
+                <div><div style="font-weight:600;font-size:0.85rem;color:#1e293b">${s.name || 'Unknown'}</div><div style="font-size:0.72rem;color:#94a3b8">${s.class || ''} · ${s.phone || ''}</div></div>
+            </div>`;
+        });
+    }
+    if (sections.length) {
+        html += `<div style="padding:0.5rem 1rem 0.25rem;font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#94a3b8;margin-top:0.25rem">Navigate To</div>`;
+        sections.forEach(([id, meta]) => {
+            html += `<div onclick="showSection('${id}'); hideGlobalSearchResults()" style="padding:0.6rem 1rem;display:flex;align-items:center;gap:0.75rem;cursor:pointer;font-size:0.85rem;color:#475569" onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background=''"><span style="color:#94a3b8">→</span> ${meta.parent ? meta.parent + ' / ' : ''}${meta.label}</div>`;
+        });
+    }
+    if (!html) html = '<div style="padding:1.5rem;text-align:center;color:#94a3b8;font-size:0.85rem">No results for "' + query + '"</div>';
+    resultsEl.innerHTML = html;
+}
+
+function selectSearchStudent(studentId) {
+    hideGlobalSearchResults();
+    showSection('studentList');
+    setTimeout(() => {
+        const searchEl = document.getElementById('studentSearch') || document.getElementById('searchInput');
+        if (searchEl) { searchEl.value = studentId; searchEl.dispatchEvent(new Event('input')); }
+    }, 400);
+}
+
+function showGlobalSearchResults() {
+    const val = document.getElementById('globalSearchInput')?.value;
+    if (val?.length >= 2) runGlobalSearch(val);
+}
+
+function hideGlobalSearchResults() {
+    const el = document.getElementById('globalSearchResults');
+    if (el) el.style.display = 'none';
+}
+
+document.addEventListener('keydown', (e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+        e.preventDefault();
+        const input = document.getElementById('globalSearchInput');
+        if (input) { input.focus(); input.select(); }
+    }
+    if (e.key === 'Escape') {
+        hideGlobalSearchResults();
+        document.getElementById('globalSearchInput')?.blur();
+    }
+});
+
+// ── TABLE UTILITIES: Sort, Filter, Export ───────────────────
+window.exportTableToCSV = function(tableIdOrEl, filename = 'export.csv') {
+    const table = typeof tableIdOrEl === 'string' ? document.getElementById(tableIdOrEl) : tableIdOrEl;
+    if (!table) return;
+    const rows = Array.from(table.querySelectorAll('tr'));
+    const csv = rows.map(row => {
+        return Array.from(row.querySelectorAll('th, td'))
+            .map(cell => {
+                let text = cell.innerText.replace(/\n/g, ' ').trim();
+                if (text.includes(',') || text.includes('"')) text = `"${text.replace(/"/g, '""')}"`;
+                return text;
+            }).join(',');
+    }).join('\n');
+    const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = filename;
+    link.click();
+    showToast('CSV Downloaded', 'success', `${rows.length - 1} rows exported`);
+};
+
+window.buildTableActionBar = function(tableId, options = {}) {
+    const { title = '', totalLabel = 'records', exportFilename = 'data.csv', extraButtons = [] } = options;
+    const table = document.getElementById(tableId);
+    if (!table) return;
+    const rowCount = table.querySelectorAll('tbody tr').length;
+    const bar = document.createElement('div');
+    bar.style.cssText = 'display:flex;justify-content:space-between;align-items:center;margin-bottom:0.875rem;flex-wrap:wrap;gap:0.5rem';
+    bar.innerHTML = `
+        <span style="font-size:0.78rem;color:#94a3b8">Showing <strong style="color:#334155">${rowCount}</strong> ${totalLabel}</span>
+        <div style="display:flex;gap:0.5rem;flex-wrap:wrap">
+            ${extraButtons.map(b => `<button onclick="${b.onclick}" style="padding:0.4rem 0.875rem;background:#f1f5f9;color:#475569;border:none;border-radius:8px;font-size:0.78rem;font-weight:600;cursor:pointer">${b.icon || ''} ${b.label}</button>`).join('')}
+            <button onclick="exportTableToCSV('${tableId}', '${exportFilename}')" style="padding:0.4rem 0.875rem;background:#f1f5f9;color:#475569;border:none;border-radius:8px;font-size:0.78rem;font-weight:600;cursor:pointer">📤 Export CSV</button>
+            <button onclick="window.print()" style="padding:0.4rem 0.875rem;background:#f1f5f9;color:#475569;border:none;border-radius:8px;font-size:0.78rem;font-weight:600;cursor:pointer">🖨️ Print</button>
+        </div>
+    `;
+    table.parentNode.insertBefore(bar, table);
+};
+
+// ── EMPTY STATE COMPONENTS ───────────────────────────────────
+const EMPTY_STATES = {
+    students: { icon: '👥', title: 'No students yet', desc: 'Start by adding your first student or uploading a CSV.', action: { label: '+ Add Student', section: 'addStudent' } },
+    fees: { icon: '💰', title: 'No fee records found', desc: 'Generate monthly fees or record a manual payment.', action: { label: 'Generate Monthly Fees', section: 'createMonthlyFeeSection' } },
+    exams: { icon: '📝', title: 'No exams created', desc: 'Create your first exam and build the schedule.', action: { label: '+ Create Exam', section: 'manageExam' } },
+    results: { icon: '📊', title: 'No results recorded', desc: 'Add results manually or upload a CSV with marks.', action: { label: '+ Add Results', section: 'addResult' } },
+    notifications: { icon: '🔔', title: 'No notifications sent', desc: 'Send SMS or WhatsApp messages to students and parents.', action: { label: 'Send Notification', section: 'sendNotification' } },
+    library: { icon: '📚', title: 'No books in catalog', desc: 'Add books to the library to enable issue and return tracking.', action: { label: '+ Add Book', section: 'bookCatalog' } },
+    enquiries: { icon: '📋', title: 'No enquiries yet', desc: 'Enquiries submitted via the website will appear here.', action: null },
+    attendance: { icon: '📅', title: 'No attendance records', desc: 'Mark today\'s attendance for your classes.', action: { label: 'Mark Attendance', section: 'attendanceManagement' } },
+};
+
+window.renderEmptyState = function(containerId, type = 'students', customText = null) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    const config = EMPTY_STATES[type] || { icon: '🔍', title: customText || 'Nothing here yet', desc: 'No records match your search.', action: null };
+    container.innerHTML = `
+        <div style="text-align:center;padding:3rem 1.5rem;color:#94a3b8">
+            <div style="font-size:3.5rem;margin-bottom:1rem;opacity:0.4">${config.icon}</div>
+            <h4 style="font-size:1rem;font-weight:600;color:#334155;margin-bottom:0.4rem">${config.title}</h4>
+            <p style="font-size:0.83rem;color:#94a3b8;margin-bottom:${config.action ? '1.5rem' : '0'};max-width:300px;margin-left:auto;margin-right:auto">${config.desc}</p>
+            ${config.action ? `<button onclick="showSection('${config.action.section}')" style="padding:0.65rem 1.5rem;background:#1e40af;color:white;border:none;border-radius:8px;font-size:0.85rem;font-weight:600;cursor:pointer">${config.action.label}</button>` : ''}
+        </div>
+    `;
+};
+
+// ── LIVE KPI DASHBOARD CARDS ───────────────────────────────
+async function loadLiveDashboardKPIs() {
+    const today = new Date().toISOString().split('T')[0];
+    const thisMonth = today.slice(0, 7);
+    const container = document.getElementById('dashboardKPICards');
+    if (!container) return;
+
+    try {
+        const [studentsSnap, feesSnap, attendanceSnap, examsSnap] = await Promise.all([
+            schoolData('students').where('isActive', '!=', false).get(),
+            schoolData('fees').where('month', '==', thisMonth).get(),
+            schoolData('attendance').where('date', '==', today).get(),
+            schoolData('exams').where('date', '>=', today).orderBy('date').limit(5).get()
+        ]);
+
+        const totalStudents = studentsSnap.size;
+        const feeData = feesSnap.docs.map(d => d.data());
+        const totalDue = feeData.reduce((s, f) => s + (f.amount || 0), 0);
+        const totalPaid = feeData.reduce((s, f) => s + (f.paid || 0), 0);
+        const feePercent = totalDue > 0 ? Math.round((totalPaid / totalDue) * 100) : 0;
+        const attData = attendanceSnap.docs.map(d => d.data());
+        const presentCount = attData.filter(a => a.status === 'present').length;
+        const attPercent = attData.length > 0 ? Math.round((presentCount / attData.length) * 100) : 0;
+        const absentCount = attData.length - presentCount;
+        const nextExam = examsSnap.docs[0]?.data();
+        const examCount = examsSnap.size;
+
+        container.innerHTML = `
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem;margin-bottom:1.5rem">
+                ${kpiCard('👥', 'Total Students', totalStudents.toLocaleString('en-IN'), 'Active enrolments', '#3b82f6', '#eff6ff')}
+                ${kpiCard('💰', 'Fee Collection', '₹' + (totalPaid/1000).toFixed(1) + 'K', feePercent + '% of ' + thisMonth + ' target', '#10b981', '#ecfdf5', feePercent < 70 ? { color: '#ef4444', text: '⚠ ' + (100-feePercent) + '% pending' } : null)}
+                ${kpiCard('📅', 'Today\\'s Attendance', attPercent + '%', absentCount + ' absent today', '#f59e0b', '#fffbeb', absentCount > 10 ? { color: '#ef4444', text: '⚠ High absenteeism' } : null)}
+                ${kpiCard('📝', 'Upcoming Exams', examCount.toString(), nextExam ? 'Next: ' + new Date(nextExam.date).toLocaleDateString('en-IN', {day:'numeric',month:'short'}) : 'None scheduled', '#8b5cf6', '#f5f3ff')}
+            </div>
+        `;
+    } catch (e) { console.error('KPI load error:', e); }
+}
+
+function kpiCard(icon, label, value, sub, color, bgColor, alert = null) {
+    return `<div style="background:white;border-radius:14px;padding:1.25rem;box-shadow:0 4px 16px rgba(0,0,0,.07);display:flex;align-items:flex-start;gap:0.875rem;border-top:3px solid ${color}">
+        <div style="width:42px;height:42px;background:${bgColor};border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0">${icon}</div>
+        <div>
+            <div style="font-size:1.7rem;font-weight:800;line-height:1;color:#0f172a">${value}</div>
+            <div style="font-size:0.72rem;color:#94a3b8;margin-top:0.2rem">${label}</div>
+            <div style="font-size:0.72rem;color:${alert ? alert.color : '#10b981'};margin-top:0.3rem;font-weight:600">${alert ? alert.text : '↑ ' + sub}</div>
+        </div>
+    </div>`;
 }
 
 function escHtml(str) {

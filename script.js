@@ -203,3 +203,51 @@ function revealTimeline() {
 window.addEventListener('scroll', revealTimeline);
 
 revealTimeline();
+
+// Stat counter animation trigger (IntersectionObserver)
+(function initCounters() {
+    var counters = document.querySelectorAll('.counter[data-target]');
+    if (!counters.length) return;
+    function animateCounter(el) {
+        var target = parseInt(el.getAttribute('data-target'), 10) || 0;
+        var duration = 1600;
+        var start = performance.now();
+        function tick(now) {
+            var t = Math.min((now - start) / duration, 1);
+            var eased = 1 - Math.pow(1 - t, 3);
+            var v = Math.floor(eased * target);
+            el.textContent = target >= 100 ? v.toLocaleString('en-IN') : v;
+            if (t < 1) requestAnimationFrame(tick);
+            else el.textContent = target >= 100 ? target.toLocaleString('en-IN') : target;
+        }
+        requestAnimationFrame(tick);
+    }
+    var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+            if (e.isIntersecting) {
+                animateCounter(e.target);
+                io.unobserve(e.target);
+            }
+        });
+    }, { threshold: 0.4 });
+    counters.forEach(function (c) { io.observe(c); });
+})();
+
+// Floating button IntersectionObserver: avoid footer overlap
+(function initFloatObserver() {
+    var container = document.getElementById('floating-button');
+    if (!container) return;
+    var observer = new MutationObserver(function () {
+        var btns = container.querySelector('.floating-btn-container');
+        var footer = document.getElementById('footer');
+        if (!btns || !footer) return;
+        observer.disconnect();
+        var io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (e) {
+                btns.style.bottom = e.isIntersecting ? (e.boundingClientRect.height + 16 + 'px') : '24px';
+            });
+        }, { root: null, threshold: 0 });
+        io.observe(footer);
+    });
+    observer.observe(container, { childList: true, subtree: true });
+})();

@@ -295,33 +295,44 @@
                             placeholder="Registered Mobile Number"
                             required
                             maxlength="10"
+                            autocomplete="tel"
                             oninput="this.value = this.value.replace(/[^0-9]/g, '')"
                         >
                     </div>
 
                     <div class="input-group">
-                        <i class="fas fa-user"></i>
+                        <i class="fas fa-lock"></i>
                         <input 
-                            type="text" 
-                            id="student_name" 
+                            type="password" 
+                            id="student_password" 
                             class="input-field" 
-                            placeholder="Full Name (as registered)" 
+                            placeholder="Password (default: birth year, e.g. 2012)"
                             required
+                            autocomplete="current-password"
+                            maxlength="10"
                         >
+                        <button type="button" class="pwd-toggle" onclick="toggleStudentPassword()" tabindex="-1" title="Show/Hide Password">
+                            <i class="fas fa-eye" id="studentPwdToggleIcon"></i>
+                        </button>
                     </div>
+                    <p style="color:var(--text-dim);font-size:0.75rem;margin:-0.5rem 0 0 0.25rem">
+                        <i class="fas fa-info-circle"></i> Default password is your birth year (YYYY). Change it from profile after login.
+                    </p>
                 </div>
 
                 <!-- Parent Fields -->
                 <div id="parentFields" class="tab-content" style="display:none">
                     <div class="input-group">
-                        <i class="fas fa-user-circle"></i>
+                        <i class="fas fa-mobile-alt"></i>
                         <input 
                             type="text" 
-                            id="parent_username" 
+                            id="parent_phone" 
                             class="input-field" 
-                            placeholder="Username (provided by school)"
+                            placeholder="Registered Mobile Number"
                             required
-                            autocomplete="username"
+                            maxlength="10"
+                            autocomplete="tel"
+                            oninput="this.value = this.value.replace(/[^0-9]/g, '')"
                         >
                     </div>
 
@@ -331,13 +342,17 @@
                             type="password" 
                             id="parent_password" 
                             class="input-field" 
-                            placeholder="Password"
+                            placeholder="Password (default: child's birth year, e.g. 2012)"
                             required
                             autocomplete="current-password"
+                            maxlength="10"
                         >
-                        <button type="button" class="pwd-toggle" onclick="togglePassword()" tabindex="-1" title="Show/Hide Password">
-                            <i class="fas fa-eye" id="pwdToggleIcon"></i>
+                        <button type="button" class="pwd-toggle" onclick="toggleParentPassword()" tabindex="-1" title="Show/Hide Password">
+                            <i class="fas fa-eye" id="parentPwdToggleIcon"></i>
                         </button>
+                        <p style="color:var(--text-dim);font-size:0.75rem;margin:0.25rem 0 0 0">
+                            <i class="fas fa-info-circle"></i> Default password is your child's birth year. Change it from profile after login.
+                        </p>
                     </div>
                 </div>
 

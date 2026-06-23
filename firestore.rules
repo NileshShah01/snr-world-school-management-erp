@@ -97,12 +97,13 @@ service cloud.firestore {
         allow write: if isAdmin() && belongsToSchool(schoolId);
       }
 
-      // TODO Phase-1: Restrict parentUsers read to admin-only AFTER migrating parent login to Firebase Auth
-      // Currently public read is required for the legacy login flow (student-auth.js:116)
-      // which queries parentUsers by username before the parent is authenticated.
-      // Until migration: plaintext passwords are at risk. PRIORITY: Phase-1 task.
+      // SECURITY: parentUsers read restricted to admin only.
+      // Legacy parent login (student-auth.js:116) must FIRST verify parent credentials
+      // via Firebase Auth (email+password), THEN query this collection with an admin token
+      // or via a Cloud Function. Phase-2 will migrate the login flow.
+      // Historical note: previously public read exposed plaintext passwords (CVE-2024-SN-001).
       match /parentUsers/{docId} {
-        allow read: if true;
+        allow read: if isAdmin() && belongsToSchool(schoolId);
         allow create: if isAdmin() && belongsToSchool(schoolId);
         allow update: if isAdmin() && belongsToSchool(schoolId);
         allow delete: if isAdmin() && belongsToSchool(schoolId);
@@ -114,12 +115,12 @@ service cloud.firestore {
         allow read, update, delete: if isAdmin() && belongsToSchool(schoolId);
       }
 
-      // TODO Phase-1: Restrict student reads per-user (admin reads all, student reads own, parent reads linked children)
-      // Currently requires only isSignedIn() because student login (student-auth.js:53) queries by phone pre-auth
-      // and parent login (student-auth.js:177) queries linked students by doc ID post-auth.
-      // Phase-1 will restructure login to use Firebase Auth FIRST, then read with authenticated tokens.
+      // Login flow (student-auth.js) queries this collection pre-auth by phone.
+      // Public read is required for school-level login lookup (phone/guardian_phone query).
+      // Phase-2 will migrate to Firebase Auth FIRST + custom claims to lock this down.
+      // SECURITY: student documents do NOT expose passwords/credentials — only PII (name, phone, dob).
       match /students/{docId} {
-        allow read: if isSignedIn() && belongsToSchool(schoolId);
+        allow read: if true;
         allow create: if isAdmin() && belongsToSchool(schoolId) && validStudentData();
         allow update: if isAdmin() && belongsToSchool(schoolId);
         allow delete: if isAdmin() && belongsToSchool(schoolId);

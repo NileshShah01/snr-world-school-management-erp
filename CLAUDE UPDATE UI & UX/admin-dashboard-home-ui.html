@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard — SNR ERP</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root{
+  --blue:#1e40af;--blue-lt:#eff6ff;--blue-md:#bfdbfe;--blue-dk:#1e3a8a;
+  --green:#059669;--green-lt:#ecfdf5;--green-md:#6ee7b7;
+  --red:#dc2626;--red-lt:#fef2f2;--red-md:#fca5a5;
+  --amber:#d97706;--amber-lt:#fffbeb;--amber-md:#fcd34d;
+  --purple:#7c3aed;--purple-lt:#f5f3ff;
+  --cyan:#0891b2;--cyan-lt:#ecfeff;
+  --ink:#0f172a;--ink-2:#1e293b;--ink-3:#334155;
+  --muted:#64748b;--faint:#94a3b8;--ghost:#cbd5e1;
+  --bg:#f1f5f9;--surface:#fff;--border:#e2e8f0;
+  --r-sm:6px;--r-md:10px;--r-lg:14px;--r-xl:20px;
+  --sh-sm:0 2px 8px rgba(0,0,0,.06);
+  --sh-md:0 4px 20px rgba(0,0,0,.09);
+  --sh-lg:0 8px 40px rgba(0,0,0,.14);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--ink-2);font-size:14px;line-height:1.5}
+.page{max-width:1240px;margin:0 auto;padding:1.5rem}
+
+/* ── WELCOME HEADER ─────────── */
+.welcome-bar{
+  background:linear-gradient(135deg,var(--blue-dk) 0%,#1e40af 60%,#3b82f6 100%);
+  border-radius:var(--r-xl);padding:1.5rem 2rem;color:white;
+  margin-bottom:1.5rem;display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;
+  position:relative;overflow:hidden;
+}
+.welcome-bar::after{
+  content:'';position:absolute;right:-40px;top:-40px;
+  width:200px;height:200px;border-radius:50%;
+  background:rgba(255,255,255,.06);
+}
+.wb-left h1{font-size:1.3rem;font-weight:800}
+.wb-left p{font-size:.83rem;opacity:.75;margin-top:3px}
+.wb-date{opacity:.6;font-size:.78rem;margin-top:.4rem;display:flex;align-items:center;gap:.3rem}
+.wb-right{margin-left:auto;display:flex;gap:.75rem;flex-wrap:wrap;position:relative;z-index:1}
+.wb-btn{padding:.6rem 1.1rem;border-radius:var(--r-md);font-size:.82rem;font-weight:700;
+        cursor:pointer;border:none;transition:all .15s;display:flex;align-items:center;gap:.4rem}
+.wb-btn.primary{background:white;color:var(--blue-dk)}
+.wb-btn.primary:hover{box-shadow:0 4px 12px rgba(255,255,255,.3)}
+.wb-btn.ghost{background:rgba(255,255,255,.15);color:white;border:1.5px solid rgba(255,255,255,.25)}
+.wb-btn.ghost:hover{background:rgba(255,255,255,.25)}
+
+/* ── ALERT STRIP ────────────── */
+.alert-strip{display:flex;gap:.75rem;overflow-x:auto;padding-bottom:.25rem;margin-bottom:1.25rem;
+             scrollbar-width:none}
+.alert-strip::-webkit-scrollbar{display:none}
+.alert-card{display:flex;align-items:center;gap:.65rem;padding:.7rem 1rem;
+            border-radius:var(--r-lg);border:1.5px solid;white-space:nowrap;
+            cursor:pointer;flex-shrink:0;transition:all .15s;font-size:.8rem;font-weight:600}
+.alert-card:hover{transform:translateY(-1px)}
+.ac-red{background:var(--red-lt);border-color:var(--red-md);color:var(--red)}
+.ac-amber{background:var(--amber-lt);border-color:var(--amber-md);color:var(--amber)}
+.ac-blue{background:var(--blue-lt);border-color:var(--blue-md);color:var(--blue)}
+.ac-green{background:var(--green-lt);border-color:var(--green-md);color:var(--green)}
+.alert-card .badge{background:currentColor;color:white;border-radius:20px;padding:1px 7px;font-size:.68rem;margin-left:.25rem}
+.alert-card .badge span{color:white}
+
+/* ── KPI GRID ───────────────── */
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem}
+.kpi{background:white;border-radius:var(--r-lg);padding:1.1rem 1.25rem;
+     box-shadow:var(--sh-sm);cursor:pointer;transition:all .15s;
+     border-top:3px solid transparent;position:relative;overflow:hidden}
+.kpi:hover{box-shadow:var(--sh-md);transform:translateY(-2px)}
+.kpi.kp-students{border-top-color:#3b82f6}
+.kpi.kp-fees{border-top-color:#059669}
+.kpi.kp-attend{border-top-color:#d97706}
+.kpi.kp-exams{border-top-color:#7c3aed}
+.kpi-row{display:flex;align-items:flex-start;gap:.875rem}
+.kpi-icon{width:42px;height:42px;border-radius:var(--r-md);display:flex;
+          align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+.kpi-data .kd-val{font-size:1.8rem;font-weight:800;line-height:1;color:var(--ink)}
+.kpi-data .kd-lbl{font-size:.7rem;font-weight:700;text-transform:uppercase;
+                  letter-spacing:.06em;color:var(--faint);margin-top:.2rem}
+.kpi-data .kd-sub{font-size:.75rem;color:var(--muted);margin-top:.3rem}
+.kpi-trend{position:absolute;top:.875rem;right:.875rem;font-size:.72rem;
+           font-weight:700;padding:2px 8px;border-radius:20px;display:flex;align-items:center;gap:2px}
+.trend-up{background:var(--green-lt);color:var(--green)}
+.trend-down{background:var(--red-lt);color:var(--red)}
+.trend-flat{background:var(--bg);color:var(--muted)}
+
+/* ── QUICK ACTIONS ───────────── */
+.qa-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:.75rem;margin-bottom:1.5rem}
+.qa-btn{background:white;border-radius:var(--r-lg);padding:1rem .75rem;text-align:center;
+        cursor:pointer;transition:all .15s;box-shadow:var(--sh-sm);border:1.5px solid transparent;
+        text-decoration:none;display:flex;flex-direction:column;align-items:center;gap:.5rem}
+.qa-btn:hover{box-shadow:var(--sh-md);transform:translateY(-2px);border-color:var(--blue-md)}
+.qa-icon{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;
+         justify-content:center;font-size:1rem;flex-shrink:0;margin:0 auto}
+.qa-lbl{font-size:.72rem;font-weight:700;color:var(--ink-3);line-height:1.2;text-align:center}
+
+/* ── MAIN GRID ───────────────── */
+.main-grid{display:grid;grid-template-columns:1fr 360px;gap:1.25rem}
+.main-left,.main-right{display:flex;flex-direction:column;gap:1.25rem}
+
+/* ── CARD ────────────────────── */
+.card{background:white;border-radius:var(--r-lg);box-shadow:var(--sh-sm);overflow:hidden}
+.card-head{padding:1rem 1.25rem;border-bottom:1px solid var(--border);
+           display:flex;align-items:center;gap:.75rem}
+.card-head h2{font-size:.9rem;font-weight:700;color:var(--ink)}
+.card-head p{font-size:.75rem;color:var(--muted)}
+.card-head .ch-icon{width:32px;height:32px;border-radius:var(--r-md);
+                    display:flex;align-items:center;justify-content:center;font-size:.85rem;flex-shrink:0}
+.card-body{padding:1.1rem 1.25rem}
+.see-all{margin-left:auto;font-size:.75rem;font-weight:700;color:var(--blue);
+         cursor:pointer;text-decoration:none;white-space:nowrap}
+.see-all:hover{text-decoration:underline}
+
+/* ── ATTENDANCE HEATMAP ──────── */
+.att-summary{display:flex;align-items:center;gap:1.25rem;margin-bottom:1rem;flex-wrap:wrap}
+.att-donut{position:relative;flex-shrink:0}
+.att-donut svg{transform:rotate(-90deg)}
+.att-donut-text{position:absolute;inset:0;display:flex;flex-direction:column;
+                align-items:center;justify-content:center}
+.att-pct{font-size:1.3rem;font-weight:800;color:var(--ink)}
+.att-tiny{font-size:.62rem;color:var(--faint);font-weight:700}
+.att-breakdown{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
+.ab-item{background:var(--bg);border-radius:var(--r-md);padding:.5rem .75rem}
+.ab-item .abi-val{font-size:1rem;font-weight:800;color:var(--ink)}
+.ab-item .abi-lbl{font-size:.68rem;color:var(--faint);font-weight:600}
+
+.class-att-list{display:flex;flex-direction:column;gap:.4rem}
+.cal-row{display:flex;align-items:center;gap:.75rem}
+.cal-cls{font-size:.8rem;font-weight:600;color:var(--ink-3);min-width:70px}
+.cal-bar-bg{flex:1;height:8px;background:var(--bg);border-radius:20px;overflow:hidden}
+.cal-bar{height:100%;border-radius:20px;transition:width .5s ease}
+.cal-pct{font-size:.75rem;font-weight:700;min-width:36px;text-align:right}
+
+/* ── RECENT PAYMENTS ─────────── */
+.pay-list{display:flex;flex-direction:column;gap:.1rem}
+.pay-item{display:flex;align-items:center;gap:.75rem;padding:.65rem .25rem;
+          border-bottom:1px solid #f8fafc;cursor:pointer;transition:background .1s;
+          border-radius:var(--r-sm)}
+.pay-item:last-child{border-bottom:none}
+.pay-item:hover{background:var(--bg)}
+.pay-avatar{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;
+            justify-content:center;font-weight:800;font-size:.78rem;color:white;flex-shrink:0}
+.pay-info{flex:1;min-width:0}
+.pay-name{font-size:.85rem;font-weight:600;color:var(--ink-2);
+          white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pay-meta{font-size:.72rem;color:var(--muted)}
+.pay-right{text-align:right;flex-shrink:0}
+.pay-amount{font-size:.88rem;font-weight:800;color:var(--green)}
+.pay-time{font-size:.68rem;color:var(--faint)}
+
+/* ── ACTIVITY FEED ───────────── */
+.activity-feed{display:flex;flex-direction:column;gap:0}
+.af-item{display:flex;gap:.75rem;padding:.75rem 0;border-bottom:1px solid #f8fafc;position:relative}
+.af-item:last-child{border-bottom:none}
+.af-item::before{content:'';position:absolute;left:15px;top:38px;bottom:-1px;
+                 width:1px;background:var(--border)}
+.af-item:last-child::before{display:none}
+.af-icon{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;
+         justify-content:center;font-size:.8rem;flex-shrink:0;position:relative;z-index:1}
+.af-body{flex:1;min-width:0}
+.af-text{font-size:.82rem;color:var(--ink-3);line-height:1.4}
+.af-text strong{color:var(--ink);font-weight:700}
+.af-time{font-size:.7rem;color:var(--faint);margin-top:2px}
+
+/* ── UPCOMING ────────────────── */
+.upcoming-list{display:flex;flex-direction:column;gap:.6rem}
+.up-item{display:flex;gap:.875rem;align-items:flex-start;padding:.75rem;
+         background:var(--bg);border-radius:var(--r-md);cursor:pointer;transition:all .15s}
+.up-item:hover{background:var(--blue-lt)}
+.up-date{display:flex;flex-direction:column;align-items:center;
+         background:white;border-radius:var(--r-md);padding:.35rem .6rem;
+         min-width:42px;box-shadow:var(--sh-sm);flex-shrink:0}
+.up-day{font-size:1rem;font-weight:800;line-height:1;color:var(--blue)}
+.up-mon{font-size:.6rem;font-weight:700;text-transform:uppercase;color:var(--faint)}
+.up-info h4{font-size:.83rem;font-weight:700;color:var(--ink-2)}
+.up-info p{font-size:.73rem;color:var(--muted);margin-top:1px}
+.up-pill{display:inline-block;padding:2px 8px;border-radius:20px;font-size:.65rem;
+         font-weight:700;margin-top:.3rem}
+
+/* ── PILL ────────────────────── */
+.pill{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;
+      border-radius:20px;font-size:.68rem;font-weight:700;white-space:nowrap}
+.pill::before{content:'●';font-size:.4rem}
+.pill.paid{background:var(--green-lt);color:var(--green)}
+.pill.due{background:var(--red-lt);color:var(--red)}
+.pill.partial{background:var(--amber-lt);color:var(--amber)}
+.pill.exam{background:var(--purple-lt);color:var(--purple)}
+.pill.event{background:var(--cyan-lt);color:var(--cyan)}
+.pill.holiday{background:var(--green-lt);color:var(--green)}
+
+@media(max-width:1000px){
+  .main-grid{grid-template-columns:1fr}
+  .kpi-grid{grid-template-columns:repeat(2,1fr)}
+  .qa-grid{grid-template-columns:repeat(3,1fr)}
+}
+@media(max-width:540px){
+  .kpi-grid{grid-template-columns:1fr 1fr}
+  .qa-grid{grid-template-columns:repeat(3,1fr)}
+  .welcome-bar{padding:1.1rem 1.25rem}
+  .wb-right{display:none}
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- WELCOME BAR -->
+  <div class="welcome-bar">
+    <div class="wb-left">
+      <h1>👋 Good morning, Nilesh</h1>
+      <p>Here's what's happening at Apex Public School today</p>
+      <div class="wb-date"><i class="fas fa-calendar-alt"></i> Monday, 23 June 2026 &nbsp;·&nbsp; Academic Year 2026-27</div>
+    </div>
+    <div class="wb-right">
+      <button class="wb-btn primary" onclick="showSection('classFeePayment')">
+        <i class="fas fa-plus"></i> Collect Fee
+      </button>
+      <button class="wb-btn ghost" onclick="showSection('attendanceManagement')">
+        <i class="fas fa-calendar-check"></i> Mark Attendance
+      </button>
+    </div>
+  </div>
+
+  <!-- SMART ALERT STRIP -->
+  <div class="alert-strip">
+    <div class="alert-card ac-red" onclick="showSection('studentList')">
+      <i class="fas fa-user-times"></i>
+      <span>46 students absent today</span>
+      <div class="badge"><span>!</span></div>
+    </div>
+    <div class="alert-card ac-amber" onclick="showSection('feeDuesSearch')">
+      <i class="fas fa-rupee-sign"></i>
+      <span>78 fee defaulters</span>
+      <div class="badge"><span>78</span></div>
+    </div>
+    <div class="alert-card ac-purple" style="background:var(--purple-lt);border-color:#c4b5fd;color:var(--purple)" onclick="showSection('createExam')">
+      <i class="fas fa-file-alt"></i>
+      <span>3 exams scheduled this week</span>
+    </div>
+    <div class="alert-card ac-blue" onclick="showSection('searchEnquiry')">
+      <i class="fas fa-clipboard-list"></i>
+      <span>5 new admission enquiries</span>
+      <div class="badge"><span>5</span></div>
+    </div>
+    <div class="alert-card ac-green" onclick="showSection('attendanceStats')">
+      <i class="fas fa-chart-line"></i>
+      <span>Today's attendance: 87%</span>
+    </div>
+  </div>
+
+  <!-- KPI GRID -->
+  <div class="kpi-grid">
+    <div class="kpi kp-students" onclick="showSection('studentList')">
+      <div class="kpi-trend trend-up"><i class="fas fa-arrow-up"></i> +12</div>
+      <div class="kpi-row">
+        <div class="kpi-icon" style="background:#eff6ff;color:#3b82f6"><i class="fas fa-users"></i></div>
+        <div class="kpi-data">
+          <div class="kd-val">347</div>
+          <div class="kd-lbl">Total Students</div>
+          <div class="kd-sub">12 new this month</div>
+        </div>
+      </div>
+    </div>
+    <div class="kpi kp-fees" onclick="showSection('feeDuesSearch')">
+      <div class="kpi-trend trend-up"><i class="fas fa-arrow-up"></i> 78%</div>
+      <div class="kpi-row">
+        <div class="kpi-icon" style="background:var(--green-lt);color:var(--green)"><i class="fas fa-rupee-sign"></i></div>
+        <div class="kpi-data">
+          <div class="kd-val">₹2.4L</div>
+          <div class="kd-lbl">Fees This Month</div>
+          <div class="kd-sub" style="color:var(--red)">₹67K pending</div>
+        </div>
+      </div>
+    </div>
+    <div class="kpi kp-attend" onclick="showSection('attendanceStats')">
+      <div class="kpi-trend trend-down" style="background:var(--red-lt);color:var(--red)"><i class="fas fa-arrow-down"></i> -4%</div>
+      <div class="kpi-row">
+        <div class="kpi-icon" style="background:var(--amber-lt);color:var(--amber)"><i class="fas fa-calendar-check"></i></div>
+        <div class="kpi-data">
+          <div class="kd-val">87%</div>
+          <div class="kd-lbl">Today's Attendance</div>
+          <div class="kd-sub" style="color:var(--red)">46 absent today</div>
+        </div>
+      </div>
+    </div>
+    <div class="kpi kp-exams" onclick="showSection('viewExamSchedule')">
+      <div class="kpi-trend trend-flat">Next: Mon</div>
+      <div class="kpi-row">
+        <div class="kpi-icon" style="background:var(--purple-lt);color:var(--purple)"><i class="fas fa-file-alt"></i></div>
+        <div class="kpi-data">
+          <div class="kd-val">3</div>
+          <div class="kd-lbl">Exams This Week</div>
+          <div class="kd-sub">Math, Science, Hindi</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUICK ACTIONS -->
+  <div class="qa-grid">
+    <a class="qa-btn" onclick="showSection('classFeePayment')">
+      <div class="qa-icon" style="background:var(--green-lt);color:var(--green)"><i class="fas fa-rupee-sign"></i></div>
+      <span class="qa-lbl">Collect Fee</span>
+    </a>
+    <a class="qa-btn" onclick="showSection('attendanceManagement')">
+      <div class="qa-icon" style="background:var(--amber-lt);color:var(--amber)"><i class="fas fa-calendar-check"></i></div>
+      <span class="qa-lbl">Mark Attendance</span>
+    </a>
+    <a class="qa-btn" onclick="showSection('addStudent')">
+      <div class="qa-icon" style="background:var(--blue-lt);color:var(--blue)"><i class="fas fa-user-plus"></i></div>
+      <span class="qa-lbl">Add Student</span>
+    </a>
+    <a class="qa-btn" onclick="showSection('addResult')">
+      <div class="qa-icon" style="background:var(--purple-lt);color:var(--purple)"><i class="fas fa-chart-bar"></i></div>
+      <span class="qa-lbl">Add Results</span>
+    </a>
+    <a class="qa-btn" onclick="showSection('sendNotification')">
+      <div class="qa-icon" style="background:var(--cyan-lt);color:var(--cyan)"><i class="fas fa-bell"></i></div>
+      <span class="qa-lbl">Send Notice</span>
+    </a>
+    <a class="qa-btn" onclick="showSection('addEnquiry')">
+      <div class="qa-icon" style="background:#fff7ed;color:#ea580c"><i class="fas fa-clipboard-list"></i></div>
+      <span class="qa-lbl">New Enquiry</span>
+    </a>
+  </div>
+
+  <!-- MAIN GRID -->
+  <div class="main-grid">
+
+    <!-- LEFT COLUMN -->
+    <div class="main-left">
+
+      <!-- Today's Attendance -->
+      <div class="card">
+        <div class="card-head">
+          <div class="ch-icon" style="background:var(--amber-lt);color:var(--amber)"><i class="fas fa-calendar-check"></i></div>
+          <div><h2>Today's Attendance</h2><p>23 June 2026 · Monday</p></div>
+          <a class="see-all" onclick="showSection('attendanceManagement')">Mark Attendance →</a>
+        </div>
+        <div class="card-body">
+          <div class="att-summary">
+            <!-- Donut ring -->
+            <div class="att-donut">
+              <svg width="90" height="90" viewBox="0 0 90 90">
+                <circle cx="45" cy="45" r="36" fill="none" stroke="#e2e8f0" stroke-width="12"/>
+                <circle cx="45" cy="45" r="36" fill="none" stroke="#059669" stroke-width="12"
+                  stroke-dasharray="196.4 226.2" stroke-dashoffset="0" transform="rotate(-90 45 45)"/>
+              </svg>
+              <div class="att-donut-text">
+                <div class="att-pct">87%</div>
+                <div class="att-tiny">Present</div>
+              </div>
+            </div>
+            <div class="att-breakdown">
+              <div class="ab-item"><div class="abi-val" style="color:var(--green)">301</div><div class="abi-lbl">Present</div></div>
+              <div class="ab-item"><div class="abi-val" style="color:var(--red)">46</div><div class="abi-lbl">Absent</div></div>
+              <div class="ab-item"><div class="abi-val" style="color:var(--amber)">8</div><div class="abi-lbl">On Leave</div></div>
+              <div class="ab-item"><div class="abi-val" style="color:var(--faint)">347</div><div class="abi-lbl">Total</div></div>
+            </div>
+          </div>
+          <!-- Per-class attendance bars -->
+          <div class="class-att-list">
+            <div class="cal-row">
+              <span class="cal-cls">Class VI</span>
+              <div class="cal-bar-bg"><div class="cal-bar" style="width:92%;background:var(--green)"></div></div>
+              <span class="cal-pct" style="color:var(--green)">92%</span>
+            </div>
+            <div class="cal-row">
+              <span class="cal-cls">Class VII</span>
+              <div class="cal-bar-bg"><div class="cal-bar" style="width:88%;background:var(--green)"></div></div>
+              <span class="cal-pct" style="color:var(--green)">88%</span>
+            </div>
+            <div class="cal-row">
+              <span class="cal-cls">Class VIII</span>
+              <div class="cal-bar-bg"><div class="cal-bar" style="width:71%;background:var(--amber)"></div></div>
+              <span class="cal-pct" style="color:var(--amber)">71%</span>
+            </div>
+            <div class="cal-row">
+              <span class="cal-cls">Class V</span>
+              <div class="cal-bar-bg"><div class="cal-bar" style="width:95%;background:var(--green)"></div></div>
+              <span class="cal-pct" style="color:var(--green)">95%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Payments -->
+      <div class="card">
+        <div class="card-head">
+          <div class="ch-icon" style="background:var(--green-lt);color:var(--green)"><i class="fas fa-rupee-sign"></i></div>
+          <div><h2>Recent Payments</h2><p>Today's fee collections</p></div>
+          <a class="see-all" onclick="showSection('feeDuesSearch')">View All →</a>
+        </div>
+        <div class="card-body" style="padding-top:.5rem;padding-bottom:.5rem">
+          <div class="pay-list">
+            <div class="pay-item">
+              <div class="pay-avatar" style="background:linear-gradient(135deg,#3b82f6,#7c3aed)">A</div>
+              <div class="pay-info">
+                <div class="pay-name">Aarav Singh</div>
+                <div class="pay-meta">Tuition — June 2026 · Cash · #1042</div>
+              </div>
+              <div class="pay-right">
+                <div class="pay-amount">+₹1,600</div>
+                <div class="pay-time">11:32 AM</div>
+              </div>
+            </div>
+            <div class="pay-item">
+              <div class="pay-avatar" style="background:linear-gradient(135deg,#10b981,#0891b2)">R</div>
+              <div class="pay-info">
+                <div class="pay-name">Rahul Verma</div>
+                <div class="pay-meta">Tuition + Transport · UPI · #1041</div>
+              </div>
+              <div class="pay-right">
+                <div class="pay-amount">+₹2,100</div>
+                <div class="pay-time">10:14 AM</div>
+              </div>
+            </div>
+            <div class="pay-item">
+              <div class="pay-avatar" style="background:linear-gradient(135deg,#f59e0b,#ef4444)">S</div>
+              <div class="pay-info">
+                <div class="pay-name">Sneha Gupta</div>
+                <div class="pay-meta">Annual Fee · Cheque · #1040</div>
+              </div>
+              <div class="pay-right">
+                <div class="pay-amount">+₹3,500</div>
+                <div class="pay-time">09:48 AM</div>
+              </div>
+            </div>
+          </div>
+          <div style="text-align:center;padding:.875rem 0 .25rem;border-top:1px solid var(--border);margin-top:.5rem">
+            <span style="font-size:.75rem;color:var(--green);font-weight:700">Today's total: ₹17,400 from 9 payments</span>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /main-left -->
+
+    <!-- RIGHT COLUMN -->
+    <div class="main-right">
+
+      <!-- Upcoming Events & Exams -->
+      <div class="card">
+        <div class="card-head">
+          <div class="ch-icon" style="background:var(--purple-lt);color:var(--purple)"><i class="fas fa-calendar-alt"></i></div>
+          <div><h2>This Week</h2><p>Exams, events & holidays</p></div>
+        </div>
+        <div class="card-body">
+          <div class="upcoming-list">
+            <div class="up-item" onclick="showSection('viewExamSchedule')">
+              <div class="up-date"><div class="up-day">23</div><div class="up-mon">JUN</div></div>
+              <div class="up-info">
+                <h4>Mathematics Exam</h4>
+                <p>Class VII & VIII · 9:00 AM – 12:00 PM · Hall A</p>
+                <span class="up-pill" style="background:var(--purple-lt);color:var(--purple)">Exam</span>
+              </div>
+            </div>
+            <div class="up-item" onclick="showSection('viewExamSchedule')">
+              <div class="up-date"><div class="up-day">24</div><div class="up-mon">JUN</div></div>
+              <div class="up-info">
+                <h4>Science Practical</h4>
+                <p>Class VIII · Lab 1 · 10:00 AM</p>
+                <span class="up-pill" style="background:var(--purple-lt);color:var(--purple)">Exam</span>
+              </div>
+            </div>
+            <div class="up-item">
+              <div class="up-date"><div class="up-day">25</div><div class="up-mon">JUN</div></div>
+              <div class="up-info">
+                <h4>Parent-Teacher Meeting</h4>
+                <p>All Classes · 2:00 PM – 5:00 PM</p>
+                <span class="up-pill" style="background:var(--cyan-lt);color:var(--cyan)">Event</span>
+              </div>
+            </div>
+            <div class="up-item">
+              <div class="up-date"><div class="up-day">27</div><div class="up-mon">JUN</div></div>
+              <div class="up-info">
+                <h4>Hindi Language Exam</h4>
+                <p>Class VI · 9:00 AM · Hall B</p>
+                <span class="up-pill" style="background:var(--purple-lt);color:var(--purple)">Exam</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Activity Feed -->
+      <div class="card">
+        <div class="card-head">
+          <div class="ch-icon" style="background:var(--bg);color:var(--muted)"><i class="fas fa-history"></i></div>
+          <div><h2>Recent Activity</h2><p>System-wide audit trail</p></div>
+        </div>
+        <div class="card-body" style="padding-top:.5rem">
+          <div class="activity-feed">
+            <div class="af-item">
+              <div class="af-icon" style="background:var(--green-lt);color:var(--green)"><i class="fas fa-rupee-sign"></i></div>
+              <div class="af-body">
+                <div class="af-text">Fee payment of <strong>₹1,600</strong> recorded for <strong>Aarav Singh</strong></div>
+                <div class="af-time">11:32 AM · by Admin</div>
+              </div>
+            </div>
+            <div class="af-item">
+              <div class="af-icon" style="background:var(--blue-lt);color:var(--blue)"><i class="fas fa-user-plus"></i></div>
+              <div class="af-body">
+                <div class="af-text">New student <strong>Riya Joshi</strong> admitted to Class VI-A</div>
+                <div class="af-time">10:48 AM · by Admin</div>
+              </div>
+            </div>
+            <div class="af-item">
+              <div class="af-icon" style="background:var(--amber-lt);color:var(--amber)"><i class="fas fa-sms"></i></div>
+              <div class="af-body">
+                <div class="af-text">Fee reminder SMS sent to <strong>78 parents</strong></div>
+                <div class="af-time">09:00 AM · Scheduled</div>
+              </div>
+            </div>
+            <div class="af-item">
+              <div class="af-icon" style="background:var(--purple-lt);color:var(--purple)"><i class="fas fa-calendar-check"></i></div>
+              <div class="af-body">
+                <div class="af-text">Attendance marked for <strong>Class VII-A</strong> · 88% present</div>
+                <div class="af-time">08:32 AM · by Teacher</div>
+              </div>
+            </div>
+            <div class="af-item">
+              <div class="af-icon" style="background:var(--green-lt);color:var(--green)"><i class="fas fa-chart-bar"></i></div>
+              <div class="af-body">
+                <div class="af-text">Results published for <strong>Unit Test 2</strong> · All classes</div>
+                <div class="af-time">Yesterday · 4:12 PM</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /main-right -->
+  </div><!-- /main-grid -->
+
+</div><!-- /page -->
+<script>
+function showSection(s){ console.log('Navigate to:', s); }
+</script>
+</body>
+</html>

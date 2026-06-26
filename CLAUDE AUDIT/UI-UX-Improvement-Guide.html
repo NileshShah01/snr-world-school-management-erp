@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SNR ERP — Complete UI/UX Audit & Improvement Guide</title>
+<style>
+  :root {
+    --brand: #1e40af;
+    --accent: #f59e0b;
+    --red: #ef4444;
+    --green: #10b981;
+    --purple: #8b5cf6;
+    --gray-50: #f8fafc;
+    --gray-100: #f1f5f9;
+    --gray-200: #e2e8f0;
+    --gray-300: #cbd5e1;
+    --gray-700: #334155;
+    --gray-800: #1e293b;
+    --gray-900: #0f172a;
+    --white: #fff;
+    --radius: 12px;
+    --shadow: 0 4px 24px rgba(0,0,0,.08);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--gray-50); color: var(--gray-800); line-height: 1.6; }
+  
+  /* NAV */
+  .sticky-nav { position: sticky; top: 0; z-index: 100; background: var(--gray-900); padding: 0.75rem 2rem; display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap; }
+  .sticky-nav a { color: var(--gray-300); text-decoration: none; font-size: 0.82rem; font-weight: 500; padding: 0.3rem 0.75rem; border-radius: 6px; transition: all .2s; }
+  .sticky-nav a:hover { background: rgba(255,255,255,.1); color: white; }
+  .sticky-nav .logo { color: white; font-weight: 700; font-size: 0.95rem; margin-right: auto; }
+  
+  /* HERO */
+  .hero { background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #1e40af 100%); color: white; padding: 4rem 2rem 3rem; text-align: center; }
+  .hero h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 0.5rem; }
+  .hero p { font-size: 1.1rem; opacity: .8; max-width: 600px; margin: 0 auto 2rem; }
+  .score-grid { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; margin-top: 2rem; }
+  .score-card { background: rgba(255,255,255,.1); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,.15); padding: 1.25rem 2rem; border-radius: 12px; text-align: center; }
+  .score-card .num { font-size: 2.5rem; font-weight: 800; display: block; }
+  .score-card .lbl { font-size: 0.78rem; opacity: .7; text-transform: uppercase; letter-spacing: .05em; }
+  .score-card.bad .num { color: #f87171; }
+  .score-card.ok .num { color: #fbbf24; }
+  .score-card.good .num { color: #34d399; }
+
+  /* LAYOUT */
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+  .section { padding: 3.5rem 0; }
+  .section-title { font-size: 1.6rem; font-weight: 800; margin-bottom: 0.4rem; }
+  .section-sub { color: #64748b; margin-bottom: 2.5rem; font-size: 0.95rem; }
+  
+  /* PROBLEM CARDS */
+  .problems-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 1.5rem; }
+  .problem-card { background: white; border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; }
+  .problem-card .pc-header { padding: 1rem 1.25rem 0.75rem; display: flex; align-items: center; gap: 0.75rem; border-bottom: 1px solid var(--gray-100); }
+  .pc-num { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; flex-shrink: 0; }
+  .pc-num.critical { background: #fee2e2; color: var(--red); }
+  .pc-num.high { background: #fef3c7; color: #d97706; }
+  .pc-num.medium { background: #ede9fe; color: var(--purple); }
+  .pc-title { font-weight: 700; font-size: 0.95rem; }
+  .pc-tag { margin-left: auto; font-size: 0.7rem; font-weight: 600; padding: 2px 8px; border-radius: 20px; }
+  .pc-tag.critical { background: #fee2e2; color: var(--red); }
+  .pc-tag.high { background: #fef3c7; color: #d97706; }
+  .pc-tag.medium { background: #ede9fe; color: var(--purple); }
+  .problem-card .pc-body { padding: 1.25rem; }
+  .problem-card .pc-body p { font-size: 0.88rem; color: #475569; margin-bottom: 1rem; }
+  
+  /* COMPARE BOXES */
+  .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-top: 0.75rem; }
+  .compare-box { border-radius: 8px; padding: 0.875rem; font-size: 0.82rem; }
+  .compare-box.bad { background: #fef2f2; border: 1.5px solid #fecaca; }
+  .compare-box.good { background: #f0fdf4; border: 1.5px solid #bbf7d0; }
+  .compare-box strong { display: block; font-size: 0.72rem; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 0.4rem; }
+  .compare-box.bad strong { color: var(--red); }
+  .compare-box.good strong { color: var(--green); }
+
+  /* CODE BLOCKS */
+  .code-block { background: var(--gray-900); color: #e2e8f0; border-radius: 8px; padding: 1rem 1.25rem; font-size: 0.78rem; font-family: 'Cascadia Code', 'Fira Code', monospace; overflow-x: auto; margin-top: 0.75rem; line-height: 1.7; }
+  .code-block .kw { color: #93c5fd; }
+  .code-block .str { color: #86efac; }
+  .code-block .cm { color: #6b7280; font-style: italic; }
+  .code-block .prop { color: #fca5a5; }
+  .code-block .val { color: #fbbf24; }
+
+  /* VISUAL MOCKUP PANELS */
+  .mockup-panel { background: white; border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; margin: 1.5rem 0; }
+  .mockup-header { background: var(--gray-900); color: white; padding: 0.6rem 1rem; font-size: 0.78rem; display: flex; align-items: center; gap: 0.5rem; }
+  .mockup-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .mockup-body { padding: 1.5rem; }
+  
+  /* SIDE BY SIDE WIREFRAMES */
+  .wireframe-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.5rem 0; }
+  .wireframe { border-radius: 10px; overflow: hidden; }
+  .wireframe-label { text-align: center; font-size: 0.78rem; font-weight: 600; padding: 0.5rem; }
+  .wireframe-label.before { background: #fef2f2; color: var(--red); }
+  .wireframe-label.after { background: #f0fdf4; color: var(--green); }
+  
+  /* COMPETITOR TABLE */
+  .compare-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin: 1.5rem 0; }
+  .compare-table th { background: var(--gray-800); color: white; padding: 0.75rem 1rem; text-align: left; font-weight: 600; }
+  .compare-table td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--gray-100); vertical-align: top; }
+  .compare-table tr:nth-child(even) td { background: var(--gray-50); }
+  .compare-table td:first-child { font-weight: 600; color: var(--gray-800); }
+  .chip { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 0.72rem; font-weight: 600; margin: 1px; }
+  .chip.win { background: #dcfce7; color: #15803d; }
+  .chip.lose { background: #fee2e2; color: #b91c1c; }
+  .chip.tie { background: #fef3c7; color: #b45309; }
+
+  /* PRIORITY LIST */
+  .priority-list { list-style: none; }
+  .priority-list li { display: flex; gap: 1rem; padding: 1.1rem 1.25rem; background: white; border-radius: 10px; margin-bottom: 0.75rem; box-shadow: 0 2px 8px rgba(0,0,0,.05); align-items: flex-start; }
+  .priority-list .pri-num { font-size: 1.1rem; font-weight: 800; color: var(--brand); min-width: 28px; }
+  .priority-list .pri-body h4 { font-size: 0.92rem; margin-bottom: 0.2rem; }
+  .priority-list .pri-body p { font-size: 0.82rem; color: #64748b; }
+  .pri-effort { margin-left: auto; font-size: 0.72rem; font-weight: 700; padding: 3px 10px; border-radius: 20px; white-space: nowrap; align-self: center; }
+  .pri-effort.easy { background: #dcfce7; color: #15803d; }
+  .pri-effort.medium { background: #fef3c7; color: #b45309; }
+  .pri-effort.hard { background: #fee2e2; color: #b91c1c; }
+
+  /* IMPROVEMENT SECTION */
+  .improvement { background: white; border-radius: var(--radius); box-shadow: var(--shadow); margin: 1.5rem 0; overflow: hidden; }
+  .improvement-header { padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--gray-100); display: flex; gap: 1rem; align-items: center; }
+  .improvement-header .imp-icon { width: 42px; height: 42px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
+  .improvement-header h3 { font-size: 1rem; font-weight: 700; }
+  .improvement-header p { font-size: 0.82rem; color: #64748b; }
+  .improvement-body { padding: 1.5rem; }
+  
+  /* VISUAL DEMO COMPONENTS */
+  .demo-old { background: #f8f8f8; border: 2px solid #e5e7eb; border-radius: 8px; padding: 1rem; margin-bottom: 0.5rem; }
+  .demo-new { background: white; border: 2px solid #bfdbfe; border-radius: 8px; padding: 1rem; box-shadow: 0 4px 16px rgba(30,64,175,.1); }
+  .demo-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 0.6rem; display: block; }
+  .demo-label.old { color: #9ca3af; }
+  .demo-label.new { color: var(--brand); }
+
+  /* OLD SIDEBAR DEMO */
+  .sidebar-demo { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+  .sd-sidebar { width: 220px; border-radius: 10px; overflow: hidden; flex-shrink: 0; }
+  .sd-main { flex: 1; min-width: 200px; }
+  .sd-nav-item-old { padding: 0.55rem 1rem; font-size: 0.82rem; border-bottom: 1px solid rgba(0,0,0,.06); cursor: pointer; }
+  .sd-nav-item-old:hover { background: #f3f4f6; }
+  .sd-nav-item-old.active { background: #e0f2fe; color: #0284c7; border-left: 3px solid #0284c7; }
+  .sd-cat-old { padding: 0.35rem 0.75rem; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; color: #9ca3af; letter-spacing: .07em; background: #f9fafb; }
+  
+  /* NEW SIDEBAR DEMO */
+  .sd-sidebar-new { background: #0f172a; color: white; }
+  .sd-nav-item-new { padding: 0.65rem 1rem 0.65rem 0.875rem; font-size: 0.83rem; display: flex; align-items: center; gap: 0.65rem; cursor: pointer; border-radius: 7px; margin: 0 0.5rem 0.15rem; color: #94a3b8; transition: all .15s; }
+  .sd-nav-item-new:hover { background: rgba(255,255,255,.06); color: white; }
+  .sd-nav-item-new.active { background: rgba(96,165,250,.15); color: #93c5fd; }
+  .sd-nav-item-new .icon { width: 20px; text-align: center; font-size: 0.9rem; }
+  .sd-nav-item-new .badge { margin-left: auto; background: rgba(239,68,68,.2); color: #fca5a5; border-radius: 20px; font-size: 0.65rem; padding: 1px 6px; font-weight: 700; }
+  .sd-cat-new { padding: 0.8rem 1.5rem 0.3rem; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; color: #475569; letter-spacing: .1em; }
+
+  /* FORM DEMOS */
+  .form-field-old { margin-bottom: 1rem; }
+  .form-field-old label { display: block; font-size: 0.82rem; color: #374151; margin-bottom: 0.3rem; }
+  .form-field-old input, .form-field-old select { width: 100%; padding: 0.5rem 0.75rem; border: 1px solid #d1d5db; border-radius: 4px; font-size: 0.85rem; background: white; }
+  .form-field-new { margin-bottom: 1.25rem; }
+  .form-field-new label { display: block; font-size: 0.78rem; font-weight: 600; color: #1e40af; margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: .04em; }
+  .form-field-new input, .form-field-new select { width: 100%; padding: 0.75rem 1rem; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 0.9rem; background: white; transition: border .15s; outline: none; }
+  .form-field-new input:focus, .form-field-new select:focus { border-color: #93c5fd; box-shadow: 0 0 0 3px rgba(147,197,253,.3); }
+  .form-field-new .field-hint { font-size: 0.72rem; color: #94a3b8; margin-top: 0.3rem; }
+  
+  /* STAT CARDS */
+  .stat-cards-old { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem; }
+  .stat-card-old { background: white; border: 1px solid #e5e7eb; border-radius: 8px; padding: 0.875rem; text-align: center; }
+  .stat-card-old .num { font-size: 1.5rem; font-weight: 700; color: #1f2937; }
+  .stat-card-old .lbl { font-size: 0.72rem; color: #9ca3af; }
+
+  .stat-cards-new { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.875rem; }
+  .stat-card-new { background: white; border-radius: 12px; padding: 1.1rem; box-shadow: 0 4px 16px rgba(0,0,0,.07); display: flex; align-items: flex-start; gap: 0.875rem; position: relative; overflow: hidden; }
+  .stat-card-new::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+  .stat-card-new.c1::before { background: #3b82f6; }
+  .stat-card-new.c2::before { background: #10b981; }
+  .stat-card-new.c3::before { background: #f59e0b; }
+  .stat-card-new.c4::before { background: #8b5cf6; }
+  .stat-icon-new { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
+  .stat-icon-new.c1 { background: #eff6ff; color: #3b82f6; }
+  .stat-icon-new.c2 { background: #ecfdf5; color: #10b981; }
+  .stat-icon-new.c3 { background: #fffbeb; color: #f59e0b; }
+  .stat-icon-new.c4 { background: #f5f3ff; color: #8b5cf6; }
+  .stat-card-new .sc-info .num { font-size: 1.6rem; font-weight: 800; line-height: 1; }
+  .stat-card-new .sc-info .lbl { font-size: 0.72rem; color: #94a3b8; margin-top: 0.2rem; }
+  .stat-card-new .sc-info .trend { font-size: 0.72rem; font-weight: 600; color: #10b981; margin-top: 0.3rem; }
+
+  /* TABS DEMO */
+  .tabs-old { display: flex; gap: 0; border-bottom: 2px solid #e5e7eb; margin-bottom: 1rem; }
+  .tab-old { padding: 0.6rem 1rem; font-size: 0.82rem; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px; color: #6b7280; }
+  .tab-old.active { color: #2563eb; border-bottom-color: #2563eb; }
+  
+  .tabs-new { display: flex; gap: 0.4rem; background: #f1f5f9; border-radius: 10px; padding: 0.35rem; margin-bottom: 1.25rem; }
+  .tab-new { padding: 0.55rem 1rem; font-size: 0.83rem; cursor: pointer; border-radius: 8px; color: #64748b; font-weight: 500; display: flex; align-items: center; gap: 0.4rem; transition: all .15s; }
+  .tab-new.active { background: white; color: #1e40af; font-weight: 600; box-shadow: 0 2px 8px rgba(0,0,0,.08); }
+
+  /* TABLE DEMOS */
+  .table-old { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+  .table-old th { background: #f3f4f6; padding: 0.6rem 0.75rem; text-align: left; font-weight: 600; border-bottom: 1px solid #e5e7eb; }
+  .table-old td { padding: 0.6rem 0.75rem; border-bottom: 1px solid #f3f4f6; }
+  
+  .table-new { width: 100%; border-collapse: collapse; font-size: 0.83rem; }
+  .table-new thead tr { border-bottom: 2px solid #e2e8f0; }
+  .table-new th { padding: 0.75rem 1rem; text-align: left; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: #94a3b8; }
+  .table-new td { padding: 0.875rem 1rem; border-bottom: 1px solid #f8fafc; }
+  .table-new tr:hover td { background: #f8fafc; }
+  .table-new .avatar-cell { display: flex; align-items: center; gap: 0.75rem; }
+  .avatar-sm { width: 34px; height: 34px; border-radius: 50%; background: linear-gradient(135deg, #3b82f6, #8b5cf6); display: flex; align-items: center; justify-content: center; color: white; font-size: 0.75rem; font-weight: 700; flex-shrink: 0; }
+  .status-pill { display: inline-flex; align-items: center; gap: 0.3rem; padding: 3px 10px; border-radius: 20px; font-size: 0.72rem; font-weight: 600; }
+  .status-pill.paid { background: #dcfce7; color: #15803d; }
+  .status-pill.due { background: #fee2e2; color: #b91c1c; }
+  .status-pill.partial { background: #fef3c7; color: #b45309; }
+  .status-pill::before { content: '●'; font-size: 0.5rem; }
+
+  /* BREADCRUMB */
+  .breadcrumb-new { display: flex; align-items: center; gap: 0.4rem; font-size: 0.78rem; color: #94a3b8; margin-bottom: 1.25rem; }
+  .breadcrumb-new .bc-sep { color: #cbd5e1; }
+  .breadcrumb-new .bc-current { color: #1e40af; font-weight: 600; }
+
+  /* SEARCH DEMO */
+  .search-old { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+  .search-old input { padding: 0.5rem 0.75rem; border: 1px solid #d1d5db; border-radius: 4px; font-size: 0.82rem; }
+  .search-old select { padding: 0.5rem; border: 1px solid #d1d5db; border-radius: 4px; font-size: 0.82rem; }
+  .search-old button { padding: 0.5rem 1rem; background: #2563eb; color: white; border: none; border-radius: 4px; font-size: 0.82rem; cursor: pointer; }
+  
+  .search-new { background: white; border-radius: 12px; padding: 1.25rem; box-shadow: 0 2px 12px rgba(0,0,0,.06); margin-bottom: 1.25rem; }
+  .search-new-bar { display: flex; gap: 0.75rem; }
+  .search-input-wrap { flex: 1; position: relative; }
+  .search-input-wrap input { width: 100%; padding: 0.75rem 1rem 0.75rem 2.5rem; border: 2px solid #e2e8f0; border-radius: 10px; font-size: 0.9rem; outline: none; }
+  .search-input-wrap .si { position: absolute; left: 0.875rem; top: 50%; transform: translateY(-50%); color: #94a3b8; font-size: 0.9rem; }
+  .search-chip-bar { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.75rem; }
+  .search-chip { background: #eff6ff; color: #2563eb; border: 1.5px solid #bfdbfe; border-radius: 20px; padding: 3px 10px; font-size: 0.72rem; font-weight: 600; cursor: pointer; }
+  .search-chip.active { background: #2563eb; color: white; border-color: #2563eb; }
+  .search-btn { padding: 0.75rem 1.5rem; background: #1e40af; color: white; border: none; border-radius: 10px; font-size: 0.88rem; font-weight: 600; cursor: pointer; white-space: nowrap; }
+
+  /* EMPTY STATE */
+  .empty-old { text-align: center; padding: 2rem; color: #9ca3af; font-size: 0.85rem; }
+  .empty-new { text-align: center; padding: 3rem 1.5rem; }
+  .empty-new .em-icon { font-size: 3rem; margin-bottom: 1rem; opacity: .5; }
+  .empty-new h4 { font-size: 1rem; font-weight: 600; color: #334155; margin-bottom: 0.4rem; }
+  .empty-new p { font-size: 0.83rem; color: #94a3b8; margin-bottom: 1.25rem; }
+  .empty-new button { padding: 0.65rem 1.5rem; background: #1e40af; color: white; border: none; border-radius: 8px; font-size: 0.85rem; font-weight: 600; cursor: pointer; }
+
+  /* TOAST DEMO */
+  .toast-old { background: #1f2937; color: white; padding: 0.75rem 1.25rem; border-radius: 4px; font-size: 0.85rem; display: inline-block; }
+  .toast-new { background: white; border-radius: 12px; padding: 1rem 1.25rem; box-shadow: 0 8px 32px rgba(0,0,0,.15); display: inline-flex; align-items: center; gap: 0.875rem; font-size: 0.88rem; border-left: 4px solid #10b981; }
+  .toast-new .ti { width: 32px; height: 32px; background: #dcfce7; color: #15803d; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+
+  /* MOBILE WARNINGS */
+  .mobile-warn { background: #fef3c7; border: 1.5px solid #fcd34d; border-radius: 10px; padding: 1rem 1.25rem; display: flex; gap: 0.75rem; align-items: flex-start; margin: 1rem 0; font-size: 0.85rem; }
+  .mobile-warn .mw-icon { color: #d97706; font-size: 1.1rem; flex-shrink: 0; margin-top: 0.1rem; }
+
+  /* ACTION ITEMS */
+  .action-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; margin-top: 1.5rem; }
+  .action-item { background: white; border-radius: 10px; padding: 1.25rem; box-shadow: 0 2px 8px rgba(0,0,0,.06); border-left: 4px solid var(--brand); }
+  .action-item h4 { font-size: 0.9rem; font-weight: 700; margin-bottom: 0.4rem; }
+  .action-item p { font-size: 0.82rem; color: #64748b; }
+  .action-item .ai-tag { font-size: 0.68rem; font-weight: 700; padding: 2px 7px; border-radius: 20px; background: #eff6ff; color: #2563eb; display: inline-block; margin-top: 0.6rem; }
+
+  /* ROADMAP */
+  .roadmap { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.25rem; margin: 1.5rem 0; }
+  .roadmap-phase { background: white; border-radius: 12px; overflow: hidden; box-shadow: var(--shadow); }
+  .roadmap-phase .rp-head { padding: 1rem 1.25rem; font-weight: 700; font-size: 0.9rem; color: white; }
+  .roadmap-phase.p1 .rp-head { background: #ef4444; }
+  .roadmap-phase.p2 .rp-head { background: #f59e0b; }
+  .roadmap-phase.p3 .rp-head { background: #10b981; }
+  .roadmap-phase.p4 .rp-head { background: #8b5cf6; }
+  .roadmap-phase ul { padding: 1rem 1.25rem; list-style: none; }
+  .roadmap-phase ul li { font-size: 0.82rem; padding: 0.35rem 0; border-bottom: 1px solid #f1f5f9; display: flex; align-items: center; gap: 0.5rem; color: #475569; }
+  .roadmap-phase ul li::before { content: '→'; color: #94a3b8; font-size: 0.75rem; }
+
+  @media(max-width:768px) {
+    .hero h1 { font-size: 1.7rem; }
+    .wireframe-pair, .compare, .stat-cards-new, .stat-cards-old { grid-template-columns: 1fr; }
+    .sidebar-demo { flex-direction: column; }
+    .search-new-bar { flex-direction: column; }
+    .sticky-nav { gap: 0.75rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="sticky-nav">
+  <span class="logo">🎓 SNR ERP — UI/UX Audit</span>
+  <a href="#problems">Problems</a>
+  <a href="#vs-competitor">vs Competitor</a>
+  <a href="#improvements">Improvements</a>
+  <a href="#components">Components</a>
+  <a href="#roadmap">Roadmap</a>
+</nav>
+
+<div class="hero">
+  <h1>SNR ERP — Full UI/UX Audit</h1>
+  <p>Competitor analysis vs EducationDesk · Every pain point identified · Visual before/after for every fix</p>
+  <div class="score-grid">
+    <div class="score-card bad"><span class="num">4.5</span><span class="lbl">Current UI Score</span></div>
+    <div class="score-card ok"><span class="num">7.2</span><span class="lbl">Competitor Score</span></div>
+    <div class="score-card good"><span class="num">9.0</span><span class="lbl">Target After Fixes</span></div>
+    <div class="score-card"><span class="num">18</span><span class="lbl">Issues Found</span></div>
+    <div class="score-card good"><span class="num">3 wks</span><span class="lbl">Estimated Fix Time</span></div>
+  </div>
+</div>
+
+<!-- ── PROBLEMS ──────────────────────────────────────────── -->
+<section id="problems" class="section" style="background:var(--gray-50)">
+<div class="container">
+  <h2 class="section-title">18 UI/UX Problems Found</h2>
+  <p class="section-sub">Ranked by user impact. Critical = users can't do their job. High = friction every session. Medium = polish gap.</p>
+  
+  <div class="problems-grid">
+
+    <!-- P1 -->
+    <div class="problem-card">
+      <div class="pc-header">
+        <div class="pc-num critical">1</div>
+        <span class="pc-title">Sidebar has no visual hierarchy — 17 categories look identical</span>
+        <span class="pc-tag critical">Critical</span>
+      </div>
+      <div class="pc-body">
+        <p>All 17 sidebar categories use the same font weight, size, and color. Users can't scan to find what they need. The competitor EducationDesk groups items into logical visual clusters with color-coded icons per module.</p>
+        <div class="compare">
+          <div class="compare-box bad"><strong>🔴 Your Current</strong>Flat list of 17 categories, all looking identical. No grouping, no color coding, no visual weight difference between parent and child items.</div>
+          <div class="compare-box good"><strong>✅ What's Needed</strong>Color-coded module icons (blue=students, green=fees, orange=exams), subtle section dividers, and clear open/closed state for each category.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- P2 -->
+    <div class="problem-card">
+      <div class="pc-header">
+        <div class="pc-num critical">2</div>
+        <span class="pc-title">No breadcrumb — users don't know where they are</span>
+        <span class="pc-tag critical">Critical</span>
+      </div>
+      <div class="pc-body">
+        <p>When an admin is on "Bulk Result Generator" there's zero indication of their location: no breadcrumb, no page title, no "you are here" signal. After clicking through the sidebar, context is completely lost.</p>
+        <div class="compare">
+          <div class="compare-box bad"><strong>🔴 Current</strong>Main content area shows just the section content. No "Home → Results → Bulk Generator" trail.</div>
+          <div class="compare-box good"><strong>✅ Fix</strong>Add <code>Home / Results / Bulk Generator</code> breadcrumb in the page header. 3 lines of JS to wire it to showSection().</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- P3 -->
+    <div class="problem-card">
+      <div class="pc-header">
+        <div class="pc-num critical">3</div>
+        <span class="pc-title">Dashboard home shows no actionable data</span>
+        <span class="pc-tag critical">Critical</span>
+      </div>
+      <div class="pc-body">
+        <p>The admin's first screen after login is mostly empty space or generic stats. The competitor opens with: today's attendance %, fees collected this month vs. target, overdue count, and upcoming exam alerts. Yours doesn't do any of this.</p>
+        <div class="compare">
+          <div class="compare-box bad"><strong>🔴 Current</strong>Static stat cards with placeholder numbers. No "urgent actions needed" panel, no today's summary, no activity feed.</div>
+          <div class="compare-box good"><strong>✅ Fix</strong>4 live KPI cards (attendance today, fees this month, overdue, exams this week) + 1 quick-action row + recent-activity feed. All Firestore-queryable.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- P4 -->
+    <div class="problem-card">
+      <div class="pc-header">
+        <div class="pc-num critical">4</div>
+        <span class="pc-title">Forms have no visual structure — 28-field add-student is a wall of inputs</span>
+        <span class="pc-tag critical">Critical</span>
+      </div>
+      <div class="pc-body">
+        <p>The Add Student form dumps all 28 fields on one screen in a single column with no sections, no steps, no grouping. Users make errors and miss required fields. Competitor uses a multi-step wizard with logical groups: Basic Info → Academic Info → Guardian Info → Photo/Docs.</p>
+        <div class="compare">
+          <div class="compare-box bad"><strong>🔴 Current</strong>28 fields in one form, linear layout, no visual separation between personal, academic and guardian data.</div>
+          <div class="compare-box good"><strong>✅ Fix</strong>4-step wizard with a step progress indicator: Step 1 Basic, Step 2 Academic, Step 3 Guardian, Step 4 Documents. Each step = 5-8 fields max.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- P5 -->
+    <div class="problem-card">
+      <div class="pc-header">
+        <div class="pc-num high">5</div>
+        <span class="pc-title">No global search across the app</span>
+        <span class="pc-tag high">High</span>
+      </div>
+      <div class="pc-body">
+        <p>To find a student, admin must navigate: Sidebar → Student Management → Search Student → type name. There's no ⌘K / Ctrl+K command palette or top-bar search. Every competitor has a global search bar pinned to the top of the dashboard.</p>
+        <div class="compare">
+          <div class="compare-box bad"><strong>🔴 Current</strong>Per-section search only. To find a student you must already be in the Student section.</div>
+          <div class="compare-box good"><strong>✅ Fix</strong>Global search bar in the top header. Searches students, fees, and sections simultaneously. Keyboard shortcut Ctrl+K.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- P6 -->
+    <div class="problem-card">
+      <div class="pc-header">
+        <div class="pc-num high">6</div>
+        <span class="pc-title">Data tables have no sorting, filtering, or export buttons</span>
+        <span class="pc-tag high">High</span>
+      </div>
+      <div class="pc-body">
+        <p>Student lists, fee tables, attendance grids — all are rendered as basic HTML tables with no column sorting, filter chips, pagination display, or "Export to CSV/Excel" button visible in the table header. Competitor uses DataTables.js with per-column filters and Excel/PDF export in every table header.</p>
+        <div class="compare">
+          <div class="compare-box bad"><strong>🔴 Current</strong>Plain table, no sort arrows, no visible pagination, no export button, no column filters.</div>
+          <div class="compare-box good"><strong>✅ Fix</strong>Table header with sort-by arrows + filter chips + "Export CSV" and "Print" buttons. Row count display: "Showing 1-25 of 347 students".</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- P7 -->
+    <div class="problem-card">
+      <div class="pc-header">
+        <div class="pc-num high">7</div>
+        <span class="pc-title">Fee payment screen is confusing — 3 separate sections for one task</span>
+        <span class="pc-tag high">High</span>
+      </div>
+      <div class="pc-body">
+        <p>Collecting a fee payment requires navigating: 1) Search Student, 2) Class Fee Payment, 3) Demand Receipt — three separate sidebar items for what should be a single 3-step flow. The competitor does it in one page: search → ledger → collect → receipt, all in-page.</p>
+        <div class="compare">
+          <div class="compare-box bad"><strong>🔴 Current</strong>Fee flow is split across 3+ separate sections in sidebar. Staff must jump around to complete one payment transaction.</div>
+          <div class="compare-box good"><strong>✅ Fix</strong>Single "Collect Fee" page: Step 1 find student (type-ahead), Step 2 see outstanding (auto-loaded), Step 3 enter amount + mode, Step 4 print receipt. All in one screen.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- P8 -->
+    <div class="problem-card">
+      <div class="pc-header">
+        <div class="pc-num high">8</div>
+        <span class="pc-title">Student portal tabs are invisible on mobile</span>
+        <span class="pc-tag high">High</span>
+      </div>
+      <div class="pc-body">
+        <p>The student dashboard sidebar collapses on mobile but the tab labels are hidden, leaving only icons. Many icons are ambiguous — a folder icon for "Resources" isn't intuitive. Students can't tell where they are without labels.</p>
+        <div class="compare">
+          <div class="compare-box bad"><strong>🔴 Current</strong>Sidebar collapses to icon-only on mobile. No bottom nav bar. No tooltips on icons. Labels disappear entirely.</div>
+          <div class="compare-box good"><strong>✅ Fix</strong>Switch to a bottom navigation bar on mobile (max 5 items: Dashboard, Fees, Exams, Attendance, More). Bottom nav is the mobile-native pattern.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- P9 -->
+    <div class="problem-card">
+      <div class="pc-header">
+        <div class="pc-num high">9</div>
+        <span class="pc-title">Empty states show nothing — just blank content areas</span>
+        <span class="pc-tag high">High</span>
+      </div>
+      <div class="pc-body">
+        <p>When a section has no data (e.g. no exams created yet, no library books added), the content area is blank or shows a tiny "No records" text. Users don't know if the section is loading, broken, or genuinely empty. There's no call-to-action to add the first item.</p>
+        <div class="compare">
+          <div class="compare-box bad"><strong>🔴 Current</strong>"No data" in grey text, no icon, no context, no action button. Users feel lost.</div>
+          <div class="compare-box good"><strong>✅ Fix</strong>Illustrated empty states: icon + heading "No exams yet" + description + primary action button "Create First Exam →"</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- P10 -->
+    <div class="problem-card">
+      <div class="pc-header">
+        <div class="pc-num high">10</div>
+        <span class="pc-title">Loading states are generic — same spinner for all operations</span>
+        <span class="pc-tag high">High</span>
+      </div>
+      <div class="pc-body">
+        <p>A full-page overlay spinner appears for every operation from "loading dashboard" to "saving one field". The 12-second fail-safe is too long. Users can't tell if something is working or frozen.</p>
+        <div class="compare">
+          <div class="compare-box bad"><strong>🔴 Current</strong>Full-page white overlay + spinner for ALL operations. Same experience for 0.2s Firestore read as for 5s PDF generation.</div>
+          <div class="compare-box good"><strong>✅ Fix</strong>3 tiers: (1) inline skeleton loader for data tables, (2) button spinner for form submits, (3) full-page overlay only for navigation/PDF generation.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- P11 -->
+    <div class="problem-card">
+      <div class="pc-header">
+        <div class="pc-num high">11</div>
+        <span class="pc-title">Typography is inconsistent — 14 different font sizes in portal.css</span>
+        <span class="pc-tag high">High</span>
+      </div>
+      <div class="pc-body">
+        <p>portal.css has font sizes: 0.55rem, 0.6rem, 0.65rem, 0.7rem, 0.75rem, 0.8rem, 0.85rem, 0.875rem, 0.9rem, 0.95rem, 1rem, 1.1rem, 1.15rem, 1.25rem, 1.5rem, 1.8rem — 16 values with no scale. Text looks unpredictably sized across sections.</p>
+        <div class="compare">
+          <div class="compare-box bad"><strong>🔴 Current</strong>16 arbitrary font sizes with comments like "Reduced from 0.875rem". No type scale, no design tokens.</div>
+          <div class="compare-box good"><strong>✅ Fix</strong>Define 6 sizes as CSS vars: --text-xs(0.72rem), --text-sm(0.83rem), --text-base(0.95rem), --text-md(1.1rem), --text-lg(1.3rem), --text-xl(1.6rem). Use only these 6.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- P12 -->
+    <div class="problem-card">
+      <div class="pc-header">
+        <div class="pc-num high">12</div>
+        <span class="pc-title">Fee table has no "Paid / Due / Partial" status column with color</span>
+        <span class="pc-tag high">High</span>
+      </div>
+      <div class="pc-body">
+        <p>Fee records are shown in plain rows with no status indicators. Staff must read the numbers to determine if a student is paid up or overdue. The competitor shows a colored status badge (green = Paid, red = Overdue, yellow = Partial) in every row.</p>
+        <div class="compare">
+          <div class="compare-box bad"><strong>🔴 Current</strong>Raw number columns. Staff visually scan amounts to determine status.</div>
+          <div class="compare-box good"><strong>✅ Fix</strong>Add status pill column: <span style="background:#dcfce7;color:#15803d;padding:2px 8px;border-radius:20px;font-size:0.75rem;font-weight:600">● Paid</span> <span style="background:#fee2e2;color:#b91c1c;padding:2px 8px;border-radius:20px;font-size:0.75rem;font-weight:600">● Overdue</span> <span style="background:#fef3c7;color:#b45309;padding:2px 8px;border-radius:20px;font-size:0.75rem;font-weight:600">● Partial</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- P13 -->
+    <div class="problem-card">
+      <div class="pc-header">
+        <div class="pc-num medium">13</div>
+        <span class="pc-title">Buttons lack consistent hierarchy — primary/secondary/ghost all look similar</span>
+        <span class="pc-tag medium">Medium</span>
+      </div>
+      <div class="pc-body">
+        <p>Forms have multiple buttons (Save, Cancel, Export, Delete) that look nearly identical in size and color. There's no clear visual hierarchy telling users which is the primary action. Delete buttons aren't styled destructively.</p>
+        <div class="compare">
+          <div class="compare-box bad"><strong>🔴 Current</strong>Save, Cancel, Export, Delete — all similar-looking buttons side by side.</div>
+          <div class="compare-box good"><strong>✅ Fix</strong>Primary (blue, filled), Secondary (blue, outlined), Ghost (no border), Destructive (red). Delete buttons must be red. Max 1 primary action per form.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- P14 -->
+    <div class="problem-card">
+      <div class="pc-header">
+        <div class="pc-num medium">14</div>
+        <span class="pc-title">No page title in browser tab — every tab says "Admin Dashboard"</span>
+        <span class="pc-tag medium">Medium</span>
+      </div>
+      <div class="pc-body">
+        <p>Every admin dashboard section shares the same browser title "Admin Dashboard". If an admin has 3 tabs open (student search, fee collection, result entry), all tabs say the same thing. Multi-tasking is broken.</p>
+        <div class="compare">
+          <div class="compare-box bad"><strong>🔴 Current</strong>document.title is set once and never updated when showSection() is called.</div>
+          <div class="compare-box good"><strong>✅ Fix</strong>In showSection(), update document.title: "Students | Apex ERP", "Fees | Apex ERP". 2 lines of JS.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- P15 -->
+    <div class="problem-card">
+      <div class="pc-header">
+        <div class="pc-num medium">15</div>
+        <span class="pc-title">Public site homepage stats are hardcoded, look fake</span>
+        <span class="pc-tag medium">Medium</span>
+      </div>
+      <div class="pc-body">
+        <p>The homepage counter shows "300 Students, 15 Teachers, 12 Classes, 8 Years" as hardcoded HTML values. These numbers don't update from the CMS and read as placeholders to any savvy visitor. The CMS exists to drive this, but it's not wired up.</p>
+        <div class="compare">
+          <div class="compare-box bad"><strong>🔴 Current</strong>data-target="300" hardcoded in HTML. Admin cannot change from CMS.</div>
+          <div class="compare-box good"><strong>✅ Fix</strong>Wire counter to Firestore globalStats. Already managed in CMS → Global Stats section — just needs the homepage to read it. 5 lines of JS.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- P16 -->
+    <div class="problem-card">
+      <div class="pc-header">
+        <div class="pc-num medium">16</div>
+        <span class="pc-title">No keyboard shortcuts — power users are slowed down</span>
+        <span class="pc-tag medium">Medium</span>
+      </div>
+      <div class="pc-body">
+        <p>A school accountant collecting 50+ fees per day has no keyboard shortcuts. Every student lookup requires mouse navigation to the sidebar → search box → type. Ctrl+K for global search and arrow keys to navigate results would save 30+ seconds per transaction.</p>
+        <div class="compare">
+          <div class="compare-box bad"><strong>🔴 Current</strong>100% mouse-driven UI. No keyboard navigation beyond browser defaults.</div>
+          <div class="compare-box good"><strong>✅ Fix</strong>Ctrl+K = global search. Ctrl+S = save current form. Escape = close modal. Arrow keys in search results. These are 20-line JS additions.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- P17 -->
+    <div class="problem-card">
+      <div class="pc-header">
+        <div class="pc-num medium">17</div>
+        <span class="pc-title">Toast notifications disappear in 3 seconds — too fast for long messages</span>
+        <span class="pc-tag medium">Medium</span>
+      </div>
+      <div class="pc-body">
+        <p>"Fee payment recorded for Aarav Singh — ₹3,500 received for March 2026, Receipt #1042" disappears in 3 seconds. For success confirmations with details, users can't read them in time.</p>
+        <div class="compare">
+          <div class="compare-box bad"><strong>🔴 Current</strong>Fixed 3-second dismiss for all toasts regardless of message length.</div>
+          <div class="compare-box good"><strong>✅ Fix</strong>Calculate duration from message length (min 3s, +1s per 20 chars). Add a ✕ close button on every toast. Persist error toasts until dismissed.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- P18 -->
+    <div class="problem-card">
+      <div class="pc-header">
+        <div class="pc-num medium">18</div>
+        <span class="pc-title">Mobile public site: floating inquiry button overlaps footer content</span>
+        <span class="pc-tag medium">Medium</span>
+      </div>
+      <div class="pc-body">
+        <p>The fixed floating "Inquiry" button sits at bottom-right and overlaps footer links on mobile screens. Users can't click the footer phone/email links because the button is on top of them.</p>
+        <div class="compare">
+          <div class="compare-box bad"><strong>🔴 Current</strong>Floating button: position: fixed; bottom: 20px; right: 20px — covers footer on all screen sizes.</div>
+          <div class="compare-box good"><strong>✅ Fix</strong>Hide floating button when footer is in viewport (IntersectionObserver on footer). Or push button above footer with bottom: 80px on mobile.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</section>
+
+<!-- ── VS COMPETITOR ──────────────────────────────────────── -->
+<section id="vs-competitor" class="section" style="background:white">
+<div class="container">
+  <h2 class="section-title">SNR ERP vs EducationDesk — Head to Head</h2>
+  <p class="section-sub">Your competitor runs on Bootstrap 3 + jQuery from 2018. You have a modern stack. You should be winning every UX category — but you're currently losing most of them because functionality isn't enough.</p>
+
+  <table class="compare-table">
+    <thead><tr>
+      <th>Category</th>
+      <th>SNR ERP (You)</th>
+      <th>EducationDesk (Competitor)</th>
+      <th>Verdict</th>
+    </tr></thead>
+    <tbody>
+      <tr>
+        <td>Tech Stack</td>
+        <td>Firebase + Vanilla JS + CSS Custom Props (2024)</td>
+        <td>Java Spring MVC + Bootstrap 3 + jQuery (2018)</td>
+        <td><span class="chip win">You Win</span></td>
+      </tr>
+      <tr>
+        <td>Dashboard Home</td>
+        <td>Static placeholder stat cards, no live data</td>
+        <td>Live KPIs, attendance %, fee collection chart, activity feed</td>
+        <td><span class="chip lose">You Lose</span></td>
+      </tr>
+      <tr>
+        <td>Student Search</td>
+        <td>Section-specific search, basic text input</td>
+        <td>Global search: code / name / phone / father name / RFID in one bar</td>
+        <td><span class="chip lose">You Lose</span></td>
+      </tr>
+      <tr>
+        <td>Fee Collection Flow</td>
+        <td>Split across 3+ sidebar sections</td>
+        <td>Single page: search → ledger → collect → receipt, all in-page via AJAX</td>
+        <td><span class="chip lose">You Lose</span></td>
+      </tr>
+      <tr>
+        <td>Data Tables</td>
+        <td>Plain HTML tables, no sort/filter/export visible</td>
+        <td>DataTables.js: sort, search, Excel/PDF export buttons in every table</td>
+        <td><span class="chip lose">You Lose</span></td>
+      </tr>
+      <tr>
+        <td>Add Student Form</td>
+        <td>28 fields on one screen, one column, no steps</td>
+        <td>Multi-tab form with AJAX section loads, photo upload, document upload</td>
+        <td><span class="chip lose">You Lose</span></td>
+      </tr>
+      <tr>
+        <td>Form Validation</td>
+        <td>Basic HTML required + custom JS</td>
+        <td>Parsley.js: per-field inline errors on blur, visual highlight</td>
+        <td><span class="chip tie">Tie</span></td>
+      </tr>
+      <tr>
+        <td>Notifications / Toasts</td>
+        <td>Custom CSS toasts, auto-dismiss 3s</td>
+        <td>PNotify: stacked, categorized, dismissible, persistent options</td>
+        <td><span class="chip lose">You Lose</span></td>
+      </tr>
+      <tr>
+        <td>Mobile Experience</td>
+        <td>Sidebar collapses to icons, no bottom nav</td>
+        <td>Responsive Bootstrap grid, sidebar collapses cleanly</td>
+        <td><span class="chip tie">Tie</span></td>
+      </tr>
+      <tr>
+        <td>Select Dropdowns</td>
+        <td>Native HTML selects (no search inside dropdowns)</td>
+        <td>Select2: searchable dropdowns everywhere (critical for 30-student class lists)</td>
+        <td><span class="chip lose">You Lose</span></td>
+      </tr>
+      <tr>
+        <td>Payment Integration</td>
+        <td>Razorpay (Cloud Function, server-side verify) ✅</td>
+        <td>Manual entry only (no gateway)</td>
+        <td><span class="chip win">You Win</span></td>
+      </tr>
+      <tr>
+        <td>SMS Notifications</td>
+        <td>MSG91 real SMS via Cloud Functions ✅</td>
+        <td>Not present in competitor</td>
+        <td><span class="chip win">You Win</span></td>
+      </tr>
+      <tr>
+        <td>Multi-Tenancy</td>
+        <td>Full multi-tenant SaaS architecture ✅</td>
+        <td>Single-school deployment per instance</td>
+        <td><span class="chip win">You Win</span></td>
+      </tr>
+      <tr>
+        <td>CMS / Branding</td>
+        <td>Full Firestore-driven CMS for all pages ✅</td>
+        <td>Limited website module (basic)</td>
+        <td><span class="chip win">You Win</span></td>
+      </tr>
+      <tr>
+        <td>Loading States</td>
+        <td>Full-page overlay spinner for everything</td>
+        <td>NProgress top-bar loader + section-level spinners</td>
+        <td><span class="chip lose">You Lose</span></td>
+      </tr>
+      <tr>
+        <td>Empty States</td>
+        <td>"No data" text only</td>
+        <td>Contextual empty state messages with add-item prompts</td>
+        <td><span class="chip lose">You Lose</span></td>
+      </tr>
+      <tr>
+        <td>Breadcrumbs</td>
+        <td>None</td>
+        <td>Module → Sub-module breadcrumb trail on every page</td>
+        <td><span class="chip lose">You Lose</span></td>
+      </tr>
+      <tr>
+        <td>Security</td>
+        <td>Firebase Rules + Auth Guard + DPDP ✅</td>
+        <td>Session cookies, no modern security headers</td>
+        <td><span class="chip win">You Win Big</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="mobile-warn">
+    <span class="mw-icon">⚠️</span>
+    <div><strong>Key takeaway:</strong> You have a fundamentally superior technical foundation (modern stack, SaaS architecture, real integrations, better security). But EducationDesk wins on day-to-day usability: searchable dropdowns, data table tools, streamlined fee collection, and breadcrumbs. These are all achievable fixes, not rewrites.</div>
+  </div>
+</div>
+</section>
+
+<!-- ── COMPONENT IMPROVEMENTS ──────────────────────────────── -->
+<section id="components" class="section" style="background:var(--gray-50)">
+<div class="container">
+  <h2 class="section-title">Visual Before / After: Every Component</h2>
+  <p class="section-sub">Exact HTML/CSS patterns to replace. Copy these directly into your codebase.</p>
+
+  <!-- SIDEBAR -->
+  <div class="improvement">
+    <div class="improvement-header">
+      <div class="imp-icon" style="background:#eff6ff;color:#2563eb">🧭</div>
+      <div><h3>Sidebar Navigation — Color-Coded Modules</h3><p>Add module color coding and clearer active states. Replace flat grey with intent.</p></div>
+    </div>
+    <div class="improvement-body">
+      <div class="wireframe-pair">
+        <div class="wireframe">
+          <div class="wireframe-label before">Before — Flat, undifferentiated</div>
+          <div class="demo-old" style="padding:0;overflow:hidden">
+            <div style="background:#f8f8f8;padding:0.75rem 1rem;font-weight:700;font-size:0.85rem;border-bottom:1px solid #e5e7eb">School ERP</div>
+            <div class="sd-cat-old">Student Management</div>
+            <div class="sd-nav-item-old">Add Student</div>
+            <div class="sd-nav-item-old active">Search Student</div>
+            <div class="sd-nav-item-old">Upload Student</div>
+            <div class="sd-cat-old">Fees</div>
+            <div class="sd-nav-item-old">Class Fee Payment</div>
+            <div class="sd-nav-item-old">Monthly Fee</div>
+            <div class="sd-nav-item-old">Demand Receipt</div>
+            <div class="sd-cat-old">Exams</div>
+            <div class="sd-nav-item-old">Create Exams</div>
+            <div class="sd-nav-item-old">Manage Schedule</div>
+          </div>
+        </div>
+        <div class="wireframe">
+          <div class="wireframe-label after">After — Color-coded, clear hierarchy</div>
+          <div class="demo-new" style="padding:0;overflow:hidden">
+            <div class="sd-sidebar-new" style="padding:0.875rem 0">
+              <div style="padding:0 1rem 0.875rem;border-bottom:1px solid rgba(255,255,255,.06);margin-bottom:0.5rem">
+                <div style="font-weight:700;color:white;font-size:0.9rem">🎓 School ERP</div>
+              </div>
+              <div class="sd-cat-new">Students</div>
+              <div class="sd-nav-item-new"><span class="icon" style="color:#3b82f6">👤</span>Add Student</div>
+              <div class="sd-nav-item-new active"><span class="icon" style="color:#3b82f6">🔍</span>Search Student<span class="badge">347</span></div>
+              <div class="sd-nav-item-new"><span class="icon" style="color:#3b82f6">📤</span>Upload</div>
+              <div class="sd-cat-new">Fees</div>
+              <div class="sd-nav-item-new"><span class="icon" style="color:#10b981">💰</span>Collect Fee</div>
+              <div class="sd-nav-item-new"><span class="icon" style="color:#10b981">📋</span>Fee Dues<span class="badge">12</span></div>
+              <div class="sd-cat-new">Exams</div>
+              <div class="sd-nav-item-new"><span class="icon" style="color:#f59e0b">📝</span>Create Exam</div>
+              <div class="sd-nav-item-new"><span class="icon" style="color:#f59e0b">📅</span>Schedule</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="code-block"><span class="cm">/* Add to portal.css — color coding by module group */</span>
+<span class="prop">.nav-group-students</span> <span class="prop">.sd-icon</span> { <span class="prop">color</span>: <span class="val">#3b82f6</span>; }
+<span class="prop">.nav-group-fees</span>     <span class="prop">.sd-icon</span> { <span class="prop">color</span>: <span class="val">#10b981</span>; }
+<span class="prop">.nav-group-exams</span>    <span class="prop">.sd-icon</span> { <span class="prop">color</span>: <span class="val">#f59e0b</span>; }
+<span class="prop">.nav-group-results</span>  <span class="prop">.sd-icon</span> { <span class="prop">color</span>: <span class="val">#8b5cf6</span>; }
+<span class="prop">.nav-group-hr</span>       <span class="prop">.sd-icon</span> { <span class="prop">color</span>: <span class="val">#ec4899</span>; }
+
+<span class="cm">/* Badge on nav items (overdue fees, absent count) */</span>
+<span class="prop">.nav-badge</span> {
+  <span class="prop">margin-left</span>: <span class="val">auto</span>;
+  <span class="prop">background</span>: <span class="val">rgba(239,68,68,.2)</span>;
+  <span class="prop">color</span>: <span class="val">#fca5a5</span>;
+  <span class="prop">font-size</span>: <span class="val">0.65rem</span>;
+  <span class="prop">font-weight</span>: <span class="val">700</span>;
+  <span class="prop">padding</span>: <span class="val">1px 6px</span>;
+  <span class="prop">border-radius</span>: <span class="val">20px</span>;
+}</div>
+    </div>
+  </div>
+
+  <!-- STAT CARDS -->
+  <div class="improvement">
+    <div class="improvement-header">
+      <div class="imp-icon" style="background:#ecfdf5;color:#10b981">📊</div>
+      <div><h3>Dashboard KPI Cards — From Static to Live</h3><p>Replace hardcoded placeholder cards with live Firestore-queried KPIs with trend indicators.</p></div>
+    </div>
+    <div class="improvement-body">
+      <span class="demo-label old">Before — Static, no live data</span>
+      <div class="stat-cards-old demo-old">
+        <div class="stat-card-old"><div class="num">300</div><div class="lbl">Students</div></div>
+        <div class="stat-card-old"><div class="num">15</div><div class="lbl">Teachers</div></div>
+        <div class="stat-card-old"><div class="num">12</div><div class="lbl">Classes</div></div>
+        <div class="stat-card-old"><div class="num">8</div><div class="lbl">Years</div></div>
+      </div>
+      <span class="demo-label new" style="margin-top:1rem;display:block">After — Live Firestore data with trend</span>
+      <div class="stat-cards-new demo-new">
+        <div class="stat-card-new c1"><div class="stat-icon-new c1">👥</div><div class="sc-info"><div class="num">347</div><div class="lbl">Total Students</div><div class="trend">↑ 12 this month</div></div></div>
+        <div class="stat-card-new c2"><div class="stat-icon-new c2">💰</div><div class="sc-info"><div class="num">₹2.4L</div><div class="lbl">Fees This Month</div><div class="trend">↑ 94% collected</div></div></div>
+        <div class="stat-card-new c3"><div class="stat-icon-new c3">📅</div><div class="sc-info"><div class="num">87%</div><div class="lbl">Attendance Today</div><div class="trend" style="color:#ef4444">↓ 12 absent</div></div></div>
+        <div class="stat-card-new c4"><div class="stat-icon-new c4">📝</div><div class="sc-info"><div class="num">3</div><div class="lbl">Exams This Week</div><div class="trend">Next: Mon</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SEARCH -->
+  <div class="improvement">
+    <div class="improvement-header">
+      <div class="imp-icon" style="background:#fef3c7;color:#d97706">🔍</div>
+      <div><h3>Student Search — Global, Multi-Field, Instant</h3><p>Replace scattered per-section search with a global search bar that finds students by name, phone, registration number, or father's name.</p></div>
+    </div>
+    <div class="improvement-body">
+      <span class="demo-label old">Before — Multiple separate inputs, no chips</span>
+      <div class="search-old demo-old">
+        <input type="text" placeholder="Student name...">
+        <select><option>-- Session --</option><option>2025-26</option></select>
+        <select><option>-- Class --</option><option>Class VI</option></select>
+        <button>Search</button>
+      </div>
+      <span class="demo-label new">After — Smart global search with filter chips</span>
+      <div class="search-new demo-new">
+        <div class="search-new-bar">
+          <div class="search-input-wrap">
+            <span class="si">🔍</span>
+            <input type="text" placeholder="Search by name, phone, reg. no., or father name...">
+          </div>
+          <button class="search-btn">Search</button>
+        </div>
+        <div class="search-chip-bar">
+          <span class="search-chip active">All Classes</span>
+          <span class="search-chip">Class VI</span>
+          <span class="search-chip">Class VII</span>
+          <span class="search-chip">Class VIII</span>
+          <span class="search-chip">Fee Due</span>
+          <span class="search-chip">Absent Today</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TABLES -->
+  <div class="improvement">
+    <div class="improvement-header">
+      <div class="imp-icon" style="background:#f5f3ff;color:#8b5cf6">📋</div>
+      <div><h3>Data Tables — Sort, Filter, Export in Every Table</h3><p>Every list view (students, fees, attendance) needs sort arrows, a visible row count, and an Export CSV button.</p></div>
+    </div>
+    <div class="improvement-body">
+      <span class="demo-label old">Before — Plain table, no actions</span>
+      <div class="demo-old" style="overflow-x:auto">
+        <table class="table-old">
+          <thead><tr><th>Name</th><th>Class</th><th>Phone</th><th>Fee Status</th><th>Action</th></tr></thead>
+          <tbody>
+            <tr><td>Aarav Singh</td><td>VI-A</td><td>9898123456</td><td>Paid</td><td>Edit | Delete</td></tr>
+            <tr><td>Priya Sharma</td><td>VII-B</td><td>9898234567</td><td>Due</td><td>Edit | Delete</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <span class="demo-label new">After — Avatar, status pills, row count, export button</span>
+      <div class="demo-new" style="overflow-x:auto">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.875rem;flex-wrap:wrap;gap:0.5rem">
+          <span style="font-size:0.78rem;color:#94a3b8">Showing 1–25 of <strong style="color:#334155">347</strong> students</span>
+          <div style="display:flex;gap:0.5rem">
+            <button style="padding:0.4rem 0.875rem;background:#f1f5f9;color:#475569;border:none;border-radius:8px;font-size:0.78rem;font-weight:600;cursor:pointer">📤 Export CSV</button>
+            <button style="padding:0.4rem 0.875rem;background:#f1f5f9;color:#475569;border:none;border-radius:8px;font-size:0.78rem;font-weight:600;cursor:pointer">🖨️ Print</button>
+          </div>
+        </div>
+        <table class="table-new">
+          <thead><tr><th>Student ↕</th><th>Class ↕</th><th>Phone</th><th>Fee Status ↕</th><th></th></tr></thead>
+          <tbody>
+            <tr><td><div class="avatar-cell"><div class="avatar-sm">A</div><div><div style="font-weight:600;font-size:0.85rem">Aarav Singh</div><div style="font-size:0.72rem;color:#94a3b8">Reg: 574</div></div></div></td><td>VI — A</td><td>98981 23456</td><td><span class="status-pill paid">Paid</span></td><td><button style="border:none;background:none;color:#94a3b8;cursor:pointer;font-size:0.85rem">⋯</button></td></tr>
+            <tr><td><div class="avatar-cell"><div class="avatar-sm" style="background:linear-gradient(135deg,#ec4899,#f59e0b)">P</div><div><div style="font-weight:600;font-size:0.85rem">Priya Sharma</div><div style="font-size:0.72rem;color:#94a3b8">Reg: 581</div></div></div></td><td>VII — B</td><td>98982 34567</td><td><span class="status-pill due">Overdue</span></td><td><button style="border:none;background:none;color:#94a3b8;cursor:pointer;font-size:0.85rem">⋯</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="improvement">
+    <div class="improvement-header">
+      <div class="imp-icon" style="background:#fff7ed;color:#ea580c">🗂️</div>
+      <div><h3>Tab Controls — Pill Style vs Underline</h3><p>Replace bare underline tabs with contained pill tabs. They're clearer as a group and more touch-friendly.</p></div>
+    </div>
+    <div class="improvement-body">
+      <span class="demo-label old">Before — Underline tabs</span>
+      <div class="demo-old">
+        <div class="tabs-old">
+          <div class="tab-old active">SMS</div>
+          <div class="tab-old">WhatsApp</div>
+          <div class="tab-old">Push</div>
+          <div class="tab-old">Email</div>
+        </div>
+        <div style="font-size:0.82rem;color:#6b7280">Message type selected: SMS</div>
+      </div>
+      <span class="demo-label new">After — Pill tabs with icons</span>
+      <div class="demo-new">
+        <div class="tabs-new">
+          <div class="tab-new active">📱 SMS</div>
+          <div class="tab-new">💬 WhatsApp</div>
+          <div class="tab-new">🔔 Push</div>
+          <div class="tab-new">📧 Email</div>
+        </div>
+        <div style="font-size:0.85rem;color:#475569">Compose your SMS message below.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EMPTY STATE -->
+  <div class="improvement">
+    <div class="improvement-header">
+      <div class="imp-icon" style="background:#f0fdf4;color:#10b981">🈳</div>
+      <div><h3>Empty States — From Blank to Actionable</h3><p>Every list view that can be empty needs an illustrated empty state with a clear call-to-action.</p></div>
+    </div>
+    <div class="improvement-body">
+      <div class="wireframe-pair">
+        <div class="wireframe">
+          <div class="wireframe-label before">Before</div>
+          <div class="demo-old" style="min-height:120px">
+            <div class="empty-old">No records found.</div>
+          </div>
+        </div>
+        <div class="wireframe">
+          <div class="wireframe-label after">After</div>
+          <div class="demo-new">
+            <div class="empty-new">
+              <div class="em-icon">📝</div>
+              <h4>No exams created yet</h4>
+              <p>Schedule your first exam to let students know what to prepare for.</p>
+              <button>+ Create First Exam</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div class="improvement">
+    <div class="improvement-header">
+      <div class="imp-icon" style="background:#dcfce7;color:#16a34a">🔔</div>
+      <div><h3>Toast Notifications — Rich & Dismissible</h3><p>Add icons, context, and a close button. Errors should persist until dismissed.</p></div>
+    </div>
+    <div class="improvement-body">
+      <span class="demo-label old">Before</span>
+      <div class="demo-old"><div class="toast-old">Fee payment saved successfully</div></div>
+      <span class="demo-label new">After</span>
+      <div class="demo-new">
+        <div class="toast-new">
+          <div class="ti">✓</div>
+          <div>
+            <div style="font-weight:600;font-size:0.88rem">Payment Recorded</div>
+            <div style="font-size:0.78rem;color:#64748b;margin-top:2px">₹3,500 from Aarav Singh · Receipt #1042</div>
+          </div>
+          <div style="margin-left:auto;color:#94a3b8;cursor:pointer;font-size:1rem;padding-left:0.75rem">✕</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FORM -->
+  <div class="improvement">
+    <div class="improvement-header">
+      <div class="imp-icon" style="background:#eff6ff;color:#3b82f6">📋</div>
+      <div><h3>Form Fields — Elevated Labels, Better Focus States</h3><p>Replace basic inputs with floating-label inputs that have clear focus rings and helper text.</p></div>
+    </div>
+    <div class="improvement-body">
+      <div class="wireframe-pair">
+        <div class="wireframe">
+          <div class="wireframe-label before">Before</div>
+          <div class="demo-old">
+            <div class="form-field-old"><label>Student Name</label><input type="text" placeholder="Enter name"></div>
+            <div class="form-field-old"><label>Class</label><select><option>Select class</option><option>Class VI</option></select></div>
+            <div class="form-field-old"><label>Phone</label><input type="text" placeholder="Phone number"></div>
+          </div>
+        </div>
+        <div class="wireframe">
+          <div class="wireframe-label after">After</div>
+          <div class="demo-new">
+            <div class="form-field-new"><label>Student Name</label><input type="text" placeholder="e.g. Aarav Singh"><div class="field-hint">As per school records</div></div>
+            <div class="form-field-new"><label>Class & Section</label><select><option>Select class</option><option>Class VI — A</option><option>Class VI — B</option></select></div>
+            <div class="form-field-new"><label>Parent Phone</label><input type="text" placeholder="+91 98981 23456"><div class="field-hint">Used for SMS fee reminders</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BREADCRUMB -->
+  <div class="improvement">
+    <div class="improvement-header">
+      <div class="imp-icon" style="background:#f8fafc;color:#64748b">🗺️</div>
+      <div><h3>Breadcrumb Navigation — 3 Lines of JS, Massive UX Gain</h3><p>Wire document.title and a breadcrumb element to showSection(). Cheapest high-impact fix in this list.</p></div>
+    </div>
+    <div class="improvement-body">
+      <span class="demo-label new">After — User always knows where they are</span>
+      <div class="demo-new">
+        <div class="breadcrumb-new">
+          <span>🏠 Home</span><span class="bc-sep">/</span>
+          <span>Results</span><span class="bc-sep">/</span>
+          <span class="bc-current">Bulk Result Generator</span>
+        </div>
+        <div style="font-size:0.82rem;color:#94a3b8">Page title in browser tab: "Bulk Results | Apex ERP"</div>
+      </div>
+      <div class="code-block"><span class="cm">// In admin-dashboard.js — add to showSection()</span>
+<span class="kw">const</span> <span class="prop">SECTION_LABELS</span> = {
+  <span class="str">'bulkResultGenerator'</span>: { <span class="prop">label</span>: <span class="str">'Bulk Result Generator'</span>, <span class="prop">parent</span>: <span class="str">'Results'</span> },
+  <span class="str">'classFeePayment'</span>:    { <span class="prop">label</span>: <span class="str">'Collect Fee'</span>, <span class="prop">parent</span>: <span class="str">'Fees'</span> },
+  <span class="cm">// ... all sections</span>
+};
+
+<span class="kw">function</span> <span class="prop">showSection</span>(<span class="prop">id</span>) {
+  <span class="cm">// ... existing hide/show logic ...</span>
+  <span class="kw">const</span> <span class="prop">meta</span> = <span class="prop">SECTION_LABELS</span>[<span class="prop">id</span>];
+  <span class="kw">if</span> (<span class="prop">meta</span>) {
+    document.title = `<span class="str">${meta.label} | ${schoolName} ERP</span>`;
+    document.getElementById(<span class="str">'breadcrumbCurrent'</span>).textContent = <span class="prop">meta.label</span>;
+    document.getElementById(<span class="str">'breadcrumbParent'</span>).textContent = <span class="prop">meta.parent</span>;
+  }
+}</div>
+    </div>
+  </div>
+
+</div>
+</section>
+
+<!-- ── MOBILE ──────────────────────────────────────────────── -->
+<section id="improvements" class="section" style="background:white">
+<div class="container">
+  <h2 class="section-title">Mobile UX — Student Portal Fix</h2>
+  <p class="section-sub">Students access the portal from their phones. The current sidebar-on-mobile pattern is broken for student use.</p>
+  
+  <div class="improvement">
+    <div class="improvement-header">
+      <div class="imp-icon" style="background:#fff7ed;color:#ea580c">📱</div>
+      <div><h3>Add Bottom Navigation Bar for Mobile Student Portal</h3><p>Replace the icon-only sidebar collapse with a mobile-native bottom tab bar. This is how every banking/edu app works on mobile.</p></div>
+    </div>
+    <div class="improvement-body">
+      <div class="code-block"><span class="cm">/* Add to portal.css — Mobile bottom nav for student dashboard */</span>
+<span class="prop">.mobile-bottom-nav</span> {
+  <span class="prop">display</span>: <span class="val">none</span>;
+}
+<span class="prop">@media (max-width: 768px)</span> {
+  <span class="prop">.mobile-bottom-nav</span> {
+    <span class="prop">display</span>: <span class="val">flex</span>;
+    <span class="prop">position</span>: <span class="val">fixed</span>;
+    <span class="prop">bottom</span>: <span class="val">0</span>;
+    <span class="prop">left</span>: <span class="val">0</span>;
+    <span class="prop">right</span>: <span class="val">0</span>;
+    <span class="prop">background</span>: <span class="val">white</span>;
+    <span class="prop">border-top</span>: <span class="val">1px solid #e2e8f0</span>;
+    <span class="prop">padding</span>: <span class="val">0.5rem 0 env(safe-area-inset-bottom)</span>;
+    <span class="prop">z-index</span>: <span class="val">200</span>;
+    <span class="prop">box-shadow</span>: <span class="val">0 -4px 20px rgba(0,0,0,.08)</span>;
+  }
+  <span class="prop">.mbn-item</span> {
+    <span class="prop">flex</span>: <span class="val">1</span>;
+    <span class="prop">display</span>: <span class="val">flex</span>;
+    <span class="prop">flex-direction</span>: <span class="val">column</span>;
+    <span class="prop">align-items</span>: <span class="val">center</span>;
+    <span class="prop">gap</span>: <span class="val">2px</span>;
+    <span class="prop">padding</span>: <span class="val">0.4rem 0</span>;
+    <span class="prop">font-size</span>: <span class="val">0.62rem</span>;
+    <span class="prop">color</span>: <span class="val">#94a3b8</span>;
+    <span class="prop">cursor</span>: <span class="val">pointer</span>;
+  }
+  <span class="prop">.mbn-item.active</span> { <span class="prop">color</span>: <span class="val">#1e40af</span>; }
+  <span class="prop">.mbn-item i</span> { <span class="prop">font-size</span>: <span class="val">1.1rem</span>; }
+  <span class="prop">.student-sidebar</span> { <span class="prop">display</span>: <span class="val">none</span>; }  <span class="cm">/* hide sidebar on mobile */</span>
+  <span class="prop">.main-content</span> { <span class="prop">padding-bottom</span>: <span class="val">70px</span>; }  <span class="cm">/* space for bottom nav */</span>
+}</div>
+      <div class="code-block"><span class="cm">&lt;!-- Add to student-dashboard.html before &lt;/body&gt; --&gt;</span>
+&lt;<span class="kw">nav</span> <span class="prop">class</span>=<span class="str">"mobile-bottom-nav"</span>&gt;
+  &lt;<span class="kw">div</span> <span class="prop">class</span>=<span class="str">"mbn-item active"</span> <span class="prop">onclick</span>=<span class="str">"showPortalSection('dashboard')"</span>&gt;
+    &lt;<span class="kw">i</span> <span class="prop">class</span>=<span class="str">"fas fa-th-large"</span>&gt;&lt;/<span class="kw">i</span>&gt; Home
+  &lt;/<span class="kw">div</span>&gt;
+  &lt;<span class="kw">div</span> <span class="prop">class</span>=<span class="str">"mbn-item"</span> <span class="prop">onclick</span>=<span class="str">"showPortalSection('fees')"</span>&gt;
+    &lt;<span class="kw">i</span> <span class="prop">class</span>=<span class="str">"fas fa-wallet"</span>&gt;&lt;/<span class="kw">i</span>&gt; Fees
+  &lt;/<span class="kw">div</span>&gt;
+  &lt;<span class="kw">div</span> <span class="prop">class</span>=<span class="str">"mbn-item"</span> <span class="prop">onclick</span>=<span class="str">"showPortalSection('exams')"</span>&gt;
+    &lt;<span class="kw">i</span> <span class="prop">class</span>=<span class="str">"fas fa-file-alt"</span>&gt;&lt;/<span class="kw">i</span>&gt; Exams
+  &lt;/<span class="kw">div</span>&gt;
+  &lt;<span class="kw">div</span> <span class="prop">class</span>=<span class="str">"mbn-item"</span> <span class="prop">onclick</span>=<span class="str">"showPortalSection('attendance')"</span>&gt;
+    &lt;<span class="kw">i</span> <span class="prop">class</span>=<span class="str">"fas fa-calendar-check"</span>&gt;&lt;/<span class="kw">i</span>&gt; Attend
+  &lt;/<span class="kw">div</span>&gt;
+  &lt;<span class="kw">div</span> <span class="prop">class</span>=<span class="str">"mbn-item"</span> <span class="prop">onclick</span>=<span class="str">"showPortalSection('profile')"</span>&gt;
+    &lt;<span class="kw">i</span> <span class="prop">class</span>=<span class="str">"fas fa-user"</span>&gt;&lt;/<span class="kw">i</span>&gt; Profile
+  &lt;/<span class="kw">div</span>&gt;
+&lt;/<span class="kw">nav</span>&gt;</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ── ROADMAP ──────────────────────────────────────────────── -->
+<section id="roadmap" class="section" style="background:var(--gray-50)">
+<div class="container">
+  <h2 class="section-title">3-Week Implementation Roadmap</h2>
+  <p class="section-sub">Ordered by impact-to-effort ratio. Do Week 1 first — it solves the most felt pain with the least code.</p>
+  
+  <div class="roadmap">
+    <div class="roadmap-phase p1">
+      <div class="rp-head">🔴 Week 1 — Maximum Impact, Low Effort</div>
+      <ul>
+        <li>Breadcrumb + document.title update</li>
+        <li>Status pills in fee/student tables</li>
+        <li>Empty state components (copy code above)</li>
+        <li>Toast: add close button + auto-duration</li>
+        <li>Fix floating button overlapping footer</li>
+        <li>Wire homepage counters to Firestore globalStats</li>
+        <li>Mobile bottom nav for student portal</li>
+      </ul>
+    </div>
+    <div class="roadmap-phase p2">
+      <div class="rp-head">🟡 Week 2 — Sidebar + Search Overhaul</div>
+      <ul>
+        <li>Color-code sidebar module groups</li>
+        <li>Add count badges to sidebar items (fee dues, absent today)</li>
+        <li>Global search bar in admin header (Ctrl+K)</li>
+        <li>Add filter chips to student list</li>
+        <li>Export CSV button to all data tables</li>
+        <li>Sort arrows on table columns</li>
+        <li>Skeleton loaders for data tables</li>
+      </ul>
+    </div>
+    <div class="roadmap-phase p3">
+      <div class="rp-head">🟢 Week 3 — Dashboard + Forms</div>
+      <ul>
+        <li>Live KPI cards on admin home (attendance, fees, exams)</li>
+        <li>Quick-action row on dashboard</li>
+        <li>Add Student form: break into 4-step wizard</li>
+        <li>Define type scale CSS vars (6 sizes only)</li>
+        <li>Consolidate fee collection into one page</li>
+        <li>Button hierarchy system (primary/secondary/ghost/destructive)</li>
+        <li>Keyboard shortcuts (Ctrl+K, Ctrl+S, Escape)</li>
+      </ul>
+    </div>
+    <div class="roadmap-phase p4">
+      <div class="rp-head">🟣 Week 4+ — Polish & Delight</div>
+      <ul>
+        <li>Select2 searchable dropdowns on all class/section fields</li>
+        <li>Tiered loading states (inline vs. full-page)</li>
+        <li>Page transition animations (subtle)</li>
+        <li>Hover states on table rows</li>
+        <li>Confirm dialogs for destructive actions</li>
+        <li>Accessibility audit (WCAG 2.1 AA)</li>
+        <li>Dark mode (optional)</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3 style="margin:2rem 0 1rem;font-size:1.2rem">Quick Win Code — Copy These Today</h3>
+  <div class="action-grid">
+    <div class="action-item">
+      <h4>1. Fix browser tab title</h4>
+      <p>In showSection(), add: <code style="background:#f1f5f9;padding:2px 6px;border-radius:4px;font-size:0.8rem">document.title = sectionName + ' | ' + schoolName + ' ERP'</code></p>
+      <span class="ai-tag">⏱ 15 minutes</span>
+    </div>
+    <div class="action-item">
+      <h4>2. Wire globalStats to homepage</h4>
+      <p>In cms-settings.js, read <code style="background:#f1f5f9;padding:2px 6px;border-radius:4px;font-size:0.8rem">schools/{id}/settings/globalStats</code> and set <code style="background:#f1f5f9;padding:2px 6px;border-radius:4px;font-size:0.8rem">data-target</code> attributes on counter elements.</p>
+      <span class="ai-tag">⏱ 30 minutes</span>
+    </div>
+    <div class="action-item">
+      <h4>3. Mobile bottom nav for students</h4>
+      <p>Copy the HTML + CSS from the Mobile section above. 5 nav items, 20 lines CSS, 5 lines JS.</p>
+      <span class="ai-tag">⏱ 45 minutes</span>
+    </div>
+    <div class="action-item">
+      <h4>4. Status pills for fee tables</h4>
+      <p>Add <code style="background:#f1f5f9;padding:2px 6px;border-radius:4px;font-size:0.8rem">.status-pill.paid/.due/.partial</code> CSS classes and apply them in renderFeeTable().</p>
+      <span class="ai-tag">⏱ 30 minutes</span>
+    </div>
+    <div class="action-item">
+      <h4>5. Toast close button</h4>
+      <p>In showToast(), add <code style="background:#f1f5f9;padding:2px 6px;border-radius:4px;font-size:0.8rem">&lt;button onclick="this.parentElement.remove()"&gt;✕&lt;/button&gt;</code> to the toast HTML.</p>
+      <span class="ai-tag">⏱ 10 minutes</span>
+    </div>
+    <div class="action-item">
+      <h4>6. Export CSV button</h4>
+      <p>Add a universal <code style="background:#f1f5f9;padding:2px 6px;border-radius:4px;font-size:0.8rem">exportTableToCSV(tableId, filename)</code> utility function. Attach to a button above each table.</p>
+      <span class="ai-tag">⏱ 1 hour</span>
+    </div>
+  </div>
+</div>
+</section>
+
+<footer style="background:var(--gray-900);color:#94a3b8;text-align:center;padding:2rem;font-size:0.82rem">
+  <strong style="color:white">SNR Edu ERP — UI/UX Audit Report</strong> · Generated June 22, 2026<br>
+  18 issues identified · 3-week fix roadmap · Competitor analysis vs EducationDesk
+</footer>
+
+</body>
+</html>

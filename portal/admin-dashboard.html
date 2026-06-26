@@ -5,9 +5,108 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title id="dashboardTitle">Admin Dashboard</title>
         <link rel="manifest" href="/manifest.json" />
+        <link rel="stylesheet" href="/css/snr-design-system.css" />
         <link rel="stylesheet" href="/css/portal.css" />
         <link rel="stylesheet" href="/css/id-cards.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+        <style>
+.welcome-bar{background:linear-gradient(135deg,var(--blue-dk) 0%,#1e40af 60%,#3b82f6 100%);border-radius:var(--r-xl);padding:1.5rem 2rem;color:white;margin-bottom:1.5rem;display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;position:relative;overflow:hidden}
+.welcome-bar::after{content:'';position:absolute;right:-40px;top:-40px;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,.06)}
+.wb-left h1{font-size:1.3rem;font-weight:800;margin:0}
+.wb-left p{font-size:.83rem;opacity:.75;margin-top:4px}
+.wb-date{opacity:.6;font-size:.78rem;margin-top:.4rem;display:flex;align-items:center;gap:.3rem}
+.wb-right{margin-left:auto;display:flex;gap:.75rem;flex-wrap:wrap;position:relative;z-index:1}
+.wb-btn{padding:.6rem 1.1rem;border-radius:var(--r-md);font-size:.82rem;font-weight:700;cursor:pointer;border:none;transition:all .15s;display:flex;align-items:center;gap:.4rem}
+.wb-btn.primary{background:white;color:var(--blue-dk)}
+.wb-btn.primary:hover{box-shadow:0 4px 12px rgba(255,255,255,.3)}
+.wb-btn.ghost{background:rgba(255,255,255,.15);color:white;border:1.5px solid rgba(255,255,255,.25)}
+.wb-btn.ghost:hover{background:rgba(255,255,255,.25)}
+.alert-strip{display:flex;gap:.75rem;overflow-x:auto;padding-bottom:.25rem;margin-bottom:1.25rem;scrollbar-width:none}
+.alert-strip::-webkit-scrollbar{display:none}
+.alert-card{display:flex;align-items:center;gap:.65rem;padding:.7rem 1rem;border-radius:var(--r-lg);border:1.5px solid;white-space:nowrap;cursor:pointer;flex-shrink:0;transition:all .15s;font-size:.8rem;font-weight:600}
+.alert-card:hover{transform:translateY(-1px)}
+.ac-red{background:var(--red-lt);border-color:var(--red-md);color:var(--red)}
+.ac-amber{background:var(--amber-lt);border-color:var(--amber-md);color:var(--amber)}
+.ac-blue{background:var(--blue-lt);border-color:var(--blue-md);color:var(--blue)}
+.ac-green{background:var(--green-lt);border-color:var(--green-md);color:var(--green)}
+.alert-card .badge{background:currentColor;color:white;border-radius:20px;padding:1px 7px;font-size:.68rem;margin-left:.25rem}
+.alert-card .badge span{color:white}
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem}
+#dashboardOverviewSection .kpi,.dashboard-section.active .kpi{background:white;border-radius:var(--r-lg);padding:1.1rem 1.25rem;box-shadow:var(--sh-sm);cursor:pointer;transition:all .15s;border-top:3px solid transparent;position:relative;overflow:hidden}
+#dashboardOverviewSection .kpi:hover,.dashboard-section.active .kpi:hover{box-shadow:var(--sh-md);transform:translateY(-2px)}
+#dashboardOverviewSection .kpi-row,.dashboard-section.active .kpi-row{display:flex;align-items:flex-start;gap:.875rem}
+#dashboardOverviewSection .kpi-icon,.dashboard-section.active .kpi-icon{width:42px;height:42px;border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+#dashboardOverviewSection .kd-val,.dashboard-section.active .kd-val{font-size:1.8rem;font-weight:800;line-height:1;color:var(--ink)}
+#dashboardOverviewSection .kd-lbl,.dashboard-section.active .kd-lbl{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--faint);margin-top:.2rem}
+#dashboardOverviewSection .kd-sub,.dashboard-section.active .kd-sub{font-size:.75rem;color:var(--muted);margin-top:.3rem}
+#dashboardOverviewSection .kpi-trend,.dashboard-section.active .kpi-trend{position:absolute;top:.875rem;right:.875rem;font-size:.72rem;font-weight:700;padding:2px 8px;border-radius:20px;display:flex;align-items:center;gap:2px}
+.trend-up{background:var(--green-lt);color:var(--green)}
+.trend-down{background:var(--red-lt);color:var(--red)}
+.trend-flat{background:var(--bg);color:var(--muted)}
+.qa-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:.75rem;margin-bottom:1.5rem}
+.qa-btn{background:white;border-radius:var(--r-lg);padding:1rem .75rem;text-align:center;cursor:pointer;transition:all .15s;box-shadow:var(--sh-sm);border:1.5px solid transparent;text-decoration:none;display:flex;flex-direction:column;align-items:center;gap:.5rem}
+.qa-btn:hover{box-shadow:var(--sh-md);transform:translateY(-2px);border-color:var(--blue-md)}
+.qa-icon{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;margin:0 auto}
+.qa-lbl{font-size:.72rem;font-weight:700;color:var(--ink-3);line-height:1.2;text-align:center}
+.main-grid{display:grid;grid-template-columns:1fr 360px;gap:1.25rem}
+.main-left,.main-right{display:flex;flex-direction:column;gap:1.25rem}
+.card{background:white;border-radius:var(--r-lg);box-shadow:var(--sh-sm);overflow:hidden}
+.card-head{padding:1rem 1.25rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:.75rem}
+.card-head h2{font-size:.9rem;font-weight:700;color:var(--ink);margin:0}
+.card-head p{font-size:.75rem;color:var(--muted);margin:0}
+.card-head .ch-icon{width:32px;height:32px;border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;font-size:.85rem;flex-shrink:0}
+.card-body{padding:1.1rem 1.25rem}
+.see-all{margin-left:auto;font-size:.75rem;font-weight:700;color:var(--blue);cursor:pointer;text-decoration:none;white-space:nowrap}
+.see-all:hover{text-decoration:underline}
+.att-summary{display:flex;align-items:center;gap:1.25rem;margin-bottom:1rem;flex-wrap:wrap}
+.att-donut{position:relative;flex-shrink:0}
+.att-donut svg{transform:rotate(-90deg)}
+.att-donut-text{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.att-pct{font-size:1.3rem;font-weight:800;color:var(--ink)}
+.att-tiny{font-size:.62rem;color:var(--faint);font-weight:700}
+.att-breakdown{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
+.ab-item{background:var(--bg);border-radius:var(--r-md);padding:.5rem .75rem}
+.ab-item .abi-val{font-size:1rem;font-weight:800;color:var(--ink)}
+.ab-item .abi-lbl{font-size:.68rem;color:var(--faint);font-weight:600}
+.class-att-list{display:flex;flex-direction:column;gap:.4rem}
+.cal-row{display:flex;align-items:center;gap:.75rem}
+.cal-cls{font-size:.8rem;font-weight:600;color:var(--ink-3);min-width:70px}
+.cal-bar-bg{flex:1;height:8px;background:var(--bg);border-radius:20px;overflow:hidden}
+.cal-bar{height:100%;border-radius:20px;transition:width .5s ease}
+.cal-pct{font-size:.75rem;font-weight:700;min-width:36px;text-align:right}
+.pay-list{display:flex;flex-direction:column;gap:.1rem}
+.pay-item{display:flex;align-items:center;gap:.75rem;padding:.65rem .25rem;border-bottom:1px solid #f8fafc;cursor:pointer;transition:background .1s;border-radius:var(--r-sm)}
+.pay-item:last-child{border-bottom:none}
+.pay-item:hover{background:var(--bg)}
+.pay-avatar{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.78rem;color:white;flex-shrink:0}
+.pay-info{flex:1;min-width:0}
+.pay-name{font-size:.85rem;font-weight:600;color:var(--ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pay-meta{font-size:.72rem;color:var(--muted)}
+.pay-right{text-align:right;flex-shrink:0}
+.pay-amount{font-size:.88rem;font-weight:800;color:var(--green)}
+.pay-time{font-size:.68rem;color:var(--faint)}
+.activity-feed{display:flex;flex-direction:column;gap:0}
+.af-item{display:flex;gap:.75rem;padding:.75rem 0;border-bottom:1px solid #f8fafc;position:relative}
+.af-item:last-child{border-bottom:none}
+.af-item::before{content:'';position:absolute;left:15px;top:38px;bottom:-1px;width:1px;background:var(--border)}
+.af-item:last-child::before{display:none}
+.af-icon{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.8rem;flex-shrink:0;position:relative;z-index:1}
+.af-body{flex:1;min-width:0}
+.af-text{font-size:.82rem;color:var(--ink-3);line-height:1.4}
+.af-text strong{color:var(--ink);font-weight:700}
+.af-time{font-size:.7rem;color:var(--faint);margin-top:2px}
+.upcoming-list{display:flex;flex-direction:column;gap:.6rem}
+.up-item{display:flex;gap:.875rem;align-items:flex-start;padding:.75rem;background:var(--bg);border-radius:var(--r-md);cursor:pointer;transition:all .15s}
+.up-item:hover{background:var(--blue-lt)}
+.up-date{display:flex;flex-direction:column;align-items:center;background:white;border-radius:var(--r-md);padding:.35rem .6rem;min-width:42px;box-shadow:var(--sh-sm);flex-shrink:0}
+.up-day{font-size:1rem;font-weight:800;line-height:1;color:var(--blue)}
+.up-mon{font-size:.6rem;font-weight:700;text-transform:uppercase;color:var(--faint)}
+.up-info h4{font-size:.83rem;font-weight:700;color:var(--ink-2);margin:0}
+.up-info p{font-size:.73rem;color:var(--muted);margin-top:1px}
+.up-pill{display:inline-block;padding:2px 8px;border-radius:20px;font-size:.65rem;font-weight:700;margin-top:.3rem}
+@media(max-width:1000px){.main-grid{grid-template-columns:1fr}.kpi-grid{grid-template-columns:repeat(2,1fr)}.qa-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:540px){.kpi-grid{grid-template-columns:1fr 1fr}.qa-grid{grid-template-columns:repeat(3,1fr)}.welcome-bar{padding:1.1rem 1.25rem}.wb-right{display:none}}
+        </style>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
@@ -663,84 +762,203 @@
                         <span id="breadcrumbCurrent" style="color:#1e40af;font-weight:600"></span>
                     </div>
 
-                    <!-- Live KPI Cards -->
-                    <div id="dashboardKPICards" class="mt-2"></div>
-
                     <section id="dashboardOverviewSection" class="dashboard-section active">
-                    <div class="stats-grid" id="statsOverview">
-                        <div class="stat-card">
-                            <div class="stat-icon bg-sky-opacity-10 text-sky">
-                                <i class="fas fa-user-graduate" title="Total Students"></i>
-                            </div>
-                            <div class="stat-info">
-                                <h3>Total Students</h3>
-                                <p id="totalStudentsCount">Loading...</p>
-                            </div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-icon bg-emerald-opacity-10 text-emerald">
-                                <i class="fas fa-chalkboard-teacher" title="Total Teachers"></i>
-                            </div>
-                            <div class="stat-info">
-                                <h3>Total Teachers</h3>
-                                <p id="totalTeachersCount">Loading...</p>
-                            </div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-icon bg-amber-opacity-10 text-amber">
-                                <i class="fas fa-indian-rupee-sign" title="Monthly Fees"></i>
-                            </div>
-                            <div class="stat-info">
-                                <h3>Monthly Fees</h3>
-                                <p id="monthlyFeesTotal">Loading...</p>
-                            </div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-icon bg-rose-opacity-10 text-rose">
-                                <i class="fas fa-clock" title="Today's Attendance"></i>
-                            </div>
-                            <div class="stat-info">
-                                <h3>Today's Attendance</h3>
-                                <p id="attendanceRate">Loading...</p>
-                            </div>
-                        </div>
-                    </div>
+  <!-- WELCOME BAR -->
+  <div class="welcome-bar" id="welcomeBar">
+    <div class="wb-left">
+      <h1 id="wbGreeting">👋 Good morning</h1>
+      <p id="wbSubtext">Here's what's happening at <span id="wbSchoolName">your school</span> today</p>
+      <div class="wb-date"><i class="fas fa-calendar-alt"></i> <span id="wbDate"></span> &nbsp;·&nbsp; <span id="wbSession">Academic Year 2026-27</span></div>
+    </div>
+    <div class="wb-right">
+      <button class="wb-btn primary" onclick="showSection('classFeePayment')"><i class="fas fa-plus"></i> Collect Fee</button>
+      <button class="wb-btn ghost" onclick="showSection('attendanceManagement')"><i class="fas fa-calendar-check"></i> Mark Attendance</button>
+    </div>
+  </div>
 
-                    <!-- Analytics Section -->
-                    <div id="analyticsHub" class="mt-2-5">
-                        <h2 class="text-lg font-bold flex align-center gap-0-5 mb-1-5">
-                            <i class="fas fa-chart-pie"></i> Visual Insights
-                        </h2>
-                        <div class="grid-cols-auto-400 gap-1-5">
-                            <div class="card p-1-5">
-                                <h4 class="mb-1">
-                                    <i class="fas fa-chart-line text-emerald"></i> Fee Collection Trend
-                                </h4>
-                                <canvas id="feeGrowthChart" height="250"></canvas>
-                            </div>
-                            <div class="card p-1-5">
-                                <h4 class="mb-1"><i class="fas fa-chart-area text-sky"></i> Enrollment Growth</h4>
-                                <canvas id="enrollmentChart" height="250"></canvas>
-                            </div>
-                        </div>
-                    </div>
+  <!-- SMART ALERT STRIP -->
+  <div class="alert-strip" id="alertStrip">
+    <div class="alert-card ac-red" onclick="showSection('attendanceManagement')">
+      <i class="fas fa-user-times"></i>
+      <span id="alertAbsent">0 students absent today</span>
+      <div class="badge"><span id="alertAbsentBadge">0</span></div>
+    </div>
+    <div class="alert-card ac-amber" onclick="showSection('searchFeeDues')">
+      <i class="fas fa-rupee-sign"></i>
+      <span id="alertDefaulters">0 fee defaulters</span>
+      <div class="badge"><span id="alertDefaulterBadge">0</span></div>
+    </div>
+    <div class="alert-card" style="background:var(--purple-lt);border-color:#c4b5fd;color:var(--purple)" onclick="showSection('viewExamSchedule')">
+      <i class="fas fa-file-alt"></i>
+      <span>Exams scheduled <span id="alertExams">this week</span></span>
+    </div>
+    <div class="alert-card ac-blue" onclick="showSection('searchEnquiry')">
+      <i class="fas fa-clipboard-list"></i>
+      <span><span id="alertEnquiries">0</span> new admission enquiries</span>
+      <div class="badge"><span id="alertEnquiriesBadge">0</span></div>
+    </div>
+    <div class="alert-card ac-green" onclick="showSection('viewAttendanceStats')">
+      <i class="fas fa-chart-line"></i>
+      <span>Today's attendance: <span id="alertAttPct">—</span></span>
+    </div>
+  </div>
 
-                    <div class="mt-2-5 grid-cols-2-1 gap-2">
-                        <div class="card p-1-5">
-                            <h3 class="mb-1-5">Recent Admissions</h3>
-                            <div id="recentAdmissionsList" class="text-center text-muted p-2">
-                                <i class="fas fa-user-plus text-3xl mb-1 opacity-30"></i>
-                                <p>No recent admissions to show.</p>
-                            </div>
-                        </div>
-                        <div class="card p-1-5">
-                            <h3 class="mb-1-5">Quick Notices</h3>
-                            <div id="dashboardNotices" class="flex flex-col gap-1">
-                                <p class="text-muted text-sm">No active notices.</p>
-                            </div>
-                        </div>
-                    </div>
-                </section></section>
+  <!-- KPI GRID -->
+  <div class="kpi-grid" id="liveKPIGrid">
+    <div class="kpi kp-students" onclick="showSection('studentList')">
+      <div class="kpi-trend trend-up" id="kpiStudentTrend"><i class="fas fa-arrow-up"></i> —</div>
+      <div class="kpi-row">
+        <div class="kpi-icon" style="background:#eff6ff;color:#3b82f6"><i class="fas fa-users"></i></div>
+        <div class="kpi-data">
+          <div class="kd-val" id="kpiTotalStudents">—</div>
+          <div class="kd-lbl">Total Students</div>
+          <div class="kd-sub"><span id="kpiNewStudents">0</span> new this month</div>
+        </div>
+      </div>
+    </div>
+    <div class="kpi kp-fees" onclick="showSection('searchFeeDues')">
+      <div class="kpi-trend trend-up" id="kpiFeeTrend"><i class="fas fa-arrow-up"></i> —</div>
+      <div class="kpi-row">
+        <div class="kpi-icon" style="background:var(--green-lt);color:var(--green)"><i class="fas fa-rupee-sign"></i></div>
+        <div class="kpi-data">
+          <div class="kd-val" id="kpiFeesThisMonth">₹—</div>
+          <div class="kd-lbl">Fees This Month</div>
+          <div class="kd-sub" id="kpiFeePending" style="color:var(--red)">₹— pending</div>
+        </div>
+      </div>
+    </div>
+    <div class="kpi kp-attend" onclick="showSection('viewAttendanceStats')">
+      <div class="kpi-trend" id="kpiAttTrend"><i class="fas fa-arrow-up"></i> —</div>
+      <div class="kpi-row">
+        <div class="kpi-icon" style="background:var(--amber-lt);color:var(--amber)"><i class="fas fa-calendar-check"></i></div>
+        <div class="kpi-data">
+          <div class="kd-val" id="kpiAttPct">—%</div>
+          <div class="kd-lbl">Today's Attendance</div>
+          <div class="kd-sub" id="kpiAttAbsent" style="color:var(--red)">— absent</div>
+        </div>
+      </div>
+    </div>
+    <div class="kpi kp-exams" onclick="showSection('viewExamSchedule')">
+      <div class="kpi-trend trend-flat" id="kpiExamNext">Next: —</div>
+      <div class="kpi-row">
+        <div class="kpi-icon" style="background:var(--purple-lt);color:var(--purple)"><i class="fas fa-file-alt"></i></div>
+        <div class="kpi-data">
+          <div class="kd-val" id="kpiExamsThisWeek">—</div>
+          <div class="kd-lbl">Exams This Week</div>
+          <div class="kd-sub" id="kpiExamSubjects">—</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUICK ACTIONS -->
+  <div class="qa-grid" id="quickActionsGrid">
+    <a class="qa-btn" onclick="showSection('classFeePayment')">
+      <div class="qa-icon" style="background:var(--green-lt);color:var(--green)"><i class="fas fa-rupee-sign"></i></div>
+      <span class="qa-lbl">Collect Fee</span>
+    </a>
+    <a class="qa-btn" onclick="showSection('attendanceManagement')">
+      <div class="qa-icon" style="background:var(--amber-lt);color:var(--amber)"><i class="fas fa-calendar-check"></i></div>
+      <span class="qa-lbl">Mark Attendance</span>
+    </a>
+    <a class="qa-btn" onclick="showSection('addStudent')">
+      <div class="qa-icon" style="background:var(--blue-lt);color:var(--blue)"><i class="fas fa-user-plus"></i></div>
+      <span class="qa-lbl">Add Student</span>
+    </a>
+    <a class="qa-btn" onclick="showSection('addResult')">
+      <div class="qa-icon" style="background:var(--purple-lt);color:var(--purple)"><i class="fas fa-chart-bar"></i></div>
+      <span class="qa-lbl">Add Results</span>
+    </a>
+    <a class="qa-btn" onclick="showSection('sendNotification')">
+      <div class="qa-icon" style="background:var(--cyan-lt);color:var(--cyan)"><i class="fas fa-bell"></i></div>
+      <span class="qa-lbl">Send Notice</span>
+    </a>
+    <a class="qa-btn" onclick="showSection('addEnquiry')">
+      <div class="qa-icon" style="background:#fff7ed;color:#ea580c"><i class="fas fa-clipboard-list"></i></div>
+      <span class="qa-lbl">New Enquiry</span>
+    </a>
+  </div>
+
+  <!-- MAIN GRID -->
+  <div class="main-grid">
+    <div class="main-left">
+      <!-- Today's Attendance -->
+      <div class="card">
+        <div class="card-head">
+          <div class="ch-icon" style="background:var(--amber-lt);color:var(--amber)"><i class="fas fa-calendar-check"></i></div>
+          <div><h2>Today's Attendance</h2><p id="attDate"></p></div>
+          <a class="see-all" onclick="showSection('attendanceManagement')">Mark Attendance →</a>
+        </div>
+        <div class="card-body">
+          <div class="att-summary">
+            <div class="att-donut">
+              <svg width="90" height="90" viewBox="0 0 90 90">
+                <circle cx="45" cy="45" r="36" fill="none" stroke="#e2e8f0" stroke-width="12"/>
+                <circle id="attDonutArc" cx="45" cy="45" r="36" fill="none" stroke="#059669" stroke-width="12" stroke-dasharray="0 226.2" stroke-dashoffset="0" transform="rotate(-90 45 45)"/>
+              </svg>
+              <div class="att-donut-text">
+                <div class="att-pct" id="attDonutPct">—%</div>
+                <div class="att-tiny">Present</div>
+              </div>
+            </div>
+            <div class="att-breakdown">
+              <div class="ab-item"><div class="abi-val" id="attPresent" style="color:var(--green)">—</div><div class="abi-lbl">Present</div></div>
+              <div class="ab-item"><div class="abi-val" id="attAbsent" style="color:var(--red)">—</div><div class="abi-lbl">Absent</div></div>
+              <div class="ab-item"><div class="abi-val" id="attLeave" style="color:var(--amber)">—</div><div class="abi-lbl">On Leave</div></div>
+              <div class="ab-item"><div class="abi-val" id="attTotal" style="color:var(--faint)">—</div><div class="abi-lbl">Total</div></div>
+            </div>
+          </div>
+          <div class="class-att-list" id="classAttList"></div>
+        </div>
+      </div>
+
+      <!-- Recent Payments -->
+      <div class="card">
+        <div class="card-head">
+          <div class="ch-icon" style="background:var(--green-lt);color:var(--green)"><i class="fas fa-rupee-sign"></i></div>
+          <div><h2>Recent Payments</h2><p id="recentPaySub">Today's fee collections</p></div>
+          <a class="see-all" onclick="showSection('searchFeeDues')">View All →</a>
+        </div>
+        <div class="card-body" style="padding-top:.5rem;padding-bottom:.5rem">
+          <div class="pay-list" id="recentPayList">
+            <div style="padding:1.5rem;text-align:center;color:var(--faint);font-size:.82rem"><i class="fas fa-spinner fa-spin"></i> Loading...</div>
+          </div>
+          <div style="text-align:center;padding:.875rem 0 .25rem;border-top:1px solid var(--border);margin-top:.5rem">
+            <span id="recentPayTotal" style="font-size:.75rem;color:var(--green);font-weight:700">Today's total: ₹—</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="main-right">
+      <!-- Upcoming -->
+      <div class="card">
+        <div class="card-head">
+          <div class="ch-icon" style="background:var(--purple-lt);color:var(--purple)"><i class="fas fa-calendar-alt"></i></div>
+          <div><h2>This Week</h2><p>Exams, events & holidays</p></div>
+        </div>
+        <div class="card-body">
+          <div class="upcoming-list" id="upcomingList">
+            <div style="padding:1rem;text-align:center;color:var(--faint);font-size:.82rem">No upcoming events</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Activity -->
+      <div class="card">
+        <div class="card-head">
+          <div class="ch-icon" style="background:var(--bg);color:var(--muted)"><i class="fas fa-history"></i></div>
+          <div><h2>Recent Activity</h2><p>System-wide audit trail</p></div>
+        </div>
+        <div class="card-body" style="padding-top:.5rem">
+          <div class="activity-feed" id="activityFeed">
+            <div style="padding:1rem;text-align:center;color:var(--faint);font-size:.82rem">No recent activity</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
                 </div>
 
         </div>
@@ -792,6 +1010,23 @@
         <script async src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
         <script defer src="/js/report-card-factory.js"></script>
         <script defer src="/js/erp-report-card-tool-v2.js"></script>
+
+        <!-- STUDENT DETAIL DRAWER -->
+        <div id="studentDrawerOverlay" onclick="closeStudentDrawer()" style="display:none;position:fixed;inset:0;background:rgba(15,23,42,.4);z-index:200;backdrop-filter:blur(2px)"></div>
+        <div id="studentDrawer" class="drawer" style="width:480px">
+            <div class="modal-header">
+                <i class="fas fa-user-circle" style="color:var(--blue);font-size:1.1rem"></i>
+                <h3>Student Profile</h3>
+                <button class="modal-close" onclick="closeStudentDrawer()"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body" id="studentDrawerBody"><!-- populated by openStudentDrawer() --></div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" id="drawerFeeBtn"><i class="fas fa-rupee-sign"></i> Collect Fee</button>
+                <button class="btn btn-outline" id="drawerEditBtn"><i class="fas fa-edit"></i> Edit</button>
+                <button class="btn btn-outline" id="drawerIdBtn"><i class="fas fa-id-card"></i> ID Card</button>
+                <button class="btn btn-outline" id="drawerSmsBtn"><i class="fas fa-sms"></i> SMS</button>
+            </div>
+        </div>
 
         <!-- CHANGE PASSWORD MODAL -->
         <div id="adminChangePwdModal" class="modal-overlay hidden">

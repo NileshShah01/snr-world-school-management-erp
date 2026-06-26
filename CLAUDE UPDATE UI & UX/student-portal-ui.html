@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Portal — SNR ERP</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root{
+  --blue:#1e40af;--blue-lt:#eff6ff;--blue-md:#bfdbfe;--blue-dk:#1e3a8a;
+  --green:#059669;--green-lt:#ecfdf5;--green-md:#6ee7b7;
+  --red:#dc2626;--red-lt:#fef2f2;--red-md:#fca5a5;
+  --amber:#d97706;--amber-lt:#fffbeb;--amber-md:#fcd34d;
+  --purple:#7c3aed;--purple-lt:#f5f3ff;--purple-md:#c4b5fd;
+  --cyan:#0891b2;--cyan-lt:#ecfeff;
+  --ink:#0f172a;--ink-2:#1e293b;--ink-3:#334155;
+  --muted:#64748b;--faint:#94a3b8;--ghost:#cbd5e1;
+  --bg:#f1f5f9;--surface:#fff;--border:#e2e8f0;
+  --r-sm:6px;--r-md:10px;--r-lg:14px;--r-xl:20px;--r-2xl:24px;
+  --sh-sm:0 2px 8px rgba(0,0,0,.06);
+  --sh-md:0 4px 20px rgba(0,0,0,.09);
+  --sh-lg:0 8px 40px rgba(0,0,0,.14);
+  --sidebar-w:240px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);
+     color:var(--ink-2);font-size:14px;line-height:1.5;min-height:100vh}
+
+/* ── LAYOUT ─────────────────── */
+.portal{display:flex;min-height:100vh}
+
+/* ── SIDEBAR ─────────────────── */
+.sidebar{
+  width:var(--sidebar-w);flex-shrink:0;
+  background:var(--ink);display:flex;flex-direction:column;
+  position:fixed;top:0;left:0;bottom:0;z-index:100;
+  transition:transform .25s cubic-bezier(.4,0,.2,1);
+}
+.sb-header{padding:1.25rem 1rem 1rem;border-bottom:1px solid rgba(255,255,255,.07)}
+.sb-avatar{width:52px;height:52px;border-radius:50%;
+           background:linear-gradient(135deg,#3b82f6,#7c3aed);
+           display:flex;align-items:center;justify-content:center;
+           font-size:1.2rem;font-weight:800;color:white;margin-bottom:.75rem;
+           box-shadow:0 4px 12px rgba(59,130,246,.4)}
+.sb-name{font-size:.92rem;font-weight:700;color:white;line-height:1.2}
+.sb-class{font-size:.72rem;color:#94a3b8;margin-top:3px}
+.sb-pills{display:flex;gap:.3rem;margin-top:.5rem;flex-wrap:wrap}
+.sb-pill{font-size:.62rem;font-weight:700;padding:2px 7px;border-radius:20px;
+         background:rgba(255,255,255,.08);color:#cbd5e1}
+
+.sb-nav{flex:1;overflow-y:auto;padding:.5rem 0;scrollbar-width:thin;
+        scrollbar-color:rgba(255,255,255,.1) transparent}
+.sb-section-label{padding:.75rem 1.25rem .25rem;font-size:.62rem;font-weight:700;
+                  text-transform:uppercase;letter-spacing:.08em;color:#475569}
+.sb-item{display:flex;align-items:center;gap:.65rem;padding:.65rem 1rem;
+         margin:.1rem .5rem;border-radius:var(--r-md);cursor:pointer;
+         color:#94a3b8;font-size:.83rem;font-weight:500;transition:all .15s;position:relative}
+.sb-item:hover{background:rgba(255,255,255,.06);color:#e2e8f0}
+.sb-item.active{background:rgba(96,165,250,.15);color:#93c5fd}
+.sb-item.active::before{content:'';position:absolute;left:0;top:20%;bottom:20%;
+                         width:3px;border-radius:0 3px 3px 0;background:#60a5fa}
+.sb-item i{width:18px;text-align:center;font-size:.85rem;flex-shrink:0}
+.sb-item .sb-badge{margin-left:auto;background:rgba(239,68,68,.25);color:#fca5a5;
+                   border-radius:20px;font-size:.62rem;font-weight:800;
+                   padding:1px 7px;min-width:20px;text-align:center}
+.sb-item .sb-badge.green{background:rgba(16,185,129,.2);color:#6ee7b7}
+
+.sb-footer{padding:1rem;border-top:1px solid rgba(255,255,255,.07)}
+.logout-btn{display:flex;align-items:center;gap:.6rem;padding:.6rem .875rem;
+            border-radius:var(--r-md);color:#94a3b8;font-size:.82rem;font-weight:600;
+            cursor:pointer;transition:all .15s;width:100%}
+.logout-btn:hover{background:rgba(239,68,68,.1);color:#fca5a5}
+
+/* ── MAIN ────────────────────── */
+.main{margin-left:var(--sidebar-w);flex:1;display:flex;flex-direction:column;min-height:100vh}
+
+/* ── TOP BAR ─────────────────── */
+.topbar{background:white;border-bottom:1px solid var(--border);
+        padding:.75rem 1.5rem;display:flex;align-items:center;gap:1rem;
+        position:sticky;top:0;z-index:50;flex-shrink:0}
+.topbar-title{font-size:1rem;font-weight:800;color:var(--ink)}
+.topbar-sub{font-size:.75rem;color:var(--muted);margin-left:.25rem}
+.topbar-breadcrumb{display:flex;align-items:center;gap:.35rem;font-size:.75rem;color:var(--faint)}
+.topbar-breadcrumb .sep{color:var(--ghost)}
+.topbar-breadcrumb .current{color:var(--blue);font-weight:700}
+.topbar-right{margin-left:auto;display:flex;align-items:center;gap:.75rem}
+.tb-icon-btn{width:36px;height:36px;border-radius:50%;border:1.5px solid var(--border);
+             background:white;cursor:pointer;display:flex;align-items:center;justify-content:center;
+             color:var(--muted);font-size:.88rem;transition:all .15s;position:relative}
+.tb-icon-btn:hover{border-color:var(--blue-md);color:var(--blue)}
+.tb-notif-dot{position:absolute;top:3px;right:3px;width:8px;height:8px;
+              border-radius:50%;background:var(--red);border:2px solid white}
+.hamburger{display:none;width:36px;height:36px;border:none;background:none;
+           cursor:pointer;color:var(--ink-3);font-size:1.1rem;align-items:center;justify-content:center}
+
+/* ── CONTENT ─────────────────── */
+.content{flex:1;padding:1.5rem;overflow-y:auto}
+.section{display:none}
+.section.active{display:block}
+
+/* ── HERO CARD ───────────────── */
+.hero-card{
+  background:linear-gradient(135deg,var(--blue-dk),#1e40af,#3b82f6);
+  border-radius:var(--r-2xl);padding:1.5rem;color:white;
+  margin-bottom:1.25rem;position:relative;overflow:hidden;
+}
+.hero-card::after{content:'';position:absolute;right:-30px;bottom:-30px;
+                  width:160px;height:160px;border-radius:50%;
+                  background:rgba(255,255,255,.06)}
+.hero-card::before{content:'';position:absolute;right:60px;top:-20px;
+                   width:80px;height:80px;border-radius:50%;
+                   background:rgba(255,255,255,.04)}
+.hc-top{display:flex;align-items:center;gap:1rem;margin-bottom:1.25rem}
+.hc-avatar{width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,.15);
+           border:2px solid rgba(255,255,255,.3);display:flex;align-items:center;
+           justify-content:center;font-size:1.3rem;font-weight:800;color:white;flex-shrink:0}
+.hc-name{font-size:1.1rem;font-weight:800;line-height:1.2}
+.hc-class{font-size:.8rem;opacity:.75;margin-top:3px}
+.hc-reg{font-size:.72rem;opacity:.55;margin-top:2px}
+.hc-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;
+          background:rgba(255,255,255,.1);border-radius:var(--r-lg);padding:1rem;
+          position:relative;z-index:1}
+.hc-stat .val{font-size:1.3rem;font-weight:800;line-height:1}
+.hc-stat .lbl{font-size:.67rem;opacity:.65;margin-top:.2rem;font-weight:600;
+              text-transform:uppercase;letter-spacing:.05em}
+
+/* ── QUICK ACTION ROW ────────── */
+.qa-row{display:flex;gap:.75rem;margin-bottom:1.25rem;overflow-x:auto;
+        padding-bottom:.25rem;scrollbar-width:none}
+.qa-row::-webkit-scrollbar{display:none}
+.qa-chip{display:flex;align-items:center;gap:.5rem;padding:.6rem 1rem;
+         background:white;border-radius:var(--r-xl);box-shadow:var(--sh-sm);
+         cursor:pointer;white-space:nowrap;font-size:.78rem;font-weight:700;
+         color:var(--ink-3);border:1.5px solid transparent;transition:all .15s;flex-shrink:0}
+.qa-chip:hover{border-color:var(--blue-md);color:var(--blue);transform:translateY(-1px)}
+.qa-chip i{font-size:.85rem}
+
+/* ── CARD ────────────────────── */
+.card{background:white;border-radius:var(--r-lg);box-shadow:var(--sh-sm);
+      overflow:hidden;margin-bottom:1.25rem}
+.card-head{padding:1rem 1.25rem;border-bottom:1px solid var(--border);
+           display:flex;align-items:center;gap:.75rem}
+.card-head .ch-icon{width:34px;height:34px;border-radius:var(--r-md);
+                    display:flex;align-items:center;justify-content:center;
+                    font-size:.9rem;flex-shrink:0}
+.card-head h2{font-size:.92rem;font-weight:700;color:var(--ink)}
+.card-head p{font-size:.75rem;color:var(--muted)}
+.card-head .hd-action{margin-left:auto;font-size:.75rem;font-weight:700;
+                      color:var(--blue);cursor:pointer;white-space:nowrap}
+.card-body{padding:1.25rem}
+
+/* ── PILL ────────────────────── */
+.pill{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;
+      border-radius:20px;font-size:.68rem;font-weight:700;white-space:nowrap}
+.pill::before{content:'●';font-size:.4rem}
+.pill.paid,.pill.present,.pill.good{background:var(--green-lt);color:var(--green)}
+.pill.due,.pill.absent,.pill.overdue{background:var(--red-lt);color:var(--red)}
+.pill.partial,.pill.warning{background:var(--amber-lt);color:var(--amber)}
+.pill.info{background:var(--blue-lt);color:var(--blue)}
+.pill.exam{background:var(--purple-lt);color:var(--purple)}
+
+/* ── FEE CARDS ───────────────── */
+.fee-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:.875rem;margin-bottom:1.25rem}
+.fee-sum-card{background:var(--bg);border-radius:var(--r-lg);padding:1rem;text-align:center}
+.fee-sum-card .fsv{font-size:1.4rem;font-weight:800;line-height:1}
+.fee-sum-card .fsl{font-size:.68rem;font-weight:700;text-transform:uppercase;
+                   letter-spacing:.05em;color:var(--faint);margin-top:.2rem}
+
+.fee-item{display:flex;align-items:center;gap:.875rem;padding:.875rem;
+          border:1.5px solid var(--border);border-radius:var(--r-lg);margin-bottom:.6rem;
+          transition:all .15s;cursor:pointer}
+.fee-item:hover{border-color:var(--blue-md);background:var(--blue-lt)}
+.fee-item.overdue{border-color:var(--red-md);background:var(--red-lt)}
+.fee-item.partial{border-color:var(--amber-md);background:var(--amber-lt)}
+.fi-icon{width:38px;height:38px;border-radius:var(--r-md);display:flex;
+         align-items:center;justify-content:center;font-size:.95rem;flex-shrink:0}
+.fi-info{flex:1}
+.fi-name{font-size:.88rem;font-weight:700;color:var(--ink-2)}
+.fi-period{font-size:.72rem;color:var(--muted);margin-top:2px}
+.fi-right{text-align:right;flex-shrink:0}
+.fi-amount{font-size:.95rem;font-weight:800}
+.fi-status{margin-top:3px}
+
+.pay-now-btn{width:100%;padding:.875rem;border:none;border-radius:var(--r-lg);
+             background:linear-gradient(135deg,#059669,#0891b2);color:white;
+             font-size:.92rem;font-weight:800;cursor:pointer;margin-top:.875rem;
+             display:flex;align-items:center;justify-content:center;gap:.5rem;
+             transition:all .2s;letter-spacing:.02em}
+.pay-now-btn:hover{opacity:.9;transform:translateY(-1px);box-shadow:0 6px 20px rgba(5,150,105,.35)}
+
+/* ── ATTENDANCE SECTION ──────── */
+.att-hero{display:flex;align-items:center;gap:1.5rem;padding:1.25rem;
+          background:linear-gradient(135deg,var(--green-lt),#f0fdf4);
+          border-radius:var(--r-lg);border:1.5px solid var(--green-md);margin-bottom:1.25rem}
+.att-ring{position:relative;flex-shrink:0}
+.att-ring svg{transform:rotate(-90deg)}
+.att-ring-text{position:absolute;inset:0;display:flex;flex-direction:column;
+               align-items:center;justify-content:center}
+.arp{font-size:1.4rem;font-weight:800;color:var(--green);line-height:1}
+.arl{font-size:.62rem;color:var(--faint);font-weight:700}
+.att-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem;flex:1}
+.att-stat{background:white;border-radius:var(--r-md);padding:.6rem;text-align:center;
+          box-shadow:var(--sh-sm)}
+.att-stat .asv{font-size:1.1rem;font-weight:800}
+.att-stat .asl{font-size:.65rem;color:var(--faint);font-weight:700;text-transform:uppercase}
+
+.subject-att{display:flex;flex-direction:column;gap:.5rem}
+.sa-row{display:flex;align-items:center;gap:.875rem}
+.sa-subj{font-size:.82rem;font-weight:600;color:var(--ink-3);min-width:90px;
+         white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sa-bar-bg{flex:1;height:8px;background:var(--bg);border-radius:20px;overflow:hidden}
+.sa-bar{height:100%;border-radius:20px;transition:width .5s ease}
+.sa-pct{font-size:.75rem;font-weight:700;min-width:38px;text-align:right}
+.sa-pill{font-size:.62rem;font-weight:700;padding:2px 6px;border-radius:20px;min-width:28px;text-align:center}
+
+/* ── EXAM CARDS ──────────────── */
+.exam-card{border:1.5px solid var(--border);border-radius:var(--r-lg);
+           overflow:hidden;margin-bottom:.875rem;transition:all .15s}
+.exam-card:hover{border-color:var(--purple-md);box-shadow:var(--sh-sm)}
+.exam-card.upcoming{border-left:4px solid var(--purple)}
+.exam-card.today{border-left:4px solid var(--red)}
+.ec-head{padding:.875rem 1rem;display:flex;align-items:center;gap:.875rem}
+.ec-date{background:var(--purple-lt);border-radius:var(--r-md);padding:.4rem .65rem;
+         text-align:center;flex-shrink:0}
+.ec-day{font-size:1.1rem;font-weight:800;color:var(--purple);line-height:1}
+.ec-mon{font-size:.6rem;font-weight:700;text-transform:uppercase;color:var(--purple);opacity:.7}
+.ec-info{flex:1}
+.ec-subject{font-size:.9rem;font-weight:700;color:var(--ink)}
+.ec-class{font-size:.72rem;color:var(--muted);margin-top:2px}
+.ec-time{font-size:.75rem;font-weight:600;color:var(--purple)}
+.ec-body{padding:.6rem 1rem .875rem 1rem;border-top:1px solid var(--bg);
+         display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem}
+.ec-detail{font-size:.75rem;color:var(--muted)}
+.ec-detail strong{color:var(--ink-3)}
+.download-btn{padding:.4rem .875rem;border-radius:var(--r-sm);font-size:.75rem;
+              font-weight:700;cursor:pointer;border:1.5px solid var(--purple-md);
+              background:var(--purple-lt);color:var(--purple);display:flex;
+              align-items:center;gap:.35rem;transition:all .15s}
+.download-btn:hover{background:var(--purple);color:white}
+
+/* ── RESULT CARD ─────────────── */
+.result-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:.875rem;margin-bottom:1.25rem}
+.rs-card{background:var(--bg);border-radius:var(--r-lg);padding:1rem;text-align:center}
+.rs-card .rsv{font-size:1.4rem;font-weight:800}
+.rs-card .rsl{font-size:.67rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--faint)}
+.result-table{width:100%;border-collapse:collapse}
+.result-table th{padding:.6rem .875rem;text-align:left;font-size:.68rem;font-weight:700;
+                 text-transform:uppercase;letter-spacing:.05em;color:var(--faint);background:var(--bg)}
+.result-table td{padding:.75rem .875rem;border-bottom:1px solid #f8fafc;font-size:.83rem}
+.result-table tr:last-child td{border-bottom:none}
+.result-table tr:hover td{background:#fafbff}
+.marks-cell{display:flex;align-items:center;gap:.5rem}
+.marks-bar{flex:1;height:5px;background:var(--bg);border-radius:20px;overflow:hidden;min-width:40px}
+.marks-fill{height:100%;border-radius:20px}
+.grade-badge{font-size:.75rem;font-weight:800;padding:2px 8px;border-radius:4px;
+             background:var(--green-lt);color:var(--green);font-family:monospace}
+
+/* ── MOBILE BOTTOM NAV ──────── */
+.bottom-nav{display:none;position:fixed;bottom:0;left:0;right:0;
+            background:white;border-top:1px solid var(--border);
+            padding:.4rem 0 env(safe-area-inset-bottom,.4rem);
+            z-index:200;box-shadow:0 -4px 20px rgba(0,0,0,.08)}
+.bn-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;
+         padding:.3rem 0;font-size:.58rem;font-weight:700;color:var(--faint);
+         cursor:pointer;transition:color .15s;text-transform:uppercase;letter-spacing:.03em;
+         position:relative}
+.bn-item.active{color:var(--blue)}
+.bn-item i{font-size:1.1rem}
+.bn-dot{position:absolute;top:4px;right:calc(50% - 16px);width:7px;height:7px;
+        border-radius:50%;background:var(--red);border:2px solid white}
+
+/* ── HOMEWORK ITEM ───────────── */
+.hw-item{display:flex;gap:.875rem;padding:.875rem;border:1.5px solid var(--border);
+         border-radius:var(--r-lg);margin-bottom:.6rem;transition:all .15s}
+.hw-item:hover{border-color:var(--blue-md)}
+.hw-item.urgent{border-left:3px solid var(--red)}
+.hw-icon{width:36px;height:36px;border-radius:var(--r-md);display:flex;
+         align-items:center;justify-content:center;font-size:.85rem;flex-shrink:0}
+.hw-info{flex:1}
+.hw-subject{font-size:.85rem;font-weight:700;color:var(--ink)}
+.hw-title{font-size:.78rem;color:var(--muted);margin-top:2px;line-height:1.4}
+.hw-due{font-size:.72rem;font-weight:700;margin-top:.4rem;display:flex;align-items:center;gap:.3rem}
+
+/* ── MOBILE OVERLAY ─────────── */
+.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(15,23,42,.5);z-index:99}
+
+@media(max-width:768px){
+  .sidebar{transform:translateX(-100%)}
+  .sidebar.mobile-open{transform:translateX(0)}
+  .main{margin-left:0}
+  .hamburger{display:flex}
+  .bottom-nav{display:flex}
+  .content{padding:1rem;padding-bottom:90px}
+  .hc-stats{grid-template-columns:repeat(2,1fr);gap:.75rem}
+  .fee-summary{grid-template-columns:1fr 1fr}
+  .result-summary{grid-template-columns:1fr 1fr}
+  .att-stats{grid-template-columns:1fr}
+  .att-hero{flex-direction:column;text-align:center}
+  .sidebar-overlay.open{display:block}
+}
+</style>
+</head>
+<body>
+<div class="portal">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sb-header">
+      <div class="sb-avatar">A</div>
+      <div class="sb-name">Aarav Singh</div>
+      <div class="sb-class">Class VII — A &nbsp;·&nbsp; Roll No. 12</div>
+      <div class="sb-pills">
+        <span class="sb-pill">Reg: #574</span>
+        <span class="sb-pill">2026-27</span>
+      </div>
+    </div>
+
+    <nav class="sb-nav">
+      <div class="sb-section-label">Main</div>
+      <div class="sb-item active" onclick="switchTab('home')">
+        <i class="fas fa-home"></i> Dashboard
+      </div>
+      <div class="sb-item" onclick="switchTab('profile')">
+        <i class="fas fa-user-circle"></i> My Profile
+      </div>
+
+      <div class="sb-section-label">Academics</div>
+      <div class="sb-item" onclick="switchTab('attendance')">
+        <i class="fas fa-calendar-check"></i> Attendance
+        <span class="sb-badge">91%</span>
+      </div>
+      <div class="sb-item" onclick="switchTab('exams')">
+        <i class="fas fa-file-alt"></i> Exams
+        <span class="sb-badge green">3</span>
+      </div>
+      <div class="sb-item" onclick="switchTab('results')">
+        <i class="fas fa-chart-bar"></i> Results
+      </div>
+      <div class="sb-item" onclick="switchTab('homework')">
+        <i class="fas fa-book-open"></i> Homework
+        <span class="sb-badge">2</span>
+      </div>
+      <div class="sb-item" onclick="switchTab('materials')">
+        <i class="fas fa-folder-open"></i> Study Material
+      </div>
+
+      <div class="sb-section-label">Finance</div>
+      <div class="sb-item" onclick="switchTab('fees')">
+        <i class="fas fa-rupee-sign"></i> Fee & Payments
+        <span class="sb-badge">!</span>
+      </div>
+
+      <div class="sb-section-label">Services</div>
+      <div class="sb-item" onclick="switchTab('library')">
+        <i class="fas fa-book"></i> Library
+      </div>
+      <div class="sb-item" onclick="switchTab('transport')">
+        <i class="fas fa-bus"></i> Transport
+      </div>
+      <div class="sb-item" onclick="switchTab('certificates')">
+        <i class="fas fa-certificate"></i> Certificates
+      </div>
+    </nav>
+
+    <div class="sb-footer">
+      <div class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</div>
+    </div>
+  </aside>
+
+  <!-- SIDEBAR OVERLAY (mobile) -->
+  <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+  <!-- MAIN CONTENT -->
+  <main class="main">
+
+    <!-- TOP BAR -->
+    <div class="topbar">
+      <button class="hamburger" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+      <div>
+        <div class="topbar-breadcrumb">
+          <span>Portal</span><span class="sep">/</span>
+          <span class="current" id="breadcrumbCurrent">Dashboard</span>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <button class="tb-icon-btn" title="Notifications">
+          <i class="fas fa-bell"></i>
+          <div class="tb-notif-dot"></div>
+        </button>
+        <button class="tb-icon-btn" title="Help"><i class="fas fa-question-circle"></i></button>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <!-- ─── HOME TAB ─────────────────────────────── -->
+      <div class="section active" id="tab-home">
+
+        <!-- Hero Card -->
+        <div class="hero-card">
+          <div class="hc-top">
+            <div class="hc-avatar">A</div>
+            <div>
+              <div class="hc-name">Good morning, Aarav! 👋</div>
+              <div class="hc-class">Class VII — A &nbsp;·&nbsp; Apex Public School</div>
+              <div class="hc-reg">Roll No. 12 &nbsp;·&nbsp; Reg. #574 &nbsp;·&nbsp; 2026-27</div>
+            </div>
+          </div>
+          <div class="hc-stats">
+            <div class="hc-stat"><div class="val">91%</div><div class="lbl">Attendance</div></div>
+            <div class="hc-stat"><div class="val" style="color:#fbbf24">₹2,400</div><div class="lbl">Fee Due</div></div>
+            <div class="hc-stat"><div class="val">72%</div><div class="lbl">Overall Score</div></div>
+            <div class="hc-stat"><div class="val" style="color:#86efac">B+</div><div class="lbl">Grade</div></div>
+          </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="qa-row">
+          <div class="qa-chip" onclick="switchTab('fees')"><i class="fas fa-rupee-sign" style="color:var(--green)"></i> Pay Fees</div>
+          <div class="qa-chip" onclick="switchTab('exams')"><i class="fas fa-file-alt" style="color:var(--purple)"></i> Exam Schedule</div>
+          <div class="qa-chip" onclick="switchTab('results')"><i class="fas fa-chart-bar" style="color:var(--blue)"></i> My Results</div>
+          <div class="qa-chip" onclick="switchTab('homework')"><i class="fas fa-book-open" style="color:var(--amber)"></i> Homework</div>
+          <div class="qa-chip" onclick="switchTab('attendance')"><i class="fas fa-calendar-check" style="color:var(--cyan)"></i> Attendance</div>
+          <div class="qa-chip" onclick="switchTab('certificates')"><i class="fas fa-download" style="color:var(--red)"></i> Download Marksheet</div>
+        </div>
+
+        <!-- Fee Alert -->
+        <div style="background:var(--red-lt);border:1.5px solid var(--red-md);border-radius:var(--r-lg);
+                    padding:1rem 1.25rem;margin-bottom:1.25rem;display:flex;align-items:center;gap:.875rem;flex-wrap:wrap">
+          <div style="width:38px;height:38px;border-radius:50%;background:var(--red);
+                      display:flex;align-items:center;justify-content:center;color:white;font-size:.9rem;flex-shrink:0">
+            <i class="fas fa-exclamation"></i>
+          </div>
+          <div style="flex:1">
+            <div style="font-size:.88rem;font-weight:700;color:var(--red)">Fee Payment Overdue</div>
+            <div style="font-size:.75rem;color:var(--muted)">₹2,400 is due for April + May 2026. Late fine applies after 15th of each month.</div>
+          </div>
+          <button onclick="switchTab('fees')" style="padding:.5rem 1rem;background:var(--red);color:white;
+                  border:none;border-radius:var(--r-md);font-size:.78rem;font-weight:700;cursor:pointer;white-space:nowrap">
+            Pay Now →
+          </button>
+        </div>
+
+        <!-- Upcoming This Week -->
+        <div class="card">
+          <div class="card-head">
+            <div class="ch-icon" style="background:var(--purple-lt);color:var(--purple)"><i class="fas fa-calendar-week"></i></div>
+            <div><h2>This Week</h2><p>Exams, homework, events</p></div>
+          </div>
+          <div class="card-body" style="display:flex;flex-direction:column;gap:.6rem">
+            <div style="display:flex;align-items:center;gap:.875rem;padding:.75rem;background:var(--purple-lt);border-radius:var(--r-md);border:1px solid var(--purple-md)">
+              <div style="background:var(--purple);color:white;border-radius:var(--r-md);padding:.4rem .7rem;text-align:center;flex-shrink:0">
+                <div style="font-size:1rem;font-weight:800;line-height:1">23</div>
+                <div style="font-size:.58rem;font-weight:700;text-transform:uppercase">MON</div>
+              </div>
+              <div style="flex:1"><div style="font-size:.85rem;font-weight:700;color:var(--ink)">Mathematics Exam</div>
+              <div style="font-size:.72rem;color:var(--muted)">9:00 AM – 12:00 PM &nbsp;·&nbsp; Hall A &nbsp;·&nbsp; 100 marks</div></div>
+              <span class="pill exam">Today</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:.875rem;padding:.75rem;background:var(--amber-lt);border-radius:var(--r-md);border:1px solid var(--amber-md)">
+              <div style="background:var(--amber);color:white;border-radius:var(--r-md);padding:.4rem .7rem;text-align:center;flex-shrink:0">
+                <div style="font-size:1rem;font-weight:800;line-height:1">24</div>
+                <div style="font-size:.58rem;font-weight:700;text-transform:uppercase">TUE</div>
+              </div>
+              <div style="flex:1"><div style="font-size:.85rem;font-weight:700;color:var(--ink)">Science Assignment Due</div>
+              <div style="font-size:.72rem;color:var(--muted)">Chapter 7: Forces & Motion — Submit in class</div></div>
+              <span class="pill warning">Due Tomorrow</span>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /home tab -->
+
+      <!-- ─── FEES TAB ─────────────────────────────── -->
+      <div class="section" id="tab-fees">
+        <div class="fee-summary">
+          <div class="fee-sum-card">
+            <div class="fsv" style="color:var(--ink)">₹9,600</div>
+            <div class="fsl">Annual Total</div>
+          </div>
+          <div class="fee-sum-card">
+            <div class="fsv" style="color:var(--green)">₹7,200</div>
+            <div class="fsl">Paid</div>
+          </div>
+          <div class="fee-sum-card">
+            <div class="fsv" style="color:var(--red)">₹2,400</div>
+            <div class="fsl">Outstanding</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div class="ch-icon" style="background:var(--amber-lt);color:var(--amber)"><i class="fas fa-receipt"></i></div>
+            <div><h2>Fee Ledger 2026-27</h2><p>All fee records for this academic year</p></div>
+          </div>
+          <div class="card-body">
+
+            <div class="fee-item overdue">
+              <div class="fi-icon" style="background:var(--red-lt);color:var(--red)"><i class="fas fa-exclamation-circle"></i></div>
+              <div class="fi-info">
+                <div class="fi-name">Tuition Fee — April 2026</div>
+                <div class="fi-period">Due: 10 Apr 2026 &nbsp;·&nbsp; Late fine: ₹50</div>
+              </div>
+              <div class="fi-right">
+                <div class="fi-amount" style="color:var(--red)">₹1,600</div>
+                <div class="fi-status"><span class="pill overdue">Overdue</span></div>
+              </div>
+            </div>
+
+            <div class="fee-item partial">
+              <div class="fi-icon" style="background:var(--amber-lt);color:var(--amber)"><i class="fas fa-clock"></i></div>
+              <div class="fi-info">
+                <div class="fi-name">Tuition Fee — May 2026</div>
+                <div class="fi-period">Partial: ₹800 paid on 12 May &nbsp;·&nbsp; Balance: ₹800</div>
+              </div>
+              <div class="fi-right">
+                <div class="fi-amount" style="color:var(--amber)">₹800</div>
+                <div class="fi-status"><span class="pill partial">Partial</span></div>
+              </div>
+            </div>
+
+            <div class="fee-item">
+              <div class="fi-icon" style="background:var(--green-lt);color:var(--green)"><i class="fas fa-check-circle"></i></div>
+              <div class="fi-info">
+                <div class="fi-name">Tuition Fee — March 2026</div>
+                <div class="fi-period">Paid on 05 Mar 2026 &nbsp;·&nbsp; Receipt: #0989</div>
+              </div>
+              <div class="fi-right">
+                <div class="fi-amount" style="color:var(--green)">₹1,600</div>
+                <div class="fi-status"><span class="pill paid">Paid</span></div>
+              </div>
+            </div>
+
+            <div class="fee-item" style="opacity:.6">
+              <div class="fi-icon" style="background:var(--green-lt);color:var(--green)"><i class="fas fa-check-circle"></i></div>
+              <div class="fi-info">
+                <div class="fi-name">Computer Fee — Annual 2025-26</div>
+                <div class="fi-period">Paid on 02 Apr 2025 &nbsp;·&nbsp; Receipt: #0742</div>
+              </div>
+              <div class="fi-right">
+                <div class="fi-amount" style="color:var(--green)">₹1,200</div>
+                <div class="fi-status"><span class="pill paid">Paid</span></div>
+              </div>
+            </div>
+
+            <button class="pay-now-btn">
+              <i class="fas fa-credit-card"></i>
+              Pay Outstanding ₹2,400 Online
+            </button>
+
+          </div>
+        </div>
+      </div><!-- /fees tab -->
+
+      <!-- ─── ATTENDANCE TAB ────────────────────────── -->
+      <div class="section" id="tab-attendance">
+        <div class="att-hero">
+          <div class="att-ring">
+            <svg width="100" height="100" viewBox="0 0 100 100">
+              <circle cx="50" cy="50" r="40" fill="none" stroke="#e2e8f0" stroke-width="12"/>
+              <circle cx="50" cy="50" r="40" fill="none" stroke="#059669" stroke-width="12"
+                stroke-dasharray="228.6 251.2" stroke-dashoffset="0" transform="rotate(-90 50 50)"/>
+            </svg>
+            <div class="att-ring-text">
+              <div class="arp">91%</div>
+              <div class="arl">Overall</div>
+            </div>
+          </div>
+          <div class="att-stats">
+            <div class="att-stat"><div class="asv" style="color:var(--green)">182</div><div class="asl">Present</div></div>
+            <div class="att-stat"><div class="asv" style="color:var(--red)">18</div><div class="asl">Absent</div></div>
+            <div class="att-stat"><div class="asv" style="color:var(--amber)">200</div><div class="asl">Total Days</div></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div class="ch-icon" style="background:var(--cyan-lt);color:var(--cyan)"><i class="fas fa-book"></i></div>
+            <div><h2>Subject-wise Attendance</h2><p>Attendance percentage per subject</p></div>
+          </div>
+          <div class="card-body">
+            <div class="subject-att">
+              <div class="sa-row">
+                <span class="sa-subj">Mathematics</span>
+                <div class="sa-bar-bg"><div class="sa-bar" style="width:96%;background:var(--green)"></div></div>
+                <span class="sa-pct" style="color:var(--green)">96%</span>
+                <span class="sa-pill" style="background:var(--green-lt);color:var(--green)">✓</span>
+              </div>
+              <div class="sa-row">
+                <span class="sa-subj">Science</span>
+                <div class="sa-bar-bg"><div class="sa-bar" style="width:93%;background:var(--green)"></div></div>
+                <span class="sa-pct" style="color:var(--green)">93%</span>
+                <span class="sa-pill" style="background:var(--green-lt);color:var(--green)">✓</span>
+              </div>
+              <div class="sa-row">
+                <span class="sa-subj">English</span>
+                <div class="sa-bar-bg"><div class="sa-bar" style="width:88%;background:var(--green)"></div></div>
+                <span class="sa-pct" style="color:var(--green)">88%</span>
+                <span class="sa-pill" style="background:var(--green-lt);color:var(--green)">✓</span>
+              </div>
+              <div class="sa-row">
+                <span class="sa-subj">Hindi</span>
+                <div class="sa-bar-bg"><div class="sa-bar" style="width:71%;background:var(--amber)"></div></div>
+                <span class="sa-pct" style="color:var(--amber)">71%</span>
+                <span class="sa-pill" style="background:var(--amber-lt);color:var(--amber)">!</span>
+              </div>
+              <div class="sa-row">
+                <span class="sa-subj">Social Science</span>
+                <div class="sa-bar-bg"><div class="sa-bar" style="width:62%;background:var(--red)"></div></div>
+                <span class="sa-pct" style="color:var(--red)">62%</span>
+                <span class="sa-pill" style="background:var(--red-lt);color:var(--red)">✕</span>
+              </div>
+            </div>
+            <div style="margin-top:1rem;padding:.875rem;background:var(--red-lt);border-radius:var(--r-md);border:1px solid var(--red-md)">
+              <div style="font-size:.8rem;font-weight:700;color:var(--red)"><i class="fas fa-exclamation-triangle"></i> Low Attendance Warning</div>
+              <div style="font-size:.72rem;color:var(--muted);margin-top:3px">Social Science attendance is 62% — below the required 75%. Contact your teacher.</div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /attendance tab -->
+
+      <!-- ─── EXAMS TAB ─────────────────────────────── -->
+      <div class="section" id="tab-exams">
+        <div class="card" style="margin-bottom:1.25rem">
+          <div class="card-head">
+            <div class="ch-icon" style="background:var(--red-lt);color:var(--red)"><i class="fas fa-exclamation-circle"></i></div>
+            <div><h2>Upcoming Exams</h2><p>Scheduled for this term</p></div>
+          </div>
+          <div class="card-body">
+
+            <div class="exam-card today">
+              <div class="ec-head">
+                <div class="ec-date"><div class="ec-day">23</div><div class="ec-mon">JUN</div></div>
+                <div class="ec-info">
+                  <div class="ec-subject">Mathematics</div>
+                  <div class="ec-class">Class VII — A &nbsp;·&nbsp; All Sections</div>
+                  <div class="ec-time"><i class="fas fa-clock"></i> 9:00 AM – 12:00 PM</div>
+                </div>
+                <span class="pill due" style="flex-shrink:0">Today</span>
+              </div>
+              <div class="ec-body">
+                <div class="ec-detail"><strong>Hall:</strong> Examination Hall A &nbsp;·&nbsp; <strong>Marks:</strong> 100 &nbsp;·&nbsp; <strong>Passing:</strong> 35</div>
+                <button class="download-btn"><i class="fas fa-download"></i> Admit Card</button>
+              </div>
+            </div>
+
+            <div class="exam-card upcoming">
+              <div class="ec-head">
+                <div class="ec-date" style="background:var(--blue-lt)"><div class="ec-day" style="color:var(--blue)">24</div><div class="ec-mon" style="color:var(--blue)">JUN</div></div>
+                <div class="ec-info">
+                  <div class="ec-subject">Science Practical</div>
+                  <div class="ec-class">Class VII — A &nbsp;·&nbsp; Lab 1</div>
+                  <div class="ec-time" style="color:var(--blue)"><i class="fas fa-clock"></i> 10:00 AM – 12:00 PM</div>
+                </div>
+                <span class="pill info" style="flex-shrink:0">Tomorrow</span>
+              </div>
+              <div class="ec-body">
+                <div class="ec-detail"><strong>Lab:</strong> Science Lab 1 &nbsp;·&nbsp; <strong>Marks:</strong> 50 &nbsp;·&nbsp; <strong>Passing:</strong> 17</div>
+                <button class="download-btn" style="border-color:var(--blue-md);background:var(--blue-lt);color:var(--blue)"><i class="fas fa-download"></i> Admit Card</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div><!-- /exams tab -->
+
+      <!-- ─── RESULTS TAB ────────────────────────────── -->
+      <div class="section" id="tab-results">
+        <div class="result-summary">
+          <div class="rs-card"><div class="rsv" style="color:var(--blue)">72%</div><div class="rsl">Overall</div></div>
+          <div class="rs-card"><div class="rsv" style="color:var(--green)">B+</div><div class="rsl">Grade</div></div>
+          <div class="rs-card"><div class="rsv" style="color:var(--purple)">7.2</div><div class="rsl">CGPA</div></div>
+          <div class="rs-card"><div class="rsv" style="color:var(--amber)">5th</div><div class="rsl">Class Rank</div></div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div class="ch-icon" style="background:var(--blue-lt);color:var(--blue)"><i class="fas fa-chart-bar"></i></div>
+            <div><h2>Unit Test 2 — June 2026</h2><p>Class VII-A Results</p></div>
+            <button class="download-btn" style="margin-left:auto"><i class="fas fa-download"></i> Report Card PDF</button>
+          </div>
+          <div class="card-body" style="padding:0">
+            <table class="result-table">
+              <thead><tr><th>Subject</th><th>Max</th><th>Scored</th><th>%</th><th>Grade</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td><strong>Mathematics</strong></td>
+                  <td>100</td>
+                  <td>
+                    <div class="marks-cell">
+                      82
+                      <div class="marks-bar"><div class="marks-fill" style="width:82%;background:var(--green)"></div></div>
+                    </div>
+                  </td>
+                  <td style="color:var(--green);font-weight:700">82%</td>
+                  <td><span class="grade-badge">A</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Science</strong></td>
+                  <td>100</td>
+                  <td>
+                    <div class="marks-cell">
+                      75
+                      <div class="marks-bar"><div class="marks-fill" style="width:75%;background:var(--green)"></div></div>
+                    </div>
+                  </td>
+                  <td style="color:var(--green);font-weight:700">75%</td>
+                  <td><span class="grade-badge">B+</span></td>
+                </tr>
+                <tr>
+                  <td><strong>English</strong></td>
+                  <td>100</td>
+                  <td>
+                    <div class="marks-cell">
+                      68
+                      <div class="marks-bar"><div class="marks-fill" style="width:68%;background:var(--amber)"></div></div>
+                    </div>
+                  </td>
+                  <td style="color:var(--amber);font-weight:700">68%</td>
+                  <td><span class="grade-badge" style="background:var(--amber-lt);color:var(--amber)">B</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Hindi</strong></td>
+                  <td>100</td>
+                  <td>
+                    <div class="marks-cell">
+                      58
+                      <div class="marks-bar"><div class="marks-fill" style="width:58%;background:var(--amber)"></div></div>
+                    </div>
+                  </td>
+                  <td style="color:var(--amber);font-weight:700">58%</td>
+                  <td><span class="grade-badge" style="background:var(--amber-lt);color:var(--amber)">C+</span></td>
+                </tr>
+                <tr>
+                  <td><strong>Social Science</strong></td>
+                  <td>100</td>
+                  <td>
+                    <div class="marks-cell">
+                      55
+                      <div class="marks-bar"><div class="marks-fill" style="width:55%;background:var(--amber)"></div></div>
+                    </div>
+                  </td>
+                  <td style="color:var(--amber);font-weight:700">55%</td>
+                  <td><span class="grade-badge" style="background:var(--amber-lt);color:var(--amber)">C</span></td>
+                </tr>
+              </tbody>
+            </table>
+            <div style="padding:1rem 1.25rem;border-top:2px solid var(--border);display:flex;justify-content:space-between;align-items:center">
+              <span style="font-size:.82rem;color:var(--muted)">Total out of 500</span>
+              <span style="font-size:1.1rem;font-weight:800;color:var(--blue)">338 / 500 &nbsp;·&nbsp; 67.6%</span>
+            </div>
+          </div>
+        </div>
+      </div><!-- /results tab -->
+
+      <!-- ─── HOMEWORK TAB ───────────────────────────── -->
+      <div class="section" id="tab-homework">
+        <div class="card">
+          <div class="card-head">
+            <div class="ch-icon" style="background:var(--amber-lt);color:var(--amber)"><i class="fas fa-book-open"></i></div>
+            <div><h2>Pending Homework</h2><p>2 assignments due this week</p></div>
+          </div>
+          <div class="card-body">
+            <div class="hw-item urgent">
+              <div class="hw-icon" style="background:var(--red-lt);color:var(--red)"><i class="fas fa-flask"></i></div>
+              <div class="hw-info">
+                <div class="hw-subject">Science</div>
+                <div class="hw-title">Chapter 7: Forces & Motion — Write 10 examples of Newton's laws with diagrams</div>
+                <div class="hw-due" style="color:var(--red)"><i class="fas fa-clock"></i> Due: Tomorrow, 24 Jun 2026</div>
+              </div>
+            </div>
+            <div class="hw-item">
+              <div class="hw-icon" style="background:var(--blue-lt);color:var(--blue)"><i class="fas fa-calculator"></i></div>
+              <div class="hw-info">
+                <div class="hw-subject">Mathematics</div>
+                <div class="hw-title">Exercise 8.3 — Complete all questions (Q1 to Q15) from textbook</div>
+                <div class="hw-due" style="color:var(--amber)"><i class="fas fa-clock"></i> Due: 26 Jun 2026</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- OTHER TABS (skeleton) -->
+      <div class="section" id="tab-profile"><div class="card"><div class="card-body" style="text-align:center;padding:3rem;color:var(--faint)"><i class="fas fa-user-circle" style="font-size:3rem;margin-bottom:1rem;display:block"></i>Profile section — wire to Firestore student document</div></div></div>
+      <div class="section" id="tab-materials"><div class="card"><div class="card-body" style="text-align:center;padding:3rem;color:var(--faint)"><i class="fas fa-folder-open" style="font-size:3rem;margin-bottom:1rem;display:block"></i>Study materials uploaded by teachers appear here</div></div></div>
+      <div class="section" id="tab-library"><div class="card"><div class="card-body" style="text-align:center;padding:3rem;color:var(--faint)"><i class="fas fa-book" style="font-size:3rem;margin-bottom:1rem;display:block"></i>Library issued books and return dates</div></div></div>
+      <div class="section" id="tab-transport"><div class="card"><div class="card-body" style="text-align:center;padding:3rem;color:var(--faint)"><i class="fas fa-bus" style="font-size:3rem;margin-bottom:1rem;display:block"></i>Route: Patna Junction → School &nbsp;·&nbsp; Bus #12 &nbsp;·&nbsp; Driver: Ramu</div></div></div>
+      <div class="section" id="tab-certificates"><div class="card"><div class="card-body" style="text-align:center;padding:3rem;color:var(--faint)"><i class="fas fa-certificate" style="font-size:3rem;margin-bottom:1rem;display:block"></i>Download marksheets, bonafide, and transfer certificates</div></div></div>
+
+    </div><!-- /content -->
+  </main><!-- /main -->
+
+  <!-- MOBILE BOTTOM NAV -->
+  <nav class="bottom-nav">
+    <div class="bn-item active" onclick="switchTab('home')"><i class="fas fa-home"></i>Home</div>
+    <div class="bn-item" onclick="switchTab('fees')">
+      <i class="fas fa-rupee-sign"></i>Fees
+      <div class="bn-dot"></div>
+    </div>
+    <div class="bn-item" onclick="switchTab('exams')"><i class="fas fa-file-alt"></i>Exams</div>
+    <div class="bn-item" onclick="switchTab('attendance')"><i class="fas fa-calendar-check"></i>Attend</div>
+    <div class="bn-item" onclick="switchTab('results')"><i class="fas fa-chart-bar"></i>Results</div>
+  </nav>
+
+</div><!-- /portal -->
+
+<script>
+const TAB_LABELS = {
+  home:'Dashboard', profile:'My Profile', attendance:'Attendance',
+  exams:'Exams', results:'Results', homework:'Homework', materials:'Study Material',
+  fees:'Fee & Payments', library:'Library', transport:'Transport', certificates:'Certificates'
+};
+
+function switchTab(tab) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.sb-item').forEach(i => i.classList.remove('active'));
+  document.querySelectorAll('.bn-item').forEach(i => i.classList.remove('active'));
+  const el = document.getElementById('tab-' + tab);
+  if (el) el.classList.add('active');
+  document.getElementById('breadcrumbCurrent').textContent = TAB_LABELS[tab] || tab;
+  document.querySelectorAll('.sb-item').forEach(i => {
+    if (i.getAttribute('onclick')?.includes("'" + tab + "'")) i.classList.add('active');
+  });
+  document.querySelectorAll('.bn-item').forEach(i => {
+    if (i.getAttribute('onclick')?.includes("'" + tab + "'")) i.classList.add('active');
+  });
+  closeSidebar();
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('mobile-open');
+  document.getElementById('sidebarOverlay').classList.toggle('open');
+}
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('mobile-open');
+  document.getElementById('sidebarOverlay').classList.remove('open');
+}
+</script>
+</body>
+</html>

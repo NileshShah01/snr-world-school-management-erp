@@ -1,329 +1,384 @@
-<section id="addStudentSection" class="dashboard-section card hidden">
-                    <h3 id="formTitle">Add New Student</h3>
-                    <form id="studentForm" class="mt-2">
-                        <!-- Photo Upload -->
-                        <div class="flex align-center gap-2 mb-2 p-1-5 bg-secondary border-radius-0-75">
-                            <div
-                                id="photoPreview"
-                                class="avatar-100 bg-gray-light border-3-primary flex-shrink-0 flex align-center justify-center overflow-hidden student-photo-avatar-lg"
-                            >
-                                <img
-                                    id="proto_preview_img"
-                                    src=""
-                                    alt="Student Preview"
-                                    class="hidden student-photo-avatar-img"
-                                />
-                                <i id="photo_placeholder_icon" class="fas fa-user text-2xl text-muted"></i>
-                            </div>
-                            <div>
-                                <p class="font-700 mb-0-5">Student Photo</p>
-                                <p class="text-xs text-muted mb-0-75">
-                                    Upload a clear photo of the student (JPG/PNG, max 2MB)
-                                </p>
-                                <label
-                                    for="student_photo"
-                                    class="btn-portal btn-ghost cursor-pointer flex align-center gap-0-5"
-                                    title="Choose Photo"
-                                >
-                                    <i class="fas fa-camera"></i> Choose Photo
-                                </label>
-                                <input
-                                    type="file"
-                                    id="student_photo"
-                                    accept="image/*"
-                                    class="hidden"
-                                    onchange="previewPhoto(event)"
-                                />
-                                <span id="photoFileName" class="text-xs text-muted ml-0-75"></span>
-                            </div>
-                        </div>
+<section id="addStudentSection" class="dashboard-section">
 
-                        <p class="text-xs text-muted mb-1 font-700 text-uppercase letter-spacing-05">
-                            Mandatory Fields <span class="text-red">*</span>
-                        </p>
-                        <div class="grid-3 gap-1-25 mb-1-5">
-                            <div class="form-group">
-                                <label>Full Name <span class="text-red">*</span></label>
-                                <input
-                                    type="text"
-                                    id="student_name"
-                                    required
-                                    placeholder="Student's full name"
-                                    class="form-control"
-                                    title="Full Name"
-                                />
-                            </div>
-                            <div class="form-group">
-                                <label>Father's Name <span class="text-red">*</span></label>
-                                <input
-                                    type="text"
-                                    id="student_father"
-                                    required
-                                    placeholder="Father's full name"
-                                    class="form-control"
-                                    title="Father's Name"
-                                />
-                            </div>
-                            <div class="form-group">
-                                <label>Mobile Number <span class="text-red">*</span></label>
-                                <input
-                                    type="text"
-                                    id="student_phone"
-                                    required
-                                    placeholder="10-digit mobile number"
-                                    maxlength="10"
-                                    class="form-control"
-                                    title="Mobile Number"
-                                />
-                            </div>
-                        </div>
+  <!-- PROGRESS BAR -->
+  <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:25%"></div></div>
 
-                        <p class="text-xs text-muted mb-1 font-700 text-uppercase letter-spacing-05">
-                            Optional Details
-                        </p>
-                        <div class="grid-3 gap-1-25 mb-1-5">
-                            <div class="form-group">
-                                <label>Session <span class="text-red">*</span></label>
-                                <select
-                                    id="student_session"
-                                    required
-                                    onchange="loadClassesForRegistration()"
-                                    class="form-control"
-                                    title="Select Session"
-                                >
-                                    <option value="">Select Session</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Student ID</label>
-                                <input
-                                    type="text"
-                                    id="student_id"
-                                    placeholder="Auto-generated (1000+)"
-                                    readonly
-                                    class="bg-gray-light cursor-not-allowed form-control"
-                                    title="Student ID"
-                                />
-                            </div>
-                            <div class="form-group">
-                                <label>Class <span class="text-red">*</span></label>
-                                <select
-                                    id="student_class"
-                                    required
-                                    onchange="updateRegistrationSections()"
-                                    class="form-control"
-                                    title="Select Class"
-                                >
-                                    <option value="">Select Class</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Section <span class="text-red">*</span></label>
-                                <select id="student_section" required class="form-control" title="Select Section">
-                                    <option value="">Select Class First</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Roll No</label>
-                                <input type="text" id="student_roll_no" class="form-control" title="Roll No" />
-                            </div>
-                            <div class="form-group">
-                                <label>Reg No</label>
-                                <input type="text" id="student_reg_no" class="form-control" title="Reg No" />
-                            </div>
-                            <div class="form-group">
-                                <label>Join Date</label>
-                                <input type="date" id="student_join_date" class="form-control" title="Join Date" />
-                            </div>
-                        </div>
+  <!-- WIZARD -->
+  <div class="wizard">
 
-                        <p class="text-xs text-muted mb-1 font-700 text-uppercase letter-spacing-05">
-                            Personal & Identity
-                        </p>
-                        <div class="grid-3 gap-1-25 mb-1-5">
-                            <div class="form-group">
-                                <label>Date of Birth</label>
-                                <input type="date" id="student_dob" class="form-control" title="Date of Birth" />
-                            </div>
-                            <div class="form-group">
-                                <label>Gender</label>
-                                <select id="student_gender" class="form-control" title="Select Gender">
-                                    <option value="">Select</option>
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Student Aadhar</label>
-                                <input
-                                    type="text"
-                                    id="student_aadhar"
-                                    maxlength="12"
-                                    class="form-control"
-                                    title="Student Aadhar"
-                                />
-                            </div>
-                            <div class="form-group">
-                                <label>Religion</label>
-                                <select id="student_religion" class="form-control" title="Religion">
-                                    <option value="">Select Religion</option>
-                                    <option value="Hindu">Hindu</option>
-                                    <option value="Muslim">Muslim</option>
-                                    <option value="Buddhist">Buddhist</option>
-                                    <option value="Sikh">Sikh</option>
-                                    <option value="Jain">Jain</option>
-                                    <option value="Christian">Christian</option>
-                                    <option value="Other">Other</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Category</label>
-                                <select id="student_category" class="form-control" title="Category">
-                                    <option value="">Select Category</option>
-                                    <option value="General">General Category (Unreserved)</option>
-                                    <option value="OBC">Other Backward Class (OBC/BC)</option>
-                                    <option value="EBC">Extremely Backward Class (EBC)</option>
-                                    <option value="SC">Scheduled Castes (SC)</option>
-                                    <option value="ST">Scheduled Tribes (ST)</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Caste</label>
-                                <input type="text" id="student_caste" class="form-control" title="Caste" />
-                            </div>
-                            <div class="form-group">
-                                <label>PEN</label>
-                                <input type="text" id="student_pen" class="form-control" title="PEN" />
-                            </div>
-                            <div class="form-group">
-                                <label>Smart Card No</label>
-                                <input
-                                    type="text"
-                                    id="student_smart_card_no"
-                                    class="form-control"
-                                    title="Smart Card No"
-                                />
-                            </div>
-                        </div>
+    <!-- STEP TABS -->
+    <div class="wizard-steps">
+      <div class="ws-step active" id="wsStep1" onclick="goStep(1)">
+        <div class="ws-num" id="wsNum1">1</div>
+        <div class="ws-label">Basic Info</div>
+        <div class="ws-sub">Name, DOB, Address</div>
+      </div>
+      <div class="ws-step idle" id="wsStep2" onclick="goStep(2)">
+        <div class="ws-num" id="wsNum2">2</div>
+        <div class="ws-label">Academic Info</div>
+        <div class="ws-sub">Class, Section, Roll</div>
+      </div>
+      <div class="ws-step idle" id="wsStep3" onclick="goStep(3)">
+        <div class="ws-num" id="wsNum3">3</div>
+        <div class="ws-label">Guardian Info</div>
+        <div class="ws-sub">Parents, Contact</div>
+      </div>
+      <div class="ws-step idle" id="wsStep4" onclick="goStep(4)">
+        <div class="ws-num" id="wsNum4">4</div>
+        <div class="ws-label">Review & Save</div>
+        <div class="ws-sub">Confirm details</div>
+      </div>
+    </div>
 
-                        <p class="text-xs text-muted mb-1 font-700 text-uppercase letter-spacing-05">Family Details</p>
-                        <div class="grid-3 gap-1-25 mb-1-5">
-                            <div class="form-group">
-                                <label>Mother's Name</label>
-                                <input type="text" id="student_mother" class="form-control" title="Mother's Name" />
-                            </div>
-                            <div class="form-group">
-                                <label>Father's Aadhar</label>
-                                <input
-                                    type="text"
-                                    id="student_father_aadhar"
-                                    maxlength="12"
-                                    class="form-control"
-                                    title="Father's Aadhar"
-                                />
-                            </div>
-                            <div class="form-group">
-                                <label>Mother's Aadhar</label>
-                                <input
-                                    type="text"
-                                    id="student_mother_aadhar"
-                                    maxlength="12"
-                                    class="form-control"
-                                    title="Mother's Aadhar"
-                                />
-                            </div>
-                            <div class="form-group">
-                                <label>Guardian Name</label>
-                                <input
-                                    type="text"
-                                    id="student_guardian_name"
-                                    class="form-control"
-                                    title="Guardian Name"
-                                />
-                            </div>
-                            <div class="form-group">
-                                <label>Guardian Phone</label>
-                                <input
-                                    type="text"
-                                    id="student_guardian_phone"
-                                    class="form-control"
-                                    title="Guardian Phone"
-                                />
-                            </div>
-                        </div>
+    <!-- STEP 1: BASIC INFO -->
+    <div class="step-panel active" id="stepPanel1">
+      <div class="field-group">
+        <div class="fg-title"><i class="fas fa-camera"></i> Student Photo</div>
+        <div class="photo-upload" onclick="document.getElementById('photoInput').click()">
+          <div class="pu-preview" id="photoPreview">A</div>
+          <div class="pu-info">
+            <h4>Upload Student Photo</h4>
+            <p>JPG or PNG, max 2MB. Recommended: square crop, passport size.</p>
+            <button class="pu-btn" type="button">Choose Photo</button>
+          </div>
+          <input type="file" id="photoInput" accept="image/*" style="display:none" onchange="previewPhoto(this)">
+        </div>
+      </div>
 
-                        <p class="text-xs text-muted mb-1 font-700 text-uppercase letter-spacing-05">
-                            Address & Logistics
-                        </p>
-                        <div class="grid-2 gap-1-25 mb-1-5">
-                            <div class="form-group">
-                                <label>Current Address</label>
-                                <textarea
-                                    id="student_address"
-                                    rows="2"
-                                    class="form-control"
-                                    title="Current Address"
-                                ></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label>Permanent Address</label>
-                                <textarea
-                                    id="student_permanent_address"
-                                    rows="2"
-                                    class="form-control"
-                                    title="Permanent Address"
-                                ></textarea>
-                            </div>
-                        </div>
-                        <div class="grid-3 gap-1-25 mb-1-5">
-                            <div class="form-group">
-                                <label>City</label>
-                                <input type="text" id="student_city" class="form-control" title="City" />
-                            </div>
-                            <div class="form-group">
-                                <label>Hostel Facility</label>
-                                <select id="student_hostel" class="form-control" title="Hostel Facility">
-                                    <option value="No">No</option>
-                                    <option value="Yes">Yes</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Transport Facility</label>
-                                <select id="student_transport" class="form-control" title="Transport Facility">
-                                    <option value="No">No</option>
-                                    <option value="Yes">Yes</option>
-                                </select>
-                            </div>
-                        </div>
+      <div class="field-group">
+        <div class="fg-title"><i class="fas fa-user"></i> Personal Details</div>
+        <div class="form-grid cols-2">
+          <div class="field">
+            <label>First Name <span class="req">*</span></label>
+            <input type="text" id="f_firstName" placeholder="e.g. Aarav" oninput="syncReview()">
+          </div>
+          <div class="field">
+            <label>Last Name <span class="req">*</span></label>
+            <input type="text" id="f_lastName" placeholder="e.g. Singh" oninput="syncReview()">
+          </div>
+          <div class="field">
+            <label>Date of Birth <span class="req">*</span></label>
+            <input type="date" id="f_dob" max="2020-01-01" oninput="calcAge()">
+            <span class="hint" id="ageHint"></span>
+          </div>
+          <div class="field">
+            <label>Gender <span class="req">*</span></label>
+            <div class="gender-group">
+              <div class="gender-opt"><input type="radio" name="gender" id="gMale" value="Male"><label for="gMale"><i class="fas fa-mars"></i> Male</label></div>
+              <div class="gender-opt"><input type="radio" name="gender" id="gFemale" value="Female"><label for="gFemale"><i class="fas fa-venus"></i> Female</label></div>
+              <div class="gender-opt"><input type="radio" name="gender" id="gOther" value="Other"><label for="gOther"><i class="fas fa-genderless"></i> Other</label></div>
+            </div>
+          </div>
+          <div class="field">
+            <label>Blood Group</label>
+            <select id="f_bloodGroup"><option value="">Select blood group</option><option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>AB+</option><option>AB-</option><option>O+</option><option>O-</option></select>
+          </div>
+          <div class="field">
+            <label>Religion</label>
+            <select id="f_religion"><option value="">Select religion</option><option>Hindu</option><option>Muslim</option><option>Christian</option><option>Sikh</option><option>Buddhist</option><option>Jain</option><option>Other</option></select>
+          </div>
+          <div class="field">
+            <label>Category</label>
+            <select id="f_category"><option value="">Select category</option><option>General</option><option>OBC</option><option>SC</option><option>ST</option><option>EWS</option></select>
+          </div>
+          <div class="field">
+            <label>Nationality</label>
+            <input type="text" id="f_nationality" value="Indian">
+          </div>
+        </div>
+      </div>
 
-                        <div class="mb-1-5 p-1-5 bg-secondary border-radius-0-75">
-                            <label class="flex align-start gap-0-75 cursor-pointer">
-                                <input type="checkbox" id="consentCheckbox" style="margin-top:0.25rem;" />
-                                <span class="text-sm">
-                                    I consent to the collection and processing of my child's data as per the
-                                    <a href="/privacy.html" target="_blank" class="text-primary">Privacy Policy</a>.
-                                    <span class="text-red">*</span>
-                                </span>
-                            </label>
-                        </div>
+      <div class="field-group">
+        <div class="fg-title"><i class="fas fa-map-marker-alt"></i> Address</div>
+        <div class="form-grid cols-2">
+          <div class="field span-full">
+            <label>Street Address <span class="req">*</span></label>
+            <textarea id="f_address" placeholder="House no., street, locality..." rows="2" oninput="syncReview()"></textarea>
+          </div>
+          <div class="field">
+            <label>City <span class="req">*</span></label>
+            <input type="text" id="f_city" placeholder="e.g. Patna" oninput="syncReview()">
+          </div>
+          <div class="field">
+            <label>State <span class="req">*</span></label>
+            <select id="f_state"><option value="">Select state</option><option>Bihar</option><option>Uttar Pradesh</option><option>Delhi</option><option>Jharkhand</option><option>West Bengal</option><option>Maharashtra</option><option>Rajasthan</option><option>Madhya Pradesh</option><option>Other</option></select>
+          </div>
+          <div class="field">
+            <label>PIN Code <span class="req">*</span></label>
+            <input type="text" id="f_pin" placeholder="e.g. 800001" maxlength="6">
+          </div>
+        </div>
+      </div>
+    </div>
 
-                        <div id="uploadProgress" class="hidden mb-1">
-                            <p class="text-sm primary font-600">
-                                <i class="fas fa-spinner fa-spin"></i> Uploading photo...
-                            </p>
-                        </div>
-                        <div class="flex gap-1">
-                            <button type="submit" class="btn-portal btn-primary" id="saveBtn" title="Save Student">
-                                Save Student
-                            </button>
-                            <button
-                                type="button"
-                                class="btn-portal btn-ghost"
-                                onclick="showSection('studentList')"
-                                title="Cancel"
-                            >
-                                Cancel
-                            </button>
-                        </div>
-                    </form>
-                </section>
+    <!-- STEP 2: ACADEMIC INFO -->
+    <div class="step-panel" id="stepPanel2">
+      <div class="field-group">
+        <div class="fg-title"><i class="fas fa-graduation-cap"></i> Class & Enrollment</div>
+        <div class="form-grid cols-3">
+          <div class="field">
+            <label>Academic Session <span class="req">*</span></label>
+            <select id="f_session" oninput="syncReview()"><option value="">Select session</option></select>
+          </div>
+          <div class="field">
+            <label>Class <span class="req">*</span></label>
+            <select id="f_class" oninput="syncReview(); loadSections()"><option value="">Select class</option></select>
+          </div>
+          <div class="field">
+            <label>Section <span class="req">*</span></label>
+            <select id="f_section" oninput="syncReview()"><option value="">Select section</option></select>
+          </div>
+          <div class="field">
+            <label>Roll Number</label>
+            <input type="number" id="f_roll" placeholder="Auto-assigned if blank" min="1" oninput="syncReview()">
+          </div>
+          <div class="field">
+            <label>Admission Date <span class="req">*</span></label>
+            <input type="date" id="f_admDate">
+          </div>
+          <div class="field">
+            <label>House / Group</label>
+            <select id="f_house"><option value="">Select house (optional)</option><option>Red House</option><option>Blue House</option><option>Green House</option><option>Yellow House</option></select>
+          </div>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <div class="fg-title"><i class="fas fa-bus"></i> School Services</div>
+        <div class="form-grid cols-2">
+          <div class="field">
+            <label>Transport Route</label>
+            <select id="f_transport"><option value="">Not enrolled</option><option>Route 1 — Patna Junction</option><option>Route 2 — Boring Road</option><option>Route 3 — Kankarbagh</option></select>
+          </div>
+          <div class="field">
+            <label>Hostel</label>
+            <select id="f_hostel"><option value="">Day Scholar</option><option>Boys Hostel — Block A</option><option>Boys Hostel — Block B</option><option>Girls Hostel</option></select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 3: GUARDIAN INFO -->
+    <div class="step-panel" id="stepPanel3">
+      <div class="field-group">
+        <div class="fg-title"><i class="fas fa-user-tie"></i> Father's Details</div>
+        <div class="form-grid cols-2">
+          <div class="field">
+            <label>Father's Full Name <span class="req">*</span></label>
+            <input type="text" id="f_fatherName" placeholder="e.g. Rajesh Singh" oninput="syncReview()">
+          </div>
+          <div class="field">
+            <label>Father's Occupation</label>
+            <input type="text" id="f_fatherOcc" placeholder="e.g. Business, Government Service">
+          </div>
+          <div class="field">
+            <label>Father's Phone <span class="req">*</span></label>
+            <input type="tel" id="f_fatherPhone" placeholder="98981 23456" maxlength="10" oninput="syncReview()">
+          </div>
+          <div class="field">
+            <label>Father's Email</label>
+            <input type="email" id="f_fatherEmail" placeholder="father@email.com">
+          </div>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <div class="fg-title"><i class="fas fa-user"></i> Mother's Details</div>
+        <div class="form-grid cols-2">
+          <div class="field">
+            <label>Mother's Full Name</label>
+            <input type="text" id="f_motherName" placeholder="e.g. Sunita Singh">
+          </div>
+          <div class="field">
+            <label>Mother's Phone</label>
+            <input type="tel" id="f_motherPhone" placeholder="98981 99999" maxlength="10">
+          </div>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <div class="fg-title"><i class="fas fa-ambulance"></i> Emergency & Medical</div>
+        <div class="form-grid cols-2">
+          <div class="field">
+            <label>Emergency Contact Name</label>
+            <input type="text" id="f_emergName" placeholder="e.g. Uncle — Vikram Singh">
+          </div>
+          <div class="field">
+            <label>Emergency Phone</label>
+            <input type="tel" id="f_emergPhone" placeholder="98981 88888" maxlength="10">
+          </div>
+          <div class="field span-full">
+            <label>Medical Conditions / Allergies</label>
+            <textarea id="f_medical" placeholder="List any known medical conditions, allergies, or special needs..." rows="2"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 4: REVIEW -->
+    <div class="step-panel" id="stepPanel4">
+      <div class="review-hero">
+        <div class="rh-avatar" id="rvAvatar">A</div>
+        <div>
+          <div class="rh-name" id="rvName">—</div>
+          <div class="rh-class" id="rvClass">Not selected</div>
+        </div>
+        <button class="edit-chip" onclick="goStep(1)"><i class="fas fa-edit"></i> Edit Basic Info</button>
+      </div>
+
+      <div class="review-section">
+        <h3><i class="fas fa-user"></i> Personal Information</h3>
+        <div class="review-grid">
+          <div class="rv-item"><div class="rv-l">Full Name</div><div class="rv-v" id="rv_name">—</div></div>
+          <div class="rv-item"><div class="rv-l">Date of Birth</div><div class="rv-v" id="rv_dob">—</div></div>
+          <div class="rv-item"><div class="rv-l">Gender</div><div class="rv-v" id="rv_gender">—</div></div>
+          <div class="rv-item"><div class="rv-l">Blood Group</div><div class="rv-v" id="rv_blood">—</div></div>
+          <div class="rv-item"><div class="rv-l">Category</div><div class="rv-v" id="rv_cat">—</div></div>
+          <div class="rv-item span-full"><div class="rv-l">Address</div><div class="rv-v" id="rv_addr">—</div></div>
+        </div>
+      </div>
+
+      <div class="review-section">
+        <h3><i class="fas fa-graduation-cap"></i> Academic Details <button class="edit-chip" onclick="goStep(2)"><i class="fas fa-edit"></i> Edit</button></h3>
+        <div class="review-grid">
+          <div class="rv-item"><div class="rv-l">Class</div><div class="rv-v" id="rv_class">—</div></div>
+          <div class="rv-item"><div class="rv-l">Section</div><div class="rv-v" id="rv_sec">—</div></div>
+          <div class="rv-item"><div class="rv-l">Session</div><div class="rv-v" id="rv_session">—</div></div>
+          <div class="rv-item"><div class="rv-l">Roll Number</div><div class="rv-v" id="rv_roll">Auto-assign</div></div>
+        </div>
+      </div>
+
+      <div class="review-section">
+        <h3><i class="fas fa-users"></i> Guardian Details <button class="edit-chip" onclick="goStep(3)"><i class="fas fa-edit"></i> Edit</button></h3>
+        <div class="review-grid">
+          <div class="rv-item"><div class="rv-l">Father's Name</div><div class="rv-v" id="rv_father">—</div></div>
+          <div class="rv-item"><div class="rv-l">Father's Phone</div><div class="rv-v" id="rv_fPhone">—</div></div>
+          <div class="rv-item"><div class="rv-l">Mother's Name</div><div class="rv-v" id="rv_mother">—</div></div>
+          <div class="rv-item"><div class="rv-l">Emergency Contact</div><div class="rv-v" id="rv_emerg">—</div></div>
+        </div>
+      </div>
+
+      <div style="padding:.875rem 1rem;background:var(--blue-lt);border-radius:var(--r-lg);border:1.5px solid var(--blue-md);display:flex;align-items:flex-start;gap:.75rem">
+        <i class="fas fa-shield-alt" style="color:var(--blue);margin-top:2px;font-size:1rem"></i>
+        <div>
+          <div style="font-size:.82rem;font-weight:700;color:var(--blue)">DPDP Act 2023 Consent</div>
+          <div style="font-size:.75rem;color:var(--muted);margin-top:3px">By saving, you confirm consent from parent/guardian per DPDP Act 2023.</div>
+        </div>
+        <input type="checkbox" id="dpdpConsent" style="width:18px;height:18px;accent-color:var(--blue);flex-shrink:0;margin-top:2px">
+      </div>
+    </div>
+
+    <!-- SUCCESS SCREEN -->
+    <div class="success-screen" id="successScreen">
+      <div class="ss-icon"><i class="fas fa-check"></i></div>
+      <div class="ss-title">Student Added Successfully!</div>
+      <div class="ss-sub" id="successSub">Student has been enrolled.</div>
+      <div class="ss-card" id="successCard"></div>
+      <div class="ss-actions">
+        <button class="btn btn-outline" onclick="showSection('classFeePayment')"><i class="fas fa-rupee-sign"></i> Generate Fee Record</button>
+        <button class="btn btn-primary" onclick="resetStudentForm()"><i class="fas fa-plus"></i> Add Another</button>
+      </div>
+    </div>
+
+    <!-- STEP FOOTER -->
+    <div class="step-footer" id="stepFooter">
+      <div class="sf-left"><i class="fas fa-info-circle"></i> Step <span id="currentStepNum">1</span> of 4</div>
+      <div style="display:flex;gap:.75rem">
+        <button class="btn btn-ghost" id="prevBtn" onclick="prevStep()" style="display:none"><i class="fas fa-arrow-left"></i> Previous</button>
+        <button class="btn btn-primary" id="nextBtn" onclick="nextStep()">Next: Academic Info <i class="fas fa-arrow-right"></i></button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<style>
+.wizard{background:white;border-radius:var(--r-xl);box-shadow:var(--sh-sm);overflow:hidden;margin-bottom:1.5rem}
+.wizard-steps{display:flex;background:var(--bg);border-bottom:1px solid var(--border);overflow-x:auto;scrollbar-width:none}
+.wizard-steps::-webkit-scrollbar{display:none}
+.ws-step{flex:1;display:flex;flex-direction:column;align-items:center;gap:.35rem;padding:1rem .75rem;cursor:pointer;transition:all .2s;position:relative;min-width:120px;border-bottom:3px solid transparent}
+.ws-step.active{background:white;border-bottom-color:var(--blue)}
+.ws-step.done{border-bottom-color:var(--green)}
+.ws-num{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:800;transition:all .2s}
+.ws-step.idle .ws-num{background:var(--ghost);color:white}
+.ws-step.active .ws-num{background:var(--blue);color:white;box-shadow:0 0 0 4px var(--blue-md)}
+.ws-step.done .ws-num{background:var(--green);color:white}
+.ws-label{font-size:.72rem;font-weight:700;text-align:center;line-height:1.2}
+.ws-step.idle .ws-label{color:var(--faint)}
+.ws-step.active .ws-label{color:var(--blue)}
+.ws-step.done .ws-label{color:var(--green)}
+.ws-sub{font-size:.65rem;color:var(--faint);text-align:center}
+.step-content{padding:0}
+.step-panel{display:none;padding:1.75rem}
+.step-panel.active{display:block;animation:fadeIn .2s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.field-group{margin-bottom:1.5rem}
+.fg-title{font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--faint);margin-bottom:.875rem;display:flex;align-items:center;gap:.5rem}
+.fg-title::after{content:'';flex:1;height:1px;background:var(--border)}
+.form-grid{display:grid;gap:.875rem}
+.form-grid.cols-2{grid-template-columns:1fr 1fr}
+.form-grid.cols-3{grid-template-columns:1fr 1fr 1fr}
+.span-2{grid-column:span 2}
+.span-full{grid-column:1/-1}
+.field{display:flex;flex-direction:column;gap:.35rem}
+.field label{font-size:.72rem;font-weight:700;color:var(--ink-3);text-transform:uppercase;letter-spacing:.04em}
+.field label .req{color:var(--red);font-size:.8rem}
+.field input,.field select,.field textarea{padding:.72rem .875rem;border:2px solid var(--border);border-radius:var(--r-md);font-size:.9rem;color:var(--ink-2);outline:none;transition:all .15s;background:var(--bg);font-family:inherit;width:100%}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--blue);background:white;box-shadow:0 0 0 4px rgba(30,64,175,.07)}
+.field textarea{resize:vertical;min-height:80px}
+.field .hint{font-size:.7rem;color:var(--faint);margin-top:.15rem}
+.gender-group{display:flex;gap:.75rem}
+.gender-opt{flex:1}
+.gender-opt input{display:none}
+.gender-opt label{display:flex;align-items:center;justify-content:center;gap:.5rem;padding:.65rem;border:2px solid var(--border);border-radius:var(--r-md);cursor:pointer;font-size:.85rem;font-weight:600;color:var(--muted);transition:all .15s;background:var(--bg)}
+.gender-opt input:checked+label{border-color:var(--blue);background:var(--blue-lt);color:var(--blue)}
+.photo-upload{display:flex;align-items:center;gap:1.25rem;padding:1.25rem;background:var(--bg);border-radius:var(--r-lg);border:2px dashed var(--ghost);transition:all .2s;cursor:pointer}
+.photo-upload:hover{border-color:var(--blue-md);background:var(--blue-lt)}
+.pu-preview{width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--purple));display:flex;align-items:center;justify-content:center;color:white;font-size:1.6rem;font-weight:800;flex-shrink:0;position:relative;overflow:hidden}
+.pu-preview img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
+.pu-info h4{font-size:.88rem;font-weight:700;color:var(--ink-2);margin:0}
+.pu-info p{font-size:.75rem;color:var(--muted);margin-top:3px}
+.pu-btn{margin-top:.5rem;padding:.4rem .875rem;background:white;border:1.5px solid var(--border);border-radius:var(--r-sm);font-size:.75rem;font-weight:700;cursor:pointer;color:var(--ink-3)}
+.pu-btn:hover{border-color:var(--blue-md);color:var(--blue)}
+.review-hero{display:flex;align-items:center;gap:1rem;padding:1.25rem;background:linear-gradient(135deg,var(--blue-lt),#f0f9ff);border-radius:var(--r-lg);border:1.5px solid var(--blue-md);margin-bottom:1.25rem}
+.rh-avatar{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#1e40af,#7c3aed);display:flex;align-items:center;justify-content:center;font-size:1.3rem;font-weight:800;color:white;flex-shrink:0}
+.rh-name{font-size:1.05rem;font-weight:800;color:var(--ink)}
+.rh-class{font-size:.78rem;color:var(--muted);margin-top:2px}
+.edit-chip{margin-left:auto;padding:.35rem .75rem;background:white;border:1.5px solid var(--border);border-radius:var(--r-sm);font-size:.72rem;font-weight:700;cursor:pointer;color:var(--muted);display:flex;align-items:center;gap:.3rem}
+.edit-chip:hover{border-color:var(--blue-md);color:var(--blue)}
+.review-section{margin-bottom:1.25rem}
+.review-section h3{font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--faint);margin-bottom:.75rem;display:flex;align-items:center;gap:.4rem}
+.review-grid{display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
+.rv-item{background:var(--bg);border-radius:var(--r-md);padding:.65rem .875rem}
+.rv-item.span-full{grid-column:1/-1}
+.rv-l{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--faint)}
+.rv-v{font-size:.85rem;font-weight:600;color:var(--ink-2);margin-top:2px}
+.progress-track{background:var(--border);border-radius:20px;height:4px;margin-bottom:1.5rem;overflow:hidden}
+.progress-fill{height:100%;border-radius:20px;background:linear-gradient(90deg,var(--blue),var(--purple));transition:width .4s ease}
+.step-footer{display:flex;align-items:center;justify-content:space-between;padding:1.25rem 1.75rem;border-top:1px solid var(--border);background:var(--bg)}
+.sf-left{display:flex;align-items:center;gap:.5rem;font-size:.78rem;color:var(--muted)}
+.btn{display:inline-flex;align-items:center;gap:.4rem;padding:.7rem 1.4rem;border-radius:var(--r-md);font-size:.85rem;font-weight:700;cursor:pointer;border:none;transition:all .15s;white-space:nowrap}
+.btn-primary{background:var(--blue);color:white}
+.btn-primary:hover{background:var(--blue-dk);box-shadow:0 4px 12px rgba(30,64,175,.35)}
+.btn-ghost{background:transparent;color:var(--muted);border:1.5px solid transparent}
+.btn-ghost:hover{background:white;color:var(--ink)}
+.btn-outline{background:white;color:var(--ink-3);border:1.5px solid var(--border)}
+.btn-outline:hover{border-color:var(--blue-md);color:var(--blue)}
+.success-screen{text-align:center;padding:3rem 2rem;display:none}
+.success-screen.visible{display:block;animation:fadeIn .3s ease}
+.ss-icon{width:80px;height:80px;border-radius:50%;background:var(--green-lt);border:3px solid var(--green-md);display:flex;align-items:center;justify-content:center;margin:0 auto 1.25rem;font-size:2rem;color:var(--green)}
+.ss-title{font-size:1.3rem;font-weight:800;color:var(--ink);margin-bottom:.5rem}
+.ss-sub{font-size:.88rem;color:var(--muted);max-width:400px;margin:0 auto 2rem}
+.ss-actions{display:flex;gap:.875rem;justify-content:center;flex-wrap:wrap}
+.ss-card{background:var(--bg);border-radius:var(--r-lg);padding:1.25rem;margin:1.5rem 0;text-align:left}
+.ss-card-row{display:flex;justify-content:space-between;padding:.3rem 0;font-size:.83rem;border-bottom:1px solid var(--border)}
+.ss-card-row:last-child{border:none}
+.ss-card-row .scl{color:var(--muted)}
+.ss-card-row .scr{font-weight:700;color:var(--ink-2)}
+@media(max-width:640px){
+  .form-grid.cols-2,.form-grid.cols-3{grid-template-columns:1fr}
+  .span-2,.span-3{grid-column:1}
+  .gender-group{flex-direction:column}
+  .step-footer{flex-direction:column;gap:.875rem;align-items:stretch}
+}
+</style>

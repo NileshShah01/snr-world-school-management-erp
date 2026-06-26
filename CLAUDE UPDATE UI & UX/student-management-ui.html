@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Management — SNR ERP</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root {
+  --blue:#1e40af; --blue-lt:#eff6ff; --blue-md:#bfdbfe; --blue-dk:#1e3a8a;
+  --green:#059669; --green-lt:#ecfdf5; --green-md:#6ee7b7;
+  --red:#dc2626; --red-lt:#fef2f2; --red-md:#fca5a5;
+  --amber:#d97706; --amber-lt:#fffbeb; --amber-md:#fcd34d;
+  --purple:#7c3aed; --purple-lt:#f5f3ff;
+  --ink:#0f172a; --ink-2:#1e293b; --ink-3:#334155;
+  --muted:#64748b; --faint:#94a3b8; --ghost:#cbd5e1;
+  --bg:#f1f5f9; --surface:#fff; --border:#e2e8f0;
+  --r-sm:6px; --r-md:10px; --r-lg:14px; --r-xl:20px;
+  --sh-sm:0 2px 8px rgba(0,0,0,.06);
+  --sh-md:0 4px 20px rgba(0,0,0,.09);
+  --sh-lg:0 8px 40px rgba(0,0,0,.14);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--ink-2);font-size:14px;line-height:1.5}
+
+/* ── PAGE ───────────────────── */
+.page{max-width:1200px;margin:0 auto;padding:1.5rem}
+
+/* ── PAGE HEADER ────────────── */
+.ph{display:flex;align-items:flex-start;gap:1rem;margin-bottom:1.5rem;flex-wrap:wrap}
+.ph-left h1{font-size:1.35rem;font-weight:800;color:var(--ink)}
+.ph-left p{font-size:.82rem;color:var(--muted);margin-top:2px}
+.ph-actions{margin-left:auto;display:flex;gap:.6rem;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:.4rem;padding:.6rem 1.1rem;border-radius:var(--r-md);font-size:.82rem;font-weight:700;cursor:pointer;border:none;transition:all .15s;white-space:nowrap}
+.btn-primary{background:var(--blue);color:white}
+.btn-primary:hover{background:var(--blue-dk);box-shadow:0 4px 12px rgba(30,64,175,.35)}
+.btn-outline{background:white;color:var(--ink-3);border:1.5px solid var(--border)}
+.btn-outline:hover{border-color:var(--blue-md);color:var(--blue)}
+.btn-ghost{background:transparent;color:var(--muted);border:1.5px solid transparent}
+.btn-ghost:hover{background:white;color:var(--ink-2)}
+
+/* ── KPI STRIP ──────────────── */
+.kpi-strip{display:grid;grid-template-columns:repeat(5,1fr);gap:.875rem;margin-bottom:1.5rem}
+.kpi{background:white;border-radius:var(--r-lg);padding:1rem 1.1rem;box-shadow:var(--sh-sm);position:relative;overflow:hidden;cursor:pointer;transition:all .15s;border:1.5px solid transparent}
+.kpi:hover{box-shadow:var(--sh-md);border-color:var(--blue-md)}
+.kpi.active{border-color:var(--blue);box-shadow:0 0 0 3px rgba(30,64,175,.1)}
+.kpi::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px}
+.kpi.k-total::after{background:var(--blue)}
+.kpi.k-present::after{background:var(--green)}
+.kpi.k-absent::after{background:var(--red)}
+.kpi.k-due::after{background:var(--amber)}
+.kpi.k-new::after{background:var(--purple)}
+.kpi-val{font-size:1.7rem;font-weight:800;line-height:1;color:var(--ink)}
+.kpi-lbl{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--faint);margin-top:.2rem}
+.kpi-sub{font-size:.72rem;color:var(--muted);margin-top:.3rem}
+.kpi-icon{position:absolute;right:.875rem;top:.875rem;font-size:1.3rem;opacity:.12}
+
+/* ── SEARCH + FILTER BAR ────── */
+.filter-bar{background:white;border-radius:var(--r-lg);box-shadow:var(--sh-sm);padding:1rem 1.25rem;margin-bottom:1.25rem;display:flex;flex-direction:column;gap:.875rem}
+.fb-top{display:flex;gap:.75rem;align-items:center;flex-wrap:wrap}
+.search-wrap{position:relative;flex:1;min-width:220px}
+.search-wrap input{width:100%;padding:.7rem 1rem .7rem 2.5rem;border:2px solid var(--border);border-radius:var(--r-lg);font-size:.9rem;outline:none;transition:all .15s;background:var(--bg)}
+.search-wrap input:focus{border-color:var(--blue);background:white;box-shadow:0 0 0 4px rgba(30,64,175,.08)}
+.search-wrap .si{position:absolute;left:.85rem;top:50%;transform:translateY(-50%);color:var(--faint)}
+.search-wrap .kbd{position:absolute;right:.75rem;top:50%;transform:translateY(-50%);background:var(--bg);border:1px solid var(--ghost);border-radius:4px;padding:1px 6px;font-size:.62rem;font-weight:700;color:var(--faint)}
+.fb-chips{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center}
+.fb-chips label{font-size:.72rem;font-weight:700;color:var(--muted);margin-right:.2rem}
+.chip{padding:.28rem .75rem;border-radius:20px;font-size:.72rem;font-weight:700;cursor:pointer;border:1.5px solid var(--border);background:white;color:var(--muted);transition:all .15s;display:flex;align-items:center;gap:.3rem}
+.chip:hover{border-color:var(--blue-md);color:var(--blue)}
+.chip.active{background:var(--blue);color:white;border-color:var(--blue)}
+.chip.chip-red.active{background:var(--red);border-color:var(--red)}
+.chip.chip-amber.active{background:var(--amber);border-color:var(--amber)}
+.fb-selects{display:flex;gap:.6rem;flex-wrap:wrap}
+.fb-selects select{padding:.5rem .875rem;border:1.5px solid var(--border);border-radius:var(--r-md);font-size:.82rem;color:var(--ink-3);background:white;outline:none;cursor:pointer;transition:border .15s}
+.fb-selects select:focus{border-color:var(--blue)}
+
+/* ── TABLE TOOLBAR ──────────── */
+.tbl-toolbar{display:flex;align-items:center;gap:.75rem;margin-bottom:.875rem;flex-wrap:wrap}
+.tbl-info{font-size:.8rem;color:var(--muted)}
+.tbl-info strong{color:var(--ink-2)}
+.bulk-actions{display:none;align-items:center;gap:.5rem;padding:.4rem .875rem;background:var(--blue-lt);border-radius:var(--r-xl);border:1.5px solid var(--blue-md)}
+.bulk-actions.visible{display:flex}
+.bulk-actions span{font-size:.78rem;font-weight:700;color:var(--blue);margin-right:.25rem}
+.view-toggle{display:flex;border:1.5px solid var(--border);border-radius:var(--r-md);overflow:hidden;margin-left:auto}
+.vt-btn{padding:.45rem .75rem;background:white;border:none;cursor:pointer;color:var(--muted);transition:all .15s}
+.vt-btn.active{background:var(--blue);color:white}
+
+/* ── STUDENT TABLE ──────────── */
+.tbl-wrap{background:white;border-radius:var(--r-lg);box-shadow:var(--sh-sm);overflow:hidden}
+.student-table{width:100%;border-collapse:collapse}
+.student-table thead tr{border-bottom:2px solid var(--border)}
+.student-table th{padding:.7rem .875rem;text-align:left;font-size:.67rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--faint);background:var(--bg);white-space:nowrap;cursor:pointer;user-select:none}
+.student-table th:hover{color:var(--blue)}
+.student-table th .sort-icon{font-size:.6rem;opacity:.5;margin-left:3px}
+.student-table td{padding:.8rem .875rem;border-bottom:1px solid #f8fafc;vertical-align:middle}
+.student-table tr:last-child td{border-bottom:none}
+.student-table tr:hover td{background:#fafbff}
+.student-table tr.selected td{background:var(--blue-lt)}
+.student-table thead th:first-child,.student-table td:first-child{width:44px}
+
+/* ── STUDENT CELL ───────────── */
+.s-cell{display:flex;align-items:center;gap:.75rem}
+.s-avatar{width:36px;height:36px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.82rem;color:white}
+.s-name{font-weight:700;font-size:.88rem;color:var(--ink);line-height:1.2}
+.s-meta{font-size:.72rem;color:var(--muted);margin-top:2px}
+.s-reg{font-size:.72rem;color:var(--faint);font-family:monospace}
+
+/* ── STATUS + PILLS ─────────── */
+.pill{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:20px;font-size:.68rem;font-weight:700;white-space:nowrap}
+.pill::before{content:'●';font-size:.4rem}
+.pill.paid,.pill.present,.pill.active{background:var(--green-lt);color:var(--green)}
+.pill.due,.pill.absent{background:var(--red-lt);color:var(--red)}
+.pill.partial{background:var(--amber-lt);color:var(--amber)}
+
+/* ── ACTION MENU ────────────── */
+.act-menu-wrap{position:relative}
+.act-btn{width:30px;height:30px;border-radius:50%;border:none;background:transparent;cursor:pointer;color:var(--ghost);font-size:.95rem;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.act-btn:hover{background:var(--bg);color:var(--muted)}
+.act-dropdown{position:absolute;right:0;top:110%;background:white;border-radius:var(--r-lg);box-shadow:var(--sh-lg);border:1px solid var(--border);min-width:180px;z-index:50;overflow:hidden;display:none}
+.act-dropdown.open{display:block;animation:dropIn .15s ease}
+@keyframes dropIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+.act-item{display:flex;align-items:center;gap:.65rem;padding:.65rem 1rem;font-size:.83rem;cursor:pointer;color:var(--ink-3);transition:background .1s}
+.act-item:hover{background:var(--bg)}
+.act-item i{width:16px;text-align:center;color:var(--muted)}
+.act-item.danger{color:var(--red)}
+.act-item.danger i{color:var(--red)}
+.act-divider{border:none;border-top:1px solid var(--border);margin:0}
+
+/* ── CARD GRID VIEW ─────────── */
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem;display:none}
+.s-card{background:white;border-radius:var(--r-lg);box-shadow:var(--sh-sm);overflow:hidden;cursor:pointer;transition:all .15s;border:1.5px solid transparent}
+.s-card:hover{box-shadow:var(--sh-md);border-color:var(--blue-md);transform:translateY(-2px)}
+.s-card.selected{border-color:var(--blue);box-shadow:0 0 0 3px rgba(30,64,175,.1)}
+.sc-top{padding:1.25rem;display:flex;align-items:center;gap:.875rem}
+.sc-avatar{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.1rem;color:white;flex-shrink:0}
+.sc-name{font-weight:700;font-size:.92rem;color:var(--ink)}
+.sc-class{font-size:.75rem;color:var(--muted);margin-top:2px}
+.sc-body{padding:.75rem 1.25rem;border-top:1px solid var(--bg);display:grid;grid-template-columns:1fr 1fr;gap:.4rem}
+.sc-stat .sl{font-size:.67rem;color:var(--faint);font-weight:700;text-transform:uppercase;letter-spacing:.05em}
+.sc-stat .sv{font-size:.82rem;font-weight:600;color:var(--ink-2);margin-top:1px}
+.sc-foot{padding:.6rem 1.25rem;background:var(--bg);display:flex;gap:.5rem}
+.sc-foot-btn{flex:1;padding:.4rem;border-radius:var(--r-sm);border:none;font-size:.72rem;font-weight:700;cursor:pointer;transition:all .15s}
+.sc-foot-btn.view{background:var(--blue-lt);color:var(--blue)}
+.sc-foot-btn.fee{background:var(--green-lt);color:var(--green)}
+
+/* ── PAGINATION ─────────────── */
+.pagination{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.25rem;border-top:1px solid var(--border);flex-wrap:wrap;gap:.5rem}
+.pg-info{font-size:.78rem;color:var(--muted)}
+.pg-controls{display:flex;gap:.3rem}
+.pg-btn{width:32px;height:32px;border-radius:var(--r-sm);border:1.5px solid var(--border);background:white;cursor:pointer;font-size:.8rem;font-weight:600;color:var(--muted);display:flex;align-items:center;justify-content:center;transition:all .15s}
+.pg-btn:hover{border-color:var(--blue-md);color:var(--blue)}
+.pg-btn.active{background:var(--blue);color:white;border-color:var(--blue)}
+
+/* ── STUDENT DETAIL DRAWER ──── */
+.drawer-overlay{position:fixed;inset:0;background:rgba(15,23,42,.4);z-index:200;display:none;backdrop-filter:blur(2px)}
+.drawer-overlay.open{display:block}
+.drawer{position:fixed;right:0;top:0;bottom:0;width:460px;max-width:96vw;background:white;z-index:201;box-shadow:var(--sh-lg);display:flex;flex-direction:column;transform:translateX(100%);transition:transform .25s cubic-bezier(.4,0,.2,1)}
+.drawer.open{transform:translateX(0)}
+.drawer-head{padding:1.25rem 1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:.875rem}
+.drawer-head h3{font-size:1rem;font-weight:700;color:var(--ink)}
+.drawer-close{margin-left:auto;width:32px;height:32px;border-radius:50%;border:none;background:var(--bg);cursor:pointer;font-size:1rem;color:var(--muted);display:flex;align-items:center;justify-content:center}
+.drawer-close:hover{background:var(--red-lt);color:var(--red)}
+.drawer-body{flex:1;overflow-y:auto;padding:1.25rem 1.5rem}
+.drawer-footer{padding:1rem 1.5rem;border-top:1px solid var(--border);display:flex;gap:.75rem}
+
+/* ── PROFILE HEADER ─────────── */
+.profile-hero{display:flex;align-items:center;gap:1rem;padding:1.25rem;background:linear-gradient(135deg,var(--blue-lt),#f0f9ff);border-radius:var(--r-lg);margin-bottom:1.25rem;border:1px solid var(--blue-md)}
+.ph-avatar{width:60px;height:60px;border-radius:50%;font-size:1.4rem;font-weight:800;display:flex;align-items:center;justify-content:center;color:white;flex-shrink:0;background:linear-gradient(135deg,#1e40af,#7c3aed);box-shadow:0 4px 12px rgba(30,64,175,.3)}
+.ph-name{font-size:1.05rem;font-weight:800;color:var(--ink)}
+.ph-class{font-size:.78rem;color:var(--muted);margin-top:2px}
+.ph-badges{display:flex;gap:.4rem;margin-top:.5rem;flex-wrap:wrap}
+
+/* ── DETAIL SECTIONS ─────────── */
+.detail-section{margin-bottom:1.25rem}
+.ds-title{font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--faint);margin-bottom:.6rem;display:flex;align-items:center;gap:.4rem}
+.ds-title::after{content:'';flex:1;height:1px;background:var(--border)}
+.ds-grid{display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
+.ds-item{background:var(--bg);border-radius:var(--r-md);padding:.65rem .875rem}
+.ds-item .di-l{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--faint)}
+.ds-item .di-v{font-size:.85rem;font-weight:600;color:var(--ink-2);margin-top:2px}
+
+/* ── FEE MINI-CARD ───────────── */
+.fee-mini{background:white;border-radius:var(--r-md);border:1.5px solid var(--border);padding:.875rem;margin-bottom:.5rem;display:flex;align-items:center;gap:.75rem}
+.fm-icon{width:32px;height:32px;border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0}
+.fm-info{flex:1}
+.fm-info .fm-name{font-size:.85rem;font-weight:600;color:var(--ink-2)}
+.fm-info .fm-period{font-size:.72rem;color:var(--muted)}
+.fm-due{font-size:.95rem;font-weight:800;margin-left:auto}
+
+/* ── ATTENDANCE MINI-CHART ───── */
+.att-bar-wrap{display:flex;gap:3px;height:32px;align-items:flex-end;margin:.75rem 0}
+.att-bar{flex:1;border-radius:3px 3px 0 0;transition:all .2s;cursor:pointer;min-height:4px}
+.att-bar.p{background:var(--green)}
+.att-bar.a{background:var(--red)}
+.att-bar.h{background:var(--ghost)}
+.att-months{display:flex;gap:3px;margin-bottom:.25rem}
+.att-months span{flex:1;font-size:.6rem;color:var(--faint);text-align:center}
+
+/* ── EMPTY STATE ─────────────── */
+.empty{display:flex;flex-direction:column;align-items:center;padding:3.5rem 1rem;text-align:center}
+.empty-icon{font-size:3rem;opacity:.2;margin-bottom:1rem}
+.empty h3{font-size:.95rem;font-weight:700;color:var(--ink-3);margin-bottom:.3rem}
+.empty p{font-size:.82rem;color:var(--faint);max-width:280px}
+
+@media(max-width:900px){
+  .kpi-strip{grid-template-columns:repeat(3,1fr)}
+  .drawer{width:100%;max-width:100%}
+}
+@media(max-width:600px){
+  .kpi-strip{grid-template-columns:repeat(2,1fr)}
+  .fb-top{flex-direction:column;align-items:stretch}
+  .search-wrap{min-width:0}
+  .ds-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- PAGE HEADER -->
+  <div class="ph">
+    <div class="ph-left">
+      <h1><i class="fas fa-users" style="color:var(--blue);margin-right:.4rem"></i>Student Management</h1>
+      <p>View, search, and manage all enrolled students across classes and sections</p>
+    </div>
+    <div class="ph-actions">
+      <button class="btn btn-outline" onclick="exportCSV()"><i class="fas fa-download"></i> Export</button>
+      <button class="btn btn-outline"><i class="fas fa-upload"></i> Bulk Import</button>
+      <button class="btn btn-primary" onclick="showSection('addStudent')"><i class="fas fa-plus"></i> Add Student</button>
+    </div>
+  </div>
+
+  <!-- KPI STRIP -->
+  <div class="kpi-strip">
+    <div class="kpi k-total active" onclick="filterKPI('all')">
+      <i class="fas fa-users kpi-icon"></i>
+      <div class="kpi-val">347</div>
+      <div class="kpi-lbl">Total Students</div>
+      <div class="kpi-sub" style="color:var(--green)">↑ 12 this month</div>
+    </div>
+    <div class="kpi k-present" onclick="filterKPI('present')">
+      <i class="fas fa-calendar-check kpi-icon"></i>
+      <div class="kpi-val">301</div>
+      <div class="kpi-lbl">Present Today</div>
+      <div class="kpi-sub">87% attendance</div>
+    </div>
+    <div class="kpi k-absent" onclick="filterKPI('absent')">
+      <i class="fas fa-calendar-times kpi-icon"></i>
+      <div class="kpi-val">46</div>
+      <div class="kpi-lbl">Absent Today</div>
+      <div class="kpi-sub" style="color:var(--red)">↑ high absenteeism</div>
+    </div>
+    <div class="kpi k-due" onclick="filterKPI('fee-due')">
+      <i class="fas fa-rupee-sign kpi-icon"></i>
+      <div class="kpi-val">78</div>
+      <div class="kpi-lbl">Fee Defaulters</div>
+      <div class="kpi-sub">₹1.2L outstanding</div>
+    </div>
+    <div class="kpi k-new" onclick="filterKPI('new')">
+      <i class="fas fa-user-plus kpi-icon"></i>
+      <div class="kpi-val">12</div>
+      <div class="kpi-lbl">New This Month</div>
+      <div class="kpi-sub">Admitted in June</div>
+    </div>
+  </div>
+
+  <!-- SEARCH + FILTER -->
+  <div class="filter-bar">
+    <div class="fb-top">
+      <div class="search-wrap">
+        <i class="fas fa-search si"></i>
+        <input type="text" id="studentSearchInput" placeholder="Search by name, phone, reg. no., father's name, RFID…"
+               oninput="filterStudents(this.value)" autocomplete="off">
+        <span class="kbd">Ctrl+K</span>
+      </div>
+      <div class="fb-selects">
+        <select onchange="filterStudents()" id="filterClass">
+          <option value="">All Classes</option>
+          <option>Class I</option><option>Class II</option><option>Class III</option>
+          <option>Class IV</option><option>Class V</option><option>Class VI</option>
+          <option selected>Class VII</option><option>Class VIII</option>
+        </select>
+        <select onchange="filterStudents()" id="filterSection">
+          <option value="">All Sections</option>
+          <option>Section A</option><option>Section B</option><option>Section C</option>
+        </select>
+        <select onchange="filterStudents()" id="filterSession">
+          <option>2025-26</option><option selected>2026-27</option>
+        </select>
+      </div>
+    </div>
+    <div class="fb-chips">
+      <label>Quick Filter:</label>
+      <span class="chip active" onclick="setChip(this,'all')"><i class="fas fa-th"></i> All</span>
+      <span class="chip chip-red" onclick="setChip(this,'absent')"><i class="fas fa-calendar-times"></i> Absent Today</span>
+      <span class="chip chip-amber" onclick="setChip(this,'due')"><i class="fas fa-rupee-sign"></i> Fee Due</span>
+      <span class="chip" onclick="setChip(this,'boys')"><i class="fas fa-mars"></i> Boys</span>
+      <span class="chip" onclick="setChip(this,'girls')"><i class="fas fa-venus"></i> Girls</span>
+      <span class="chip" onclick="setChip(this,'hostel')"><i class="fas fa-bed"></i> Hostel</span>
+      <span class="chip" onclick="setChip(this,'transport')"><i class="fas fa-bus"></i> Transport</span>
+    </div>
+  </div>
+
+  <!-- TABLE TOOLBAR -->
+  <div class="tbl-toolbar">
+    <div class="tbl-info">Showing <strong>1–25</strong> of <strong id="totalCount">347</strong> students</div>
+    <!-- Bulk actions (shown when rows selected) -->
+    <div class="bulk-actions" id="bulkActions">
+      <span id="selectedCount">3 selected</span>
+      <button class="btn btn-outline" style="padding:.3rem .75rem;font-size:.75rem"><i class="fas fa-sms"></i> SMS</button>
+      <button class="btn btn-outline" style="padding:.3rem .75rem;font-size:.75rem"><i class="fas fa-level-up-alt"></i> Promote</button>
+      <button class="btn btn-outline" style="padding:.3rem .75rem;font-size:.75rem;color:var(--red);border-color:var(--red-md)"><i class="fas fa-trash"></i> Delete</button>
+    </div>
+    <div style="margin-left:auto;display:flex;gap:.6rem;align-items:center">
+      <button class="btn btn-ghost" style="padding:.45rem .75rem;font-size:.78rem" onclick="exportCSV()"><i class="fas fa-download"></i> CSV</button>
+      <button class="btn btn-ghost" style="padding:.45rem .75rem;font-size:.78rem" onclick="window.print()"><i class="fas fa-print"></i> Print</button>
+      <div class="view-toggle">
+        <button class="vt-btn active" id="tblViewBtn" onclick="setView('table')"><i class="fas fa-list"></i></button>
+        <button class="vt-btn" id="cardViewBtn" onclick="setView('card')"><i class="fas fa-th-large"></i></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TABLE VIEW -->
+  <div class="tbl-wrap" id="tableView">
+    <table class="student-table">
+      <thead>
+        <tr>
+          <th><input type="checkbox" id="masterCb" onchange="toggleAll(this)" style="width:15px;height:15px;accent-color:var(--blue);cursor:pointer"></th>
+          <th>Student <span class="sort-icon">↕</span></th>
+          <th>Class <span class="sort-icon">↕</span></th>
+          <th>Contact</th>
+          <th>Attendance <span class="sort-icon">↕</span></th>
+          <th>Fee Status <span class="sort-icon">↕</span></th>
+          <th>Balance <span class="sort-icon">↕</span></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="studentTableBody">
+
+        <!-- Student row 1 -->
+        <tr class="selected" id="row-1">
+          <td><input type="checkbox" checked class="row-cb" style="width:15px;height:15px;accent-color:var(--blue);cursor:pointer" onchange="rowSelect('row-1',this)"></td>
+          <td>
+            <div class="s-cell">
+              <div class="s-avatar" style="background:linear-gradient(135deg,#3b82f6,#7c3aed)">A</div>
+              <div>
+                <div class="s-name">Aarav Singh</div>
+                <div class="s-meta">Father: Rajesh Singh</div>
+                <div class="s-reg">#574</div>
+              </div>
+            </div>
+          </td>
+          <td><span style="font-weight:600">VII — A</span><div style="font-size:.72rem;color:var(--muted)">Roll: 12</div></td>
+          <td>
+            <div style="font-size:.82rem">98981 23456</div>
+            <div style="font-size:.72rem;color:var(--muted)">aarav@email.com</div>
+          </td>
+          <td>
+            <div style="display:flex;align-items:center;gap:.5rem">
+              <div style="flex:1;height:6px;background:var(--bg);border-radius:20px;overflow:hidden;min-width:60px">
+                <div style="height:100%;width:91%;background:var(--green);border-radius:20px"></div>
+              </div>
+              <span style="font-size:.78rem;font-weight:700;color:var(--green)">91%</span>
+            </div>
+          </td>
+          <td><span class="pill partial">Partial</span></td>
+          <td style="font-weight:700;color:var(--amber)">₹2,400</td>
+          <td>
+            <div class="act-menu-wrap">
+              <button class="act-btn" onclick="toggleMenu('m1')"><i class="fas fa-ellipsis-v"></i></button>
+              <div class="act-dropdown" id="m1">
+                <div class="act-item" onclick="openDrawer('1')"><i class="fas fa-eye"></i> View Profile</div>
+                <div class="act-item" onclick="showSection('classFeePayment')"><i class="fas fa-rupee-sign"></i> Collect Fee</div>
+                <div class="act-item"><i class="fas fa-edit"></i> Edit Details</div>
+                <div class="act-item"><i class="fas fa-sms"></i> Send SMS</div>
+                <div class="act-item"><i class="fas fa-id-card"></i> Print ID Card</div>
+                <hr class="act-divider">
+                <div class="act-item danger"><i class="fas fa-trash"></i> Remove Student</div>
+              </div>
+            </div>
+          </td>
+        </tr>
+
+        <!-- Row 2 -->
+        <tr id="row-2">
+          <td><input type="checkbox" class="row-cb" style="width:15px;height:15px;accent-color:var(--blue);cursor:pointer" onchange="rowSelect('row-2',this)"></td>
+          <td>
+            <div class="s-cell">
+              <div class="s-avatar" style="background:linear-gradient(135deg,#ec4899,#f97316)">P</div>
+              <div>
+                <div class="s-name">Priya Sharma</div>
+                <div class="s-meta">Father: Mohan Sharma</div>
+                <div class="s-reg">#581</div>
+              </div>
+            </div>
+          </td>
+          <td><span style="font-weight:600">VI — B</span><div style="font-size:.72rem;color:var(--muted)">Roll: 07</div></td>
+          <td>
+            <div style="font-size:.82rem">98982 34567</div>
+            <div style="font-size:.72rem;color:var(--muted)">priya@email.com</div>
+          </td>
+          <td>
+            <div style="display:flex;align-items:center;gap:.5rem">
+              <div style="flex:1;height:6px;background:var(--bg);border-radius:20px;overflow:hidden;min-width:60px">
+                <div style="height:100%;width:68%;background:var(--amber);border-radius:20px"></div>
+              </div>
+              <span style="font-size:.78rem;font-weight:700;color:var(--amber)">68%</span>
+            </div>
+          </td>
+          <td><span class="pill due">Overdue</span></td>
+          <td style="font-weight:700;color:var(--red)">₹4,800</td>
+          <td>
+            <div class="act-menu-wrap">
+              <button class="act-btn" onclick="toggleMenu('m2')"><i class="fas fa-ellipsis-v"></i></button>
+              <div class="act-dropdown" id="m2">
+                <div class="act-item" onclick="openDrawer('2')"><i class="fas fa-eye"></i> View Profile</div>
+                <div class="act-item" onclick="showSection('classFeePayment')"><i class="fas fa-rupee-sign"></i> Collect Fee</div>
+                <div class="act-item"><i class="fas fa-edit"></i> Edit Details</div>
+                <div class="act-item"><i class="fas fa-sms"></i> Send SMS</div>
+                <div class="act-item"><i class="fas fa-id-card"></i> Print ID Card</div>
+                <hr class="act-divider">
+                <div class="act-item danger"><i class="fas fa-trash"></i> Remove Student</div>
+              </div>
+            </div>
+          </td>
+        </tr>
+
+        <!-- Row 3 -->
+        <tr id="row-3">
+          <td><input type="checkbox" class="row-cb" style="width:15px;height:15px;accent-color:var(--blue);cursor:pointer" onchange="rowSelect('row-3',this)"></td>
+          <td>
+            <div class="s-cell">
+              <div class="s-avatar" style="background:linear-gradient(135deg,#10b981,#06b6d4)">R</div>
+              <div>
+                <div class="s-name">Rahul Verma</div>
+                <div class="s-meta">Father: Suresh Verma</div>
+                <div class="s-reg">#562</div>
+              </div>
+            </div>
+          </td>
+          <td><span style="font-weight:600">VIII — A</span><div style="font-size:.72rem;color:var(--muted)">Roll: 03</div></td>
+          <td>
+            <div style="font-size:.82rem">98983 45678</div>
+            <div style="font-size:.72rem;color:var(--muted)">rahul@email.com</div>
+          </td>
+          <td>
+            <div style="display:flex;align-items:center;gap:.5rem">
+              <div style="flex:1;height:6px;background:var(--bg);border-radius:20px;overflow:hidden;min-width:60px">
+                <div style="height:100%;width:96%;background:var(--green);border-radius:20px"></div>
+              </div>
+              <span style="font-size:.78rem;font-weight:700;color:var(--green)">96%</span>
+            </div>
+          </td>
+          <td><span class="pill paid">Paid</span></td>
+          <td style="font-weight:700;color:var(--green)">₹0</td>
+          <td>
+            <div class="act-menu-wrap">
+              <button class="act-btn" onclick="toggleMenu('m3')"><i class="fas fa-ellipsis-v"></i></button>
+              <div class="act-dropdown" id="m3">
+                <div class="act-item" onclick="openDrawer('3')"><i class="fas fa-eye"></i> View Profile</div>
+                <div class="act-item"><i class="fas fa-rupee-sign"></i> Collect Fee</div>
+                <div class="act-item"><i class="fas fa-edit"></i> Edit Details</div>
+                <div class="act-item"><i class="fas fa-sms"></i> Send SMS</div>
+                <div class="act-item"><i class="fas fa-id-card"></i> Print ID Card</div>
+                <hr class="act-divider">
+                <div class="act-item danger"><i class="fas fa-trash"></i> Remove Student</div>
+              </div>
+            </div>
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+
+    <!-- PAGINATION -->
+    <div class="pagination">
+      <div class="pg-info">Showing <strong>1–25</strong> of <strong>347</strong> students</div>
+      <div style="display:flex;align-items:center;gap:.75rem">
+        <select style="padding:.35rem .75rem;border:1.5px solid var(--border);border-radius:var(--r-sm);font-size:.78rem;color:var(--muted)">
+          <option>25 per page</option><option>50 per page</option><option>100 per page</option>
+        </select>
+        <div class="pg-controls">
+          <button class="pg-btn"><i class="fas fa-chevron-left"></i></button>
+          <button class="pg-btn active">1</button>
+          <button class="pg-btn">2</button>
+          <button class="pg-btn">3</button>
+          <button class="pg-btn" style="font-size:.7rem">…</button>
+          <button class="pg-btn">14</button>
+          <button class="pg-btn"><i class="fas fa-chevron-right"></i></button>
+        </div>
+      </div>
+    </div>
+  </div><!-- /tbl-wrap -->
+
+</div><!-- /page -->
+
+<!-- ── STUDENT DETAIL DRAWER ──────────────────────────────────── -->
+<div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
+<div class="drawer" id="studentDrawer">
+  <div class="drawer-head">
+    <i class="fas fa-user-circle" style="color:var(--blue);font-size:1.2rem"></i>
+    <h3>Student Profile</h3>
+    <button class="drawer-close" onclick="closeDrawer()"><i class="fas fa-times"></i></button>
+  </div>
+  <div class="drawer-body">
+
+    <!-- Profile hero -->
+    <div class="profile-hero">
+      <div class="ph-avatar">A</div>
+      <div>
+        <div class="ph-name">Aarav Singh</div>
+        <div class="ph-class">Class VII — A &nbsp;·&nbsp; Roll No. 12 &nbsp;·&nbsp; Reg. #574</div>
+        <div class="ph-badges">
+          <span class="pill active">Active</span>
+          <span class="pill partial">Fee Partial</span>
+          <span class="pill" style="background:#f0fdf4;color:#166534">🏠 Day Scholar</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Personal info -->
+    <div class="detail-section">
+      <div class="ds-title"><i class="fas fa-user" style="color:var(--blue)"></i> Personal Info</div>
+      <div class="ds-grid">
+        <div class="ds-item"><div class="di-l">Date of Birth</div><div class="di-v">15 Jan 2013</div></div>
+        <div class="ds-item"><div class="di-l">Gender</div><div class="di-v">Male</div></div>
+        <div class="ds-item"><div class="di-l">Blood Group</div><div class="di-v">B+</div></div>
+        <div class="ds-item"><div class="di-l">Category</div><div class="di-v">General</div></div>
+        <div class="ds-item" style="grid-column:1/-1"><div class="di-l">Address</div><div class="di-v">123 Main Road, Patna, Bihar 800001</div></div>
+      </div>
+    </div>
+
+    <!-- Guardian info -->
+    <div class="detail-section">
+      <div class="ds-title"><i class="fas fa-users" style="color:var(--purple)"></i> Guardian Info</div>
+      <div class="ds-grid">
+        <div class="ds-item"><div class="di-l">Father's Name</div><div class="di-v">Rajesh Singh</div></div>
+        <div class="ds-item"><div class="di-l">Father's Phone</div><div class="di-v">98981 23456</div></div>
+        <div class="ds-item"><div class="di-l">Mother's Name</div><div class="di-v">Sunita Singh</div></div>
+        <div class="ds-item"><div class="di-l">Mother's Phone</div><div class="di-v">98981 99999</div></div>
+      </div>
+    </div>
+
+    <!-- Fee status -->
+    <div class="detail-section">
+      <div class="ds-title"><i class="fas fa-rupee-sign" style="color:var(--amber)"></i> Fee Status</div>
+      <div class="fee-mini">
+        <div class="fm-icon" style="background:var(--red-lt);color:var(--red)"><i class="fas fa-exclamation-circle"></i></div>
+        <div class="fm-info"><div class="fm-name">Tuition Fee — April 2026</div><div class="fm-period">Overdue since 10 Apr 2026</div></div>
+        <div class="fm-due" style="color:var(--red)">₹1,600</div>
+      </div>
+      <div class="fee-mini">
+        <div class="fm-icon" style="background:var(--amber-lt);color:var(--amber)"><i class="fas fa-clock"></i></div>
+        <div class="fm-info"><div class="fm-name">Tuition Fee — May 2026</div><div class="fm-period">Partial payment received</div></div>
+        <div class="fm-due" style="color:var(--amber)">₹800</div>
+      </div>
+      <div style="padding:.75rem;background:var(--red-lt);border-radius:var(--r-md);display:flex;align-items:center;justify-content:space-between">
+        <span style="font-size:.82rem;font-weight:700;color:var(--red)">Total Outstanding</span>
+        <span style="font-size:1.1rem;font-weight:800;color:var(--red)">₹2,400</span>
+      </div>
+    </div>
+
+    <!-- Attendance mini -->
+    <div class="detail-section">
+      <div class="ds-title"><i class="fas fa-calendar-check" style="color:var(--green)"></i> Attendance (Last 6 Months)</div>
+      <div style="background:var(--bg);border-radius:var(--r-md);padding:.875rem">
+        <div class="att-months">
+          <span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span>
+        </div>
+        <div class="att-bar-wrap">
+          <div class="att-bar p" style="height:90%"></div>
+          <div class="att-bar p" style="height:95%"></div>
+          <div class="att-bar p" style="height:88%"></div>
+          <div class="att-bar a" style="height:72%"></div>
+          <div class="att-bar p" style="height:93%"></div>
+          <div class="att-bar p" style="height:91%"></div>
+        </div>
+        <div style="display:flex;gap:1rem;font-size:.72rem;color:var(--muted);margin-top:.25rem">
+          <span><span style="color:var(--green);font-weight:700">●</span> Present</span>
+          <span><span style="color:var(--red);font-weight:700">●</span> Absent</span>
+          <span style="margin-left:auto;font-weight:700;color:var(--green)">Overall: 91%</span>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /drawer-body -->
+  <div class="drawer-footer">
+    <button class="btn btn-primary" style="flex:1" onclick="showSection('classFeePayment')"><i class="fas fa-rupee-sign"></i> Collect Fee</button>
+    <button class="btn btn-outline"><i class="fas fa-edit"></i> Edit</button>
+    <button class="btn btn-outline"><i class="fas fa-id-card"></i> ID Card</button>
+    <button class="btn btn-outline"><i class="fas fa-sms"></i> SMS</button>
+  </div>
+</div>
+
+<script>
+// ── VIEW TOGGLE ──────────────
+function setView(v) {
+  document.getElementById('tableView').style.display = v === 'table' ? 'block' : 'none';
+  document.getElementById('tblViewBtn').classList.toggle('active', v === 'table');
+  document.getElementById('cardViewBtn').classList.toggle('active', v === 'card');
+}
+
+// ── CHIP FILTER ──────────────
+function setChip(el, type) {
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+}
+
+// ── KPI FILTER ───────────────
+function filterKPI(type) {
+  document.querySelectorAll('.kpi').forEach(k => k.classList.remove('active'));
+  event.currentTarget.classList.add('active');
+}
+
+// ── SELECT ALL ───────────────
+function toggleAll(cb) {
+  document.querySelectorAll('.row-cb').forEach(c => {
+    c.checked = cb.checked;
+    document.getElementById(c.closest('tr').id)?.classList.toggle('selected', cb.checked);
+  });
+  updateBulk();
+}
+function rowSelect(rowId, cb) {
+  document.getElementById(rowId).classList.toggle('selected', cb.checked);
+  updateBulk();
+}
+function updateBulk() {
+  const selected = document.querySelectorAll('.row-cb:checked').length;
+  const bulk = document.getElementById('bulkActions');
+  bulk.classList.toggle('visible', selected > 0);
+  document.getElementById('selectedCount').textContent = selected + ' selected';
+}
+
+// ── ACTION MENUS ──────────────
+function toggleMenu(id) {
+  document.querySelectorAll('.act-dropdown').forEach(d => {
+    if (d.id !== id) d.classList.remove('open');
+  });
+  document.getElementById(id).classList.toggle('open');
+}
+document.addEventListener('click', e => {
+  if (!e.target.closest('.act-menu-wrap')) {
+    document.querySelectorAll('.act-dropdown').forEach(d => d.classList.remove('open'));
+  }
+});
+
+// ── DRAWER ────────────────────
+function openDrawer(id) {
+  document.getElementById('studentDrawer').classList.add('open');
+  document.getElementById('drawerOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  document.querySelectorAll('.act-dropdown').forEach(d => d.classList.remove('open'));
+}
+function closeDrawer() {
+  document.getElementById('studentDrawer').classList.remove('open');
+  document.getElementById('drawerOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// ── SEARCH ────────────────────
+function filterStudents(val) {
+  // Wire to your real data here
+}
+
+// ── EXPORT CSV ────────────────
+function exportCSV() {
+  const rows = [['Name','Class','Phone','Attendance','Fee Status','Balance']];
+  document.querySelectorAll('.student-table tbody tr').forEach(tr => {
+    const cells = tr.querySelectorAll('td');
+    rows.push([
+      tr.querySelector('.s-name')?.innerText || '',
+      cells[2]?.innerText.split('\n')[0] || '',
+      cells[3]?.innerText.split('\n')[0] || '',
+      tr.querySelector('.student-table td:nth-child(5) span')?.innerText || '',
+      tr.querySelector('.pill')?.innerText || '',
+      cells[6]?.innerText || '',
+    ]);
+  });
+  const csv = rows.map(r => r.join(',')).join('\n');
+  const a = document.createElement('a');
+  a.href = 'data:text/csv;charset=utf-8,\uFEFF' + encodeURIComponent(csv);
+  a.download = 'students-export.csv'; a.click();
+}
+
+function showSection(s) { console.log('Navigate to:', s); }
+</script>
+</body>
+</html>

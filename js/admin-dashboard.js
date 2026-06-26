@@ -189,6 +189,7 @@ const SECTION_META = {
     addSession:               { label: 'Sessions',               parent: 'Class Management' },
     addClass:                 { label: 'Classes',                parent: 'Class Management' },
     addSubject:               { label: 'Subjects',               parent: 'Class Management' },
+    addSyllabus:               { label: 'Syllabus',               parent: 'Class Management' },
     addSyllabusSection:       { label: 'Syllabus',               parent: 'Class Management' },
     addStudent:               { label: 'Add Student',            parent: 'Student Management' },
     studentList:              { label: 'Search Students',        parent: 'Student Management' },
@@ -205,15 +206,25 @@ const SECTION_META = {
     studentAdmission:         { label: 'Admission Form',         parent: 'Admission' },
     attendanceManagement:     { label: 'Mark Attendance',        parent: 'Attendance' },
     viewAttendanceStats:      { label: 'Attendance Reports',     parent: 'Attendance' },
+    searchStudentFee:         { label: 'Student Fee Payment',    parent: 'Fees' },
     searchStudentFeeSection:  { label: 'Student Fee Payment',    parent: 'Fees' },
+    createMonthlyFee:         { label: 'Monthly Fee Generation', parent: 'Fees' },
     createMonthlyFeeSection:  { label: 'Monthly Fee Generation', parent: 'Fees' },
+    classFeePayment:          { label: 'Add Fee Payment',        parent: 'Fees' },
     classFeePaymentSection:   { label: 'Add Fee Payment',        parent: 'Fees' },
+    demandReceipt:            { label: 'Demand Receipt',         parent: 'Fees' },
     demandReceiptSection:     { label: 'Demand Receipt',         parent: 'Fees' },
+    bulkFeeDiscount:          { label: 'Bulk Discount',          parent: 'Fees' },
     bulkFeeDiscountSection:   { label: 'Bulk Discount',          parent: 'Fees' },
+    bulkExtraFee:             { label: 'Bulk Extra Fee',         parent: 'Fees' },
     bulkExtraFeeSection:      { label: 'Bulk Extra Fee',         parent: 'Fees' },
+    lateFeeRules:             { label: 'Late Fee Rules',         parent: 'Fees' },
     lateFeeRulesSection:      { label: 'Late Fee Rules',         parent: 'Fees' },
+    feeMaster:                { label: 'Fee Master',             parent: 'Fees' },
     feeMasterSection:         { label: 'Fee Master',             parent: 'Fees' },
+    searchFeeDues:            { label: 'Search Fee Dues',        parent: 'Fees' },
     searchFeeDuesSection:     { label: 'Search Fee Dues',        parent: 'Fees' },
+    sendFeeMessage:           { label: 'Send Fee Message',       parent: 'Fees' },
     sendFeeMessageSection:    { label: 'Send Fee Message',       parent: 'Fees' },
     examGrading:              { label: 'Grading Rules',          parent: 'Exams' },
     manageExam:               { label: 'Create Exams',           parent: 'Exams' },
@@ -269,10 +280,15 @@ const SECTION_META = {
     websiteSettings:          { label: 'Website Settings',       parent: 'Settings' },
     adminPortalCMS:           { label: 'Portal Branding',        parent: 'Settings' },
     notices:                  { label: 'Notice Board',           parent: 'Communication' },
+    parentLogin:              { label: 'Parent Login Access',    parent: 'Communication' },
     parentLoginSection:       { label: 'Parent Login Access',    parent: 'Communication' },
+    bonafideCertificate:      { label: 'Bonafide Certificate',   parent: 'Certificates' },
     bonafideCertificateSection: { label: 'Bonafide Certificate', parent: 'Certificates' },
+    schoolLeavingCertificate: { label: 'School Leaving Certificate', parent: 'Certificates' },
     schoolLeavingCertificateSection: { label: 'School Leaving Certificate', parent: 'Certificates' },
+    transferCertificate:      { label: 'Transfer Certificate',   parent: 'Certificates' },
     transferCertificateSection: { label: 'Transfer Certificate', parent: 'Certificates' },
+    certificateHistory:       { label: 'Certificate History',    parent: 'Certificates' },
     certificateHistorySection: { label: 'Certificate History',   parent: 'Certificates' },
 };
 
@@ -4969,54 +4985,210 @@ window.renderEmptyState = function(containerId, type = 'students', customText = 
     `;
 };
 
-// ── LIVE KPI DASHBOARD CARDS ───────────────────────────────
+function sendDirectSMS(phone, name) {
+    if (!phone) return showToast('No phone number available', 'error');
+    showToast('SMS to ' + (name || 'parent') + ' at ' + phone + ' — wire to your SMS service', 'info');
+}
+
+// ── LIVE KPI DASHBOARD ─────────────────────────────────────
 async function loadLiveDashboardKPIs() {
-    const today = new Date().toISOString().split('T')[0];
-    const thisMonth = today.slice(0, 7);
-    const container = document.getElementById('dashboardKPICards');
-    if (!container) return;
+    const today = new Date();
+    const dateStr = today.toISOString().split('T')[0];
+    const thisMonth = dateStr.slice(0, 7);
+
+    // Update welcome bar
+    const hr = today.getHours();
+    const greet = hr < 12 ? 'Good morning' : hr < 17 ? 'Good afternoon' : 'Good evening';
+    const nameEl = document.getElementById('adminEmail');
+    const adminName = nameEl ? nameEl.textContent?.split('@')[0] || '' : '';
+    const greetEl = document.getElementById('wbGreeting');
+    if (greetEl) greetEl.textContent = '👋 ' + greet + (adminName ? ', ' + adminName : '');
+    const dateEl = document.getElementById('wbDate');
+    if (dateEl) dateEl.textContent = today.toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+    const schoolEl = document.getElementById('wbSchoolName');
+    const sideName = document.getElementById('sidebarSchoolName');
+    if (schoolEl && sideName) schoolEl.textContent = sideName.textContent || 'your school';
+
+    async function safeFetch(fn) { try { return await fn(); } catch (e) { console.warn('[KPI] fetch error:', e); return null; } }
 
     try {
-        const [studentsSnap, feesSnap, attendanceSnap, examsSnap] = await Promise.all([
-            schoolData('students').where('isActive', '!=', false).get(),
-            schoolData('fees').where('month', '==', thisMonth).get(),
-            schoolData('attendance').where('date', '==', today).get(),
-            schoolData('exams').where('date', '>=', today).orderBy('date').limit(5).get()
+        const [studentsSnap, feesSnap, attSnap, examsSnap] = await Promise.all([
+            safeFetch(() => schoolData('students').get()),
+            safeFetch(() => schoolData('fees').where('month', '==', thisMonth).get()),
+            safeFetch(() => schoolData('attendance').where('date', '==', dateStr).get()),
+            safeFetch(() => schoolData('exams').where('date', '>=', dateStr).orderBy('date').limit(5).get())
         ]);
 
-        const totalStudents = studentsSnap.size;
-        const feeData = feesSnap.docs.map(d => d.data());
-        const totalDue = feeData.reduce((s, f) => s + (f.amount || 0), 0);
-        const totalPaid = feeData.reduce((s, f) => s + (f.paid || 0), 0);
-        const feePercent = totalDue > 0 ? Math.round((totalPaid / totalDue) * 100) : 0;
-        const attData = attendanceSnap.docs.map(d => d.data());
-        const presentCount = attData.filter(a => a.status === 'present').length;
-        const attPercent = attData.length > 0 ? Math.round((presentCount / attData.length) * 100) : 0;
-        const absentCount = attData.length - presentCount;
-        const nextExam = examsSnap.docs[0]?.data();
-        const examCount = examsSnap.size;
+        const totalStudents = studentsSnap ? studentsSnap.size : 0;
+        const feeDocs = feesSnap ? feesSnap.docs.map(d => d.data()) : [];
+        const totalDue = feeDocs.reduce((s, f) => s + (f.amount || 0), 0);
+        const totalPaid = feeDocs.reduce((s, f) => s + (f.paid || 0), 0);
+        const feePending = totalDue - totalPaid;
+        const attDocs = attSnap ? attSnap.docs.map(d => d.data()) : [];
+        const presentCount = attDocs.filter(a => (a.status || '').toLowerCase() === 'present').length;
+        const absentCount = attDocs.filter(a => (a.status || '').toLowerCase() === 'absent').length;
+        const leaveCount = attDocs.filter(a => (a.status || '').toLowerCase() === 'leave').length;
+        const attPercent = attDocs.length > 0 ? Math.round((presentCount / attDocs.length) * 100) : 0;
+        const examDocs = examsSnap ? examsSnap.docs : [];
+        const examCount = examDocs.length;
+        const nextExam = examDocs[0] ? examDocs[0].data() : null;
 
-        container.innerHTML = `
-            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem;margin-bottom:1.5rem">
-                ${kpiCard('👥', 'Total Students', totalStudents.toLocaleString('en-IN'), 'Active enrolments', '#3b82f6', '#eff6ff')}
-                ${kpiCard('💰', 'Fee Collection', '₹' + (totalPaid/1000).toFixed(1) + 'K', feePercent + '% of ' + thisMonth + ' target', '#10b981', '#ecfdf5', feePercent < 70 ? { color: '#ef4444', text: '⚠ ' + (100-feePercent) + '% pending' } : null)}
-                ${kpiCard('📅', 'Today\\'s Attendance', attPercent + '%', absentCount + ' absent today', '#f59e0b', '#fffbeb', absentCount > 10 ? { color: '#ef4444', text: '⚠ High absenteeism' } : null)}
-                ${kpiCard('📝', 'Upcoming Exams', examCount.toString(), nextExam ? 'Next: ' + new Date(nextExam.date).toLocaleDateString('en-IN', {day:'numeric',month:'short'}) : 'None scheduled', '#8b5cf6', '#f5f3ff')}
-            </div>
-        `;
-    } catch (e) { console.error('KPI load error:', e); }
+        const newThisMonth = studentsSnap ? studentsSnap.docs.filter(function(d) {
+            const c = d.data().createdAt;
+            if (!c) return false;
+            const t = c.toDate ? c.toDate() : new Date(c);
+            return t.getMonth() === today.getMonth() && t.getFullYear() === today.getFullYear();
+        }).length : 0;
+
+        // KPI grid
+        const setText = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+        setText('kpiTotalStudents', totalStudents.toLocaleString('en-IN'));
+        setText('kpiNewStudents', newThisMonth.toString());
+        setText('kpiStudentTrend', '<i class=\"fas fa-arrow-up\"></i> +' + newThisMonth);
+        setText('kpiFeesThisMonth', '₹' + (totalPaid || 0).toLocaleString('en-IN'));
+        setText('kpiFeePending', '₹' + Math.max(0, feePending).toLocaleString('en-IN') + ' pending');
+        setText('kpiFeeTrend', '<i class=\"fas fa-arrow-up\"></i> ' + (totalDue > 0 ? Math.round((totalPaid/totalDue)*100) + '%' : '0%'));
+        setText('kpiAttPct', (attDocs.length ? attPercent : '—') + '%');
+        setText('kpiAttAbsent', absentCount + ' absent today');
+        const attTrendEl = document.getElementById('kpiAttTrend');
+        if (attTrendEl) {
+            attTrendEl.className = 'kpi-trend ' + (attPercent >= 80 ? 'trend-up' : attPercent >= 60 ? 'trend-flat' : 'trend-down');
+            attTrendEl.innerHTML = '<i class=\"fas fa-' + (attPercent >= 80 ? 'arrow-up' : attPercent >= 60 ? 'minus' : 'arrow-down') + '\"></i> ' + attPercent + '%';
+        }
+        setText('kpiExamsThisWeek', examCount.toString());
+        setText('kpiExamSubjects', nextExam ? nextExam.name || nextExam.subject || 'Exam scheduled' : 'None scheduled');
+        setText('kpiExamNext', nextExam ? new Date(nextExam.date).toLocaleDateString('en-IN', {day:'numeric',month:'short'}) : '—');
+
+        // Alert strip
+        setText('alertAbsent', absentCount + ' students absent today');
+        setText('alertAbsentBadge', absentCount.toString());
+        setText('alertAttPct', attPercent + '%');
+        setText('alertEnquiries', '0');
+        setText('alertEnquiriesBadge', '0');
+        // Defaulters: count students with feeBalance > 0
+        if (studentsSnap) {
+            const defaulterCount = studentsSnap.docs.filter(function(d) { return (d.data().feeBalance || 0) > 0; }).length;
+            setText('alertDefaulters', defaulterCount + ' fee defaulters');
+            setText('alertDefaulterBadge', defaulterCount.toString());
+        }
+
+        // Attendance donut
+        const circumference = 2 * Math.PI * 36;
+        const dashLen = Math.round(circumference * attPercent / 100);
+        const arcEl = document.getElementById('attDonutArc');
+        if (arcEl) arcEl.setAttribute('stroke-dasharray', dashLen + ' ' + (circumference - dashLen));
+        setText('attDonutPct', (attDocs.length ? attPercent : '—') + '%');
+        setText('attPresent', presentCount.toString());
+        setText('attAbsent', absentCount.toString());
+        setText('attLeave', leaveCount.toString());
+        setText('attTotal', attDocs.length.toString());
+        const attDateEl = document.getElementById('attDate');
+        if (attDateEl) attDateEl.textContent = today.toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric', weekday: 'long' });
+
+        // Class-wise attendance bars
+        const classAttList = document.getElementById('classAttList');
+        if (classAttList && attDocs.length) {
+            const byClass = {};
+            attDocs.forEach(a => {
+                const cls = a.class || 'Unknown';
+                if (!byClass[cls]) byClass[cls] = { present: 0, total: 0 };
+                byClass[cls].total++;
+                if ((a.status || '').toLowerCase() === 'present') byClass[cls].present++;
+            });
+            const classColors = ['var(--green)','var(--blue)','var(--amber)'];
+            classAttList.innerHTML = Object.entries(byClass).sort().slice(0, 8).map(([cls, data], i) => {
+                const pct = Math.round((data.present / data.total) * 100);
+                const color = classColors[i % classColors.length];
+                return '<div class="cal-row"><span class="cal-cls">' + escHtml(cls) + '</span><div class="cal-bar-bg"><div class="cal-bar" style="width:' + pct + '%;background:' + color + '"></div></div><span class="cal-pct" style="color:' + color + '">' + pct + '%</span></div>';
+            }).join('');
+        } else if (classAttList) {
+            classAttList.innerHTML = '<div style="padding:.5rem 0;text-align:center;color:var(--faint);font-size:.78rem">No attendance marked today</div>';
+        }
+
+        // Recent payments
+        const payList = document.getElementById('recentPayList');
+        if (payList) {
+            const recentPaySnap = await schoolData('feePayments').orderBy('createdAt', 'desc').limit(5).get().catch(() => null);
+            if (recentPaySnap && recentPaySnap.size > 0) {
+                payList.innerHTML = recentPaySnap.docs.map(d => {
+                    const p = d.data();
+                    const initial = (p.studentName || 'S')[0].toUpperCase();
+                    const colors = ['linear-gradient(135deg,#3b82f6,#7c3aed)','linear-gradient(135deg,#10b981,#0891b2)','linear-gradient(135deg,#f59e0b,#ef4444)'];
+                    const bg = colors[(p.studentName || '').charCodeAt(0) % colors.length] || colors[0];
+                    const time = p.createdAt ? (p.createdAt.toDate ? p.createdAt.toDate() : new Date(p.createdAt)) : new Date();
+                    return '<div class="pay-item"><div class="pay-avatar" style="background:' + bg + '">' + initial + '</div><div class="pay-info"><div class="pay-name">' + escHtml(p.studentName || 'Student') + '</div><div class="pay-meta">' + escHtml(p.feeType || 'Fee') + ' · ' + escHtml(p.method || '—') + ' · #' + escHtml(p.receiptNo || d.id.slice(-4)) + '</div></div><div class="pay-right"><div class="pay-amount">+₹' + (p.amount || 0).toLocaleString('en-IN') + '</div><div class="pay-time">' + time.toLocaleTimeString('en-IN', {hour:'2-digit',minute:'2-digit'}) + '</div></div></div>';
+                }).join('');
+            } else {
+                payList.innerHTML = '<div style="padding:1.5rem;text-align:center;color:var(--faint);font-size:.82rem">No payments today</div>';
+            }
+        }
+
+        // Today total
+        const totalToday = feeDocs.reduce((s, f) => s + (f.paid || 0), 0);
+        const totalEl = document.getElementById('recentPayTotal');
+        if (totalEl) totalEl.textContent = 'Today\'s collections: ₹' + totalToday.toLocaleString('en-IN');
+
+    } catch (e) { console.error('[KPI] Dashboard load error:', e); }
 }
 
-function kpiCard(icon, label, value, sub, color, bgColor, alert = null) {
-    return `<div style="background:white;border-radius:14px;padding:1.25rem;box-shadow:0 4px 16px rgba(0,0,0,.07);display:flex;align-items:flex-start;gap:0.875rem;border-top:3px solid ${color}">
-        <div style="width:42px;height:42px;background:${bgColor};border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0">${icon}</div>
-        <div>
-            <div style="font-size:1.7rem;font-weight:800;line-height:1;color:#0f172a">${value}</div>
-            <div style="font-size:0.72rem;color:#94a3b8;margin-top:0.2rem">${label}</div>
-            <div style="font-size:0.72rem;color:${alert ? alert.color : '#10b981'};margin-top:0.3rem;font-weight:600">${alert ? alert.text : '↑ ' + sub}</div>
-        </div>
-    </div>`;
-}
+// ── STUDENT DRAWER ──────────────────────────────────────────
+window.openStudentDrawer = async function(studentId) {
+    const drawer = document.getElementById('studentDrawer');
+    const overlay = document.getElementById('studentDrawerOverlay');
+    if (!drawer || !overlay) return;
+    drawer.classList.add('open');
+    overlay.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+    const body = document.getElementById('studentDrawerBody');
+    if (body) body.innerHTML = '<div style="padding:3rem;text-align:center;color:#94a3b8"><i class="fas fa-spinner fa-spin fa-2x"></i></div>';
+
+    try {
+        const doc = await schoolData('students').doc(studentId).get();
+        if (!doc.exists) { if (body) body.innerHTML = '<div style="padding:2rem;text-align:center;color:var(--red)">Student not found</div>'; return; }
+        const s = { id: doc.id, ...doc.data() };
+        const initial = (s.name || '?')[0].toUpperCase();
+
+        if (body) body.innerHTML =
+          '<div style="display:flex;align-items:center;gap:1rem;padding:1.25rem;background:linear-gradient(135deg,var(--blue-lt),#f0f9ff);border-radius:var(--r-lg);border:1.5px solid var(--blue-md);margin-bottom:1.25rem">' +
+          '<div style="width:56px;height:56px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.3rem;color:white;background:linear-gradient(135deg,#1e40af,#7c3aed);box-shadow:0 4px 12px rgba(30,64,175,.3)">' + initial + '</div>' +
+          '<div><div style="font-size:1.05rem;font-weight:800;color:var(--ink)">' + escHtml(s.name || '—') + '</div>' +
+          '<div style="font-size:.78rem;color:var(--muted)">' + (s.class || '') + ' ' + (s.section ? '— ' + s.section : '') + ' · Roll: ' + (s.rollNumber || '—') + ' · Reg: ' + (s.studentCode || s.id.slice(-4)) + '</div>' +
+          '<div style="display:flex;gap:.35rem;margin-top:.4rem;flex-wrap:wrap">' +
+          '<span class="pill pill-active">Active</span>' +
+          (s.hostel && s.hostel !== 'No' && s.hostel !== '' ? '<span class="pill pill-info">' + escHtml(s.hostel) + '</span>' : '') +
+          (s.transportRoute ? '<span class="pill pill-info">' + escHtml(s.transportRoute) + '</span>' : '') +
+          '</div></div></div>' +
+          '<div style="display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-bottom:1rem">' +
+          [['DOB', s.dob ? new Date(s.dob).toLocaleDateString('en-IN') : '—'],
+           ['Gender', s.gender || '—'],
+           ['Blood Group', s.bloodGroup || '—'],
+           ['Category', s.category || '—'],
+           ['Father', s.fatherName || '—'],
+           ['Father Phone', s.fatherPhone || s.phone || '—'],
+           ['Mother', s.motherName || '—'],
+           ['Mother Phone', s.motherPhone || '—'],
+          ].map(function(a) {
+            return '<div style="background:var(--bg);border-radius:var(--r-md);padding:.65rem .875rem"><div style="font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--faint)">' + a[0] + '</div><div style="font-size:.85rem;font-weight:600;color:var(--ink-2);margin-top:2px">' + escHtml(a[1]) + '</div></div>';
+          }).join('') +
+          '<div style="grid-column:1/-1;background:var(--bg);border-radius:var(--r-md);padding:.65rem .875rem"><div style="font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--faint)">Address</div><div style="font-size:.85rem;font-weight:600;color:var(--ink-2);margin-top:2px">' + escHtml(s.address || '—') + '</div></div>' +
+          '</div>';
+
+        document.getElementById('drawerFeeBtn').onclick = function() { closeStudentDrawer(); showSection('classFeePayment'); };
+        document.getElementById('drawerEditBtn').onclick = function() { closeStudentDrawer(); showSection('addStudent'); };
+        document.getElementById('drawerIdBtn').onclick = function() { closeStudentDrawer(); window.generateStudentIdCard ? generateStudentIdCard(studentId) : showToast('ID card function not available', 'info'); };
+        document.getElementById('drawerSmsBtn').onclick = function() { closeStudentDrawer(); sendDirectSMS(s.fatherPhone || s.phone, s.name); };
+    } catch (e) {
+        if (body) body.innerHTML = '<div style="padding:2rem;text-align:center;color:var(--red)">Error: ' + escHtml(e.message) + '</div>';
+    }
+};
+
+window.closeStudentDrawer = function() {
+    const drawer = document.getElementById('studentDrawer');
+    const overlay = document.getElementById('studentDrawerOverlay');
+    if (drawer) drawer.classList.remove('open');
+    if (overlay) overlay.style.display = 'none';
+    document.body.style.overflow = '';
+};
 
 function escHtml(str) {
     if (!str) return '';

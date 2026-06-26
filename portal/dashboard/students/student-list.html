@@ -1,67 +1,180 @@
-<div class="card">
-    <div class="flex flex-between align-center mb-1-5">
-        <div class="flex gap-1 flex-1">
-            <input type="text" id="slSearchInput" class="form-control flex-1 max-w-400" placeholder="Search by name, ID, phone..." title="Search Students" />
-            <select id="slClassFilter" class="w-auto" title="Filter by Class">
-                <option value="">All Classes</option>
-            </select>
-        </div>
-        <div class="flex gap-0-75">
-            <button class="btn-portal btn-ghost hidden" id="slBulkDeleteBtn" onclick="slHandleBulkDelete()" title="Delete Selected">
-                <i class="fas fa-trash"></i> Delete (<span id="slSelectedCount">0</span>)
-            </button>
-            <button class="btn-portal btn-secondary" onclick="window.slExportStudentData()" title="Export to Excel">
-                <i class="fas fa-file-excel"></i> Export Excel
-            </button>
-            <button class="btn-portal btn-primary" onclick="window.showSection('addStudent')" title="Add New Student">
-                <i class="fas fa-plus"></i> Add Student
-            </button>
-        </div>
-    </div>
+<div class="page">
 
-    <div class="table-container">
-        <table>
-            <thead>
-                <tr>
-                    <th class="w-10"><input type="checkbox" id="slSelectAll" title="Select All" /></th>
-                    <th>ID</th>
-                    <th>Roll No</th>
-                    <th>Reg No</th>
-                    <th>Name</th>
-                    <th>Class/Sec</th>
-                    <th>Session</th>
-                    <th>Father Name</th>
-                    <th>Mother Name</th>
-                    <th>Mobile</th>
-                    <th>DOB</th>
-                    <th>Gender</th>
-                    <th>Category</th>
-                    <th>Caste</th>
-                    <th>Religion</th>
-                    <th>Aadhar</th>
-                    <th>PEN</th>
-                    <th>RFID No</th>
-                    <th>Guardian</th>
-                    <th>G.Phone</th>
-                    <th>Current Address</th>
-                    <th>Permanent Address</th>
-                    <th>City</th>
-                    <th>Hostel</th>
-                    <th>Transport</th>
-                    <th>Join Date</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody id="slTableBody">
-                <tr><td colspan="27" class="text-center text-muted p-2"><i class="fas fa-spinner fa-spin mr-1"></i> Loading...</td></tr>
-            </tbody>
-        </table>
+  <!-- PAGE HEADER -->
+  <div class="ph">
+    <div class="ph-left">
+      <h1><i class="fas fa-users" style="color:var(--blue);margin-right:.4rem"></i>Student Management</h1>
+      <p>View, search, and manage all enrolled students across classes and sections</p>
     </div>
+    <div class="ph-actions">
+      <button class="btn btn-outline" onclick="slExportStudentData()"><i class="fas fa-download"></i> Export</button>
+      <button class="btn btn-outline" onclick="window.showSection('bulkImport')"><i class="fas fa-upload"></i> Bulk Import</button>
+      <button class="btn btn-primary" onclick="window.showSection('addStudent')"><i class="fas fa-plus"></i> Add Student</button>
+    </div>
+  </div>
 
-    <div id="slPagination" class="mt-1-5 flex justify-center gap-1 align-center">
-        <button id="slPrevBtn" class="btn-portal btn-ghost" onclick="slGoToPage('prev')" disabled><i class="fas fa-chevron-left"></i> Prev</button>
-        <span id="slPageInfo" class="text-sm text-muted">Page 1</span>
-        <button id="slNextBtn" class="btn-portal btn-ghost" onclick="slGoToPage('next')"><i class="fas fa-chevron-right"></i> Next</button>
-        <span id="slTotalInfo" class="text-sm text-muted ml-1"></span>
+  <!-- KPI STRIP -->
+  <div class="kpi-strip">
+    <div class="kpi k-total active" onclick="slFilterKPI('all')">
+      <i class="fas fa-users kpi-icon"></i>
+      <div class="kpi-val" id="slKpiTotal">—</div>
+      <div class="kpi-lbl">Total Students</div>
+      <div class="kpi-sub" id="slKpiNew" style="color:var(--green)">—</div>
     </div>
+    <div class="kpi k-present" onclick="slFilterKPI('present')">
+      <i class="fas fa-calendar-check kpi-icon"></i>
+      <div class="kpi-val" id="slKpiPresent">—</div>
+      <div class="kpi-lbl">Present Today</div>
+      <div class="kpi-sub" id="slKpiAttPct">—</div>
+    </div>
+    <div class="kpi k-absent" onclick="slFilterKPI('absent')">
+      <i class="fas fa-calendar-times kpi-icon"></i>
+      <div class="kpi-val" id="slKpiAbsent">—</div>
+      <div class="kpi-lbl">Absent Today</div>
+      <div class="kpi-sub" id="slKpiAbsentSub" style="color:var(--red)">—</div>
+    </div>
+    <div class="kpi k-due" onclick="slFilterKPI('fee-due')">
+      <i class="fas fa-rupee-sign kpi-icon"></i>
+      <div class="kpi-val" id="slKpiDefaulters">—</div>
+      <div class="kpi-lbl">Fee Defaulters</div>
+      <div class="kpi-sub" id="slKpiDueAmt">—</div>
+    </div>
+    <div class="kpi k-new" onclick="slFilterKPI('new')">
+      <i class="fas fa-user-plus kpi-icon"></i>
+      <div class="kpi-val" id="slKpiNewCount">—</div>
+      <div class="kpi-lbl">New This Month</div>
+      <div class="kpi-sub">Admitted this month</div>
+    </div>
+  </div>
+
+  <!-- SEARCH + FILTER -->
+  <div class="filter-bar">
+    <div class="fb-top">
+      <div class="search-wrap">
+        <i class="fas fa-search si"></i>
+        <input type="text" id="slSearchInput" placeholder="Search by name, phone, reg. no., father's name, RFID…"
+               autocomplete="off">
+        <span class="kbd">Ctrl+K</span>
+      </div>
+      <div class="fb-selects">
+        <select id="slClassFilter">
+          <option value="">All Classes</option>
+        </select>
+        <select id="slSectionFilter">
+          <option value="">All Sections</option>
+          <option>A</option><option>B</option><option>C</option>
+        </select>
+        <select id="slSessionFilter">
+          <option value="">2026-27</option>
+          <option>2025-26</option>
+        </select>
+      </div>
+    </div>
+    <div class="fb-chips">
+      <label>Quick Filter:</label>
+      <span class="chip active" onclick="slSetChip(this,'all')"><i class="fas fa-th"></i> All</span>
+      <span class="chip chip-red" onclick="slSetChip(this,'absent')"><i class="fas fa-calendar-times"></i> Absent Today</span>
+      <span class="chip chip-amber" onclick="slSetChip(this,'due')"><i class="fas fa-rupee-sign"></i> Fee Due</span>
+      <span class="chip" onclick="slSetChip(this,'boys')"><i class="fas fa-mars"></i> Boys</span>
+      <span class="chip" onclick="slSetChip(this,'girls')"><i class="fas fa-venus"></i> Girls</span>
+      <span class="chip" onclick="slSetChip(this,'hostel')"><i class="fas fa-bed"></i> Hostel</span>
+      <span class="chip" onclick="slSetChip(this,'transport')"><i class="fas fa-bus"></i> Transport</span>
+    </div>
+  </div>
+
+  <!-- TABLE TOOLBAR -->
+  <div class="tbl-toolbar">
+    <div class="tbl-info">Showing <strong id="slPageStart">0</strong>–<strong id="slPageEnd">0</strong> of <strong id="slTotalCount">0</strong> students</div>
+    <div class="bulk-actions" id="slBulkActions">
+      <span id="slSelectedCount">0 selected</span>
+      <button class="btn btn-outline btn-sm" onclick="slBulkSMS()"><i class="fas fa-sms"></i> SMS</button>
+      <button class="btn btn-outline btn-sm" onclick="slBulkPromote()"><i class="fas fa-level-up-alt"></i> Promote</button>
+      <button class="btn btn-outline btn-sm" style="color:var(--red);border-color:var(--red-md)" onclick="slHandleBulkDelete()"><i class="fas fa-trash"></i> Delete</button>
+    </div>
+    <div style="margin-left:auto;display:flex;gap:.6rem;align-items:center">
+      <button class="btn btn-ghost btn-sm" onclick="slExportStudentData()"><i class="fas fa-download"></i> CSV</button>
+      <button class="btn btn-ghost btn-sm" onclick="window.print()"><i class="fas fa-print"></i> Print</button>
+      <div class="view-toggle">
+        <button class="vt-btn active" id="slTblViewBtn" onclick="slSetView('table')"><i class="fas fa-list"></i></button>
+        <button class="vt-btn" id="slCardViewBtn" onclick="slSetView('card')"><i class="fas fa-th-large"></i></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TABLE VIEW -->
+  <div class="tbl-wrap" id="slTableView">
+    <table class="data-table" id="slStudentTable">
+      <thead>
+        <tr>
+          <th style="width:44px"><input type="checkbox" id="slSelectAll" onchange="slToggleAll(this)" style="width:15px;height:15px;accent-color:var(--blue);cursor:pointer"></th>
+          <th>Student <span class="sort-icon">↕</span></th>
+          <th>Class <span class="sort-icon">↕</span></th>
+          <th>Contact</th>
+          <th>Attendance <span class="sort-icon">↕</span></th>
+          <th>Fee Status <span class="sort-icon">↕</span></th>
+          <th>Balance <span class="sort-icon">↕</span></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="slTableBody">
+        <tr><td colspan="8" class="text-center p-2 text-muted"><i class="fas fa-spinner fa-spin mr-1"></i> Loading...</td></tr>
+      </tbody>
+    </table>
+
+    <div class="pagination" id="slPagination">
+      <div class="pg-info">Showing <strong id="slPageInfoStart">0</strong>–<strong id="slPageInfoEnd">0</strong> of <strong id="slPageInfoTotal">0</strong> students</div>
+      <div style="display:flex;align-items:center;gap:.75rem">
+        <select id="slPageSize" style="padding:.35rem .75rem;border:1.5px solid var(--border);border-radius:var(--r-sm);font-size:.78rem;color:var(--muted)">
+          <option value="25">25 per page</option>
+          <option value="50" selected>50 per page</option>
+          <option value="100">100 per page</option>
+        </select>
+        <div class="pg-controls">
+          <button class="pg-btn" id="slPrevBtn" onclick="slGoToPage('prev')"><i class="fas fa-chevron-left"></i></button>
+          <span id="slPageNum" style="font-size:.82rem;font-weight:600;color:var(--muted);padding:0 .5rem">Page 1</span>
+          <button class="pg-btn" id="slNextBtn" onclick="slGoToPage('next')"><i class="fas fa-chevron-right"></i></button>
+        </div>
+      </div>
+    </div>
+  </div><!-- /tbl-wrap -->
+
+  <!-- CARD GRID VIEW -->
+  <div class="card-grid" id="slCardView" style="display:none"></div>
+
+</div><!-- /page -->
+
+<!-- STUDENT DETAIL DRAWER -->
+<div class="drawer-overlay" id="slDrawerOverlay" onclick="slCloseDrawer()"></div>
+<div class="drawer" id="slStudentDrawer">
+  <div class="drawer-head">
+    <i class="fas fa-user-circle" style="color:var(--blue);font-size:1.2rem"></i>
+    <h3>Student Profile</h3>
+    <button class="drawer-close" onclick="slCloseDrawer()"><i class="fas fa-times"></i></button>
+  </div>
+  <div class="drawer-body" id="slDrawerBody">
+    <div style="padding:3rem;text-align:center;color:#94a3b8"><i class="fas fa-spinner fa-spin fa-2x"></i></div>
+  </div>
+  <div class="drawer-footer">
+    <button class="btn btn-primary" id="slDrawerFeeBtn"><i class="fas fa-rupee-sign"></i> Collect Fee</button>
+    <button class="btn btn-outline" id="slDrawerEditBtn"><i class="fas fa-edit"></i> Edit</button>
+    <button class="btn btn-outline" id="slDrawerIdBtn"><i class="fas fa-id-card"></i> ID Card</button>
+    <button class="btn btn-outline" id="slDrawerSmsBtn"><i class="fas fa-sms"></i> SMS</button>
+  </div>
 </div>
+
+<style>
+  .kpi-strip { display:grid;grid-template-columns:repeat(5,1fr);gap:.875rem;margin-bottom:1.5rem }
+  .kpi { background:white;border-radius:var(--r-lg);padding:1rem 1.1rem;box-shadow:var(--sh-sm);position:relative;overflow:hidden;cursor:pointer;transition:all .15s;border:1.5px solid transparent }
+  .kpi:hover { box-shadow:var(--sh-md);border-color:var(--blue-md) }
+  .kpi.active { border-color:var(--blue);box-shadow:0 0 0 3px rgba(30,64,175,.1) }
+  .kpi::after { content:'';position:absolute;bottom:0;left:0;right:0;height:3px }
+  .kpi.k-total::after { background:var(--blue) }
+  .kpi.k-present::after { background:var(--green) }
+  .kpi.k-absent::after { background:var(--red) }
+  .kpi.k-due::after { background:var(--amber) }
+  .kpi.k-new::after { background:var(--purple) }
+  .kpi-val { font-size:1.7rem;font-weight:800;line-height:1;color:var(--ink) }
+  .kpi-lbl { font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--faint);margin-top:.2rem }
+  .kpi-sub { font-size:.72rem;color:var(--muted);margin-top:.3rem }
+  .kpi-icon { position:absolute;right:.875rem;top:.875rem;font-size:1.3rem;opacity:.12 }
+</style>

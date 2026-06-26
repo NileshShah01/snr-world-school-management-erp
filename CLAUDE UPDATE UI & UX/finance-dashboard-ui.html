@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Finance Dashboard — SNR ERP</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root{
+  --blue:#1e40af;--blue-lt:#eff6ff;--blue-md:#bfdbfe;--blue-dk:#1e3a8a;
+  --green:#059669;--green-lt:#ecfdf5;--green-md:#6ee7b7;
+  --red:#dc2626;--red-lt:#fef2f2;--red-md:#fca5a5;
+  --amber:#d97706;--amber-lt:#fffbeb;--amber-md:#fcd34d;
+  --purple:#7c3aed;--purple-lt:#f5f3ff;
+  --cyan:#0891b2;--cyan-lt:#ecfeff;
+  --ink:#0f172a;--ink-2:#1e293b;--ink-3:#334155;
+  --muted:#64748b;--faint:#94a3b8;--ghost:#cbd5e1;
+  --bg:#f1f5f9;--surface:#fff;--border:#e2e8f0;
+  --r-sm:6px;--r-md:10px;--r-lg:14px;--r-xl:20px;
+  --sh-sm:0 2px 8px rgba(0,0,0,.06);
+  --sh-md:0 4px 20px rgba(0,0,0,.09);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--ink-2);font-size:14px;line-height:1.5}
+.page{max-width:1240px;margin:0 auto;padding:1.5rem}
+
+/* ── HEADER ───────────────── */
+.ph{display:flex;align-items:flex-start;gap:1rem;margin-bottom:1.5rem;flex-wrap:wrap}
+.ph h1{font-size:1.35rem;font-weight:800;color:var(--ink)}
+.ph p{font-size:.82rem;color:var(--muted);margin-top:2px}
+.ph-actions{margin-left:auto;display:flex;gap:.6rem;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:.4rem;padding:.6rem 1.1rem;border-radius:var(--r-md);font-size:.82rem;font-weight:700;cursor:pointer;border:none;transition:all .15s;white-space:nowrap}
+.btn-primary{background:var(--blue);color:white}
+.btn-primary:hover{background:var(--blue-dk);box-shadow:0 4px 12px rgba(30,64,175,.3)}
+.btn-outline{background:white;color:var(--ink-3);border:1.5px solid var(--border)}
+.btn-outline:hover{border-color:var(--blue-md);color:var(--blue)}
+
+/* ── MONTH PICKER ──────────── */
+.month-picker{display:flex;align-items:center;gap:.5rem;background:white;border-radius:var(--r-xl);padding:.4rem .875rem;box-shadow:var(--sh-sm);border:1.5px solid var(--border)}
+.mp-btn{width:28px;height:28px;border:none;background:var(--bg);border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--muted);transition:all .15s}
+.mp-btn:hover{background:var(--blue-lt);color:var(--blue)}
+.mp-label{font-size:.85rem;font-weight:700;color:var(--ink-2);min-width:100px;text-align:center}
+
+/* ── KPI GRID ──────────────── */
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem}
+.kpi-card{background:white;border-radius:var(--r-lg);padding:1.25rem;box-shadow:var(--sh-sm);position:relative;overflow:hidden;border-left:4px solid transparent;transition:all .15s}
+.kpi-card:hover{box-shadow:var(--sh-md);transform:translateY(-1px)}
+.kpi-card.kc-collected{border-left-color:var(--green)}
+.kpi-card.kc-pending{border-left-color:var(--red)}
+.kpi-card.kc-total{border-left-color:var(--blue)}
+.kpi-card.kc-defaulters{border-left-color:var(--amber)}
+.kpi-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:.75rem}
+.kpi-icon{width:40px;height:40px;border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
+.kpi-trend{font-size:.72rem;font-weight:700;display:flex;align-items:center;gap:3px;padding:3px 8px;border-radius:20px}
+.kpi-trend.up{background:var(--green-lt);color:var(--green)}
+.kpi-trend.down{background:var(--red-lt);color:var(--red)}
+.kpi-val{font-size:1.75rem;font-weight:800;line-height:1;color:var(--ink)}
+.kpi-lbl{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--faint);margin-top:.25rem}
+.kpi-sub{font-size:.75rem;color:var(--muted);margin-top:.4rem}
+.kpi-progress{height:4px;background:var(--bg);border-radius:20px;margin-top:.875rem;overflow:hidden}
+.kpi-progress-bar{height:100%;border-radius:20px;transition:width .5s ease}
+
+/* ── PROGRESS RING ─────────── */
+.ring-wrap{position:relative;width:90px;height:90px;flex-shrink:0}
+.ring-wrap svg{transform:rotate(-90deg)}
+.ring-text{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.ring-pct{font-size:1.1rem;font-weight:800;color:var(--ink);line-height:1}
+.ring-tiny{font-size:.6rem;color:var(--faint);font-weight:700}
+
+/* ── CHARTS SECTION ────────── */
+.charts-row{display:grid;grid-template-columns:2fr 1fr;gap:1rem;margin-bottom:1.5rem}
+.card{background:white;border-radius:var(--r-lg);box-shadow:var(--sh-sm);overflow:hidden}
+.card-head{padding:1rem 1.25rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:.75rem}
+.card-head h2{font-size:.92rem;font-weight:700;color:var(--ink)}
+.card-head p{font-size:.75rem;color:var(--muted)}
+.card-head .ch-icon{width:34px;height:34px;border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0}
+.card-body{padding:1.25rem}
+
+/* ── BAR CHART (CSS only) ───── */
+.bar-chart{display:flex;align-items:flex-end;gap:.5rem;height:140px;padding-bottom:.25rem}
+.bc-group{flex:1;display:flex;flex-direction:column;align-items:center;gap:.3rem}
+.bc-bars{display:flex;gap:2px;align-items:flex-end;width:100%}
+.bc-bar{flex:1;border-radius:4px 4px 0 0;transition:all .3s;cursor:pointer;min-height:4px}
+.bc-bar.collected{background:var(--green)}
+.bc-bar.pending{background:var(--red-md)}
+.bc-bar:hover{opacity:.8}
+.bc-lbl{font-size:.62rem;color:var(--faint);font-weight:600}
+.bc-legend{display:flex;gap:1.25rem;margin-top:.875rem;justify-content:center}
+.bc-legend span{font-size:.72rem;color:var(--muted);display:flex;align-items:center;gap:.3rem}
+.bc-legend i{font-size:.5rem}
+
+/* ── PIE BREAKDOWN ─────────── */
+.pie-items{display:flex;flex-direction:column;gap:.5rem;margin-top:1rem}
+.pie-item{display:flex;align-items:center;gap:.65rem}
+.pie-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.pie-label{font-size:.8rem;color:var(--ink-3);flex:1}
+.pie-bar-bg{flex:2;height:6px;background:var(--bg);border-radius:20px;overflow:hidden}
+.pie-bar-fill{height:100%;border-radius:20px}
+.pie-pct{font-size:.75rem;font-weight:700;color:var(--ink-2);min-width:32px;text-align:right}
+
+/* ── DUE TABLE ─────────────── */
+.due-section{margin-bottom:1.5rem}
+.section-hd{display:flex;align-items:center;gap:.75rem;margin-bottom:.875rem;flex-wrap:wrap}
+.section-hd h2{font-size:1rem;font-weight:800;color:var(--ink)}
+.section-hd .count-badge{background:var(--red-lt);color:var(--red);font-size:.72rem;font-weight:800;padding:2px 9px;border-radius:20px}
+
+.due-filters{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.875rem}
+.df-chip{padding:.3rem .75rem;border-radius:20px;font-size:.72rem;font-weight:700;cursor:pointer;border:1.5px solid var(--border);background:white;color:var(--muted);transition:all .15s}
+.df-chip.active{background:var(--red);color:white;border-color:var(--red)}
+.df-chip:hover:not(.active){border-color:var(--blue-md);color:var(--blue)}
+
+.due-table-wrap{background:white;border-radius:var(--r-lg);box-shadow:var(--sh-sm);overflow:hidden}
+.due-table{width:100%;border-collapse:collapse}
+.due-table thead tr{border-bottom:2px solid var(--border)}
+.due-table th{padding:.65rem .875rem;text-align:left;font-size:.67rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--faint);background:var(--bg);white-space:nowrap}
+.due-table td{padding:.8rem .875rem;border-bottom:1px solid #f8fafc;vertical-align:middle}
+.due-table tr:last-child td{border-bottom:none}
+.due-table tr:hover td{background:#fefcf7}
+
+.da-cell{display:flex;align-items:center;gap:.65rem}
+.da-avatar{width:34px;height:34px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.78rem;color:white}
+.da-name{font-weight:700;font-size:.85rem;color:var(--ink)}
+.da-class{font-size:.72rem;color:var(--muted)}
+
+.overdue-badge{display:inline-block;padding:2px 8px;border-radius:20px;font-size:.68rem;font-weight:700}
+.ob-high{background:var(--red-lt);color:var(--red)}
+.ob-med{background:var(--amber-lt);color:var(--amber)}
+.ob-low{background:var(--blue-lt);color:var(--blue)}
+
+.due-amt{font-size:.92rem;font-weight:800;color:var(--red)}
+.days-badge{font-size:.72rem;font-weight:700;color:var(--red)}
+
+.action-group{display:flex;gap:.4rem}
+.ag-btn{padding:.35rem .65rem;border-radius:var(--r-sm);font-size:.72rem;font-weight:700;cursor:pointer;border:1.5px solid;transition:all .15s;white-space:nowrap}
+.ag-btn.sms{border-color:var(--green-md);color:var(--green);background:var(--green-lt)}
+.ag-btn.collect{border-color:var(--blue-md);color:var(--blue);background:var(--blue-lt)}
+.ag-btn.waive{border-color:var(--ghost);color:var(--muted);background:white}
+
+.tbl-foot{display:flex;align-items:center;justify-content:space-between;padding:.875rem 1.25rem;border-top:1px solid var(--border);flex-wrap:wrap;gap:.5rem}
+.tbl-foot .tf-info{font-size:.78rem;color:var(--muted)}
+.tbl-foot .tf-total{font-size:.88rem;font-weight:700;color:var(--red)}
+
+/* ── SEND REMINDER STRIP ────── */
+.reminder-strip{display:flex;align-items:center;gap:1rem;background:var(--amber-lt);border:1.5px solid var(--amber-md);border-radius:var(--r-lg);padding:1rem 1.25rem;margin-bottom:1.5rem;flex-wrap:wrap}
+.rs-icon{width:38px;height:38px;border-radius:50%;background:var(--amber);color:white;display:flex;align-items:center;justify-content:center;font-size:.95rem;flex-shrink:0}
+.rs-text h3{font-size:.88rem;font-weight:700;color:var(--amber)}
+.rs-text p{font-size:.78rem;color:var(--muted)}
+.rs-actions{margin-left:auto;display:flex;gap:.5rem;flex-wrap:wrap}
+.rs-actions button{padding:.5rem 1rem;border-radius:var(--r-md);font-size:.78rem;font-weight:700;cursor:pointer;border:none;transition:all .15s}
+.rs-sms{background:var(--amber);color:white}
+.rs-wa{background:#25D366;color:white}
+.rs-dismiss{background:white;color:var(--muted);border:1.5px solid var(--border) !important}
+
+/* ── PILL ───────────────────── */
+.pill{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:20px;font-size:.68rem;font-weight:700;white-space:nowrap}
+.pill::before{content:'●';font-size:.4rem}
+.pill.paid{background:var(--green-lt);color:var(--green)}
+.pill.due{background:var(--red-lt);color:var(--red)}
+.pill.partial{background:var(--amber-lt);color:var(--amber)}
+
+@media(max-width:900px){
+  .kpi-grid{grid-template-columns:repeat(2,1fr)}
+  .charts-row{grid-template-columns:1fr}
+}
+@media(max-width:560px){
+  .kpi-grid{grid-template-columns:1fr 1fr}
+  .action-group{flex-direction:column}
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="ph">
+    <div>
+      <h1><i class="fas fa-rupee-sign" style="color:var(--green);margin-right:.4rem"></i>Finance Dashboard</h1>
+      <p>Fee collection, dues tracking, and financial analytics</p>
+    </div>
+    <div class="ph-actions">
+      <!-- Month navigator -->
+      <div class="month-picker">
+        <button class="mp-btn"><i class="fas fa-chevron-left"></i></button>
+        <span class="mp-label">June 2026</span>
+        <button class="mp-btn"><i class="fas fa-chevron-right"></i></button>
+      </div>
+      <button class="btn btn-outline"><i class="fas fa-download"></i> Export Report</button>
+      <button class="btn btn-primary" onclick="showSection('classFeePayment')"><i class="fas fa-plus"></i> Collect Fee</button>
+    </div>
+  </div>
+
+  <!-- KPI CARDS -->
+  <div class="kpi-grid">
+
+    <div class="kpi-card kc-collected">
+      <div class="kpi-top">
+        <div class="kpi-icon" style="background:var(--green-lt);color:var(--green)"><i class="fas fa-check-circle"></i></div>
+        <div class="kpi-trend up"><i class="fas fa-arrow-up"></i> +8.2%</div>
+      </div>
+      <div class="kpi-val">₹2,41,600</div>
+      <div class="kpi-lbl">Collected This Month</div>
+      <div class="kpi-sub" style="color:var(--green)">151 payments processed</div>
+      <div class="kpi-progress"><div class="kpi-progress-bar" style="width:78%;background:var(--green)"></div></div>
+    </div>
+
+    <div class="kpi-card kc-pending">
+      <div class="kpi-top">
+        <div class="kpi-icon" style="background:var(--red-lt);color:var(--red)"><i class="fas fa-exclamation-circle"></i></div>
+        <div class="kpi-trend down"><i class="fas fa-arrow-down"></i> ₹1.2L overdue</div>
+      </div>
+      <div class="kpi-val">₹67,200</div>
+      <div class="kpi-lbl">Pending This Month</div>
+      <div class="kpi-sub" style="color:var(--red)">78 students not paid</div>
+      <div class="kpi-progress"><div class="kpi-progress-bar" style="width:22%;background:var(--red)"></div></div>
+    </div>
+
+    <div class="kpi-card kc-total">
+      <div class="kpi-top">
+        <div class="kpi-icon" style="background:var(--blue-lt);color:var(--blue)"><i class="fas fa-chart-bar"></i></div>
+        <div style="display:flex;align-items:center;gap:.3rem">
+          <span style="font-size:1.1rem;font-weight:800;color:var(--blue)">78%</span>
+          <span style="font-size:.7rem;color:var(--faint)">collected</span>
+        </div>
+      </div>
+      <div class="kpi-val">₹3,08,800</div>
+      <div class="kpi-lbl">Total Demand This Month</div>
+      <div class="kpi-sub">For 347 active students</div>
+      <div class="kpi-progress"><div class="kpi-progress-bar" style="width:78%;background:var(--blue)"></div></div>
+    </div>
+
+    <div class="kpi-card kc-defaulters">
+      <div class="kpi-top">
+        <div class="kpi-icon" style="background:var(--amber-lt);color:var(--amber)"><i class="fas fa-user-times"></i></div>
+        <div class="kpi-trend down" style="background:var(--amber-lt);color:var(--amber)"><i class="fas fa-arrow-up"></i> +5 vs last month</div>
+      </div>
+      <div class="kpi-val">78</div>
+      <div class="kpi-lbl">Fee Defaulters</div>
+      <div class="kpi-sub">3+ months outstanding: <strong style="color:var(--red)">12</strong></div>
+      <div class="kpi-progress"><div class="kpi-progress-bar" style="width:22%;background:var(--amber)"></div></div>
+    </div>
+
+  </div>
+
+  <!-- CHARTS ROW -->
+  <div class="charts-row">
+
+    <!-- Monthly collection bar chart -->
+    <div class="card">
+      <div class="card-head">
+        <div class="ch-icon" style="background:var(--green-lt);color:var(--green)"><i class="fas fa-chart-bar"></i></div>
+        <div><h2>Monthly Collection vs Demand</h2><p>Last 6 months comparison</p></div>
+        <div style="margin-left:auto;display:flex;gap:.4rem">
+          <button style="padding:.3rem .65rem;background:var(--bg);border:1.5px solid var(--border);border-radius:var(--r-sm);font-size:.72rem;font-weight:600;cursor:pointer;color:var(--muted)">₹ Amount</button>
+          <button style="padding:.3rem .65rem;background:var(--blue);color:white;border:none;border-radius:var(--r-sm);font-size:.72rem;font-weight:600;cursor:pointer">% Rate</button>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="bar-chart">
+          <div class="bc-group">
+            <div class="bc-bars" style="height:100px">
+              <div class="bc-bar collected" style="height:82%"></div>
+              <div class="bc-bar pending" style="height:18%"></div>
+            </div>
+            <div class="bc-lbl">Jan</div>
+          </div>
+          <div class="bc-group">
+            <div class="bc-bars" style="height:100px">
+              <div class="bc-bar collected" style="height:74%"></div>
+              <div class="bc-bar pending" style="height:26%"></div>
+            </div>
+            <div class="bc-lbl">Feb</div>
+          </div>
+          <div class="bc-group">
+            <div class="bc-bars" style="height:100px">
+              <div class="bc-bar collected" style="height:91%"></div>
+              <div class="bc-bar pending" style="height:9%"></div>
+            </div>
+            <div class="bc-lbl">Mar</div>
+          </div>
+          <div class="bc-group">
+            <div class="bc-bars" style="height:100px">
+              <div class="bc-bar collected" style="height:65%"></div>
+              <div class="bc-bar pending" style="height:35%"></div>
+            </div>
+            <div class="bc-lbl">Apr</div>
+          </div>
+          <div class="bc-group">
+            <div class="bc-bars" style="height:100px">
+              <div class="bc-bar collected" style="height:88%"></div>
+              <div class="bc-bar pending" style="height:12%"></div>
+            </div>
+            <div class="bc-lbl">May</div>
+          </div>
+          <div class="bc-group">
+            <div class="bc-bars" style="height:100px">
+              <div class="bc-bar collected" style="height:78%"></div>
+              <div class="bc-bar pending" style="height:22%"></div>
+            </div>
+            <div class="bc-lbl">Jun ↙</div>
+          </div>
+        </div>
+        <div class="bc-legend">
+          <span><i class="fas fa-square" style="color:var(--green)"></i> Collected</span>
+          <span><i class="fas fa-square" style="color:var(--red-md)"></i> Pending</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fee type breakdown -->
+    <div class="card">
+      <div class="card-head">
+        <div class="ch-icon" style="background:var(--purple-lt);color:var(--purple)"><i class="fas fa-pie-chart"></i></div>
+        <div><h2>Fee Breakdown</h2><p>By type, this month</p></div>
+      </div>
+      <div class="card-body">
+        <!-- SVG donut -->
+        <div style="display:flex;justify-content:center;margin-bottom:.875rem">
+          <div style="position:relative;width:110px;height:110px">
+            <svg width="110" height="110" viewBox="0 0 110 110">
+              <!-- Donut segments (rough CSS approximation) -->
+              <circle cx="55" cy="55" r="40" fill="none" stroke="#e2e8f0" stroke-width="18"/>
+              <!-- Tuition: 60% -->
+              <circle cx="55" cy="55" r="40" fill="none" stroke="#1e40af" stroke-width="18"
+                stroke-dasharray="150.8 251.2" stroke-dashoffset="0" transform="rotate(-90 55 55)"/>
+              <!-- Transport: 15% -->
+              <circle cx="55" cy="55" r="40" fill="none" stroke="#10b981" stroke-width="18"
+                stroke-dasharray="37.7 251.2" stroke-dashoffset="-150.8" transform="rotate(-90 55 55)"/>
+              <!-- Annual: 15% -->
+              <circle cx="55" cy="55" r="40" fill="none" stroke="#f59e0b" stroke-width="18"
+                stroke-dasharray="37.7 251.2" stroke-dashoffset="-188.5" transform="rotate(-90 55 55)"/>
+              <!-- Computer: 10% -->
+              <circle cx="55" cy="55" r="40" fill="none" stroke="#8b5cf6" stroke-width="18"
+                stroke-dasharray="25.1 251.2" stroke-dashoffset="-226.2" transform="rotate(-90 55 55)"/>
+            </svg>
+            <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center">
+              <div style="font-size:1.1rem;font-weight:800;color:var(--ink)">78%</div>
+              <div style="font-size:.6rem;color:var(--faint);font-weight:700">collected</div>
+            </div>
+          </div>
+        </div>
+        <div class="pie-items">
+          <div class="pie-item">
+            <div class="pie-dot" style="background:#1e40af"></div>
+            <span class="pie-label">Tuition Fee</span>
+            <div class="pie-bar-bg"><div class="pie-bar-fill" style="width:60%;background:#1e40af"></div></div>
+            <span class="pie-pct">60%</span>
+          </div>
+          <div class="pie-item">
+            <div class="pie-dot" style="background:#10b981"></div>
+            <span class="pie-label">Transport</span>
+            <div class="pie-bar-bg"><div class="pie-bar-fill" style="width:15%;background:#10b981"></div></div>
+            <span class="pie-pct">15%</span>
+          </div>
+          <div class="pie-item">
+            <div class="pie-dot" style="background:#f59e0b"></div>
+            <span class="pie-label">Annual Fee</span>
+            <div class="pie-bar-bg"><div class="pie-bar-fill" style="width:15%;background:#f59e0b"></div></div>
+            <span class="pie-pct">15%</span>
+          </div>
+          <div class="pie-item">
+            <div class="pie-dot" style="background:#8b5cf6"></div>
+            <span class="pie-label">Computer</span>
+            <div class="pie-bar-bg"><div class="pie-bar-fill" style="width:10%;background:#8b5cf6"></div></div>
+            <span class="pie-pct">10%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /charts-row -->
+
+  <!-- REMINDER STRIP -->
+  <div class="reminder-strip">
+    <div class="rs-icon"><i class="fas fa-bell"></i></div>
+    <div class="rs-text">
+      <h3>78 students have pending fees this month</h3>
+      <p>₹67,200 outstanding · 12 students overdue for 3+ months · Send reminder now</p>
+    </div>
+    <div class="rs-actions">
+      <button class="rs-sms btn"><i class="fas fa-sms"></i> Send SMS to All</button>
+      <button class="rs-wa btn"><i class="fab fa-whatsapp"></i> WhatsApp</button>
+      <button class="rs-dismiss btn" style="border:1.5px solid var(--border)">Dismiss</button>
+    </div>
+  </div>
+
+  <!-- FEE DUES TABLE -->
+  <div class="due-section">
+    <div class="section-hd">
+      <h2><i class="fas fa-exclamation-triangle" style="color:var(--amber);margin-right:.4rem"></i>Fee Defaulters</h2>
+      <span class="count-badge">78 students</span>
+      <div style="margin-left:auto;display:flex;gap:.5rem">
+        <button class="btn btn-outline" style="padding:.45rem .875rem;font-size:.75rem"><i class="fas fa-download"></i> Export Dues</button>
+        <button class="btn btn-primary" style="padding:.45rem .875rem;font-size:.75rem"><i class="fas fa-sms"></i> Bulk SMS</button>
+      </div>
+    </div>
+
+    <!-- Due filters -->
+    <div class="due-filters">
+      <span class="df-chip active">All Dues</span>
+      <span class="df-chip">This Month</span>
+      <span class="df-chip" style="color:var(--red);border-color:var(--red-md)">Overdue 30+ days</span>
+      <span class="df-chip" style="color:var(--red);border-color:var(--red-md)">Overdue 60+ days</span>
+      <span class="df-chip">Class VII</span>
+      <span class="df-chip">Class VIII</span>
+      <input type="text" placeholder="🔍 Search student…" style="padding:.3rem .75rem;border:1.5px solid var(--border);border-radius:var(--r-xl);font-size:.78rem;outline:none;margin-left:auto">
+    </div>
+
+    <!-- Dues table -->
+    <div class="due-table-wrap">
+      <table class="due-table">
+        <thead>
+          <tr>
+            <th><input type="checkbox" style="accent-color:var(--blue);cursor:pointer"></th>
+            <th>Student ↕</th>
+            <th>Class</th>
+            <th>Fee Type</th>
+            <th>Due Since</th>
+            <th>Overdue</th>
+            <th>Amount Due ↕</th>
+            <th>Fine</th>
+            <th>Total</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr>
+            <td><input type="checkbox" style="accent-color:var(--blue);cursor:pointer"></td>
+            <td>
+              <div class="da-cell">
+                <div class="da-avatar" style="background:linear-gradient(135deg,#dc2626,#f97316)">P</div>
+                <div>
+                  <div class="da-name">Priya Sharma</div>
+                  <div class="da-class">Father: Mohan · 98982 34567</div>
+                </div>
+              </div>
+            </td>
+            <td><span style="font-weight:600">VI — B</span></td>
+            <td>Tuition Fee<br><span style="font-size:.7rem;color:var(--muted)">Apr + May 2026</span></td>
+            <td><span style="color:var(--red);font-weight:600;font-size:.82rem">10 Apr 2026</span></td>
+            <td><span class="overdue-badge ob-high">73 days</span></td>
+            <td class="due-amt">₹3,200</td>
+            <td style="color:var(--amber);font-weight:700">+₹100</td>
+            <td style="font-weight:800;color:var(--red)">₹3,300</td>
+            <td>
+              <div class="action-group">
+                <button class="ag-btn collect" onclick="showSection('classFeePayment')"><i class="fas fa-rupee-sign"></i> Collect</button>
+                <button class="ag-btn sms"><i class="fas fa-sms"></i> SMS</button>
+              </div>
+            </td>
+          </tr>
+
+          <tr>
+            <td><input type="checkbox" style="accent-color:var(--blue);cursor:pointer"></td>
+            <td>
+              <div class="da-cell">
+                <div class="da-avatar" style="background:linear-gradient(135deg,#7c3aed,#ec4899)">K</div>
+                <div>
+                  <div class="da-name">Kiran Patel</div>
+                  <div class="da-class">Father: Ramesh · 98984 56789</div>
+                </div>
+              </div>
+            </td>
+            <td><span style="font-weight:600">VII — A</span></td>
+            <td>Tuition + Transport<br><span style="font-size:.7rem;color:var(--muted)">May 2026</span></td>
+            <td><span style="color:var(--amber);font-weight:600;font-size:.82rem">10 May 2026</span></td>
+            <td><span class="overdue-badge ob-med">43 days</span></td>
+            <td class="due-amt">₹2,100</td>
+            <td style="color:var(--amber);font-weight:700">+₹50</td>
+            <td style="font-weight:800;color:var(--red)">₹2,150</td>
+            <td>
+              <div class="action-group">
+                <button class="ag-btn collect" onclick="showSection('classFeePayment')"><i class="fas fa-rupee-sign"></i> Collect</button>
+                <button class="ag-btn sms"><i class="fas fa-sms"></i> SMS</button>
+              </div>
+            </td>
+          </tr>
+
+          <tr>
+            <td><input type="checkbox" style="accent-color:var(--blue);cursor:pointer"></td>
+            <td>
+              <div class="da-cell">
+                <div class="da-avatar" style="background:linear-gradient(135deg,#0891b2,#3b82f6)">S</div>
+                <div>
+                  <div class="da-name">Sneha Gupta</div>
+                  <div class="da-class">Father: Vijay · 98985 67890</div>
+                </div>
+              </div>
+            </td>
+            <td><span style="font-weight:600">VIII — B</span></td>
+            <td>Tuition Fee<br><span style="font-size:.7rem;color:var(--muted)">Jun 2026</span></td>
+            <td><span style="color:var(--blue);font-weight:600;font-size:.82rem">10 Jun 2026</span></td>
+            <td><span class="overdue-badge ob-low">12 days</span></td>
+            <td class="due-amt">₹1,600</td>
+            <td style="color:var(--faint);font-weight:600">—</td>
+            <td style="font-weight:800;color:var(--amber)">₹1,600</td>
+            <td>
+              <div class="action-group">
+                <button class="ag-btn collect" onclick="showSection('classFeePayment')"><i class="fas fa-rupee-sign"></i> Collect</button>
+                <button class="ag-btn sms"><i class="fas fa-sms"></i> SMS</button>
+              </div>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+      <div class="tbl-foot">
+        <div class="tf-info">Showing 3 of 78 defaulters &nbsp;·&nbsp; <span style="color:var(--muted)">Sorted by overdue days (highest first)</span></div>
+        <div class="tf-total">Total Pending: ₹1,24,850</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<script>
+function showSection(s){ console.log('Navigate to:', s); }
+document.querySelectorAll('.df-chip').forEach(c => {
+  c.addEventListener('click', function(){
+    document.querySelectorAll('.df-chip').forEach(x => x.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>

@@ -1,50 +1,236 @@
 <section id="financeDashboardSection" class="dashboard-section hidden">
-                <div class="header">
-                    <div>
-                        <h1><i class="fas fa-chart-line text-primary"></i> Finance Dashboard</h1>
-                        <p>Overview of school finances, recent transactions, and key metrics</p>
-                    </div>
-                </div>
-                <div class="grid-4 gap-1-5 mb-2">
-                    <div class="card p-1-5 text-center">
-                        <div class="text-muted text-sm mb-0-5">Total Income</div>
-                        <div class="text-xl font-bold text-green" id="finDashIncome">\u20B90</div>
-                    </div>
-                    <div class="card p-1-5 text-center">
-                        <div class="text-muted text-sm mb-0-5">Total Expenses</div>
-                        <div class="text-xl font-bold text-red" id="finDashExpense">\u20B90</div>
-                    </div>
-                    <div class="card p-1-5 text-center">
-                        <div class="text-muted text-sm mb-0-5">Net Balance</div>
-                        <div class="text-xl font-bold text-primary" id="finDashBalance">\u20B90</div>
-                    </div>
-                    <div class="card p-1-5 text-center">
-                        <div class="text-muted text-sm mb-0-5">This Month Vouchers</div>
-                        <div class="text-xl font-bold" id="finDashVoucherCount">0</div>
-                    </div>
-                </div>
-                <div class="grid-2 gap-1-5">
-                    <div class="card p-1-5">
-                        <h3 class="mb-1"><i class="fas fa-clock text-primary"></i> Recent Vouchers</h3>
-                        <div class="table-container" style="max-height:300px;overflow-y:auto">
-                            <table class="portal-table">
-                                <thead><tr><th>#</th><th>Type</th><th>Date</th><th>Amount</th></tr></thead>
-                                <tbody id="finDashRecentVouchers">
-                                    <tr><td colspan="4" class="text-center text-muted">Loading...</td></tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="card p-1-5">
-                        <h3 class="mb-1"><i class="fas fa-balance-scale text-primary"></i> Account Balances</h3>
-                        <div class="table-container" style="max-height:300px;overflow-y:auto">
-                            <table class="portal-table">
-                                <thead><tr><th>Account</th><th>Type</th><th class="text-right">Balance</th></tr></thead>
-                                <tbody id="finDashAccountBalances">
-                                    <tr><td colspan="3" class="text-center text-muted">Loading...</td></tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </section>
+<style>
+#financeDashboardSection {
+  --blue:#1e40af;--blue-lt:#eff6ff;--blue-md:#bfdbfe;--blue-dk:#1e3a8a;
+  --green:#059669;--green-lt:#ecfdf5;--green-md:#6ee7b7;
+  --red:#dc2626;--red-lt:#fef2f2;--red-md:#fca5a5;
+  --amber:#d97706;--amber-lt:#fffbeb;--amber-md:#fcd34d;
+  --purple:#7c3aed;--purple-lt:#f5f3ff;
+  --cyan:#0891b2;--cyan-lt:#ecfeff;
+  --ink:#0f172a;--ink-2:#1e293b;--ink-3:#334155;
+  --muted:#64748b;--faint:#94a3b8;--ghost:#cbd5e1;
+  --bg:#f1f5f9;--surface:#fff;--border:#e2e8f0;
+  --r-sm:6px;--r-md:10px;--r-lg:14px;--r-xl:20px;
+  --sh-sm:0 2px 8px rgba(0,0,0,.06);
+  --sh-md:0 4px 20px rgba(0,0,0,.09);
+}
+#financeDashboardSection *{box-sizing:border-box}
+#financeDashboardSection .fd-page{font-family:'Segoe UI',system-ui,sans-serif;color:var(--ink-2);font-size:14px;line-height:1.5}
+#financeDashboardSection .ph{display:flex;align-items:flex-start;gap:1rem;margin-bottom:1.5rem;flex-wrap:wrap}
+#financeDashboardSection .ph h1{font-size:1.35rem;font-weight:800;color:var(--ink);margin:0}
+#financeDashboardSection .ph p{font-size:.82rem;color:var(--muted);margin-top:2px}
+#financeDashboardSection .ph-actions{margin-left:auto;display:flex;gap:.6rem;flex-wrap:wrap}
+#financeDashboardSection .btn{display:inline-flex;align-items:center;gap:.4rem;padding:.6rem 1.1rem;border-radius:var(--r-md);font-size:.82rem;font-weight:700;cursor:pointer;border:none;transition:all .15s;white-space:nowrap}
+#financeDashboardSection .btn-primary{background:var(--blue);color:white}
+#financeDashboardSection .btn-primary:hover{background:var(--blue-dk);box-shadow:0 4px 12px rgba(30,64,175,.3)}
+#financeDashboardSection .btn-outline{background:white;color:var(--ink-3);border:1.5px solid var(--border)}
+#financeDashboardSection .btn-outline:hover{border-color:var(--blue-md);color:var(--blue)}
+#financeDashboardSection .month-picker{display:flex;align-items:center;gap:.5rem;background:white;border-radius:var(--r-xl);padding:.4rem .875rem;box-shadow:var(--sh-sm);border:1.5px solid var(--border)}
+#financeDashboardSection .mp-btn{width:28px;height:28px;border:none;background:var(--bg);border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--muted)}
+#financeDashboardSection .mp-btn:hover{background:var(--blue-lt);color:var(--blue)}
+#financeDashboardSection .mp-label{font-size:.85rem;font-weight:700;color:var(--ink-2);min-width:120px;text-align:center}
+#financeDashboardSection .kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem}
+#financeDashboardSection .kpi-card{background:white;border-radius:var(--r-lg);padding:1.25rem;box-shadow:var(--sh-sm);overflow:hidden;border-left:4px solid transparent}
+#financeDashboardSection .kpi-card.kc-collected{border-left-color:var(--green)}
+#financeDashboardSection .kpi-card.kc-pending{border-left-color:var(--red)}
+#financeDashboardSection .kpi-card.kc-total{border-left-color:var(--blue)}
+#financeDashboardSection .kpi-card.kc-defaulters{border-left-color:var(--amber)}
+#financeDashboardSection .kpi-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:.75rem}
+#financeDashboardSection .kpi-icon{width:40px;height:40px;border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
+#financeDashboardSection .kpi-trend{font-size:.72rem;font-weight:700;display:flex;align-items:center;gap:3px;padding:3px 8px;border-radius:20px}
+#financeDashboardSection .kpi-trend.up{background:var(--green-lt);color:var(--green)}
+#financeDashboardSection .kpi-trend.down{background:var(--red-lt);color:var(--red)}
+#financeDashboardSection .kpi-val{font-size:1.75rem;font-weight:800;line-height:1;color:var(--ink)}
+#financeDashboardSection .kpi-lbl{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--faint);margin-top:.25rem}
+#financeDashboardSection .kpi-sub{font-size:.75rem;color:var(--muted);margin-top:.4rem}
+#financeDashboardSection .kpi-progress{height:4px;background:var(--bg);border-radius:20px;margin-top:.875rem;overflow:hidden}
+#financeDashboardSection .kpi-progress-bar{height:100%;border-radius:20px}
+#financeDashboardSection .card{background:white;border-radius:var(--r-lg);box-shadow:var(--sh-sm);overflow:hidden}
+#financeDashboardSection .card-head{padding:1rem 1.25rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:.75rem}
+#financeDashboardSection .card-head h2{font-size:.92rem;font-weight:700;color:var(--ink);margin:0}
+#financeDashboardSection .card-head p{font-size:.75rem;color:var(--muted);margin:0}
+#financeDashboardSection .card-head .ch-icon{width:34px;height:34px;border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0}
+#financeDashboardSection .card-body{padding:1.25rem}
+#financeDashboardSection .charts-row{display:grid;grid-template-columns:2fr 1fr;gap:1rem;margin-bottom:1.5rem}
+#financeDashboardSection .bar-chart{display:flex;align-items:flex-end;gap:.5rem;height:140px;padding-bottom:.25rem}
+#financeDashboardSection .bc-group{flex:1;display:flex;flex-direction:column;align-items:center;gap:.3rem}
+#financeDashboardSection .bc-bars{display:flex;gap:2px;align-items:flex-end;width:100%}
+#financeDashboardSection .bc-bar{flex:1;border-radius:4px 4px 0 0;min-height:4px}
+#financeDashboardSection .bc-bar.collected{background:var(--green)}
+#financeDashboardSection .bc-bar.pending{background:var(--red-md)}
+#financeDashboardSection .bc-lbl{font-size:.62rem;color:var(--faint);font-weight:600;white-space:nowrap}
+#financeDashboardSection .bc-legend{display:flex;gap:1.25rem;margin-top:.875rem;justify-content:center}
+#financeDashboardSection .bc-legend span{font-size:.72rem;color:var(--muted);display:flex;align-items:center;gap:.3rem}
+#financeDashboardSection .pie-items{display:flex;flex-direction:column;gap:.5rem;margin-top:1rem}
+#financeDashboardSection .pie-item{display:flex;align-items:center;gap:.65rem}
+#financeDashboardSection .pie-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+#financeDashboardSection .pie-label{font-size:.8rem;color:var(--ink-3);flex:1}
+#financeDashboardSection .pie-bar-bg{flex:2;height:6px;background:var(--bg);border-radius:20px;overflow:hidden}
+#financeDashboardSection .pie-bar-fill{height:100%;border-radius:20px}
+#financeDashboardSection .pie-pct{font-size:.75rem;font-weight:700;color:var(--ink-2);min-width:32px;text-align:right}
+#financeDashboardSection .reminder-strip{display:flex;align-items:center;gap:1rem;background:var(--amber-lt);border:1.5px solid var(--amber-md);border-radius:var(--r-lg);padding:1rem 1.25rem;margin-bottom:1.5rem;flex-wrap:wrap}
+#financeDashboardSection .rs-icon{width:38px;height:38px;border-radius:50%;background:var(--amber);color:white;display:flex;align-items:center;justify-content:center;font-size:.95rem;flex-shrink:0}
+#financeDashboardSection .rs-text h3{font-size:.88rem;font-weight:700;color:var(--amber);margin:0}
+#financeDashboardSection .rs-text p{font-size:.78rem;color:var(--muted);margin:4px 0 0}
+#financeDashboardSection .rs-actions{margin-left:auto;display:flex;gap:.5rem;flex-wrap:wrap}
+#financeDashboardSection .due-section{margin-bottom:1.5rem}
+#financeDashboardSection .section-hd{display:flex;align-items:center;gap:.75rem;margin-bottom:.875rem;flex-wrap:wrap}
+#financeDashboardSection .section-hd h2{font-size:1rem;font-weight:800;color:var(--ink);margin:0}
+#financeDashboardSection .count-badge{background:var(--red-lt);color:var(--red);font-size:.72rem;font-weight:800;padding:2px 9px;border-radius:20px}
+#financeDashboardSection .due-filters{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.875rem;align-items:center}
+#financeDashboardSection .df-chip{padding:.3rem .75rem;border-radius:20px;font-size:.72rem;font-weight:700;cursor:pointer;border:1.5px solid var(--border);background:white;color:var(--muted)}
+#financeDashboardSection .df-chip.active{background:var(--red);color:white;border-color:var(--red)}
+#financeDashboardSection .df-chip:hover:not(.active){border-color:var(--blue-md);color:var(--blue)}
+#financeDashboardSection .df-search{padding:.3rem .75rem;border:1.5px solid var(--border);border-radius:var(--r-xl);font-size:.78rem;outline:none;margin-left:auto;min-width:180px}
+#financeDashboardSection .df-search:focus{border-color:var(--blue-md)}
+#financeDashboardSection .due-table-wrap{background:white;border-radius:var(--r-lg);box-shadow:var(--sh-sm);overflow:auto}
+#financeDashboardSection .due-table{width:100%;border-collapse:collapse;min-width:800px}
+#financeDashboardSection .due-table thead tr{border-bottom:2px solid var(--border)}
+#financeDashboardSection .due-table th{padding:.65rem .875rem;text-align:left;font-size:.67rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--faint);background:var(--bg);white-space:nowrap}
+#financeDashboardSection .due-table td{padding:.8rem .875rem;border-bottom:1px solid #f8fafc;vertical-align:middle}
+#financeDashboardSection .due-table tr:last-child td{border-bottom:none}
+#financeDashboardSection .due-table tr:hover td{background:#fefcf7}
+#financeDashboardSection .da-cell{display:flex;align-items:center;gap:.65rem}
+#financeDashboardSection .da-avatar{width:34px;height:34px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.78rem;color:white}
+#financeDashboardSection .da-name{font-weight:700;font-size:.85rem;color:var(--ink)}
+#financeDashboardSection .da-class{font-size:.72rem;color:var(--muted)}
+#financeDashboardSection .overdue-badge{display:inline-block;padding:2px 8px;border-radius:20px;font-size:.68rem;font-weight:700}
+#financeDashboardSection .ob-high{background:var(--red-lt);color:var(--red)}
+#financeDashboardSection .ob-med{background:var(--amber-lt);color:var(--amber)}
+#financeDashboardSection .ob-low{background:var(--blue-lt);color:var(--blue)}
+#financeDashboardSection .due-amt{font-size:.92rem;font-weight:800;color:var(--red)}
+#financeDashboardSection .action-group{display:flex;gap:.4rem;flex-wrap:wrap}
+#financeDashboardSection .ag-btn{padding:.35rem .65rem;border-radius:var(--r-sm);font-size:.72rem;font-weight:700;cursor:pointer;border:1.5px solid;white-space:nowrap}
+#financeDashboardSection .ag-btn.sms{border-color:var(--green-md);color:var(--green);background:var(--green-lt)}
+#financeDashboardSection .ag-btn.collect{border-color:var(--blue-md);color:var(--blue);background:var(--blue-lt)}
+#financeDashboardSection .tbl-foot{display:flex;align-items:center;justify-content:space-between;padding:.875rem 1.25rem;border-top:1px solid var(--border);flex-wrap:wrap;gap:.5rem}
+#financeDashboardSection .tbl-foot .tf-info{font-size:.78rem;color:var(--muted)}
+#financeDashboardSection .tbl-foot .tf-total{font-size:.88rem;font-weight:700;color:var(--red)}
+#financeDashboardSection .empty-state{padding:2.5rem 1.5rem;text-align:center;color:var(--faint)}
+#financeDashboardSection .empty-state i{font-size:2rem;display:block;margin-bottom:.75rem;opacity:.5}
+#financeDashboardSection .pill{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:20px;font-size:.68rem;font-weight:700;white-space:nowrap}
+#financeDashboardSection .pill.paid{background:var(--green-lt);color:var(--green)}
+#financeDashboardSection .pill.due{background:var(--red-lt);color:var(--red)}
+#financeDashboardSection .pill.partial{background:var(--amber-lt);color:var(--amber)}
+#financeDashboardSection .fd-loader{text-align:center;padding:3rem;color:var(--faint)}
+#financeDashboardSection .fd-loader i{font-size:1.5rem;display:block;margin-bottom:.5rem}
+@media(max-width:900px){
+  #financeDashboardSection .kpi-grid{grid-template-columns:repeat(2,1fr)}
+  #financeDashboardSection .charts-row{grid-template-columns:1fr}
+}
+@media(max-width:560px){
+  #financeDashboardSection .kpi-grid{grid-template-columns:1fr 1fr}
+}
+</style>
+
+<div class="fd-page">
+
+  <!-- HEADER -->
+  <div class="ph">
+    <div>
+      <h1><i class="fas fa-rupee-sign" style="color:var(--green);margin-right:.4rem"></i>Finance Dashboard</h1>
+      <p>Fee collection, dues tracking, and financial analytics</p>
+    </div>
+    <div class="ph-actions">
+      <div class="month-picker">
+        <button class="mp-btn" onclick="fdPrevMonth()"><i class="fas fa-chevron-left"></i></button>
+        <span class="mp-label" id="fdMonthLabel">Loading...</span>
+        <button class="mp-btn" onclick="fdNextMonth()"><i class="fas fa-chevron-right"></i></button>
+      </div>
+      <button class="btn btn-primary" onclick="showSection('classFeePayment')"><i class="fas fa-plus"></i> Collect Fee</button>
+    </div>
+  </div>
+
+  <!-- KPI CARDS -->
+  <div class="kpi-grid" id="fdKpiGrid">
+    <div class="fd-loader" style="grid-column:1/-1"><i class="fas fa-spinner fa-spin"></i>Loading finance data...</div>
+  </div>
+
+  <!-- CHARTS ROW -->
+  <div class="charts-row">
+
+    <!-- Monthly collection bar chart -->
+    <div class="card">
+      <div class="card-head">
+        <div class="ch-icon" style="background:var(--green-lt);color:var(--green)"><i class="fas fa-chart-bar"></i></div>
+        <div><h2>Monthly Collection vs Demand</h2><p>Last 6 months</p></div>
+      </div>
+      <div class="card-body" id="fdBarChartBody">
+        <div class="fd-loader"><i class="fas fa-spinner fa-spin"></i></div>
+      </div>
+    </div>
+
+    <!-- Fee type breakdown -->
+    <div class="card">
+      <div class="card-head">
+        <div class="ch-icon" style="background:var(--purple-lt);color:var(--purple)"><i class="fas fa-pie-chart"></i></div>
+        <div><h2>Fee Breakdown</h2><p>By type, this month</p></div>
+      </div>
+      <div class="card-body" id="fdFeeBreakdownBody">
+        <div class="fd-loader"><i class="fas fa-spinner fa-spin"></i></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- REMINDER STRIP -->
+  <div class="reminder-strip" id="fdReminderStrip" style="display:none">
+    <div class="rs-icon"><i class="fas fa-bell"></i></div>
+    <div class="rs-text">
+      <h3 id="fdReminderTitle">Loading...</h3>
+      <p id="fdReminderSub">Loading...</p>
+    </div>
+    <div class="rs-actions">
+      <button class="btn btn-primary" style="background:var(--amber);font-size:.78rem;padding:.5rem 1rem"><i class="fas fa-sms"></i> Send SMS to All</button>
+      <button class="btn btn-outline" style="font-size:.78rem;padding:.5rem 1rem" onclick="document.getElementById('fdReminderStrip').style.display='none'">Dismiss</button>
+    </div>
+  </div>
+
+  <!-- FEE DUES TABLE -->
+  <div class="due-section">
+    <div class="section-hd">
+      <h2><i class="fas fa-exclamation-triangle" style="color:var(--amber);margin-right:.4rem"></i>Fee Defaulters</h2>
+      <span class="count-badge" id="fdDefaulterCount">0</span>
+      <div style="margin-left:auto;display:flex;gap:.5rem">
+        <button class="btn btn-outline" style="padding:.45rem .875rem;font-size:.75rem" onclick="fdExportDues()"><i class="fas fa-download"></i> Export</button>
+      </div>
+    </div>
+
+    <div class="due-filters">
+      <span class="df-chip active" data-filter="all">All Dues</span>
+      <span class="df-chip" data-filter="current">This Month</span>
+      <span class="df-chip" data-filter="overdue30" style="color:var(--red);border-color:var(--red-md)">Overdue 30+</span>
+      <span class="df-chip" data-filter="overdue60" style="color:var(--red);border-color:var(--red-md)">Overdue 60+</span>
+      <span class="df-chip" data-filter="overdue90" style="color:var(--red);border-color:var(--red-md)">Overdue 90+</span>
+      <input type="text" class="df-search" id="fdSearchInput" placeholder="🔍 Search student…">
+    </div>
+
+    <div class="due-table-wrap">
+      <table class="due-table">
+        <thead>
+          <tr>
+            <th style="width:30px"><input type="checkbox" id="fdSelectAll" style="accent-color:var(--blue);cursor:pointer"></th>
+            <th>Student</th>
+            <th>Class</th>
+            <th>Fee Type</th>
+            <th>Due Since</th>
+            <th>Overdue</th>
+            <th>Amount Due</th>
+            <th>Fine</th>
+            <th>Total</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="fdDuesBody">
+          <tr><td colspan="10" class="empty-state"><i class="fas fa-inbox"></i>Loading defaulters...</td></tr>
+        </tbody>
+      </table>
+      <div class="tbl-foot">
+        <div class="tf-info" id="fdTableInfo">Loading...</div>
+        <div class="tf-total" id="fdTableTotal">—</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</section>

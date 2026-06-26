@@ -1,870 +1,465 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title id="studentPortalTitle">Student Dashboard</title>
-        <link rel="manifest" href="/manifest.json" />
-        <link rel="stylesheet" href="/css/portal.css" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link
-            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-            rel="stylesheet"
-        />
-    </head>
-    <body class="dashboard-page">
-        <!-- Loading Overlay -->
-        <div id="loadingOverlay" class="overlay-full">
-            <div class="spinner-large"></div>
-            <p class="mt-1 font-bold text-muted" id="loadingPortalText">Loading Portal...</p>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title id="studentPortalTitle">Student Portal</title>
+<link rel="manifest" href="/manifest.json" />
+<link rel="stylesheet" href="/css/snr-design-system.css" />
+<link rel="stylesheet" href="/css/portal.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+:root{--sidebar-w:240px}
+.portal{display:flex;min-height:100vh}
+.sidebar-portal{width:var(--sidebar-w);flex-shrink:0;background:var(--ink);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:100;transition:transform .25s cubic-bezier(.4,0,.2,1)}
+.sb-header{padding:1.25rem 1rem 1rem;border-bottom:1px solid rgba(255,255,255,.07)}
+.sb-avatar{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#3b82f6,#7c3aed);display:flex;align-items:center;justify-content:center;font-size:1.2rem;font-weight:800;color:white;margin-bottom:.75rem;box-shadow:0 4px 12px rgba(59,130,246,.4)}
+.sb-name{font-size:.92rem;font-weight:700;color:white;line-height:1.2}
+.sb-class{font-size:.72rem;color:#94a3b8;margin-top:3px}
+.sb-pills{display:flex;gap:.3rem;margin-top:.5rem;flex-wrap:wrap}
+.sb-pill{font-size:.62rem;font-weight:700;padding:2px 7px;border-radius:20px;background:rgba(255,255,255,.08);color:#cbd5e1}
+.sb-nav{flex:1;overflow-y:auto;padding:.5rem 0;scrollbar-width:thin}
+.sb-section-label{padding:.75rem 1.25rem .25rem;font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#475569}
+.sb-item{display:flex;align-items:center;gap:.65rem;padding:.65rem 1rem;margin:.1rem .5rem;border-radius:var(--r-md);cursor:pointer;color:#94a3b8;font-size:.83rem;font-weight:500;transition:all .15s}
+.sb-item:hover{background:rgba(255,255,255,.06);color:#e2e8f0}
+.sb-item.active{background:rgba(96,165,250,.15);color:#93c5fd}
+.sb-item.active::before{content:'';position:absolute;left:0;top:20%;bottom:20%;width:3px;border-radius:0 3px 3px 0;background:#60a5fa}
+.sb-item i{width:18px;text-align:center;font-size:.85rem;flex-shrink:0}
+.sb-item .sb-badge{margin-left:auto;background:rgba(239,68,68,.25);color:#fca5a5;border-radius:20px;font-size:.62rem;font-weight:800;padding:1px 7px;min-width:20px;text-align:center}
+.sb-item .sb-badge.green{background:rgba(16,185,129,.2);color:#6ee7b7}
+.sb-footer{padding:1rem;border-top:1px solid rgba(255,255,255,.07)}
+.logout-btn-s{display:flex;align-items:center;gap:.6rem;padding:.6rem .875rem;border-radius:var(--r-md);color:#94a3b8;font-size:.82rem;font-weight:600;cursor:pointer;transition:all .15s;width:100%}
+.logout-btn-s:hover{background:rgba(239,68,68,.1);color:#fca5a5}
+.main-portal{margin-left:var(--sidebar-w);flex:1;display:flex;flex-direction:column;min-height:100vh}
+.topbar{background:white;border-bottom:1px solid var(--border);padding:.75rem 1.5rem;display:flex;align-items:center;gap:1rem;position:sticky;top:0;z-index:50;flex-shrink:0}
+.topbar-title{font-size:1rem;font-weight:800;color:var(--ink)}
+.topbar-breadcrumb{display:flex;align-items:center;gap:.35rem;font-size:.75rem;color:var(--faint)}
+.topbar-breadcrumb .sep{color:var(--ghost)}
+.topbar-breadcrumb .current{color:var(--blue);font-weight:700}
+.topbar-right{margin-left:auto;display:flex;align-items:center;gap:.75rem}
+.tb-icon-btn{width:36px;height:36px;border-radius:50%;border:1.5px solid var(--border);background:white;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:.88rem;transition:all .15s;position:relative}
+.tb-icon-btn:hover{border-color:var(--blue-md);color:var(--blue)}
+.hamburger{display:none;width:36px;height:36px;border:none;background:none;cursor:pointer;color:var(--ink-3);font-size:1.1rem}
+.content-portal{flex:1;padding:1.5rem;overflow-y:auto}
+.portal-section{display:none}
+.portal-section.active{display:block}
+.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(15,23,42,.5);z-index:99}
+.hero-card{background:linear-gradient(135deg,var(--blue-dk),#1e40af,#3b82f6);border-radius:var(--r-2xl);padding:1.5rem;color:white;margin-bottom:1.25rem;position:relative;overflow:hidden}
+.hero-card::after{content:'';position:absolute;right:-30px;bottom:-30px;width:160px;height:160px;border-radius:50%;background:rgba(255,255,255,.06)}
+.hc-top{display:flex;align-items:center;gap:1rem;margin-bottom:1.25rem}
+.hc-avatar{width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,.15);border:2px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;font-size:1.3rem;font-weight:800;color:white;flex-shrink:0}
+.hc-name{font-size:1.1rem;font-weight:800;line-height:1.2}
+.hc-class{font-size:.8rem;opacity:.75;margin-top:3px}
+.hc-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;background:rgba(255,255,255,.1);border-radius:var(--r-lg);padding:1rem}
+.hc-stat .val{font-size:1.3rem;font-weight:800;line-height:1}
+.hc-stat .lbl{font-size:.67rem;opacity:.65;margin-top:.2rem;font-weight:600;text-transform:uppercase;letter-spacing:.05em}
+.card{background:white;border-radius:var(--r-lg);box-shadow:var(--sh-sm);overflow:hidden;margin-bottom:1.25rem}
+.card-head{padding:1rem 1.25rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:.75rem}
+.card-head .ch-icon{width:34px;height:34px;border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0}
+.card-head h2{font-size:.92rem;font-weight:700;color:var(--ink);margin:0}
+.card-head p{font-size:.75rem;color:var(--muted);margin:0}
+.card-body{padding:1.25rem}
+.pill{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:20px;font-size:.68rem;font-weight:700;white-space:nowrap}
+.pill{background:var(--green-lt);color:var(--green)}
+.pill.due{background:var(--red-lt);color:var(--red)}
+.pill.partial{background:var(--amber-lt);color:var(--amber)}
+.pill.info{background:var(--blue-lt);color:var(--blue)}
+.bottom-nav-sp{display:none;position:fixed;bottom:0;left:0;right:0;background:white;border-top:1px solid var(--border);padding:.4rem 0 env(safe-area-inset-bottom,.4rem);z-index:200;box-shadow:0 -4px 20px rgba(0,0,0,.08)}
+.bn-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:.3rem 0;font-size:.58rem;font-weight:700;color:var(--faint);cursor:pointer;transition:color .15s;text-transform:uppercase;letter-spacing:.03em}
+.bn-item.active{color:var(--blue)}
+.bn-item i{font-size:1.1rem}
+.qa-row{display:flex;gap:.75rem;margin-bottom:1.25rem;overflow-x:auto;padding-bottom:.25rem;scrollbar-width:none}
+.qa-row::-webkit-scrollbar{display:none}
+.qa-chip{display:flex;align-items:center;gap:.5rem;padding:.6rem 1rem;background:white;border-radius:var(--r-xl);box-shadow:var(--sh-sm);cursor:pointer;white-space:nowrap;font-size:.78rem;font-weight:700;color:var(--ink-3);border:1.5px solid transparent;transition:all .15s;flex-shrink:0}
+.qa-chip:hover{border-color:var(--blue-md);color:var(--blue)}
+@media(max-width:768px){
+  .sidebar-portal{transform:translateX(-100%)}
+  .sidebar-portal.mobile-open{transform:translateX(0)}
+  .main-portal{margin-left:0}
+  .hamburger{display:flex}
+  .bottom-nav-sp{display:flex}
+  .content-portal{padding:1rem;padding-bottom:90px}
+  .hc-stats{grid-template-columns:repeat(2,1fr)}
+  .sidebar-overlay.open{display:block}
+  .sidebar-overlay.active{display:block}
+}
+</style>
+</head>
+<body>
+<div id="loadingOverlay" class="overlay-full">
+  <div class="spinner-large"></div>
+  <p class="mt-1 font-bold text-muted" id="loadingPortalText">Loading Portal...</p>
+</div>
+
+<div class="portal">
+  <!-- SIDEBAR -->
+  <aside class="sidebar-portal" id="sidebar">
+    <div class="sb-header">
+      <div class="sb-avatar" id="sidebarAvatarIcon">A</div>
+      <div class="sb-name" id="sidebarStudentName">Loading...</div>
+      <div class="sb-class" id="sidebarStudentClass">—</div>
+      <div class="sb-pills" id="sbPills">
+        <span class="sb-pill">Reg: —</span>
+        <span class="sb-pill" id="sbSessionPill">—</span>
+      </div>
+      <div id="sidebarParentIcon" style="display:none;width:32px;height:32px;border-radius:50%;background:var(--secondary);color:white;display:none;align-items:center;justify-content:center;font-size:.8rem;flex-shrink:0"><i class="fas fa-user-friends"></i></div>
+      <div id="sidebarParentIcon" style="display:none;width:32px;height:32px;border-radius:50%;background:var(--secondary);color:white;align-items:center;justify-content:center;font-size:.8rem;flex-shrink:0"><i class="fas fa-user-friends"></i></div>
+      <div id="sidebarParentLabel" style="display:none;font-size:.72rem;color:var(--secondary);font-weight:700;margin-top:2px"></div>
+      <div id="sidebarStudentSubLabel" style="display:none;font-size:.68rem;color:var(--text-muted)"></div>
+      <select id="parentChildSwitcher" style="display:none;width:100%;margin-top:.4rem;padding:.3rem .5rem;border-radius:var(--r-sm);font-size:.75rem;border:1px solid var(--border);background:var(--bg-card)"></select>
+    </div>
+    <nav class="sb-nav">
+      <div style="display:none" id="sidebarBrandName"></div>
+      <div style="display:none" id="sidebarLogoImg"></div>
+      <div style="display:none" id="mobileBrandName"></div>
+      <div style="display:none" id="noticeTagText"></div>
+      <div style="display:none" id="portalFooterText"></div>
+      <div style="display:none"><select id="academicYear"></select></div>
+      <div class="sb-section-label">Main</div>
+      <div class="sb-item nav-link active" onclick="showPortalSection('dashboard')"><i class="fas fa-home"></i> <span>Dashboard</span></div>
+      <div class="sb-item nav-link" onclick="showPortalSection('profile')"><i class="fas fa-user-circle"></i> <span>My Profile</span></div>
+      <div class="sb-section-label">Academics</div>
+      <div class="sb-item nav-link" onclick="showPortalSection('attendance')"><i class="fas fa-calendar-check"></i> <span>Attendance</span></div>
+      <div class="sb-item nav-link" onclick="showPortalSection('exams')"><i class="fas fa-file-alt"></i> <span>Exams</span></div>
+      <div class="sb-item nav-link" onclick="showPortalSection('results')"><i class="fas fa-chart-bar"></i> <span>Results</span></div>
+      <div class="sb-item nav-link" onclick="showPortalSection('homework')"><i class="fas fa-book-open"></i> <span>Homework</span></div>
+      <div class="sb-section-label">Finance</div>
+      <div class="sb-item nav-link" onclick="showPortalSection('fees')"><i class="fas fa-rupee-sign"></i> <span>Fee & Payments</span></div>
+      <div class="sb-section-label">Services</div>
+      <div class="sb-item nav-link" onclick="showPortalSection('library')"><i class="fas fa-book"></i> <span>Library</span></div>
+      <div class="sb-item nav-link" onclick="showPortalSection('transport')"><i class="fas fa-bus"></i> <span>Transport</span></div>
+      <div class="sb-item nav-link" onclick="showPortalSection('certificates')"><i class="fas fa-certificate"></i> <span>Certificates</span></div>
+    </nav>
+    <div class="sb-footer">
+      <div class="logout-btn-s" id="changePwdBtn" onclick="openChangePwdModal()" style="display:none"><i class="fas fa-key"></i> Change Password</div>
+      <div class="logout-btn-s" onclick="logoutStudent()"><i class="fas fa-sign-out-alt"></i> Logout</div>
+    </div>
+  </aside>
+
+  <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+  <!-- MAIN -->
+  <main class="main-portal">
+    <div class="topbar">
+      <button class="hamburger" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+      <div>
+        <div class="topbar-breadcrumb">
+          <span>Portal</span><span class="sep">/</span>
+          <span class="current" id="breadcrumbCurrent">Dashboard</span>
         </div>
+      </div>
+      <div class="topbar-right">
+        <button class="tb-icon-btn" onclick="showPortalSection('dashboard')" title="Refresh"><i class="fas fa-sync-alt"></i></button>
+      </div>
+    </div>
 
-        <!-- Main Dashboard Layout -->
-        <div class="dashboard-layout">
-            <!-- Sidebar -->
-            <aside class="sidebar" id="sidebar">
-                <div class="sidebar-logo">
-                    <div class="flex-center bg-primary white w-10 h-10 border-radius-0-75 shadow-sm">
-                        <i class="fas fa-graduation-cap"></i>
-                    </div>
-                    <h2 class="text-lg secondary fw-800 m-0" id="sidebarBrandName">Apex Portal</h2>
-                </div>
+    <div class="content-portal">
 
-                <!-- Student Mini Profile in Sidebar -->
-                <div class="sidebar-profile">
-                    <div id="sidebarStudentPhoto" class="sidebar-avatar">
-                        <i class="fas fa-user-graduate" id="sidebarAvatarIcon"></i>
-                        <i class="fas fa-users" id="sidebarParentIcon" style="display:none;"></i>
-                    </div>
-                    <div style="flex:1;min-width:0;">
-                        <h4 id="sidebarStudentName">Loading...</h4>
-                        <p id="sidebarParentLabel" class="text-xs text-muted" style="display:none;">Parent</p>
-                        <p id="sidebarStudentClass" class="text-xs uppercase letter-spacing-1">Class - Sec</p>
-                        <p id="sidebarStudentSubLabel" class="text-xs text-muted" style="display:none;"></p>
-                        <select id="parentChildSwitcher" class="input mt-1" style="display:none;"></select>
-                    </div>
-                </div>
-
-                <nav class="nav-menu">
-                    <div class="sidebar-group-label">General</div>
-                    <a href="#dashboard" class="nav-link active" onclick="showPortalSection('dashboard')">
-                        <i class="fas fa-th-large"></i> <span>Dashboard</span>
-                    </a>
-                    <a href="#homework" class="nav-link" onclick="showPortalSection('homework')">
-                        <i class="fas fa-book-reader"></i> <span>Assignments</span>
-                    </a>
-                    <a href="#attendance" class="nav-link" onclick="showPortalSection('attendance')">
-                        <i class="fas fa-calendar-check"></i> <span>Attendance</span>
-                    </a>
-                    <a href="#profile" class="nav-link" onclick="showPortalSection('profile')">
-                        <i class="fas fa-user-circle"></i> <span>My Profile</span>
-                    </a>
-
-                    <div class="sidebar-group-label">Academic</div>
-                    <a href="#fees" class="nav-link" onclick="showPortalSection('fees')">
-                        <i class="fas fa-wallet"></i> <span>Fees & Receipts</span>
-                    </a>
-                    <a href="#exams" class="nav-link" onclick="showPortalSection('exams')">
-                        <i class="fas fa-file-alt"></i> <span>Exams & Results</span>
-                    </a>
-                    <a href="#results" class="nav-link" onclick="showPortalSection('results')">
-                        <i class="fas fa-certificate"></i> <span>My Report Card</span>
-                    </a>
-                    <a href="#materials" class="nav-link" onclick="showPortalSection('materials')">
-                        <i class="fas fa-folder-open"></i> <span>Resources</span>
-                    </a>
-                    <a href="#transport" class="nav-link" onclick="showPortalSection('transport')">
-                        <i class="fas fa-bus"></i> <span>Transport</span>
-                    </a>
-                    <a href="#library" class="nav-link" onclick="showPortalSection('library')">
-                        <i class="fas fa-book"></i> <span>My Library</span>
-                    </a>
-                    <a href="#certificates" class="nav-link" onclick="showPortalSection('certificates')">
-                        <i class="fas fa-stamp"></i> <span>Certificates</span>
-                    </a>
-                </nav>
-
-                <div class="mt-auto pt-8">
-                    <button class="dark-mode-toggle" onclick="toggleDarkMode()" title="Toggle Dark Mode">
-                        <i class="fas fa-moon" id="darkModeIcon"></i>
-                        <span id="darkModeLabel">Dark Mode</span>
-                        <div class="toggle-track">
-                            <div class="toggle-thumb"></div>
-                        </div>
-                    </button>
-                    <button id="changePwdBtn" style="display:none;"
-                        onclick="openChangePwdModal()"
-                        class="nav-link w-full bg-transparent border-none cursor-pointer text-blue-300 mt-1"
-                    >
-                        <i class="fas fa-key"></i> <span>Change Password</span>
-                    </button>
-                    <button
-                        onclick="logoutStudent()"
-                        class="nav-link w-full bg-transparent border-none cursor-pointer text-red-300 mt-1"
-                    >
-                        <i class="fas fa-sign-out-alt"></i> <span>Logout Portal</span>
-                    </button>
-                </div>
-            </aside>
-
-            <!-- Main Content -->
-            <main class="main-content">
-                <!-- Top Desktop Header -->
-                <header class="top-bar no-mobile">
-                    <div class="search-box">
-                        <i class="fas fa-search"></i>
-                        <input
-                            type="text"
-                            placeholder="Search services..."
-                            readonly
-                            onclick="showPortalSection('dashboard')"
-                        />
-                    </div>
-                    <div class="flex align-center gap-md">
-                        <div class="year-pill">
-                            <i class="far fa-calendar-alt text-muted"></i>
-                            <select id="academicYear" title="Select Academic Year">
-                                <option value="2026">Session 2025-26</option>
-                                <option value="2027">Session 2026-27</option>
-                            </select>
-                        </div>
-                        <div class="divider-v"></div>
-                        <div class="notify-dot">
-                            <i class="far fa-bell text-lg cursor-pointer"></i>
-                        </div>
-                    </div>
-                </header>
-
-                <!-- Mobile Header -->
-                <div class="mobile-header">
-                    <div class="d-flex align-items-center gap-sm">
-                        <i class="fas fa-bars-staggered cursor-pointer text-xl primary" onclick="toggleSidebar()"></i>
-                        <h2 class="text-md secondary fw-800 m-0" id="mobileBrandName">Apex Portal</h2>
-                    </div>
-                    <div
-                        id="mobileStudentPhoto"
-                        class="w-10 h-10 bg-white border-radius-50 shadow-sm overflow-hidden flex-center border"
-                    >
-                        <i class="fas fa-user-graduate primary"></i>
-                    </div>
-                </div>
-
-                <!-- DASHBOARD HOME SECTION -->
-                <section id="dashboardSection" class="portal-section">
-                    <!-- EXAM ANNOUNCEMENT BANNER -->
-                    <div id="examAnnouncementBanner" class="mb-1-5 hidden">
-                        <div class="announcement-banner">
-                            <div class="flex align-center gap-1 flex-1">
-                                <div class="announcement-icon-box">📢</div>
-                                <div>
-                                    <h2 id="examAnnouncementTitle" class="text-sm font-800 white line-height-1-2"></h2>
-                                    <p
-                                        id="examAnnouncementNotice"
-                                        class="text-xs white-opacity-90 mt-0-25 line-height-1-4"
-                                    ></p>
-                                </div>
-                            </div>
-                            <div class="notice-tag" id="noticeTagText">Apex Notice</div>
-                        </div>
-                    </div>
-
-                    <!-- Profile Overview Banner -->
-                    <div class="card profile-banner gradient-subtle">
-                        <div class="flex align-center gap-2">
-                            <div id="studentPhotoCard" class="banner-photo">
-                                <i class="fas fa-user-graduate"></i>
-                            </div>
-                            <div class="flex-1">
-                                <p class="text-xs primary font-bold uppercase mb-0-25">Student Profile</p>
-                                <h1 id="disp_student_name" class="text-2xl mb-0-25 secondary">Loading Profile...</h1>
-                                <div class="flex gap-1-5 text-muted text-sm">
-                                    <span
-                                        ><i class="fas fa-id-badge primary"></i> ID:
-                                        <b id="disp_student_id">...</b></span
-                                    >
-                                    <span
-                                        ><i class="fas fa-graduation-cap primary"></i> Class:
-                                        <b id="disp_class">...</b></span
-                                    >
-                                    <span
-                                        ><i class="fas fa-door-open primary"></i> Section:
-                                        <b id="disp_section">...</b></span
-                                    >
-                                </div>
-                            </div>
-                            <div class="no-mobile">
-                                <button onclick="showPortalSection('profile')" class="btn-portal btn-white shadow-sm">
-                                    Edit Profile
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Dashboard Content Grid -->
-                    <div class="grid-2fr-1fr gap-md mt-4">
-                        <!-- Left Column: Primary Info -->
-                        <div class="flex-col gap-1-5">
-                            <!-- Fee Status Widget (Premium Version) -->
-                            <div class="card gradient-primary p-2 border-none">
-                                <div class="flex-between mb-1-5 pt-0-5">
-                                    <div>
-                                        <p
-                                            class="text-xs opacity-80 uppercase letter-spacing-1 font-bold white-important"
-                                        >
-                                            Outstanding Balance
-                                        </p>
-                                        <h2 id="homeFeeBalance" class="text-3xl font-extrabold mt-1 white-important">
-                                            ₹--
-                                        </h2>
-                                    </div>
-                                    <div class="bg-white p-1-25 rounded-xl shadow-lg border-none">
-                                        <i class="fas fa-wallet text-2xl primary"></i>
-                                    </div>
-                                </div>
-                                <div class="glass-panel p-1 flex-between border-radius-0-75">
-                                    <span class="text-sm">Next Due Date: <b id="homeNextDue">Checking...</b></span>
-                                    <button
-                                        onclick="showPortalSection('fees')"
-                                        class="btn-portal btn-white shadow-sm border-none p-0-5-1 text-xs font-bold"
-                                    >
-                                        Manage Fees
-                                    </button>
-                                </div>
-                            </div>
-
-                            <!-- Homework & Tasks -->
-                            <div class="card p-0 overflow-hidden">
-                                <div class="flex-between p-1-5 pb-1">
-                                    <h3 class="text-lg secondary m-0">
-                                        <i class="fas fa-pencil-alt primary mr-0-5"></i> Assignments Today
-                                    </h3>
-                                    <button
-                                        onclick="showPortalSection('homework')"
-                                        class="btn-portal btn-white-primary text-xs font-bold"
-                                    >
-                                        Explore All
-                                    </button>
-                                </div>
-                                <div id="homeHomeworkPreview" class="p-1-5 pt-0">
-                                    <div class="flex-center p-3 text-muted text-sm italic">
-                                        Fetching today's assignments...
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Quick Support Hub -->
-                            <div id="quickActionsSection" class="card">
-                                <h3 class="text-lg secondary mb-1-5">
-                                    <i class="fas fa-life-ring primary mr-0-5"></i> Quick Support Hub
-                                </h3>
-                                <div class="actions-hub">
-                                    <a href="/contact.html" class="action-item" title="Contact Support">
-                                        <div class="icon-box bg-primary white w-12 h-12 shadow-sm">
-                                            <i class="fas fa-phone"></i>
-                                        </div>
-                                        <span class="text-xs font-bold secondary">Help Desk</span>
-                                    </a>
-                                    <a href="/holidays.html" class="action-item" title="View School Holidays">
-                                        <div class="icon-box bg-amber-light text-warning w-12 h-12 shadow-sm">
-                                            <i class="fas fa-calendar-day"></i>
-                                        </div>
-                                        <span class="text-xs font-bold secondary">Holidays</span>
-                                    </a>
-                                    <a href="/staff.html" class="action-item" title="Meet Our Teachers">
-                                        <div class="icon-box bg-green-light text-success w-12 h-12 shadow-sm">
-                                            <i class="fas fa-users"></i>
-                                        </div>
-                                        <span class="text-xs font-bold secondary">Directory</span>
-                                    </a>
-                                    <a
-                                        href="/portal/student-login.html"
-                                        class="action-item"
-                                        onclick="logoutStudent()"
-                                        title="Logout from Portal"
-                                    >
-                                        <div class="icon-box bg-red-light text-danger w-12 h-12 shadow-sm">
-                                            <i class="fas fa-sign-out-alt"></i>
-                                        </div>
-                                        <span class="text-xs font-bold secondary">Logout</span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Right Column: Boards & Widgets -->
-                        <div class="flex-col gap-1-5">
-                            <!-- Premium Notice Board -->
-                            <div class="card p-0 overflow-hidden">
-                                <div class="flex align-center p-1-5 gap-1 bg-secondary border-bottom">
-                                    <i class="fas fa-bullhorn primary animate-pulse"></i>
-                                    <h3 class="text-md secondary fw-700 m-0 text-color-inherit">Official Updates</h3>
-                                </div>
-                                <div id="noticesContainer" class="p-1-5 min-h-350">
-                                    <div class="flex-center p-4 text-muted text-sm">Synchronizing updates...</div>
-                                </div>
-                            </div>
-
-                            <!-- Principal's Desk (If enabled) -->
-                            <div id="principalMessageWidget" class="card hidden bg-white border-left-primary">
-                                <div class="flex align-center gap-0-75 mb-0-75">
-                                    <div class="icon-box-small flex-center bg-primary white border-radius-50">
-                                        <i class="fas fa-user-tie"></i>
-                                    </div>
-                                    <h4 class="m-0 text-sm secondary">Principal's Desk</h4>
-                                </div>
-                                <p id="principalMessageText" class="text-xs text-main italic line-height-1-5 m-0">
-                                    <!-- Message injected by JS -->
-                                </p>
-                            </div>
-
-                            <!-- Important Links Hub -->
-                            <div id="importantLinksWidget" class="card hidden p-0 overflow-hidden">
-                                <div class="bg-secondary p-1-25 border-bottom flex align-center gap-0-75">
-                                    <i class="fas fa-external-link-alt primary text-sm"></i>
-                                    <h4 class="m-0 text-sm secondary fw-700 uppercase letter-spacing-1">
-                                        Useful Links
-                                    </h4>
-                                </div>
-                                <div id="linksList" class="p-1-25 flex-col gap-0-75">
-                                    <!-- Links populated here -->
-                                </div>
-                            </div>
-
-                            <!-- Attendance Mini Tracking -->
-                            <div id="attendanceWidget" class="card hidden p-1-5">
-                                <div class="flex-between mb-1-25">
-                                    <h4 class="m-0 text-sm secondary">
-                                        <i class="fas fa-check-circle success mr-0-5"></i> Academic Presence
-                                    </h4>
-                                    <span id="attendancePercent" class="badge-success">0%</span>
-                                </div>
-                                <div class="flex align-center gap-1">
-                                    <div class="relative w-14 h-14 flex-shrink-0">
-                                        <svg viewBox="0 0 36 36" class="w-full h-full transform -rotate-90">
-                                            <circle
-                                                cx="18"
-                                                cy="18"
-                                                r="16"
-                                                fill="none"
-                                                stroke="var(--border)"
-                                                stroke-width="3"
-                                            ></circle>
-                                            <circle
-                                                id="attendanceCircle"
-                                                cx="18"
-                                                cy="18"
-                                                r="16"
-                                                fill="none"
-                                                stroke="var(--success)"
-                                                stroke-width="3"
-                                                stroke-dasharray="0, 100"
-                                                stroke-linecap="round"
-                                                class="transition-all-500"
-                                            ></circle>
-                                        </svg>
-                                    </div>
-                                    <div id="attendanceStatusText" class="text-xs text-muted line-height-1-4">
-                                        Evaluating attendance records...
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- HOMEWORK SECTION -->
-                <section id="homeworkSection" class="portal-section hidden">
-                    <div class="section-header-pill">
-                        <div class="flex-1">
-                            <h1 class="text-2xl secondary m-0">Assignment Portal</h1>
-                            <p class="text-sm text-muted m-0">Daily tasks and curriculum materials</p>
-                        </div>
-                        <div class="badge-glass primary px-4 py-2 border-radius-2 font-bold no-mobile">
-                            SESSION 2025-26
-                        </div>
-                    </div>
-                    <div id="homeworkGrid" class="grid-auto-300">
-                        <!-- Homework cards injected by JS -->
-                    </div>
-                    <div id="noHomeworkMsg" class="hidden text-center p-5 text-muted">
-                        <i class="fas fa-smile text-3xl opacity-20 mb-1 block"></i>
-                        No homework assigned for today! Enjoy your evening.
-                    </div>
-                </section>
-
-                <!-- ATTENDANCE SECTION -->
-                <section id="attendanceSection" class="portal-section hidden">
-                    <div class="section-header-pill">
-                        <div class="flex-1">
-                            <h1 class="text-2xl secondary m-0">Presence Records</h1>
-                            <p class="text-sm text-muted m-0">Official academic regularity tracking</p>
-                        </div>
-                        <div class="badge-glass success px-4 py-2 border-radius-2 font-bold no-mobile">ENROLLED</div>
-                    </div>
-
-                    <div class="stats-grid">
-                        <div class="stat-card border-left-success">
-                            <div class="stat-icon flex-center bg-success-light text-success">
-                                <i class="fas fa-check-circle"></i>
-                            </div>
-                            <div class="stat-info">
-                                <h3>Present Days</h3>
-                                <p id="att_presentDays">0</p>
-                            </div>
-                        </div>
-                        <div class="stat-card border-left-danger">
-                            <div class="stat-icon flex-center bg-danger-light text-danger">
-                                <i class="fas fa-times-circle"></i>
-                            </div>
-                            <div class="stat-info">
-                                <h3>Absent Days</h3>
-                                <p id="att_absentDays">0</p>
-                            </div>
-                        </div>
-                        <div class="stat-card border-left-blue">
-                            <div class="stat-icon flex-center bg-blue-light text-primary">
-                                <i class="fas fa-percentage"></i>
-                            </div>
-                            <div class="stat-info">
-                                <h3>Percentage</h3>
-                                <p id="att_percentage">0%</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card mt-2">
-                        <h3><i class="fas fa-history"></i> Attendance History</h3>
-                        <div class="grid-auto-300 mt-1-5" id="attendanceCardsGrid">
-                            <!-- Populated by JS -->
-                        </div>
-                        <div id="noAttendanceMsg" class="text-center py-3 text-muted" style="display:none;">
-                            <i class="fas fa-calendar-check text-3xl opacity-20 mb-1 block"></i>
-                            <p>No attendance records found.</p>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- PROFILE SECTION -->
-                <section id="profileSection" class="portal-section hidden">
-                    <div class="section-header-pill">
-                        <div class="flex-1">
-                            <h1 class="text-2xl secondary m-0">Student Dossier</h1>
-                            <p class="text-sm text-muted m-0">Verified identity from institutional records</p>
-                        </div>
-                        <button onclick="refreshStudentData()" class="btn-portal btn-secondary">
-                            <i class="fas fa-sync-alt"></i> Refresh Data
-                        </button>
-                    </div>
-                    <div class="card p-2">
-                        <div class="flex gap-3 align-start">
-                            <div class="text-center w-[180px]">
-                                <div
-                                    id="profilePhotoLarge"
-                                    class="flex-center border-radius-1-5 bg-gray border-white-4 shadow-lg overflow-hidden mb-1 w-[180px] h-[180px]"
-                                >
-                                    <i class="fas fa-user-graduate text-4xl text-muted"></i>
-                                </div>
-                                <span class="badge-success">ACTIVE STUDENT</span>
-                            </div>
-                            <div class="grid-2 flex-1">
-                                <div class="form-group">
-                                    <label>Full Name</label>
-                                    <p id="p_name" class="text-lg font-bold"></p>
-                                </div>
-                                <div class="form-group">
-                                    <label>Date of Birth</label>
-                                    <p id="p_dob" class="text-lg font-bold"></p>
-                                </div>
-                                <div class="form-group">
-                                    <label>Father's Name</label>
-                                    <p id="p_father" class="text-lg font-bold"></p>
-                                </div>
-                                <div class="form-group">
-                                    <label>Mother's Name</label>
-                                    <p id="p_mother" class="text-lg font-bold"></p>
-                                </div>
-                                <div class="form-group">
-                                    <label>Registration / Admission No</label>
-                                    <p id="p_adm" class="text-lg font-bold"></p>
-                                </div>
-                                <div class="form-group">
-                                    <label>Phone Number</label>
-                                    <p id="p_phone" class="text-lg font-bold"></p>
-                                </div>
-                                <div class="form-group">
-                                    <label>RFID Number</label>
-                                    <p id="p_rfid" class="text-lg font-bold text-primary"></p>
-                                </div>
-                                <div class="form-group">
-                                    <label>Transport</label>
-                                    <p id="p_transport" class="text-lg font-bold"></p>
-                                </div>
-                                <div class="form-group">
-                                    <label>Hostel</label>
-                                    <p id="p_hostel" class="text-lg font-bold"></p>
-                                </div>
-                                <div class="col-span-full">
-                                    <label>Address</label>
-                                    <p id="p_address" class="text-lg font-bold"></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- FEES & RECEIPTS SECTION -->
-                <section id="feesSection" class="portal-section hidden">
-                    <div class="section-header-pill">
-                        <div class="flex-1">
-                            <h1 class="text-2xl secondary m-0">Finance Dashboard</h1>
-                            <p class="text-sm text-muted m-0">Transaction history and digital receipt repository</p>
-                        </div>
-                    </div>
-
-                    <div class="stats-grid">
-                        <div class="stat-card border-left-primary">
-                            <div class="stat-icon flex-center bg-blue-light text-primary">
-                                <i class="fas fa-calendar-alt"></i>
-                            </div>
-                            <div class="stat-info">
-                                <h3>Total Payable</h3>
-                                <p id="feeTotalPayable">₹0</p>
-                            </div>
-                        </div>
-                        <div class="stat-card border-left-success">
-                            <div class="stat-icon flex-center bg-success-light text-success">
-                                <i class="fas fa-check-circle"></i>
-                            </div>
-                            <div class="stat-info">
-                                <h3>Total Paid</h3>
-                                <p id="feeTotalPaid">₹0</p>
-                            </div>
-                        </div>
-                        <div class="stat-card border-left-danger">
-                            <div class="stat-icon flex-center bg-danger-light text-danger">
-                                <i class="fas fa-exclamation-circle"></i>
-                            </div>
-                            <div class="stat-info">
-                                <h3>Outstanding</h3>
-                                <p id="feeTotalBalance">₹0</p>
-                            </div>
-                        </div>
-                        <div class="stat-card border-left-primary cursor-pointer" onclick="payOnlineTotal()">
-                            <div class="stat-icon flex-center bg-blue-light text-primary">
-                                <i class="fas fa-credit-card"></i>
-                            </div>
-                            <div class="stat-info">
-                                <h3>Quick Pay</h3>
-                                <p class="text-primary font-bold" id="feePayNowBtn">Pay Now →</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <h3 class="mb-1-5"><i class="fas fa-history"></i> Payment Receipts</h3>
-                        <div class="timeline" id="feeReceiptsTimeline">
-                            <!-- Populated by JS -->
-                        </div>
-                        <div id="noFeeReceiptsMsg" class="text-center py-3 text-muted" style="display:none;">
-                            <i class="fas fa-receipt text-3xl opacity-20 mb-1 block"></i>
-                            <p>No payment receipts found.</p>
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <h3 class="mb-1-5"><i class="fas fa-list-ol"></i> Fee Ledger</h3>
-                        <div class="accordion" id="feeLedgerAccordion">
-                            <!-- Populated by JS -->
-                        </div>
-                        <div id="noFeeLedgerMsg" class="text-center py-3 text-muted" style="display:none;">
-                            <i class="fas fa-file-invoice text-3xl opacity-20 mb-1 block"></i>
-                            <p>No fee ledger entries found.</p>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- RESULTS SECTION (MANUAL REPORT CARDS) -->
-                <section id="resultsSection" class="portal-section hidden">
-                    <div class="section-header-pill">
-                        <div class="flex-1">
-                            <h1 class="text-2xl secondary m-0">Academic Performance</h1>
-                            <p class="text-sm text-muted m-0">Official institutional scorecards and evaluations</p>
-                        </div>
-                    </div>
-
-                    <div class="card p-2 text-center">
-                        <div
-                            class="icon-box-large flex-center bg-primary white mx-auto mb-1-5 shadow-lg border-none text-2xl"
-                        >
-                            <i class="fas fa-certificate"></i>
-                        </div>
-                        <h2 class="secondary mb-1">Formal Report Cards</h2>
-                        <p class="text-sm text-muted mb-2 max-w-400 mx-auto">
-                            Access your signed and verified academic reports. Select the document below to view or
-                            download.
-                        </p>
-
-                        <div id="manualResultsArea" class="flex-col gap-1 max-w-500 mx-auto">
-                            <!-- Populated by JS -->
-                            <div class="flex-center p-4 text-muted border-radius-1 bg-secondary dashed">
-                                <p class="m-0 italic">Searching for available documents...</p>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- EXAMS SECTION -->
-                <section id="examsSection" class="portal-section hidden">
-                    <div class="section-header-pill">
-                        <div class="flex-1">
-                            <h1 class="text-2xl secondary m-0">Assessment Center</h1>
-                            <p class="text-sm text-muted m-0">Examination schedules and hall tickets</p>
-                        </div>
-                    </div>
-                    <!-- This will adapt existing logic but in a cleaner grid -->
-                    <div class="grid-2">
-                        <div class="card p-2 text-center">
-                            <div
-                                class="icon-box-large flex-center bg-blue-light-soft text-primary mx-auto mb-1-5 text-2xl"
-                            >
-                                <i class="fas fa-file-invoice"></i>
-                            </div>
-                            <h3>Report Card</h3>
-                            <p class="text-sm opacity-80 mb-1-5">Official performance report for the selected term</p>
-                            <div id="resultStatusArea"></div>
-                        </div>
-                        <div class="card p-2 text-center">
-                            <div class="icon-box-large flex-center bg-amber-light text-amber mx-auto mb-1-5 text-2xl">
-                                <i class="fas fa-id-badge"></i>
-                            </div>
-                            <h3>Admit Card</h3>
-                            <p class="text-sm opacity-80 mb-1-5">Hall ticket for ongoing or upcoming examinations</p>
-                            <div id="admitCardStatusArea"></div>
-                        </div>
-                    </div>
-
-                    <div class="card mt-2">
-                        <h3><i class="fas fa-calendar-check"></i> Examination Timetable</h3>
-                        <div id="timetableStatusArea" class="mt-1"></div>
-                    </div>
-                </section>
-
-                <!-- QUESTION PAPERS SECTION -->
-                <section id="materialsSection" class="portal-section hidden">
-                    <div class="section-header-pill">
-                        <div class="flex-1">
-                            <h1 class="text-2xl secondary m-0">Academic Resources</h1>
-                            <p class="text-sm text-muted m-0">Reference materials and previous year assessments</p>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div id="examMaterialsStatusArea" class="mb-1-5"></div>
-                        <div id="paperDownloadList" class="grid-auto-280">
-                            <!-- Populated by JS -->
-                        </div>
-                    </div>
-                </section>
-
-                <!-- TRANSPORT SECTION -->
-                <section id="transportSection" class="portal-section hidden">
-                    <div class="section-header-pill">
-                        <div class="flex-1">
-                            <h1 class="text-2xl secondary m-0">Logistics & Transit</h1>
-                            <p class="text-sm text-muted m-0">Route tracking and transport assignments</p>
-                        </div>
-                    </div>
-                    <div class="card p-2 text-center">
-                        <div class="icon-box-large flex-center bg-green-light text-success mx-auto mb-1-5 text-3xl">
-                            <i class="fas fa-bus"></i>
-                        </div>
-                        <div id="transportInfoArea">
-                            <p class="opacity-80">Loading transport details...</p>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- LIBRARY SECTION -->
-                <section id="librarySection" class="portal-section hidden">
-                    <div class="section-header-pill">
-                        <div class="flex-1">
-                            <h1 class="text-2xl secondary m-0">Institutional Library</h1>
-                            <p class="text-sm text-muted m-0">Book circulation and issuing history</p>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <h3><i class="fas fa-book"></i> Currently Issued</h3>
-                        <div class="grid-auto-300 mt-1-5" id="libraryCardsGrid">
-                            <!-- Populated by JS -->
-                        </div>
-                        <div id="noLibraryBooksMsg" class="text-center py-3 text-muted" style="display:none;">
-                            <i class="fas fa-book-open text-3xl opacity-20 mb-1 block"></i>
-                            <p>No books currently issued.</p>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- CERTIFICATES SECTION -->
-                <section id="certificatesSection" class="portal-section hidden">
-                    <div class="section-header-pill">
-                        <div class="flex-1">
-                            <h1 class="text-2xl secondary m-0">Certificates & Documents</h1>
-                            <p class="text-sm text-muted m-0">Download official school certificates and documents</p>
-                        </div>
-                    </div>
-                    <div class="card p-2">
-                        <div class="grid-2 gap-1 mb-1-5" id="certActionsGrid">
-                            <div class="card p-1-5 text-center hover-lift cursor-pointer" onclick="requestCertificate('bonafide')">
-                                <div class="icon-box flex-center bg-primary white mx-auto mb-0-5 shadow-sm"><i class="fas fa-plus"></i></div>
-                                <p class="text-xs font-600 m-0">Request Bonafide</p>
-                            </div>
-                            <div class="card p-1-5 text-center hover-lift cursor-pointer" onclick="requestCertificate('slc')">
-                                <div class="icon-box flex-center bg-amber white mx-auto mb-0-5 shadow-sm"><i class="fas fa-plus"></i></div>
-                                <p class="text-xs font-600 m-0">Request SLC/TC</p>
-                            </div>
-                        </div>
-                        <div class="grid-auto-300" id="certificatesCardsGrid">
-                            <!-- Populated by JS -->
-                        </div>
-                        <div id="noCertificatesMsg" class="text-center py-3 text-muted" style="display:none;">
-                            <i class="fas fa-certificate text-4xl opacity-20 mb-1 block"></i>
-                            <p>No certificates available yet. Contact the school office to request one.</p>
-                        </div>
-                    </div>
-                </section>
-
-                <footer class="mt-1-5 p-2 text-center border-top">
-                    <p class="text-sm opacity-80" id="portalFooterText">© 2026 Powered by SNR World.</p>
-                </footer>
-            </main>
-        </div>
-
-        <!-- Scripts -->
-        <!-- Portal Modal (Generic) -->
-        <div id="portalModal" class="modal-overlay hidden">
-            <div class="modal-content-wide">
-                <div class="modal-header">
-                    <h3 id="modalTitle">Receipt Preview</h3>
-                    <button onclick="closePortalModal()" class="close-btn">&times;</button>
-                </div>
-                <div id="modalBody" class="modal-body-scroll"></div>
-                <div class="modal-footer no-print">
-                    <button class="btn-portal primary" onclick="window.print()">
-                        <i class="fas fa-print"></i> Print Receipt
-                    </button>
-                    <button class="btn-portal" onclick="closePortalModal()">Close</button>
-                </div>
+      <!-- DASHBOARD TAB -->
+      <section id="dashboardSection" class="portal-section active">
+        <div class="hero-card">
+          <div class="hc-top">
+            <div class="hc-avatar" id="hcAvatar">A</div>
+            <div>
+              <div class="hc-name" id="hcGreeting">Good morning! 👋</div>
+              <div class="hc-class" id="hcClass">Loading...</div>
             </div>
+          </div>
+          <div class="hc-stats">
+            <div class="hc-stat"><div class="val" id="hcAttPct">—</div><div class="lbl">Attendance</div></div>
+            <div class="hc-stat"><div class="val" id="hcFeeDue" style="color:#fbbf24">₹—</div><div class="lbl">Fee Due</div></div>
+            <div class="hc-stat"><div class="val" id="hcScore">—</div><div class="lbl">Overall Score</div></div>
+            <div class="hc-stat"><div class="val" id="hcGrade" style="color:#86efac">—</div><div class="lbl">Grade</div></div>
+          </div>
         </div>
 
-        <!-- Change Password Modal -->
-        <div id="changePwdModal" class="modal-overlay hidden">
-            <div class="modal-content" style="max-width: 420px;">
-                <div class="modal-header">
-                    <h3><i class="fas fa-key"></i> Change Password</h3>
-                    <button onclick="closeChangePwdModal()" class="close-btn">&times;</button>
-                </div>
-                <div class="modal-body-scroll">
-                    <div class="form-group">
-                        <label>Username</label>
-                        <input type="text" id="cpUsername" class="input" readonly style="background:var(--bg-gray);">
-                    </div>
-                    <div class="form-group">
-                        <label>Current Password</label>
-                        <input type="password" id="cpOldPassword" class="input" placeholder="Enter current password">
-                    </div>
-                    <div class="form-group">
-                        <label>New Password</label>
-                        <input type="password" id="cpNewPassword" class="input" placeholder="Enter new password (min 6 chars)">
-                    </div>
-                    <div class="form-group">
-                        <label>Confirm New Password</label>
-                        <input type="password" id="cpConfirmPassword" class="input" placeholder="Re-enter new password">
-                    </div>
-                    <div id="cpError" class="text-sm text-rose-500 mt-1" style="display:none;"></div>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn-portal" onclick="closeChangePwdModal()">Cancel</button>
-                    <button class="btn-portal btn-primary" onclick="submitChangePassword()" id="cpSubmitBtn">
-                        <i class="fas fa-save"></i> Update Password
-                    </button>
-                </div>
-            </div>
+        <div class="qa-row">
+          <div class="qa-chip" onclick="showPortalSection('fees')"><i class="fas fa-rupee-sign" style="color:var(--green)"></i> Pay Fees</div>
+          <div class="qa-chip" onclick="showPortalSection('exams')"><i class="fas fa-file-alt" style="color:var(--purple)"></i> Exam Schedule</div>
+          <div class="qa-chip" onclick="showPortalSection('results')"><i class="fas fa-chart-bar" style="color:var(--blue)"></i> My Results</div>
+          <div class="qa-chip" onclick="showPortalSection('homework')"><i class="fas fa-book-open" style="color:var(--amber)"></i> Homework</div>
+          <div class="qa-chip" onclick="showPortalSection('attendance')"><i class="fas fa-calendar-check" style="color:var(--cyan)"></i> Attendance</div>
         </div>
 
-        <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-        <script async src="https://checkout.razorpay.com/v1/checkout.js"></script>
-        <script defer src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-        <script defer src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-        <script defer src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-        <script defer src="https://www.gstatic.com/firebasejs/9.23.0/firebase-functions-compat.js"></script>
-        <script defer src="/js/firebase-config.js"></script>
-        <script defer src="/js/media-loader.js?v=1.0"></script>
-        <script defer src="/js/access-control.js"></script>
-        <script defer src="/js/student-auth.js"></script>
-        <script defer src="/js/student-dashboard.js"></script>
+        <div id="examAnnouncementBanner" class="mb-1-5 hidden"></div>
 
-        <!-- DARK MODE SCRIPT -->
-        <script>
-            function toggleDarkMode() {
-                document.body.classList.toggle('dark-mode');
-                var isDark = document.body.classList.contains('dark-mode');
-                localStorage.setItem('darkMode', isDark);
-                updateDarkModeUI(isDark);
-            }
-            function updateDarkModeUI(isDark) {
-                var icon = document.getElementById('darkModeIcon');
-                var label = document.getElementById('darkModeLabel');
-                if (icon) icon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
-                if (label) label.textContent = isDark ? 'Light Mode' : 'Dark Mode';
-            }
-            (function() {
-                var saved = localStorage.getItem('darkMode');
-                var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-                if (saved === 'true' || (saved === null && prefersDark)) {
-                    document.body.classList.add('dark-mode');
-                    updateDarkModeUI(true);
-                }
-            })();
-        </script>
-
-                <!-- Mobile Bottom Nav -->
-        <nav class="bottom-nav" id="studentBottomNav">
-            <div class="bottom-nav-items">
-                <button class="bottom-nav-item active" onclick="showPortalSection('home'); setActiveStudentBottomNav(this)">
-                    <i class="fas fa-home"></i><span>Home</span>
-                </button>
-                <button class="bottom-nav-item" onclick="showPortalSection('fees'); setActiveStudentBottomNav(this)">
-                    <i class="fas fa-wallet"></i><span>Fees</span>
-                </button>
-                <button class="bottom-nav-item" onclick="showPortalSection('attendance'); setActiveStudentBottomNav(this)">
-                    <i class="fas fa-calendar-check"></i><span>Attendance</span>
-                </button>
-                <button class="bottom-nav-item" onclick="showPortalSection('homework'); setActiveStudentBottomNav(this)">
-                    <i class="fas fa-pencil-alt"></i><span>Homework</span>
-                </button>
-                <button class="bottom-nav-item" onclick="showPortalSection('profile'); setActiveStudentBottomNav(this)">
-                    <i class="fas fa-user"></i><span>Profile</span>
-                </button>
+        <div class="grid-2fr-1fr gap-md">
+          <div class="flex-col gap-1-5">
+            <!-- Fee Status Widget -->
+            <div class="card gradient-primary p-2 border-none">
+              <div class="flex-between mb-1-5 pt-0-5">
+                <div>
+                  <p class="text-xs opacity-80 uppercase letter-spacing-1 font-bold white-important">Outstanding Balance</p>
+                  <h2 id="homeFeeBalance" class="text-3xl font-extrabold mt-1 white-important">₹--</h2>
+                </div>
+                <div class="bg-white p-1-25 rounded-xl shadow-lg border-none"><i class="fas fa-wallet text-2xl primary"></i></div>
+              </div>
+              <div class="glass-panel p-1 flex-between border-radius-0-75">
+                <span class="text-sm">Next Due Date: <b id="homeNextDue">Checking...</b></span>
+                <button onclick="showPortalSection('fees')" class="btn-portal btn-white shadow-sm border-none p-0-5-1 text-xs font-bold">Manage Fees</button>
+              </div>
             </div>
-        </nav>
-        <script>
-            function setActiveStudentBottomNav(el) {
-                document.querySelectorAll('#studentBottomNav .bottom-nav-item').forEach(function(b) {
-                    b.classList.remove('active');
-                });
-                if (el) el.classList.add('active');
-            }
-        </script>
+            <div class="card p-0 overflow-hidden">
+              <div class="flex-between p-1-5 pb-1">
+                <h3 class="text-lg secondary m-0"><i class="fas fa-pencil-alt primary mr-0-5"></i> Assignments Today</h3>
+                <button onclick="showPortalSection('homework')" class="btn-portal btn-white-primary text-xs font-bold">Explore All</button>
+              </div>
+              <div id="homeHomeworkPreview" class="p-1-5 pt-0"><div class="flex-center p-3 text-muted text-sm italic">Fetching...</div></div>
+            </div>
+          </div>
+          <div class="flex-col gap-1-5">
+            <div class="card p-0 overflow-hidden">
+              <div class="flex align-center p-1-5 gap-1 bg-secondary border-bottom">
+                <i class="fas fa-bullhorn primary animate-pulse"></i>
+                <h3 class="text-md secondary fw-700 m-0 text-color-inherit">Official Updates</h3>
+              </div>
+              <div id="noticesContainer" class="p-1-5 min-h-350"><div class="flex-center p-4 text-muted text-sm">Synchronizing...</div></div>
+            </div>
+            <div id="attendanceWidget" class="card hidden p-1-5">
+              <div class="flex-between mb-1-25">
+                <h4 class="m-0 text-sm secondary"><i class="fas fa-check-circle success mr-0-5"></i> Academic Presence</h4>
+                <span id="attendancePercent" class="badge-success">0%</span>
+              </div>
+              <div class="flex align-center gap-1">
+                <div class="relative w-14 h-14 flex-shrink-0">
+                  <svg viewBox="0 0 36 36" class="w-full h-full transform -rotate-90">
+                    <circle cx="18" cy="18" r="16" fill="none" stroke="var(--border)" stroke-width="3"></circle>
+                    <circle id="attendanceCircle" cx="18" cy="18" r="16" fill="none" stroke="var(--success)" stroke-width="3" stroke-dasharray="0, 100" stroke-linecap="round" class="transition-all-500"></circle>
+                  </svg>
+                </div>
+                <div id="attendanceStatusText" class="text-xs text-muted line-height-1-4">Loading...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-        <!-- Service Worker -->
-        <script defer>
-            if ('serviceWorker' in navigator) {
-                window.addEventListener('load', function () {
-                    navigator.serviceWorker.register('/sw.js').catch(function () {});
-                });
-            }
-        </script>
-    </body>
+      <!-- HOMEWORK SECTION -->
+      <section id="homeworkSection" class="portal-section hidden">
+        <div class="section-header-pill">
+          <div class="flex-1"><h1 class="text-2xl secondary m-0">Assignment Portal</h1><p class="text-sm text-muted m-0">Daily tasks and curriculum materials</p></div>
+        </div>
+        <div id="homeworkGrid" class="grid-auto-300"></div>
+        <div id="noHomeworkMsg" class="hidden text-center p-5 text-muted"><i class="fas fa-smile text-3xl opacity-20 mb-1 block"></i><p>No homework assigned for today!</p></div>
+      </section>
+
+      <!-- ATTENDANCE SECTION -->
+      <section id="attendanceSection" class="portal-section hidden">
+        <div class="section-header-pill">
+          <div class="flex-1"><h1 class="text-2xl secondary m-0">Presence Records</h1><p class="text-sm text-muted m-0">Official academic regularity tracking</p></div>
+        </div>
+        <div id="attendanceWidgetNew" class="stats-grid">
+          <div class="stat-card border-left-success"><div class="stat-icon flex-center bg-success-light text-success"><i class="fas fa-check-circle"></i></div><div class="stat-info"><h3>Present Days</h3><p id="att_presentDays">0</p></div></div>
+          <div class="stat-card border-left-danger"><div class="stat-icon flex-center bg-danger-light text-danger"><i class="fas fa-times-circle"></i></div><div class="stat-info"><h3>Absent Days</h3><p id="att_absentDays">0</p></div></div>
+          <div class="stat-card border-left-blue"><div class="stat-icon flex-center bg-blue-light text-primary"><i class="fas fa-percentage"></i></div><div class="stat-info"><h3>Percentage</h3><p id="att_percentage">0%</p></div></div>
+        </div>
+        <div class="card mt-2">
+          <h3><i class="fas fa-history"></i> Attendance History</h3>
+          <div class="grid-auto-300 mt-1-5" id="attendanceCardsGrid"></div>
+          <div id="noAttendanceMsg" class="text-center py-3 text-muted" style="display:none;"><i class="fas fa-calendar-check text-3xl opacity-20 mb-1 block"></i><p>No attendance records found.</p></div>
+        </div>
+      </section>
+
+      <!-- PROFILE SECTION -->
+      <section id="profileSection" class="portal-section hidden">
+        <div class="section-header-pill">
+          <div class="flex-1"><h1 class="text-2xl secondary m-0">Student Dossier</h1><p class="text-sm text-muted m-0">Verified identity from institutional records</p></div>
+          <button onclick="refreshStudentData()" class="btn-portal btn-secondary"><i class="fas fa-sync-alt"></i> Refresh</button>
+        </div>
+        <div class="card p-2 mb-2" style="background:var(--bg-card);border-radius:12px;padding:1rem 1.25rem;display:flex;align-items:center;gap:1rem">
+          <div style="width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#1e40af,#7c3aed);display:flex;align-items:center;justify-content:center;color:white;font-size:1.2rem;font-weight:800;flex-shrink:0" class="flex-center"><i class="fas fa-user-graduate"></i></div>
+          <div>
+            <div class="text-lg font-bold" id="disp_student_name">—</div>
+            <div class="text-sm text-muted">ID: <span id="disp_student_id">—</span> <span class="mx-1">·</span> Class: <span id="disp_class">—</span> <span class="mx-1">·</span> Section: <span id="disp_section">—</span></div>
+          </div>
+        </div>
+        <div class="card p-2">
+          <div class="flex gap-3 align-start">
+            <div class="text-center w-[180px]">
+              <div id="profilePhotoLarge" class="flex-center border-radius-1-5 bg-gray border-white-4 shadow-lg overflow-hidden mb-1 w-[180px] h-[180px]"><i class="fas fa-user-graduate text-4xl text-muted"></i></div>
+              <span class="badge-success">ACTIVE STUDENT</span>
+            </div>
+            <div class="grid-2 flex-1">
+              <div class="form-group"><label>Full Name</label><p id="p_name" class="text-lg font-bold"></p></div>
+              <div class="form-group"><label>Date of Birth</label><p id="p_dob" class="text-lg font-bold"></p></div>
+              <div class="form-group"><label>Father's Name</label><p id="p_father" class="text-lg font-bold"></p></div>
+              <div class="form-group"><label>Mother's Name</label><p id="p_mother" class="text-lg font-bold"></p></div>
+              <div class="form-group"><label>Registration No</label><p id="p_adm" class="text-lg font-bold"></p></div>
+              <div class="form-group"><label>Phone</label><p id="p_phone" class="text-lg font-bold"></p></div>
+              <div class="form-group"><label>Transport</label><p id="p_transport" class="text-lg font-bold"></p></div>
+              <div class="form-group"><label>Hostel</label><p id="p_hostel" class="text-lg font-bold"></p></div>
+              <div class="form-group"><label>RFID / Smart Card</label><p id="p_rfid" class="text-lg font-bold"></p></div>
+              <div class="col-span-full"><label>Address</label><p id="p_address" class="text-lg font-bold"></p></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FEES SECTION -->
+      <section id="feesSection" class="portal-section hidden">
+        <div class="section-header-pill">
+          <div class="flex-1"><h1 class="text-2xl secondary m-0">Finance Dashboard</h1><p class="text-sm text-muted m-0">Transaction history and digital receipt repository</p></div>
+        </div>
+        <div class="stats-grid">
+          <div class="stat-card border-left-primary"><div class="stat-icon flex-center bg-blue-light text-primary"><i class="fas fa-calendar-alt"></i></div><div class="stat-info"><h3>Total Payable</h3><p id="feeTotalPayable">₹0</p></div></div>
+          <div class="stat-card border-left-success"><div class="stat-icon flex-center bg-success-light text-success"><i class="fas fa-check-circle"></i></div><div class="stat-info"><h3>Total Paid</h3><p id="feeTotalPaid">₹0</p></div></div>
+          <div class="stat-card border-left-danger"><div class="stat-icon flex-center bg-danger-light text-danger"><i class="fas fa-exclamation-circle"></i></div><div class="stat-info"><h3>Outstanding</h3><p id="feeTotalBalance">₹0</p></div></div>
+          <div class="stat-card border-left-primary cursor-pointer" onclick="payOnlineTotal()"><div class="stat-icon flex-center bg-blue-light text-primary"><i class="fas fa-credit-card"></i></div><div class="stat-info"><h3>Quick Pay</h3><p class="text-primary font-bold" id="feePayNowBtn">Pay Now →</p></div></div>
+        </div>
+        <div class="card"><h3 class="mb-1-5"><i class="fas fa-history"></i> Payment Receipts</h3><div class="timeline" id="feeReceiptsTimeline"></div><div id="noFeeReceiptsMsg" class="text-center py-3 text-muted" style="display:none;"><i class="fas fa-receipt text-3xl opacity-20 mb-1 block"></i><p>No payment receipts found.</p></div></div>
+        <div class="card"><h3 class="mb-1-5"><i class="fas fa-list-ol"></i> Fee Ledger</h3><div class="accordion" id="feeLedgerAccordion"></div><div id="noFeeLedgerMsg" class="text-center py-3 text-muted" style="display:none;"><i class="fas fa-file-invoice text-3xl opacity-20 mb-1 block"></i><p>No fee ledger entries found.</p></div></div>
+      </section>
+
+      <!-- RESULTS SECTION -->
+      <section id="resultsSection" class="portal-section hidden">
+        <div class="section-header-pill">
+          <div class="flex-1"><h1 class="text-2xl secondary m-0">Academic Performance</h1><p class="text-sm text-muted m-0">Official institutional scorecards and evaluations</p></div>
+        </div>
+        <div class="card p-2 text-center">
+          <div class="icon-box-large flex-center bg-primary white mx-auto mb-1-5 shadow-lg border-none text-2xl"><i class="fas fa-certificate"></i></div>
+          <h2 class="secondary mb-1">Formal Report Cards</h2>
+          <p class="text-sm text-muted mb-2 max-w-400 mx-auto">Access your signed and verified academic reports.</p>
+          <div id="manualResultsArea" class="flex-col gap-1 max-w-500 mx-auto"><div class="flex-center p-4 text-muted border-radius-1 bg-secondary dashed"><p class="m-0 italic">Searching for available documents...</p></div></div>
+        </div>
+      </section>
+
+      <!-- EXAMS SECTION -->
+      <section id="examsSection" class="portal-section hidden">
+        <div class="section-header-pill">
+          <div class="flex-1"><h1 class="text-2xl secondary m-0">Assessment Center</h1><p class="text-sm text-muted m-0">Examination schedules and hall tickets</p></div>
+        </div>
+        <div class="grid-2">
+          <div class="card p-2 text-center"><div class="icon-box-large flex-center bg-blue-light-soft text-primary mx-auto mb-1-5 text-2xl"><i class="fas fa-file-invoice"></i></div><h3>Report Card</h3><p class="text-sm opacity-80 mb-1-5">Official performance report</p><div id="resultStatusArea"></div></div>
+          <div class="card p-2 text-center"><div class="icon-box-large flex-center bg-amber-light text-amber mx-auto mb-1-5 text-2xl"><i class="fas fa-id-badge"></i></div><h3>Admit Card</h3><p class="text-sm opacity-80 mb-1-5">Hall ticket for examinations</p><div id="admitCardStatusArea"></div></div>
+        </div>
+        <div class="card mt-2"><h3><i class="fas fa-calendar-check"></i> Examination Timetable</h3><div id="timetableStatusArea" class="mt-1"></div></div>
+      </section>
+
+      <!-- MATERIALS / RESOURCES -->
+      <section id="materialsSection" class="portal-section hidden">
+        <div class="section-header-pill"><div class="flex-1"><h1 class="text-2xl secondary m-0">Academic Resources</h1><p class="text-sm text-muted m-0">Reference materials and previous year assessments</p></div></div>
+        <div class="card"><div id="examMaterialsStatusArea" class="mb-1-5"></div><div id="paperDownloadList" class="grid-auto-280"></div></div>
+      </section>
+
+      <!-- TRANSPORT SECTION -->
+      <section id="transportSection" class="portal-section hidden">
+        <div class="section-header-pill"><div class="flex-1"><h1 class="text-2xl secondary m-0">Logistics & Transit</h1><p class="text-sm text-muted m-0">Route tracking and transport assignments</p></div></div>
+        <div class="card p-2 text-center"><div class="icon-box-large flex-center bg-green-light text-success mx-auto mb-1-5 text-3xl"><i class="fas fa-bus"></i></div><div id="transportInfoArea"><p class="opacity-80">Loading transport details...</p></div></div>
+      </section>
+
+      <!-- LIBRARY SECTION -->
+      <section id="librarySection" class="portal-section hidden">
+        <div class="section-header-pill"><div class="flex-1"><h1 class="text-2xl secondary m-0">Institutional Library</h1><p class="text-sm text-muted m-0">Book circulation and issuing history</p></div></div>
+        <div class="card"><h3><i class="fas fa-book"></i> Currently Issued</h3><div class="grid-auto-300 mt-1-5" id="libraryCardsGrid"></div><div id="noLibraryBooksMsg" class="text-center py-3 text-muted" style="display:none;"><i class="fas fa-book-open text-3xl opacity-20 mb-1 block"></i><p>No books currently issued.</p></div></div>
+      </section>
+
+      <!-- CERTIFICATES SECTION -->
+      <section id="certificatesSection" class="portal-section hidden">
+        <div class="section-header-pill"><div class="flex-1"><h1 class="text-2xl secondary m-0">Certificates & Documents</h1><p class="text-sm text-muted m-0">Download official school certificates</p></div></div>
+        <div class="card p-2">
+          <div class="grid-2 gap-1 mb-1-5" id="certActionsGrid">
+            <div class="card p-1-5 text-center hover-lift cursor-pointer" onclick="requestCertificate('bonafide')"><div class="icon-box flex-center bg-primary white mx-auto mb-0-5 shadow-sm"><i class="fas fa-plus"></i></div><p class="text-xs font-600 m-0">Request Bonafide</p></div>
+            <div class="card p-1-5 text-center hover-lift cursor-pointer" onclick="requestCertificate('slc')"><div class="icon-box flex-center bg-amber white mx-auto mb-0-5 shadow-sm"><i class="fas fa-plus"></i></div><p class="text-xs font-600 m-0">Request SLC/TC</p></div>
+          </div>
+          <div class="grid-auto-300" id="certificatesCardsGrid"></div>
+          <div id="noCertificatesMsg" class="text-center py-3 text-muted" style="display:none;"><i class="fas fa-certificate text-4xl opacity-20 mb-1 block"></i><p>No certificates available.</p></div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+</div>
+
+<!-- MOBILE BOTTOM NAV -->
+<nav class="bottom-nav-sp">
+  <div class="bn-item active" onclick="showPortalSection('dashboard')"><i class="fas fa-home"></i>Home</div>
+  <div class="bn-item" onclick="showPortalSection('fees')"><i class="fas fa-rupee-sign"></i>Fees</div>
+  <div class="bn-item" onclick="showPortalSection('exams')"><i class="fas fa-file-alt"></i>Exams</div>
+  <div class="bn-item" onclick="showPortalSection('attendance')"><i class="fas fa-calendar-check"></i>Attend</div>
+  <div class="bn-item" onclick="showPortalSection('results')"><i class="fas fa-chart-bar"></i>Results</div>
+</nav>
+
+<!-- Portal Modal -->
+<div id="portalModal" class="modal-overlay hidden">
+  <div class="modal-content-wide">
+    <div class="modal-header">
+      <h3 id="modalTitle">Receipt Preview</h3>
+      <button onclick="closePortalModal()" class="close-btn">&times;</button>
+    </div>
+    <div id="modalBody" class="modal-body-scroll"></div>
+    <div class="modal-footer no-print">
+      <button class="btn-portal primary" onclick="window.print()"><i class="fas fa-print"></i> Print</button>
+      <button class="btn-portal" onclick="closePortalModal()">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- Change Password Modal -->
+<div id="changePwdModal" class="modal-overlay hidden">
+  <div class="modal-content" style="max-width:420px;">
+    <div class="modal-header"><h3><i class="fas fa-key"></i> Change Password</h3><button onclick="closeChangePwdModal()" class="close-btn">&times;</button></div>
+    <div class="modal-body-scroll">
+      <div class="form-group"><label>Username</label><input type="text" id="cpUsername" class="input" readonly style="background:var(--bg-gray);"></div>
+      <div class="form-group"><label>Current Password</label><input type="password" id="cpOldPassword" class="input" placeholder="Enter current password"></div>
+      <div class="form-group"><label>New Password</label><input type="password" id="cpNewPassword" class="input" placeholder="New password (min 6 chars)"></div>
+      <div class="form-group"><label>Confirm New Password</label><input type="password" id="cpConfirmPassword" class="input" placeholder="Re-enter new password"></div>
+      <div id="cpError" class="text-sm text-rose-500 mt-1" style="display:none;"></div>
+    </div>
+    <div class="modal-footer"><button class="btn-portal" onclick="closeChangePwdModal()">Cancel</button><button class="btn-portal btn-primary" onclick="submitChangePassword()" id="cpSubmitBtn"><i class="fas fa-save"></i> Update Password</button></div>
+  </div>
+</div>
+
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script async src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script defer src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script defer src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script defer src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script defer src="https://www.gstatic.com/firebasejs/9.23.0/firebase-functions-compat.js"></script>
+<script defer src="/js/firebase-config.js"></script>
+<script defer src="/js/media-loader.js?v=1.0"></script>
+<script defer src="/js/access-control.js"></script>
+<script defer src="/js/student-auth.js"></script>
+<script defer src="/js/student-dashboard.js"></script>
+
+<script>
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('mobile-open');
+  document.getElementById('sidebarOverlay').classList.toggle('open');
+}
+var TAB_LABELS = {dashboard:'Dashboard',profile:'My Profile',attendance:'Attendance',exams:'Exams',results:'Results',homework:'Homework',fees:'Fee & Payments',library:'Library',transport:'Transport',certificates:'Certificates',materials:'Resources'};
+function switchStudentTab(tab) {
+  document.querySelectorAll('.portal-section').forEach(function(s) { s.classList.remove('active'); });
+  var sec = document.getElementById(tab + 'Section');
+  if (sec) sec.classList.add('active');
+  var txt = TAB_LABELS[tab] || tab;
+  var bc = document.getElementById('breadcrumbCurrent');
+  if (bc) bc.textContent = txt;
+  document.querySelectorAll('.sidebar-portal .sb-item').forEach(function(i) {
+    i.classList.remove('active');
+    if (i.getAttribute('onclick') && i.getAttribute('onclick').includes("'" + tab + "'")) i.classList.add('active');
+  });
+  document.querySelectorAll('.bottom-nav-sp .bn-item').forEach(function(i) {
+    i.classList.remove('active');
+    if (i.getAttribute('onclick') && i.getAttribute('onclick').includes("'" + tab + "'")) i.classList.add('active');
+  });
+  toggleSidebar();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+
+<div style="display:none" id="portalFooterText"></div>
+<div style="display:none" id="examAnnouncementTitle"></div>
+<div style="display:none" id="examAnnouncementNotice"></div>
+<div style="display:none" id="importantLinksWidget"></div>
+<div style="display:none" id="linksList"></div>
+<div style="display:none" id="principalMessageWidget"></div>
+<div style="display:none" id="principalMessageText"></div>
+
+<script>
+if ('serviceWorker' in navigator) { window.addEventListener('load',function(){ navigator.serviceWorker.register('/sw.js').catch(function(){}); }); }
+</script>
+</body>
 </html>

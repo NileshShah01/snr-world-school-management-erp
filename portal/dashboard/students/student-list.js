@@ -1,21 +1,24 @@
 /**
- * Student List Module — Firestore-native pagination
- * Replaces the inline student list in admin-dashboard.js
+ * Student List Module — New UI with avatars, action menus, drawer, KPIs
  */
 
 const SL_PAGE_SIZE = 50;
 const slState = {
     items: [],
     selected: new Set(),
-    cursors: [],        // Firestore document snapshots for cursor-based pagination
+    cursors: [],
     currentPage: 0,
     hasMore: true,
     classFilter: '',
+    sectionFilter: '',
     searchTerm: '',
     sessionFilter: '',
+    chipFilter: 'all',
+    totalCount: 0,
 };
 
-let slInitialized = false;
+var slInitialized = false;
+var _slKpiData = null;
 
 window.onModuleLoaded_students_student_list = function () {
     if (slInitialized) return;
@@ -24,18 +27,19 @@ window.onModuleLoaded_students_student_list = function () {
 };
 
 function slInit() {
-    const searchInput = document.getElementById('slSearchInput');
-    const classFilter = document.getElementById('slClassFilter');
-    const selectAll = document.getElementById('slSelectAll');
-    const prevBtn = document.getElementById('slPrevBtn');
-    const nextBtn = document.getElementById('slNextBtn');
+    var searchInput = document.getElementById('slSearchInput');
+    var classFilter = document.getElementById('slClassFilter');
+    var sectionFilter = document.getElementById('slSectionFilter');
+    var selectAll = document.getElementById('slSelectAll');
+    var prevBtn = document.getElementById('slPrevBtn');
+    var nextBtn = document.getElementById('slNextBtn');
+    var pageSize = document.getElementById('slPageSize');
 
     if (!document.getElementById('slTableBody')) return;
 
-    // Populate class filter from classes subcollection
     slPopulateClassFilter();
+    slLoadKPIs();
 
-    // Event listeners
     if (searchInput) {
         searchInput.addEventListener('input', slDebounce(function () {
             slState.searchTerm = this.value.trim().toLowerCase();
@@ -54,9 +58,18 @@ function slInit() {
         });
     }
 
+    if (sectionFilter) {
+        sectionFilter.addEventListener('change', function () {
+            slState.sectionFilter = this.value;
+            slState.currentPage = 0;
+            slState.cursors = [];
+            slLoadPage();
+        });
+    }
+
     if (selectAll) {
         selectAll.addEventListener('change', function () {
-            const cbs = document.querySelectorAll('.sl-student-checkbox');
+            var cbs = document.querySelectorAll('.sl-student-checkbox');
             cbs.forEach(function (cb) {
                 cb.checked = this.checked;
                 if (this.checked) slState.selected.add(cb.value);
@@ -66,7 +79,14 @@ function slInit() {
         });
     }
 
-    // Keyboard shortcut: focus search on Ctrl+K or /
+    if (pageSize) {
+        pageSize.addEventListener('change', function () {
+            slState.currentPage = 0;
+            slState.cursors = [];
+            slLoadPage();
+        });
+    }
+
     document.addEventListener('keydown', function (e) {
         if ((e.ctrlKey && e.key === 'k') || (e.key === '/' && !['INPUT', 'TEXTAREA', 'SELECT'].includes(e.target.tagName))) {
             e.preventDefault();
@@ -79,69 +99,85 @@ function slInit() {
 
 async function slPopulateClassFilter() {
     try {
-        const snap = await schoolData('classes').get();
-        const sel = document.getElementById('slClassFilter');
+        var snap = await schoolData('classes').get();
+        var sel = document.getElementById('slClassFilter');
         if (!sel) return;
-        const current = sel.value;
         sel.innerHTML = '<option value="">All Classes</option>';
-        const classes = [];
+        var classes = [];
         snap.forEach(function (d) {
-            const c = d.data();
+            var c = d.data();
             if (c.name) classes.push(c.name);
         });
         classes.sort(function (a, b) { return a - b || a.localeCompare(b); });
         classes.forEach(function (c) {
             sel.innerHTML += '<option value="' + c.replace(/"/g, '&quot;') + '">Class ' + c + '</option>';
         });
-        if (current) sel.value = current;
     } catch (e) {
         console.warn('[SL] Failed to load class filter:', e);
     }
 }
 
+async function slLoadKPIs() {
+    try {
+        var allSnap = await schoolData('students').get();
+        var total = allSnap.size;
+        var now = new Date();
+        var thisMonth = allSnap.docs.filter(function(d) {
+            var c = d.data().createdAt;
+            if (!c) return false;
+            var t = c.toDate ? c.toDate() : new Date(c);
+            return t.getMonth() === now.getMonth() && t.getFullYear() === now.getFullYear();
+        }).length;
+
+        document.getElementById('slKpiTotal').textContent = total;
+        document.getElementById('slKpiNewCount').textContent = thisMonth;
+        document.getElementById('slKpiNew').textContent = '\u2191 ' + thisMonth + ' this month';
+        slState.totalCount = total;
+    } catch (e) {
+        console.warn('[SL] KPI load error:', e);
+    }
+}
+
 async function slLoadPage() {
-    const tbody = document.getElementById('slTableBody');
+    var tbody = document.getElementById('slTableBody');
     if (!tbody) return;
-    tbody.innerHTML = '<tr><td colspan="27" class="text-center text-muted p-2"><i class="fas fa-spinner fa-spin mr-1"></i> Loading...</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="8" class="text-center p-2 text-muted"><i class="fas fa-spinner fa-spin mr-1"></i> Loading...</td></tr>';
 
     try {
-        let query = schoolData('students');
+        var query = schoolData('students');
         query = query.orderBy(firebase.firestore.FieldPath.documentId());
 
         if (slState.classFilter) {
             query = query.where('class', '==', slState.classFilter);
         }
 
-        query = query.limit(SL_PAGE_SIZE + 1);
+        var size = parseInt(document.getElementById('slPageSize')?.value || '50', 10);
+        query = query.limit(size + 1);
 
-        // Apply cursor for pages beyond 0
         if (slState.currentPage > 0 && slState.cursors[slState.currentPage - 1]) {
             query = query.startAfter(slState.cursors[slState.currentPage - 1]);
         }
 
-        const snapshot = await query.get();
-        const docs = snapshot.docs;
-        slState.hasMore = docs.length > SL_PAGE_SIZE;
+        var snapshot = await query.get();
+        var docs = snapshot.docs;
+        slState.hasMore = docs.length > size;
 
-        // Store cursor for next page
         if (slState.hasMore && docs.length > 0) {
-            slState.cursors[slState.currentPage] = docs[SL_PAGE_SIZE - 1];
+            slState.cursors[slState.currentPage] = docs[size - 1];
         }
 
-        // Take only SL_PAGE_SIZE items
-        const pageDocs = docs.slice(0, SL_PAGE_SIZE);
+        var pageDocs = docs.slice(0, size);
         slState.items = pageDocs.map(function (d) { return { id: d.id, ...d.data() }; });
 
-        // If search term is active, filter client-side on the current page
-        let displayItems = slState.items;
+        var displayItems = slState.items;
         if (slState.searchTerm) {
             displayItems = slState.items.filter(function (s) {
-                const name = (s.name || '').toLowerCase();
-                const sid = (s.student_id || '').toLowerCase();
-                const roll = (s.roll_no || '').toLowerCase();
-                const reg = (s.reg_no || '').toLowerCase();
-                const phone = (s.phone || s.mobile || '').toLowerCase();
-                const father = (s.father_name || '').toLowerCase();
+                var name = (s.name || '').toLowerCase();
+                var sid = (s.studentCode || s.student_id || '').toLowerCase();
+                var roll = (s.rollNumber || s.roll_no || '').toLowerCase();
+                var reg = (s.registrationNumber || s.reg_no || '').toLowerCase();
+                var phone = (s.phone || s.mobile || s.fatherPhone || '').toLowerCase();
+                var father = (s.fatherName || s.father_name || '').toLowerCase();
                 return name.includes(slState.searchTerm) ||
                     sid.includes(slState.searchTerm) ||
                     roll.includes(slState.searchTerm) ||
@@ -149,81 +185,94 @@ async function slLoadPage() {
                     phone.includes(slState.searchTerm) ||
                     father.includes(slState.searchTerm);
             });
-            // If no results on current page and hasMore, try next page recursively (search across pages)
             if (displayItems.length === 0 && slState.hasMore) {
                 slState.currentPage++;
                 return slLoadPage();
             }
         }
 
+        if (slState.chipFilter === 'boys') {
+            displayItems = displayItems.filter(function(s) { return (s.gender || '').toLowerCase() === 'male'; });
+        } else if (slState.chipFilter === 'girls') {
+            displayItems = displayItems.filter(function(s) { return (s.gender || '').toLowerCase() === 'female'; });
+        } else if (slState.chipFilter === 'hostel') {
+            displayItems = displayItems.filter(function(s) { return s.hostel && s.hostel !== 'No' && s.hostel !== ''; });
+        } else if (slState.chipFilter === 'transport') {
+            displayItems = displayItems.filter(function(s) { return s.transportRoute && s.transportRoute !== ''; });
+        }
+
         slRenderTable(displayItems);
         slUpdatePageControls();
     } catch (e) {
         console.error('[SL] Load error:', e);
-        tbody.innerHTML = '<tr><td colspan="27" class="text-center text-danger p-2">Error loading students: ' + e.message + '</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="8" class="text-center p-2 text-danger">Error: ' + escHtml(e.message) + '</td></tr>';
     }
 }
 
 function slRenderTable(items) {
-    const tbody = document.getElementById('slTableBody');
+    var tbody = document.getElementById('slTableBody');
     if (!tbody) return;
 
     if (items.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="27" class="text-center text-muted p-4"><i class="fas fa-users text-2xl mb-1 opacity-30 block"></i> No students found. <button class="btn-portal btn-ghost mt-1" onclick="window.showSection(\'addStudent\')">Add your first student</button></td></tr>';
+        tbody.innerHTML = '<tr><td colspan="8" class="text-center p-4 text-muted"><i class="fas fa-users text-2xl mb-1 opacity-30 block"></i> No students found.</td></tr>';
         return;
     }
 
     tbody.innerHTML = '';
-    items.forEach(function (student) {
-        const tr = document.createElement('tr');
+    items.forEach(function (s) {
+        var initial = (s.name || '?')[0].toUpperCase();
+        var colors = ['linear-gradient(135deg,#3b82f6,#7c3aed)','linear-gradient(135deg,#ec4899,#f97316)','linear-gradient(135deg,#10b981,#06b6d4)','linear-gradient(135deg,#f59e0b,#ef4444)'];
+        var bg = colors[(s.name || 'A').charCodeAt(0) % colors.length];
+
+        var attPct = s.attendancePercent || 0;
+        var attColor = attPct >= 75 ? 'var(--green)' : attPct >= 60 ? 'var(--amber)' : 'var(--red)';
+
+        var balance = (s.feeBalance || 0);
+        var feeStatus = balance <= 0 ? 'paid' : (s.partialPaid ? 'partial' : 'due');
+        var feeLabel = { paid:'Paid', partial:'Partial', due:'Overdue' }[feeStatus];
+
+        var tr = document.createElement('tr');
+        tr.id = 'srow_' + s.id;
         tr.innerHTML =
-            '<td><input type="checkbox" class="sl-student-checkbox" value="' + student.id + '" onchange="slToggleSelect(\'' + student.id + '\')" ' + (slState.selected.has(student.id) ? 'checked' : '') + '></td>' +
-            '<td>' + (escHtml(student.student_id || '-')) + '</td>' +
-            '<td>' + (escHtml(student.roll_no || '-')) + '</td>' +
-            '<td>' + (escHtml(student.reg_no || '-')) + '</td>' +
-            '<td><b>' + (escHtml(student.name || '-')) + '</b></td>' +
-            '<td><span class="badge" style="background:#f1f5f9;color:#475569;">' + (escHtml(student.class || '-')) + ' / ' + (escHtml(student.section || '-')) + '</span></td>' +
-            '<td>' + (escHtml(student.session || '-')) + '</td>' +
-            '<td>' + (escHtml(student.father_name || '-')) + '</td>' +
-            '<td>' + (escHtml(student.mother_name || '-')) + '</td>' +
-            '<td>' + (escHtml(student.phone || student.mobile || '-')) + '</td>' +
-            '<td>' + (escHtml(student.dob || '-')) + '</td>' +
-            '<td>' + (escHtml(student.gender || '-')) + '</td>' +
-            '<td>' + (escHtml(student.category || '-')) + '</td>' +
-            '<td>' + (escHtml(student.caste || '-')) + '</td>' +
-            '<td>' + (escHtml(student.religion || '-')) + '</td>' +
-            '<td>' + (escHtml(student.aadhar || '-')) + '</td>' +
-            '<td>' + (escHtml(student.pen || '-')) + '</td>' +
-            '<td>' + (escHtml(student.rfid_no || student.rfid || student.smart_card_no || '-')) + '</td>' +
-            '<td>' + (escHtml(student.guardian_name || '-')) + '</td>' +
-            '<td>' + (escHtml(student.guardian_phone || '-')) + '</td>' +
-            '<td>' + (escHtml(student.address || '-')) + '</td>' +
-            '<td>' + (escHtml(student.permanent_address || '-')) + '</td>' +
-            '<td>' + (escHtml(student.city || '-')) + '</td>' +
-            '<td>' + (escHtml(student.hostel || '-')) + '</td>' +
-            '<td>' + (escHtml(student.transport || '-')) + '</td>' +
-            '<td>' + (escHtml(student.join_date || '-')) + '</td>' +
-            '<td><div style="display:flex;gap:0.5rem;">' +
-            '<button class="btn-portal btn-ghost btn-sm" onclick="window.slViewStudent(\'' + student.id + '\')" title="View Profile"><i class="fas fa-eye"></i></button>' +
-            '<button class="btn-portal btn-ghost btn-sm" onclick="window.slEditStudent(\'' + student.id + '\')" title="Edit"><i class="fas fa-edit"></i></button>' +
-            '<button class="btn-portal btn-ghost btn-sm btn-danger" onclick="window.slDeleteStudent(\'' + student.id + '\')" title="Delete"><i class="fas fa-trash"></i></button>' +
-            '</div></td>';
+            '<td><input type="checkbox" class="sl-student-checkbox" value="' + s.id + '" onchange="slToggleSelect(\'' + s.id + '\')" ' + (slState.selected.has(s.id) ? 'checked' : '') + ' style="width:15px;height:15px;accent-color:var(--blue);cursor:pointer"></td>' +
+            '<td><div class="avatar-cell"><div class="avatar-sm" style="background:' + bg + '">' + initial + '</div><div><div class="cell-name">' + escHtml(s.name || '—') + '</div>' +
+            '<div class="cell-meta">' + (s.fatherName || s.father_name ? 'Father: ' + escHtml(s.fatherName || s.father_name) : '') + '</div>' +
+            '<div class="cell-mono">#' + escHtml(s.studentCode || s.student_id || s.id.slice(-4)) + '</div></div></div></td>' +
+            '<td><span style="font-weight:600">' + escHtml(s.class || '—') + ' ' + (s.section ? '— ' + s.section : '') + '</span><div class="cell-meta">Roll: ' + escHtml(s.rollNumber || s.roll_no || '—') + '</div></td>' +
+            '<td><div style="font-size:.82rem">' + escHtml(s.phone || s.mobile || s.fatherPhone || '—') + '</div></td>' +
+            '<td><div style="display:flex;align-items:center;gap:.5rem"><div style="flex:1;height:6px;background:var(--bg);border-radius:20px;overflow:hidden;min-width:50px"><div style="height:100%;width:' + attPct + '%;background:' + attColor + ';border-radius:20px"></div></div><span style="font-size:.75rem;font-weight:700;color:' + attColor + '">' + attPct + '%</span></div></td>' +
+            '<td><span class="pill pill-' + feeStatus + '">' + feeLabel + '</span></td>' +
+            '<td style="font-weight:700;color:' + (balance > 0 ? 'var(--red)' : 'var(--green)') + '">' + (balance > 0 ? '\u20B9' + balance.toLocaleString('en-IN') : '\u20B90') + '</td>' +
+            '<td><div style="position:relative">' +
+            '<button onclick="slToggleMenu(\'rm_' + s.id + '\')" style="width:30px;height:30px;border-radius:50%;border:none;background:transparent;cursor:pointer;color:var(--ghost);display:flex;align-items:center;justify-content:center;transition:all .15s" onmouseover="this.style.background=\'var(--bg)\'" onmouseout="this.style.background=\'transparent\'"><i class="fas fa-ellipsis-v"></i></button>' +
+            '<div id="rm_' + s.id + '" style="display:none;position:absolute;right:0;top:110%;background:white;border-radius:14px;box-shadow:var(--sh-lg);border:1px solid var(--border);min-width:180px;z-index:50;overflow:hidden">' +
+            '<div onclick="slOpenDrawer(\'' + s.id + '\')" style="display:flex;align-items:center;gap:.65rem;padding:.65rem 1rem;font-size:.83rem;cursor:pointer;color:var(--ink-3)" onmouseover="this.style.background=\'var(--bg)\'" onmouseout="this.style.background=\'\'"><i class="fas fa-eye" style="width:16px;color:var(--muted)"></i> View Profile</div>' +
+            '<div onclick="window.feeSelectStudent ? (feeSelectStudent(\'' + s.id + '\'),window.showSection(\'classFeePayment\')) : window.showSection(\'searchStudentFeeSection\')" style="display:flex;align-items:center;gap:.65rem;padding:.65rem 1rem;font-size:.83rem;cursor:pointer;color:var(--ink-3)" onmouseover="this.style.background=\'var(--bg)\'" onmouseout="this.style.background=\'\'"><i class="fas fa-rupee-sign" style="width:16px;color:var(--muted)"></i> Collect Fee</div>' +
+            '<div onclick="window.showSection(\'addStudent\')" style="display:flex;align-items:center;gap:.65rem;padding:.65rem 1rem;font-size:.83rem;cursor:pointer;color:var(--ink-3)" onmouseover="this.style.background=\'var(--bg)\'" onmouseout="this.style.background=\'\'"><i class="fas fa-edit" style="width:16px;color:var(--muted)"></i> Edit Details</div>' +
+            '<div onclick="slSendSMS(\'' + (s.fatherPhone || s.phone || '') + '\',\'' + (s.name || '') + '\')" style="display:flex;align-items:center;gap:.65rem;padding:.65rem 1rem;font-size:.83rem;cursor:pointer;color:var(--ink-3)" onmouseover="this.style.background=\'var(--bg)\'" onmouseout="this.style.background=\'\'"><i class="fas fa-sms" style="width:16px;color:var(--muted)"></i> Send SMS</div>' +
+            '<hr style="border:none;border-top:1px solid var(--border);margin:0">' +
+            '<div onclick="slDeleteStudent(\'' + s.id + '\')" style="display:flex;align-items:center;gap:.65rem;padding:.65rem 1rem;font-size:.83rem;cursor:pointer;color:var(--red)" onmouseover="this.style.background=\'var(--red-lt)\'" onmouseout="this.style.background=\'\'"><i class="fas fa-trash" style="width:16px;color:var(--red)"></i> Remove Student</div>' +
+            '</div></div></td>';
         tbody.appendChild(tr);
     });
 }
 
 function slUpdatePageControls() {
-    const pageInfo = document.getElementById('slPageInfo');
-    const prevBtn = document.getElementById('slPrevBtn');
-    const nextBtn = document.getElementById('slNextBtn');
-    const totalInfo = document.getElementById('slTotalInfo');
+    var start = slState.currentPage * slState.items.length + 1;
+    var end = start + slState.items.length - 1;
+    var pInfoStart = document.getElementById('slPageInfoStart');
+    var pInfoEnd = document.getElementById('slPageInfoEnd');
+    var pInfoTotal = document.getElementById('slPageInfoTotal');
+    var pageNum = document.getElementById('slPageNum');
+    var prevBtn = document.getElementById('slPrevBtn');
+    var nextBtn = document.getElementById('slNextBtn');
 
-    if (pageInfo) pageInfo.textContent = 'Page ' + (slState.currentPage + 1);
+    if (pInfoStart) pInfoStart.textContent = slState.items.length ? start : 0;
+    if (pInfoEnd) pInfoEnd.textContent = end;
+    if (pInfoTotal) pInfoTotal.textContent = slState.totalCount || '—';
+    if (pageNum) pageNum.textContent = 'Page ' + (slState.currentPage + 1);
     if (prevBtn) prevBtn.disabled = slState.currentPage === 0;
     if (nextBtn) nextBtn.disabled = !slState.hasMore;
-    if (totalInfo) {
-        totalInfo.textContent = slState.hasMore ? '(more available)' : '';
-    }
 }
 
 function slGoToPage(dir) {
@@ -242,33 +291,148 @@ function slToggleSelect(id) {
     slUpdateBulkUI();
 }
 
+function slToggleAll(cb) {
+    document.querySelectorAll('.sl-student-checkbox').forEach(function(c) {
+        c.checked = cb.checked;
+        if (cb.checked) slState.selected.add(c.value);
+        else slState.selected.delete(c.value);
+    });
+    slUpdateBulkUI();
+}
+
 function slUpdateBulkUI() {
-    const btn = document.getElementById('slBulkDeleteBtn');
-    const count = document.getElementById('slSelectedCount');
-    if (btn && count) {
+    var bulk = document.getElementById('slBulkActions');
+    var count = document.getElementById('slSelectedCount');
+    if (bulk && count) {
         if (slState.selected.size > 0) {
-            btn.classList.remove('hidden');
-            count.textContent = slState.selected.size;
+            bulk.classList.add('visible');
+            count.textContent = slState.selected.size + ' selected';
         } else {
-            btn.classList.add('hidden');
+            bulk.classList.remove('visible');
         }
     }
 }
 
+// ── ACTION MENUS ──
+window.slToggleMenu = function(id) {
+    document.querySelectorAll('[id^="rm_"]').forEach(function(m) { if (m.id !== id) m.style.display = 'none'; });
+    var el = document.getElementById(id);
+    if (el) el.style.display = el.style.display === 'block' ? 'none' : 'block';
+};
+document.addEventListener('click', function(e) {
+    if (!e.target.closest('[id^="rm_"]') && !e.target.closest('button[onclick*="slToggleMenu"]')) {
+        document.querySelectorAll('[id^="rm_"]').forEach(function(m) { m.style.display = 'none'; });
+    }
+});
+
+// ── DRAWER ──
+window.slOpenDrawer = async function(studentId) {
+    var drawer = document.getElementById('slStudentDrawer');
+    var overlay = document.getElementById('slDrawerOverlay');
+    if (!drawer || !overlay) return;
+    drawer.classList.add('open');
+    overlay.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+    document.getElementById('slDrawerBody').innerHTML = '<div style="padding:3rem;text-align:center;color:#94a3b8"><i class="fas fa-spinner fa-spin fa-2x"></i></div>';
+
+    try {
+        var doc = await schoolData('students').doc(studentId).get();
+        if (!doc.exists) {
+            document.getElementById('slDrawerBody').innerHTML = '<div style="padding:2rem;text-align:center;color:var(--red)">Student not found</div>';
+            return;
+        }
+        var s = { id: doc.id, ...doc.data() };
+        var initial = (s.name || '?')[0].toUpperCase();
+
+        document.getElementById('slDrawerBody').innerHTML =
+          '<div style="display:flex;align-items:center;gap:1rem;padding:1.25rem;background:linear-gradient(135deg,var(--blue-lt),#f0f9ff);border-radius:var(--r-lg);border:1.5px solid var(--blue-md);margin-bottom:1.25rem">' +
+          '<div style="width:56px;height:56px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.3rem;color:white;background:linear-gradient(135deg,#1e40af,#7c3aed);box-shadow:0 4px 12px rgba(30,64,175,.3)">' + initial + '</div>' +
+          '<div><div style="font-size:1.05rem;font-weight:800;color:var(--ink)">' + escHtml(s.name || '—') + '</div>' +
+          '<div style="font-size:.78rem;color:var(--muted)">' + (s.class || '') + ' ' + (s.section ? '— ' + s.section : '') + ' · Roll: ' + (s.rollNumber || s.roll_no || '—') + ' · Reg: ' + (s.studentCode || s.student_id || s.id.slice(-4)) + '</div>' +
+          '<div style="display:flex;gap:.35rem;margin-top:.4rem;flex-wrap:wrap">' +
+          '<span class="pill pill-active">Active</span>' +
+          (s.hostel && s.hostel !== 'No' && s.hostel !== '' ? '<span class="pill pill-info">' + escHtml(s.hostel) + '</span>' : '') +
+          (s.transportRoute ? '<span class="pill pill-info">' + escHtml(s.transportRoute) + '</span>' : '') +
+          '</div></div></div>' +
+          '<div style="display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-bottom:1rem">' +
+          [['DOB', s.dob ? new Date(s.dob).toLocaleDateString('en-IN') : '—'],
+           ['Gender', s.gender || '—'],
+           ['Blood Group', s.bloodGroup || '—'],
+           ['Category', s.category || '—'],
+           ['Father', s.fatherName || s.father_name || '—'],
+           ['Father Phone', s.fatherPhone || s.phone || s.mobile || '—'],
+           ['Mother', s.motherName || s.mother_name || '—'],
+           ['Mother Phone', s.motherPhone || '—'],
+          ].map(function(a) {
+            return '<div style="background:var(--bg);border-radius:var(--r-md);padding:.65rem .875rem"><div style="font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--faint)">' + a[0] + '</div><div style="font-size:.85rem;font-weight:600;color:var(--ink-2);margin-top:2px">' + escHtml(a[1]) + '</div></div>';
+          }).join('') +
+          '<div style="grid-column:1/-1;background:var(--bg);border-radius:var(--r-md);padding:.65rem .875rem"><div style="font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--faint)">Address</div><div style="font-size:.85rem;font-weight:600;color:var(--ink-2);margin-top:2px">' + escHtml(s.address || '—') + '</div></div>' +
+          '</div>';
+
+        document.getElementById('slDrawerFeeBtn').onclick = function() { slCloseDrawer(); window.showSection('classFeePayment'); };
+        document.getElementById('slDrawerEditBtn').onclick = function() { slCloseDrawer(); window.showSection('addStudent'); };
+        document.getElementById('slDrawerIdBtn').onclick = function() { slCloseDrawer(); window.generateStudentIdCard ? generateStudentIdCard(studentId) : showToast('ID card function not available', 'info'); };
+        document.getElementById('slDrawerSmsBtn').onclick = function() { slSendSMS(s.fatherPhone || s.phone, s.name); };
+    } catch (e) {
+        document.getElementById('slDrawerBody').innerHTML = '<div style="padding:2rem;text-align:center;color:var(--red)">Error: ' + escHtml(e.message) + '</div>';
+    }
+};
+
+window.slCloseDrawer = function() {
+    var drawer = document.getElementById('slStudentDrawer');
+    var overlay = document.getElementById('slDrawerOverlay');
+    if (drawer) drawer.classList.remove('open');
+    if (overlay) overlay.style.display = 'none';
+    document.body.style.overflow = '';
+};
+
+// ── CHIP / KPI FILTER ──
+function slSetChip(el, type) {
+    document.querySelectorAll('.chip').forEach(function(c) { c.classList.remove('active'); });
+    el.classList.add('active');
+    slState.chipFilter = type;
+}
+
+function slFilterKPI(type) {
+    document.querySelectorAll('.kpi').forEach(function(k) { k.classList.remove('active'); });
+    event.currentTarget.classList.add('active');
+}
+
+// ── VIEW TOGGLE ──
+function slSetView(v) {
+    var tblView = document.getElementById('slTableView');
+    var cardView = document.getElementById('slCardView');
+    var tblBtn = document.getElementById('slTblViewBtn');
+    var cardBtn = document.getElementById('slCardViewBtn');
+    if (tblView) tblView.style.display = v === 'table' ? 'block' : 'none';
+    if (cardView) cardView.style.display = v === 'card' ? 'grid' : 'none';
+    if (tblBtn) tblBtn.classList.toggle('active', v === 'table');
+    if (cardBtn) cardBtn.classList.toggle('active', v === 'card');
+}
+
+// ── BULK ACTIONS ──
+function slBulkSMS() {
+    showToast('Bulk SMS — wire to your SMS API', 'info');
+}
+
+function slBulkPromote() {
+    window.showSection('promotions');
+}
+
 async function slHandleBulkDelete() {
-    const size = slState.selected.size;
+    var size = slState.selected.size;
     if (!size) return;
     if (!await window.showConfirmModal({ title: 'Bulk Delete', message: 'Delete ' + size + ' selected students? This cannot be undone.', icon: 'fa-user-slash', confirmText: 'Delete All', danger: true })) return;
-
     setLoading(true);
     try {
-        const batch = db.batch();
+        var batch = db.batch();
         slState.selected.forEach(function (id) { batch.delete(schoolDoc('students', id)); });
         await batch.commit();
-        adjustStudentCounter(-slState.selected.size);
+        if (window.adjustStudentCounter) adjustStudentCounter(-slState.selected.size);
         slState.selected.clear();
         slUpdateBulkUI();
         slLoadPage();
+        slLoadKPIs();
         showToast('Deleted ' + size + ' students', 'success');
     } catch (e) {
         showToast('Delete failed: ' + e.message, 'error');
@@ -282,9 +446,10 @@ async function slDeleteStudent(id) {
     setLoading(true);
     try {
         await schoolDoc('students', id).delete();
-        adjustStudentCounter(-1);
+        if (window.adjustStudentCounter) adjustStudentCounter(-1);
         slState.selected.delete(id);
         slLoadPage();
+        slLoadKPIs();
         showToast('Student deleted', 'success');
     } catch (e) {
         showToast('Delete failed: ' + e.message, 'error');
@@ -293,21 +458,21 @@ async function slDeleteStudent(id) {
     }
 }
 
-window.slViewStudent = function (id) {
-    window.viewStudent(id);
-};
-
-window.slEditStudent = function (id) {
-    window.editStudent(id);
-};
+function slSendSMS(phone, name) {
+    if (!phone) return showToast('No phone number available', 'error');
+    showToast('SMS to ' + name + ' at ' + phone + ' — wire to your SMS service', 'info');
+}
 
 window.slExportStudentData = function () {
-    window.exportToCSV('students');
+    if (window.exportToCSV) {
+        window.exportToCSV('students');
+    } else {
+        showToast('Export — wire to exportToCSV()', 'info');
+    }
 };
 
-// Debounce helper
 function slDebounce(fn, delay) {
-    let timer;
+    var timer;
     return function () {
         var ctx = this, args = arguments;
         clearTimeout(timer);

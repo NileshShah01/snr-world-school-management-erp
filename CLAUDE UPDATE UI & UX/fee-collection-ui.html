@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fee Collection — SNR ERP</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+/* ── DESIGN TOKENS ─────────────────────────────── */
+:root {
+  --blue:    #1e40af; --blue-lt: #eff6ff; --blue-md: #bfdbfe;
+  --green:   #059669; --green-lt:#ecfdf5; --green-md:#6ee7b7;
+  --red:     #dc2626; --red-lt:  #fef2f2; --red-md:  #fca5a5;
+  --amber:   #d97706; --amber-lt:#fffbeb; --amber-md:#fcd34d;
+  --purple:  #7c3aed; --purple-lt:#f5f3ff;
+  --ink:     #0f172a; --ink-2: #1e293b; --ink-3: #334155;
+  --muted:   #64748b; --faint: #94a3b8; --ghost: #cbd5e1;
+  --bg:      #f8fafc; --surface: #ffffff; --border: #e2e8f0;
+  --r-sm:6px; --r-md:10px; --r-lg:14px; --r-xl:20px;
+  --sh-sm: 0 2px 8px rgba(0,0,0,.06);
+  --sh-md: 0 4px 20px rgba(0,0,0,.09);
+  --sh-lg: 0 8px 40px rgba(0,0,0,.13);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+       background: var(--bg); color: var(--ink-2); font-size: 14px; line-height: 1.5; }
+
+/* ── LAYOUT ───────────────────────────────────── */
+.page { max-width: 1140px; margin: 0 auto; padding: 1.5rem; }
+.page-head { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.75rem; flex-wrap: wrap; }
+.page-head h1 { font-size: 1.35rem; font-weight: 800; color: var(--ink); }
+.page-head p  { font-size: 0.82rem; color: var(--muted); }
+.back-btn { display: flex; align-items: center; gap: 0.4rem; color: var(--muted);
+            font-size: 0.8rem; cursor: pointer; padding: 0.4rem 0.75rem;
+            border-radius: var(--r-sm); border: 1px solid var(--border);
+            background: white; text-decoration: none; transition: all .15s; }
+.back-btn:hover { border-color: var(--blue-md); color: var(--blue); }
+
+/* ── STEP PROGRESS ────────────────────────────── */
+.steps { display: flex; align-items: center; gap: 0; margin-bottom: 1.75rem;
+         background: white; border-radius: var(--r-lg); box-shadow: var(--sh-sm);
+         padding: 1rem 1.5rem; overflow-x: auto; }
+.step { display: flex; align-items: center; gap: 0.6rem; flex: 1; min-width: 0; }
+.step-num { width: 28px; height: 28px; border-radius: 50%; display: flex;
+            align-items: center; justify-content: center; font-size: 0.72rem;
+            font-weight: 800; flex-shrink: 0; transition: all .2s; }
+.step.done .step-num  { background: var(--green); color: white; }
+.step.active .step-num{ background: var(--blue);  color: white; box-shadow: 0 0 0 4px var(--blue-md); }
+.step.idle .step-num  { background: var(--bg); color: var(--faint); border: 2px solid var(--ghost); }
+.step-info { min-width: 0; }
+.step-info span { display: block; font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
+                  letter-spacing: .06em; }
+.step.done .step-info span   { color: var(--green); }
+.step.active .step-info span { color: var(--blue); }
+.step.idle .step-info span   { color: var(--faint); }
+.step-info p { font-size: 0.78rem; color: var(--muted); white-space: nowrap;
+               overflow: hidden; text-overflow: ellipsis; }
+.step-line { width: 32px; height: 2px; background: var(--border); flex-shrink: 0; margin: 0 0.25rem; }
+.step-line.done { background: var(--green-md); }
+
+/* ── STUDENT SEARCH CARD ──────────────────────── */
+.card { background: white; border-radius: var(--r-lg); box-shadow: var(--sh-sm); overflow: hidden; }
+.card-head { padding: 1.1rem 1.5rem; border-bottom: 1px solid var(--border);
+             display: flex; align-items: center; gap: 0.75rem; }
+.card-head .ch-icon { width: 36px; height: 36px; border-radius: var(--r-md);
+                      display: flex; align-items: center; justify-content: center;
+                      font-size: 1rem; flex-shrink: 0; }
+.card-head h2 { font-size: 0.95rem; font-weight: 700; }
+.card-head p  { font-size: 0.78rem; color: var(--muted); }
+.card-body { padding: 1.5rem; }
+
+/* ── SEARCH BOX ───────────────────────────────── */
+.search-wrap { position: relative; }
+.search-wrap input {
+  width: 100%; padding: 0.85rem 1rem 0.85rem 2.75rem;
+  border: 2px solid var(--border); border-radius: var(--r-lg);
+  font-size: 0.95rem; outline: none; transition: border .15s, box-shadow .15s;
+  background: var(--bg);
+}
+.search-wrap input:focus { border-color: var(--blue); background: white;
+                            box-shadow: 0 0 0 4px rgba(30,64,175,.08); }
+.search-wrap .si { position: absolute; left: 0.9rem; top: 50%;
+                   transform: translateY(-50%); color: var(--faint); font-size: 0.95rem; }
+.search-wrap .clear-btn { position: absolute; right: 0.9rem; top: 50%;
+                           transform: translateY(-50%); background: none; border: none;
+                           color: var(--ghost); cursor: pointer; font-size: 0.9rem;
+                           display: none; }
+.search-wrap input:not(:placeholder-shown) ~ .clear-btn { display: block; }
+
+.search-hint { display: flex; gap: 0.6rem; margin-top: 0.6rem; flex-wrap: wrap; }
+.search-tag { padding: 0.25rem 0.65rem; background: var(--blue-lt); color: var(--blue);
+              border-radius: 20px; font-size: 0.7rem; font-weight: 600; }
+
+/* ── STUDENT RESULT DROPDOWN ──────────────────── */
+.search-results {
+  position: absolute; top: calc(100% + 6px); left: 0; right: 0;
+  background: white; border: 1.5px solid var(--blue-md); border-radius: var(--r-lg);
+  box-shadow: var(--sh-lg); z-index: 100; display: none; overflow: hidden;
+}
+.sr-item { display: flex; align-items: center; gap: 0.875rem;
+           padding: 0.875rem 1.1rem; cursor: pointer; border-bottom: 1px solid var(--bg);
+           transition: background .1s; }
+.sr-item:last-child { border-bottom: none; }
+.sr-item:hover { background: var(--blue-lt); }
+.sr-avatar { width: 38px; height: 38px; border-radius: 50%; flex-shrink: 0;
+             display: flex; align-items: center; justify-content: center;
+             font-weight: 800; font-size: 0.85rem; color: white; }
+.sr-item .sr-info h4 { font-size: 0.88rem; font-weight: 700; color: var(--ink); }
+.sr-item .sr-info p  { font-size: 0.75rem; color: var(--muted); }
+.sr-item .sr-badge   { margin-left: auto; }
+
+/* ── SELECTED STUDENT BANNER ──────────────────── */
+.student-banner {
+  display: flex; align-items: center; gap: 1rem;
+  padding: 1rem 1.25rem; border-radius: var(--r-lg); background: var(--blue-lt);
+  border: 1.5px solid var(--blue-md); margin-bottom: 1.5rem;
+}
+.sb-avatar { width: 48px; height: 48px; border-radius: 50%; flex-shrink: 0;
+             display: flex; align-items: center; justify-content: center;
+             font-weight: 800; font-size: 1.1rem; color: white;
+             background: linear-gradient(135deg, #1e40af, #7c3aed); }
+.sb-name   { font-size: 1rem; font-weight: 700; color: var(--ink); }
+.sb-meta   { font-size: 0.78rem; color: var(--muted); margin-top: 1px; }
+.sb-change { margin-left: auto; padding: 0.4rem 0.875rem; background: white;
+             color: var(--blue); border: 1.5px solid var(--blue-md); border-radius: var(--r-sm);
+             font-size: 0.78rem; font-weight: 600; cursor: pointer; white-space: nowrap;
+             transition: all .15s; }
+.sb-change:hover { background: var(--blue); color: white; }
+
+/* ── SUMMARY BAR ──────────────────────────────── */
+.summary-bar {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
+  background: white; border-radius: var(--r-lg); box-shadow: var(--sh-sm);
+  overflow: hidden; margin-bottom: 1.5rem; border: 1px solid var(--border);
+}
+.sb-stat { padding: 1rem 1.25rem; border-right: 1px solid var(--border); text-align: center; }
+.sb-stat:last-child { border-right: none; }
+.sb-stat .val { font-size: 1.5rem; font-weight: 800; line-height: 1; display: block; }
+.sb-stat .lbl { font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+                letter-spacing: .06em; color: var(--faint); margin-top: 0.25rem; }
+.sb-stat.total .val  { color: var(--ink); }
+.sb-stat.paid .val   { color: var(--green); }
+.sb-stat.disc .val   { color: var(--amber); }
+.sb-stat.due .val    { color: var(--red); }
+
+/* ── FEE TABLE ────────────────────────────────── */
+.fee-table-wrap { overflow-x: auto; }
+.fee-table { width: 100%; border-collapse: collapse; }
+.fee-table thead tr { border-bottom: 2px solid var(--border); }
+.fee-table th {
+  padding: 0.7rem 0.875rem; text-align: left; font-size: 0.68rem;
+  font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--faint);
+  white-space: nowrap; background: var(--bg);
+}
+.fee-table th:first-child { width: 40px; }
+.fee-table td { padding: 0.875rem 0.875rem; border-bottom: 1px solid #f8fafc;
+                vertical-align: middle; }
+.fee-table tr:hover td { background: #fafbff; }
+.fee-table tr.selected td { background: var(--blue-lt); }
+
+.ft-type { font-weight: 600; font-size: 0.88rem; color: var(--ink-2); }
+.ft-period { font-size: 0.75rem; color: var(--muted); margin-top: 2px; }
+.ft-amount { font-weight: 700; font-size: 0.9rem; }
+.ft-paid   { color: var(--green); font-weight: 600; }
+.ft-due    { color: var(--red); font-weight: 700; }
+
+/* ── STATUS PILL ──────────────────────────────── */
+.pill { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px;
+        border-radius: 20px; font-size: 0.7rem; font-weight: 700; white-space: nowrap; }
+.pill::before { content: '●'; font-size: 0.4rem; }
+.pill.paid    { background: var(--green-lt); color: var(--green); }
+.pill.pending { background: var(--red-lt);   color: var(--red); }
+.pill.partial { background: var(--amber-lt); color: var(--amber); }
+
+/* ── CHECKBOX ─────────────────────────────────── */
+.fee-cb { width: 17px; height: 17px; accent-color: var(--blue); cursor: pointer; }
+
+/* ── SELECT ALL ROW ───────────────────────────── */
+.select-all-row { display: flex; align-items: center; gap: 0.75rem;
+                  padding: 0.6rem 0.875rem; background: var(--blue-lt);
+                  border-radius: var(--r-md); margin-bottom: 0.75rem;
+                  font-size: 0.82rem; color: var(--blue); font-weight: 600; }
+.select-all-row span { margin-left: auto; color: var(--ink-2); font-weight: 700; }
+
+/* ── PAYMENT PANEL ────────────────────────────── */
+.pay-panel {
+  background: var(--ink-2); color: white; border-radius: var(--r-lg);
+  padding: 1.25rem 1.5rem; margin-top: 1.25rem;
+}
+.pp-row { display: flex; align-items: flex-end; gap: 1rem; flex-wrap: wrap; }
+.pp-field { flex: 1; min-width: 160px; }
+.pp-field label { display: block; font-size: 0.72rem; font-weight: 700; color: #94a3b8;
+                  text-transform: uppercase; letter-spacing: .05em; margin-bottom: 0.4rem; }
+.pp-field input, .pp-field select {
+  width: 100%; padding: 0.75rem 0.875rem; border-radius: var(--r-md);
+  border: 2px solid rgba(255,255,255,.1); background: rgba(255,255,255,.08);
+  color: white; font-size: 0.95rem; outline: none; transition: border .15s;
+}
+.pp-field input::placeholder { color: rgba(255,255,255,.3); }
+.pp-field input:focus, .pp-field select:focus { border-color: rgba(255,255,255,.35); }
+.pp-field select option { background: var(--ink-2); }
+.pp-field .amount-prefix { position: relative; }
+.pp-field .amount-prefix::before { content: '₹'; position: absolute; left: 0.875rem;
+                                    top: 50%; transform: translateY(-50%); color: #94a3b8;
+                                    font-size: 1rem; font-weight: 600; }
+.pp-field .amount-prefix input { padding-left: 1.75rem; font-size: 1.1rem; font-weight: 700; }
+.pp-total { text-align: right; }
+.pp-total .pp-lbl { font-size: 0.72rem; color: #94a3b8; font-weight: 700;
+                    text-transform: uppercase; letter-spacing: .05em; }
+.pp-total .pp-num { font-size: 1.8rem; font-weight: 800; color: white; }
+
+.pay-btn {
+  width: 100%; padding: 1rem; border: none; border-radius: var(--r-md);
+  background: linear-gradient(135deg, #10b981, #059669); color: white;
+  font-size: 1rem; font-weight: 800; cursor: pointer; margin-top: 1rem;
+  display: flex; align-items: center; justify-content: center; gap: 0.6rem;
+  transition: all .2s; letter-spacing: .02em;
+}
+.pay-btn:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(5,150,105,.4); }
+.pay-btn:active { transform: translateY(0); }
+
+/* ── METHOD SELECTOR ──────────────────────────── */
+.method-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.5rem; }
+.method-opt { position: relative; }
+.method-opt input[type=radio] { position: absolute; opacity: 0; }
+.method-opt label {
+  display: flex; flex-direction: column; align-items: center; gap: 0.3rem;
+  padding: 0.6rem 0.4rem; border-radius: var(--r-md); cursor: pointer;
+  border: 2px solid rgba(255,255,255,.1); background: rgba(255,255,255,.05);
+  transition: all .15s; font-size: 0.72rem; font-weight: 600; color: #94a3b8;
+}
+.method-opt label i { font-size: 1.1rem; }
+.method-opt input:checked + label { border-color: #10b981; background: rgba(16,185,129,.15);
+                                     color: #6ee7b7; }
+
+/* ── RECEIPT PREVIEW ──────────────────────────── */
+.receipt-preview {
+  background: white; border-radius: var(--r-lg); box-shadow: var(--sh-md);
+  padding: 1.5rem; border-top: 4px solid var(--green);
+  display: none; margin-top: 1.25rem;
+}
+.receipt-preview.visible { display: block; animation: fadeUp .3s ease; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+.rp-head { display: flex; justify-content: space-between; align-items: flex-start;
+           margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem; }
+.rp-school { font-weight: 800; font-size: 1rem; color: var(--ink); }
+.rp-meta   { font-size: 0.75rem; color: var(--muted); margin-top: 2px; }
+.rp-badge  { background: var(--green-lt); color: var(--green); border-radius: var(--r-sm);
+             padding: 0.3rem 0.75rem; font-size: 0.75rem; font-weight: 700; }
+.rp-divider { border: none; border-top: 1.5px dashed var(--border); margin: 0.875rem 0; }
+.rp-row { display: flex; justify-content: space-between; padding: 0.3rem 0;
+          font-size: 0.83rem; }
+.rp-row .rr-l { color: var(--muted); }
+.rp-row .rr-r { font-weight: 600; color: var(--ink-2); }
+.rp-total { display: flex; justify-content: space-between; padding: 0.75rem 0;
+            border-top: 2px solid var(--border); margin-top: 0.5rem; }
+.rp-total .rt-l { font-size: 0.88rem; font-weight: 700; color: var(--ink); }
+.rp-total .rt-r { font-size: 1.3rem; font-weight: 800; color: var(--green); }
+.rp-actions { display: flex; gap: 0.75rem; margin-top: 1.25rem; }
+.rpa-btn {
+  flex: 1; padding: 0.7rem; border-radius: var(--r-md); font-size: 0.85rem;
+  font-weight: 700; cursor: pointer; border: none; transition: all .15s;
+  display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+}
+.rpa-btn.print { background: var(--ink-2); color: white; }
+.rpa-btn.sms   { background: var(--green-lt); color: var(--green); border: 1.5px solid var(--green-md); }
+.rpa-btn.new   { background: var(--blue-lt); color: var(--blue); border: 1.5px solid var(--blue-md); }
+.rpa-btn:hover { opacity: .88; }
+
+/* ── RESPONSIVE ───────────────────────────────── */
+@media (max-width: 680px) {
+  .summary-bar { grid-template-columns: repeat(2,1fr); }
+  .summary-bar .sb-stat:nth-child(2) { border-right: none; }
+  .summary-bar .sb-stat:nth-child(3),
+  .summary-bar .sb-stat:nth-child(4) { border-top: 1px solid var(--border); }
+  .steps { gap: 0; }
+  .step-info p { display: none; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- PAGE HEADER -->
+  <div class="page-head">
+    <a class="back-btn" href="#"><i class="fas fa-arrow-left"></i> Back</a>
+    <div>
+      <h1>Collect Fee Payment</h1>
+      <p>Search student → Select fees → Process payment → Print receipt</p>
+    </div>
+  </div>
+
+  <!-- STEP PROGRESS -->
+  <div class="steps">
+    <div class="step done" id="step1">
+      <div class="step-num"><i class="fas fa-check" style="font-size:.65rem"></i></div>
+      <div class="step-info"><span>Step 1</span><p>Find Student</p></div>
+    </div>
+    <div class="step-line done"></div>
+    <div class="step active" id="step2">
+      <div class="step-num">2</div>
+      <div class="step-info"><span>Step 2</span><p>Select Fees</p></div>
+    </div>
+    <div class="step-line"></div>
+    <div class="step idle" id="step3">
+      <div class="step-num">3</div>
+      <div class="step-info"><span>Step 3</span><p>Process Payment</p></div>
+    </div>
+    <div class="step-line"></div>
+    <div class="step idle" id="step4">
+      <div class="step-num">4</div>
+      <div class="step-info"><span>Step 4</span><p>Print Receipt</p></div>
+    </div>
+  </div>
+
+  <!-- STEP 1: STUDENT SEARCH -->
+  <div class="card" style="margin-bottom:1.25rem" id="searchCard">
+    <div class="card-head">
+      <div class="ch-icon" style="background:#eff6ff;color:#1e40af"><i class="fas fa-search"></i></div>
+      <div><h2>Find Student</h2><p>Search by name, phone, registration number or father's name</p></div>
+    </div>
+    <div class="card-body">
+      <div class="search-wrap" id="searchWrap">
+        <i class="fas fa-search si"></i>
+        <input type="text" id="feeQuickSearchInput" placeholder="Type name, phone, reg. no. or father's name…"
+               oninput="handleFeeSearch(this.value)" autocomplete="off">
+        <button class="clear-btn" onclick="clearSearch()"><i class="fas fa-times"></i></button>
+        <div class="search-results" id="feeSearchResults">
+          <!-- Demo results -->
+          <div class="sr-item" onclick="selectStudent('1')">
+            <div class="sr-avatar" style="background:linear-gradient(135deg,#3b82f6,#7c3aed)">A</div>
+            <div class="sr-info">
+              <h4>Aarav Singh</h4>
+              <p>Class VII-A · Reg: 574 · Father: Rajesh Singh · 98981 23456</p>
+            </div>
+            <div class="sr-badge">
+              <span class="pill pending">₹3,200 due</span>
+            </div>
+          </div>
+          <div class="sr-item" onclick="selectStudent('2')">
+            <div class="sr-avatar" style="background:linear-gradient(135deg,#ec4899,#f97316)">P</div>
+            <div class="sr-info">
+              <h4>Priya Sharma</h4>
+              <p>Class VI-B · Reg: 581 · Father: Mohan Sharma · 98982 34567</p>
+            </div>
+            <div class="sr-badge">
+              <span class="pill partial">₹800 partial</span>
+            </div>
+          </div>
+          <div class="sr-item" onclick="selectStudent('3')">
+            <div class="sr-avatar" style="background:linear-gradient(135deg,#10b981,#06b6d4)">R</div>
+            <div class="sr-info">
+              <h4>Rahul Verma</h4>
+              <p>Class VIII-A · Reg: 562 · Father: Suresh Verma · 98983 45678</p>
+            </div>
+            <div class="sr-badge">
+              <span class="pill paid">All Clear</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="search-hint">
+        <span class="search-tag"><i class="fas fa-info-circle"></i> By Name</span>
+        <span class="search-tag">By Phone</span>
+        <span class="search-tag">By Reg. No.</span>
+        <span class="search-tag">By Father's Name</span>
+        <span class="search-tag">By RFID / Smart Card</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SELECTED STUDENT BANNER (shown after selection) -->
+  <div class="student-banner" id="studentBanner">
+    <div class="sb-avatar">A</div>
+    <div>
+      <div class="sb-name">Aarav Singh</div>
+      <div class="sb-meta">Class VII — A &nbsp;·&nbsp; Reg: 574 &nbsp;·&nbsp; Rajesh Singh (Father) &nbsp;·&nbsp; 98981 23456</div>
+    </div>
+    <button class="sb-change" onclick="clearSearch()">Change Student</button>
+  </div>
+
+  <!-- STEP 2: FEE SUMMARY + TABLE -->
+  <div class="summary-bar" id="summaryBar">
+    <div class="sb-stat total">
+      <span class="val" id="sumTotal">₹4,800</span>
+      <span class="lbl">Total Payable</span>
+    </div>
+    <div class="sb-stat paid">
+      <span class="val" id="sumPaid">₹1,600</span>
+      <span class="lbl">Total Paid</span>
+    </div>
+    <div class="sb-stat disc">
+      <span class="val" id="sumDisc">₹0</span>
+      <span class="lbl">Discounts</span>
+    </div>
+    <div class="sb-stat due">
+      <span class="val" id="sumDue">₹3,200</span>
+      <span class="lbl">Balance Due</span>
+    </div>
+  </div>
+
+  <!-- FEE TABLE -->
+  <div class="card" style="margin-bottom:1.25rem">
+    <div class="card-head">
+      <div class="ch-icon" style="background:#fef3c7;color:#d97706"><i class="fas fa-receipt"></i></div>
+      <div><h2>Fee Ledger</h2><p>Select fees to include in this payment</p></div>
+      <div style="margin-left:auto;display:flex;gap:0.5rem">
+        <button onclick="selectAllDue()" style="padding:.4rem .875rem;border-radius:var(--r-sm);border:1.5px solid var(--blue-md);background:var(--blue-lt);color:var(--blue);font-size:.78rem;font-weight:700;cursor:pointer">
+          <i class="fas fa-check-double"></i> Select All Due
+        </button>
+        <button onclick="exportFeeCSV()" style="padding:.4rem .875rem;border-radius:var(--r-sm);border:1.5px solid var(--border);background:white;color:var(--muted);font-size:.78rem;font-weight:600;cursor:pointer">
+          <i class="fas fa-download"></i> Export
+        </button>
+      </div>
+    </div>
+    <div class="card-body" style="padding:0">
+      <!-- Select All row -->
+      <div class="select-all-row" style="margin:0.875rem 0.875rem 0.5rem;margin-top:0.875rem">
+        <input type="checkbox" class="fee-cb" id="masterCb" onchange="toggleAllFees(this)">
+        <label for="masterCb" style="cursor:pointer;font-weight:700;color:var(--blue)">Select all pending fees</label>
+        <span id="selectedFeeTotal">₹0 selected</span>
+      </div>
+
+      <div class="fee-table-wrap">
+        <table class="fee-table">
+          <thead>
+            <tr>
+              <th><input type="checkbox" class="fee-cb" onchange="toggleAllFees(this)"></th>
+              <th>Fee Type &nbsp;↕</th>
+              <th>Period &nbsp;↕</th>
+              <th>Due Date</th>
+              <th>Amount</th>
+              <th>Paid</th>
+              <th>Balance</th>
+              <th>Status</th>
+              <th>Fine</th>
+            </tr>
+          </thead>
+          <tbody id="feeTableBody">
+            <!-- ROW: OVERDUE -->
+            <tr class="selected">
+              <td><input type="checkbox" class="fee-cb" checked data-due="1600" data-fee-id="f1" onchange="updateTotal()"></td>
+              <td><div class="ft-type">Tuition Fee</div><div class="ft-period">Monthly</div></td>
+              <td>April 2026</td>
+              <td><span style="color:var(--red);font-weight:600">10 Apr 2026</span></td>
+              <td class="ft-amount">₹1,600</td>
+              <td class="ft-paid">₹0</td>
+              <td class="ft-due">₹1,600</td>
+              <td><span class="pill pending">Overdue</span></td>
+              <td class="ft-due" style="font-size:.8rem">+₹50</td>
+            </tr>
+            <!-- ROW: OVERDUE -->
+            <tr class="selected">
+              <td><input type="checkbox" class="fee-cb" checked data-due="1600" data-fee-id="f2" onchange="updateTotal()"></td>
+              <td><div class="ft-type">Tuition Fee</div><div class="ft-period">Monthly</div></td>
+              <td>May 2026</td>
+              <td><span style="color:var(--red);font-weight:600">10 May 2026</span></td>
+              <td class="ft-amount">₹1,600</td>
+              <td class="ft-paid">₹800</td>
+              <td class="ft-due">₹800</td>
+              <td><span class="pill partial">Partial</span></td>
+              <td>—</td>
+            </tr>
+            <!-- ROW: CURRENT -->
+            <tr>
+              <td><input type="checkbox" class="fee-cb" data-due="1600" data-fee-id="f3" onchange="updateTotal()"></td>
+              <td><div class="ft-type">Tuition Fee</div><div class="ft-period">Monthly</div></td>
+              <td>June 2026</td>
+              <td>10 Jun 2026</td>
+              <td class="ft-amount">₹1,600</td>
+              <td class="ft-paid">₹800</td>
+              <td class="ft-due">₹800</td>
+              <td><span class="pill partial">Partial</span></td>
+              <td>—</td>
+            </tr>
+            <!-- ROW: PAID -->
+            <tr style="opacity:.55">
+              <td><input type="checkbox" class="fee-cb" disabled></td>
+              <td><div class="ft-type">Computer Fee</div><div class="ft-period">Annual</div></td>
+              <td>2025-26</td>
+              <td>01 Apr 2026</td>
+              <td class="ft-amount">₹1,200</td>
+              <td class="ft-paid">₹1,200</td>
+              <td style="color:var(--green);font-weight:700">₹0</td>
+              <td><span class="pill paid">Paid</span></td>
+              <td>—</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- PAYMENT PANEL -->
+      <div style="padding:0 1.25rem 1.25rem">
+        <div class="pay-panel">
+          <div style="font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#94a3b8;margin-bottom:1rem">
+            Process Payment
+          </div>
+          <div class="pp-row">
+            <!-- Amount -->
+            <div class="pp-field">
+              <label>Payment Amount</label>
+              <div class="amount-prefix">
+                <input type="number" id="payAmount" value="2450" min="1" placeholder="0">
+              </div>
+            </div>
+            <!-- Method -->
+            <div class="pp-field" style="flex:2">
+              <label>Payment Method</label>
+              <div class="method-grid">
+                <div class="method-opt">
+                  <input type="radio" name="payMethod" id="mCash" value="Cash" checked>
+                  <label for="mCash"><i class="fas fa-money-bill-wave"></i>Cash</label>
+                </div>
+                <div class="method-opt">
+                  <input type="radio" name="payMethod" id="mUPI" value="UPI">
+                  <label for="mUPI"><i class="fas fa-mobile-alt"></i>UPI</label>
+                </div>
+                <div class="method-opt">
+                  <input type="radio" name="payMethod" id="mCheque" value="Cheque">
+                  <label for="mCheque"><i class="fas fa-university"></i>Cheque</label>
+                </div>
+                <div class="method-opt">
+                  <input type="radio" name="payMethod" id="mOnline" value="Online">
+                  <label for="mOnline"><i class="fas fa-credit-card"></i>Online</label>
+                </div>
+              </div>
+            </div>
+            <!-- Total display -->
+            <div class="pp-total">
+              <div class="pp-lbl">Paying Now</div>
+              <div class="pp-num" id="ppTotal">₹2,450</div>
+            </div>
+          </div>
+          <!-- Remarks (optional, collapsible) -->
+          <div style="margin-top:0.875rem">
+            <input type="text" id="payRemarks" placeholder="Remarks (optional) — cheque number, transaction ID…"
+                   style="width:100%;padding:.6rem .875rem;border-radius:var(--r-md);border:2px solid rgba(255,255,255,.1);background:rgba(255,255,255,.07);color:white;font-size:.85rem;outline:none">
+          </div>
+          <button class="pay-btn" onclick="processPayment()">
+            <i class="fas fa-check-circle"></i>
+            Confirm Payment &nbsp;·&nbsp; <span id="payBtnAmt">₹2,450</span>
+          </button>
+        </div>
+      </div>
+
+    </div><!-- /card-body -->
+  </div><!-- /fee card -->
+
+  <!-- STEP 4: RECEIPT (shown after payment) -->
+  <div class="receipt-preview visible" id="receiptPreview">
+    <div class="rp-head">
+      <div>
+        <div class="rp-school" id="receiptSchoolName">Apex Public School</div>
+        <div class="rp-meta">Receipt No: <strong>#1042</strong> &nbsp;·&nbsp; 22 Jun 2026, 11:34 AM</div>
+      </div>
+      <div class="rp-badge"><i class="fas fa-check-circle"></i> Payment Confirmed</div>
+    </div>
+    <hr class="rp-divider">
+    <div class="rp-row"><span class="rr-l">Student</span><span class="rr-r">Aarav Singh</span></div>
+    <div class="rp-row"><span class="rr-l">Class</span><span class="rr-r">VII — A</span></div>
+    <div class="rp-row"><span class="rr-l">Fee For</span><span class="rr-r">April 2026 + May 2026 (Tuition)</span></div>
+    <div class="rp-row"><span class="rr-l">Payment Mode</span><span class="rr-r">Cash</span></div>
+    <div class="rp-row"><span class="rr-l">Received By</span><span class="rr-r">Admin — Nilesh Shah</span></div>
+    <hr class="rp-divider">
+    <div class="rp-total">
+      <span class="rt-l">Amount Paid</span>
+      <span class="rt-r">₹2,450</span>
+    </div>
+    <div class="rp-actions">
+      <button class="rpa-btn print" onclick="window.print()"><i class="fas fa-print"></i> Print Receipt</button>
+      <button class="rpa-btn sms"><i class="fas fa-sms"></i> SMS Parent</button>
+      <button class="rpa-btn new" onclick="clearSearch()"><i class="fas fa-plus"></i> Next Student</button>
+    </div>
+  </div>
+
+</div><!-- /page -->
+
+<script>
+// Demo interactivity
+function handleFeeSearch(val) {
+  const res = document.getElementById('feeSearchResults');
+  res.style.display = val.length > 1 ? 'block' : 'none';
+}
+function selectStudent(id) {
+  document.getElementById('feeSearchResults').style.display = 'none';
+  document.getElementById('studentBanner').style.display = 'flex';
+  document.getElementById('searchCard').style.display = 'none';
+}
+function clearSearch() {
+  document.getElementById('searchCard').style.display = 'block';
+  document.getElementById('studentBanner').style.display = 'none';
+  document.getElementById('feeQuickSearchInput').value = '';
+}
+function toggleAllFees(cb) {
+  document.querySelectorAll('.fee-cb:not([disabled])').forEach(c => {
+    if (c !== cb && !c.hasAttribute('disabled')) c.checked = cb.checked;
+  });
+  updateTotal();
+}
+function updateTotal() {
+  let t = 0;
+  document.querySelectorAll('.fee-cb:checked').forEach(cb => t += parseFloat(cb.dataset.due || 0));
+  const fmt = v => '₹' + v.toLocaleString('en-IN');
+  document.getElementById('selectedFeeTotal').textContent = fmt(t) + ' selected';
+  document.getElementById('payAmount').value = t;
+  document.getElementById('ppTotal').textContent = fmt(t);
+  document.getElementById('payBtnAmt').textContent = fmt(t);
+}
+function selectAllDue() {
+  document.querySelectorAll('.fee-cb:not([disabled])').forEach(c => c.checked = true);
+  document.getElementById('masterCb').checked = true;
+  updateTotal();
+}
+function processPayment() {
+  document.getElementById('receiptPreview').classList.add('visible');
+  document.getElementById('receiptPreview').scrollIntoView({ behavior: 'smooth' });
+}
+function exportFeeCSV() { alert('CSV export — wire to exportTableToCSV() utility'); }
+// live amount sync
+document.getElementById('payAmount').addEventListener('input', function() {
+  const v = '₹' + (parseFloat(this.value)||0).toLocaleString('en-IN');
+  document.getElementById('ppTotal').textContent = v;
+  document.getElementById('payBtnAmt').textContent = v;
+});
+</script>
+</body>
+</html>
